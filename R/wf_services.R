@@ -4,7 +4,7 @@
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' @param simplify simplify the output, logical (default = TRUE)
+#' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @return returns a nested list or data frame with the ECMWF services
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -17,8 +17,11 @@
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'
-#' # get key
-#' wf_get_key(email = "test@mail.com")
+#' # get a list of services
+#' wf_services("test@mail.com")
+#'
+#' # get a list of datasets
+#' wf_datasets("test@mail.com")
 #'}
 
 wf_services <- function(

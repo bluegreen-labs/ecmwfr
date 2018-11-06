@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • ecmwfr</title>
+<title>Set secret ECMWF token — wf_set_key • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Set secret ECMWF token — wf_set_key" />
+
+<meta property="og:description" content="Saves the token to your local keychain under
+a service called &quot;ecmwfr&quot;." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -95,84 +99,61 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Set secret ECMWF token</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_set_key.R'><code>R/wf_set_key.R</code></a></small>
+    <div class="hidden name"><code>wf_set_key.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Saves the token to your local keychain under
+a service called "ecmwfr".</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="wf_datasets.html">wf_datasets()</a></code> </p>
-        </td>
-        <td><p>ECMWF dataset list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_delete.html">wf_delete()</a></code> </p>
-        </td>
-        <td><p>ECMWF delete request</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_get_key.html">wf_get_key()</a></code> </p>
-        </td>
-        <td><p>Get secret ECMWF token</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_request.html">wf_request()</a></code> </p>
-        </td>
-        <td><p>ECMWF data request and download</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_services.html">wf_services()</a></code> </p>
-        </td>
-        <td><p>ECMWF services list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_set_key.html">wf_set_key()</a></code> </p>
-        </td>
-        <td><p>Set secret ECMWF token</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_status.html">wf_status()</a></code> </p>
-        </td>
-        <td><p>ECMWF status request</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_transfer.html">wf_transfer()</a></code> </p>
-        </td>
-        <td><p>ECMWF data transfer function</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>wf_set_key</span>(<span class='no'>email</span>, <span class='no'>key</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>email</th>
+      <td><p>email address used to sign up for the ECMWF data service</p></td>
+    </tr>
+    <tr>
+      <th>key</th>
+      <td><p>token provided by ECMWF</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='wf_get_key.html'>wf_get_key</a></code></p></div>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"># NOT RUN {
+# }
+<span class='co'># NOT RUN {</span>
+<span class='co'># set key</span>
+<span class='fu'>wf_set_key</span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)
+
+<span class='co'># get key</span>
+<span class='fu'><a href='wf_get_key.html'>wf_get_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>)
+<span class='co'># }</span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

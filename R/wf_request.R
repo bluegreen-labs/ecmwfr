@@ -2,7 +2,8 @@
 #'
 #' Stage a data request, and optionally download the data to disk. Alternatively
 #' you can only stage requests, logging the request URLs to submit download
-#' queries later on using \code{\link[ecmwfr]{wf_transfer}}
+#' queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
+#' allows NetCDF downloads, and will override calls for grib data.
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
@@ -43,8 +44,8 @@ wf_request <- function(
                  type = "an",
                  class = "ei",
                  area = "73.5/-27/33/45",
-                 format = "netcdf",
-                 target = "tmp.nc")){
+                 format = "grib",
+                 target = "tmp.grb")){
 
   # check the login credentials
   if(missing(email)){
@@ -53,6 +54,11 @@ wf_request <- function(
 
   # get key from email
   key <- wf_get_key(email)
+
+  # force the use of netcdf
+  request$format <- "netcdf"
+  request$target <- paste0(tools::file_path_sans_ext(request$target),
+                           ".nc")
 
   # get the response from the query provided
   response <- httr::POST(

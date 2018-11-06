@@ -25,7 +25,6 @@
 #' wf_get_key(email = "test@mail.com")
 #'}
 
-
 wf_transfer <- function(
   email,
   url,

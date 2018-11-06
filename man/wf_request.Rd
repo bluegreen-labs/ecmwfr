@@ -8,8 +8,8 @@ wf_request(email, path = tempdir(), time_out = 3600,
   transfer = FALSE, request = list(stream = "oper", levtype = "sfc",
   param = "165.128/166.128/167.128", dataset = "interim", step = "0", grid
   = "0.75/0.75", time = "00/06/12/18", date = "2014-07-01/to/2014-07-31",
-  type = "an", class = "ei", area = "73.5/-27/33/45", format = "netcdf",
-  target = "tmp.nc"))
+  type = "an", class = "ei", area = "73.5/-27/33/45", format = "grib",
+  target = "tmp.grb"))
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -30,7 +30,8 @@ a download query staging url or a netCDF of data on disk
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
-queries later on using \code{\link[ecmwfr]{wf_transfer}}
+queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
+allows NetCDF downloads, and will override calls for grib data.
 }
 \examples{
 

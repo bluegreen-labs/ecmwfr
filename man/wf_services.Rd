@@ -10,7 +10,7 @@ wf_services(email)
 \item{email}{email address used to sign up for the ECMWF data service and
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
-\item{simplify}{simplify the output, logical (default = TRUE)}
+\item{simplify}{simplify the output, logical (default = \code{TRUE})}
 }
 \value{
 returns a nested list or data frame with the ECMWF services
@@ -24,8 +24,11 @@ Returns a list of services
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 
-# get key
-wf_get_key(email = "test@mail.com")
+# get a list of services
+wf_services("test@mail.com")
+
+# get a list of datasets
+wf_datasets("test@mail.com")
 }
 }
 \seealso{

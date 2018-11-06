@@ -3,25 +3,24 @@
 #' Deletes a staged download from the queue
 #'
 #' @param email email address used to sign up for the ECMWF data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{ecmwf_set_key}}
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @keywords data download, climate, re-analysis
-#' @seealso \code{\link[ecmwfr]{ecmwf_set_key}}
-#' \code{\link[ecmwfr]{ecmwf_download}}
-#' \code{\link[ecmwfr]{ecmwf_request}}
+#' @seealso \code{\link[ecmwfr]{wf_set_key}}
+#' \code{\link[ecmwfr]{wf_transfer}}
+#' \code{\link[ecmwfr]{wf_request}}
 #' @export
 #' @examples
 #'
 #' \donttest{
 #' # set key
-#' ecmwf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(email = "test@mail.com", key = "123")
 #'
 #' # get key
-#' ecmwf_get_key(email = "test@mail.com")
+#' wf_get_key(email = "test@mail.com")
 #'}
 
-
-ecmwf_delete <- function(
+wf_delete <- function(
   email,
   url
 ){
@@ -32,11 +31,9 @@ ecmwf_delete <- function(
   }
 
   # get key from email
-  key <- ecmwf_get_key(email)
+  key <- wf_get_key(email)
 
-  # Finally when all went well we have to remove the subset
-  # from the queued list so that memory is de-allocated on the
-  # ECMWF server!
+  # remove a queued download
   response <- httr::DELETE(
     url,
     httr::add_headers(

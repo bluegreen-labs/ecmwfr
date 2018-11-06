@@ -22,10 +22,10 @@ Before starting, acquire a ECMWF API token, and set a key to your local keychain
 
 ```R
 # set key
-ecmwf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(email = "test@mail.com", key = "123")
 
 # get key
-ecmwf_get_key(email = "test@mail.com")
+wf_get_key(email = "test@mail.com")
 ```
 Downloading data
 

@@ -2,36 +2,36 @@
 #'
 #' Stage a data request, and optionally download the data to disk. Alternatively
 #' you can only stage requests, logging the request URLs to submit download
-#' queries later on using \code{\link[ecmwfr]{ecmwf_download}}
+#' queries later on using \code{\link[ecmwfr]{wf_transfer}}
 #'
 #' @param email email address used to sign up for the ECMWF data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{ecmwf_set_key}}
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start
-#' @param download logical, download data TRUE or FALSE (default = FALSE)
+#' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @return a download query staging url or a netCDF of data on disk
 #' @keywords data download, climate, re-analysis
-#' @seealso \code{\link[ecmwfr]{ecmwf_set_key}}
-#' \code{\link[ecmwfr]{ecmwf_download}}
-#' \code{\link[ecmwfr]{ecmwf_status}}
+#' @seealso \code{\link[ecmwfr]{wf_set_key}}
+#' \code{\link[ecmwfr]{wf_transfer}}
+#' \code{\link[ecmwfr]{wf_status}}
 #' @export
 #' @examples
 #'
 #' \donttest{
 #' # set key
-#' ecmwf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(email = "test@mail.com", key = "123")
 #'
 #' # get key
-#' ecmwf_get_key(email = "test@mail.com")
+#' wf_get_key(email = "test@mail.com")
 #'}
 
-ecmwf_request <- function(
+wf_request <- function(
   email,
   path = tempdir(),
   time_out = 3600,
-  download = FALSE,
+  transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
                  param = "165.128/166.128/167.128",
@@ -47,12 +47,12 @@ ecmwf_request <- function(
                  target = "tmp.nc")){
 
   # check the login credentials
-  if(missing(email) | missing(request)){
+  if(missing(email)){
     stop("Please provide ECMWF login credentials and data request!")
   }
 
   # get key from email
-  key <- ecmwf_get_key(email)
+  key <- wf_get_key(email)
 
   # get the response from the query provided
   response <- httr::POST(
@@ -81,7 +81,7 @@ ecmwf_request <- function(
   }
 
   # only return the content of the query
-  if(!download){
+  if(!transfer){
     return(ct)
   }
 
@@ -110,13 +110,13 @@ ecmwf_request <- function(
     Sys.sleep(ct$retry)
 
     # check the status of the download, no download
-    ct <- ecmwf_status(email = email, url = ct$href)
+    ct <- wf_status(email = email, url = ct$href)
   }
 
   # if the http code is 303 (a redirect)
   # follow this query and download the data
   if(ct$code == 303){
-    ecmwf_download(email = email)
+    wf_transfer(email = email)
   }
 
   # Copy data from temporary file to final location
@@ -140,5 +140,5 @@ ecmwf_request <- function(
   }
 
   # delete the request upon succesful download
-  ecmwf_delete(email = email, url = ct$href)
+  wf_delete(email = email, url = ct$href)
 }

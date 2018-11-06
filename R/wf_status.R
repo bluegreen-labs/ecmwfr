@@ -4,25 +4,25 @@
 #' downloads which were not directly downloaded by ecmwf_download.
 #'
 #' @param email email address used to sign up for the ECMWF data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{ecmwf_set_key}}
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @return returns a nested list of download information
 #' @keywords data download, climate, re-analysis
-#' @seealso \code{\link[ecmwfr]{ecmwf_set_key}}
-#' \code{\link[ecmwfr]{ecmwf_download}}
-#' \code{\link[ecmwfr]{ecmwf_request}}
+#' @seealso \code{\link[ecmwfr]{wf_set_key}}
+#' \code{\link[ecmwfr]{wf_transfer}}
+#' \code{\link[ecmwfr]{wf_request}}
 #' @export
 #' @examples
 #'
 #' \donttest{
 #' # set key
-#' ecmwf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(email = "test@mail.com", key = "123")
 #'
 #' # get key
-#' ecmwf_get_key(email = "test@mail.com")
+#' wf_get_key(email = "test@mail.com")
 #'}
 
-ecmwf_status <- function(
+wf_status <- function(
   email,
   url
 ){
@@ -33,7 +33,7 @@ ecmwf_status <- function(
   }
 
   # get key from email
-  key <- ecmwf_get_key(email)
+  key <- wf_get_key(email)
 
   # query the status url provided
   response <- httr::GET(

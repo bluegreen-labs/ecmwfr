@@ -1,0 +1,11 @@
+^\.travis\.yml$
+^.*\.Rproj$
+^.*\.Renviron$
+^\.Rproj\.user$
+^README\.Rmd$
+^README\.md$
+^_config\.yml$
+^cran-comments\.md$
+^CONDUCT\.md$
+^NEWS\.md$
+^LICENSE$

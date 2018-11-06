@@ -1,0 +1,24 @@
+Package: ecmwfr
+Title: Interface to the public 'ECMWF' Web Services
+Version: 0.0.2
+Authors@R: person("Hufkens","Koen",
+		  email="koen.hufkens@gmail.com",
+		  role=c("aut", "cre"))
+Description: Programmatic interface to the 'ECMWF' public dataset 
+    web services. Allows for easy downloads of
+    climate data directly to your R workspace or your computer.
+Depends:
+    R (>= 3.4.0)
+Imports:
+    httr,
+    keyring
+License: AGPL-3
+LazyData: true
+ByteCompile: true
+RoxygenNote: 6.1.0
+Suggests:
+    knitr,
+    rmarkdown,
+    covr,
+    testthat
+VignetteBuilder: knitr

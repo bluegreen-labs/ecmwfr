@@ -1,0 +1,20 @@
+language: R
+sudo: required
+cache: packages
+warnings_are_errors: true
+
+before_install:
+  - sudo apt-get install --yes udunits-bin libudunits2-dev
+  - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev libgdal1-dev
+  - sudo apt-get install --yes libnetcdf-dev netcdf-bin
+
+r:
+  - release
+  - devel
+
+r_packages:
+  - devtools
+  - covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'

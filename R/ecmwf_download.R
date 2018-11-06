@@ -51,7 +51,7 @@ ecmwf_download <- function(
 
   # submit download query
   response <- httr::GET(
-    ct$href,
+    url,
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",

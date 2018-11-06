@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
-
 <a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 <a href="https://liberapay.com/khufkens/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="21px"></a>
 
@@ -13,8 +12,8 @@ To install the toolbox in R run the following commands in a R terminal
 
 ```R
 if(!require(devtools)){install.packages(devtools)}
-devtools::install_github("khufkens/phenor")
-library(phenor)
+devtools::install_github("khufkens/ecmwfr")
+library("ecmwfr")
 ```
 
 ## Use

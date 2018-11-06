@@ -4,7 +4,7 @@
 \alias{ecmwf_get_key}
 \title{Get secret ECMWF token}
 \usage{
-ecmwf_get_key(email, key)
+ecmwf_get_key(email)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service}

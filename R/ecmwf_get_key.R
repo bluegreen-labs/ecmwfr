@@ -17,7 +17,7 @@
 #' ecmwf_get_key(email = "test@mail.com")
 #'}
 
-ecmwf_get_key <- function(email, key){
+ecmwf_get_key <- function(email){
   keyring::key_get(service = "ecmwfr",
                    username = email)
 }

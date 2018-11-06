@@ -9,3 +9,5 @@
 ^CONDUCT\.md$
 ^NEWS\.md$
 ^LICENSE$
+^docs$
+^\.httr-oauth$

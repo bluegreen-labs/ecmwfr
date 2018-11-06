@@ -42,12 +42,12 @@ ecmwf_download <- function(
   key <- ecmwf_get_key(email)
 
   # create temporary output file
-  ecmwf_tmp_files <- file.path(tempdir(), filename)
+  ecmwf_tmp_file <- file.path(tempdir(), filename)
 
   # provide some feedback on the url which is
   # downloaded
   message("Downloading request at:")
-  message(ct$href)
+  message(url)
 
   # submit download query
   response <- httr::GET(

@@ -124,6 +124,9 @@ ecmwf_request <- function(
   # The latter to facilitate package integration.
   if (path != tempdir()) {
 
+    # create temporary output file
+    ecmwf_tmp_file <- file.path(tempdir(), "ecmwf_tmp.nc")
+
     # copy temporary file to final destination
     file.copy(ecmwf_tmp_file,
               file.path(path, request$target),

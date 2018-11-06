@@ -1,15 +1,14 @@
-#' ECMWF services list
+#' ECMWF user info query
 #'
-#' Returns a list of services
+#' Returns user info
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' @param simplify simplify the output, logical (default = \code{TRUE})
-#' @return returns a nested list or data frame with the ECMWF services
+#' @return returns a data frame with user info
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
-#' \code{\link[ecmwfr]{wf_transfer}}
-#' \code{\link[ecmwfr]{wf_request}}
+#' \code{\link[ecmwfr]{wf_services}}
+#' \code{\link[ecmwfr]{wf_datasets}}
 #' @export
 #' @examples
 #'
@@ -17,16 +16,12 @@
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'
-#' # get a list of services
-#' wf_services("test@mail.com")
-#'
-#' # get a list of datasets
-#' wf_datasets("test@mail.com")
+#' # get user info
+#' wf_user_info("test@mail.com")
 #'}
 
-wf_services <- function(
-  email,
-  simplify = TRUE
+wf_user_info <- function(
+  email
 ){
 
   # check the login credentials
@@ -40,7 +35,7 @@ wf_services <- function(
   # query the status url provided
   response <- httr::GET(
     paste(ecmwf_server(),
-          "services", sep = "/"),
+          "/who-am-i", sep = "/"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
@@ -53,14 +48,6 @@ wf_services <- function(
   # download
   ct <- httr::content(response)
 
-  if(simplify){
-    # reformat content
-    ct <- do.call("rbind", lapply(ct$services, function(x){
-      return(data.frame(x['name'], x['href'], stringsAsFactors = FALSE))
-    }))
-    colnames(ct) <- c("name","url")
-  }
-
-  # return content in full
-  return(ct)
+  # return content
+  return(data.frame(ct))
 }

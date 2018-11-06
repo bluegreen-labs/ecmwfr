@@ -113,7 +113,8 @@ to disk.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_transfer</span>(<span class='no'>email</span>, <span class='no'>url</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"ecmwf_tmp.nc"</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_transfer</span>(<span class='no'>email</span>, <span class='no'>url</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>filename</span> <span class='kw'>=</span> <span class='st'>"ecmwf_tmp.nc"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +135,10 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
     <tr>
       <th>filename</th>
       <td><p>filename to use for the downloaded data</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>show feedback on data transfers</p></td>
     </tr>
     </table>
     

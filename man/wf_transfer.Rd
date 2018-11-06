@@ -4,7 +4,8 @@
 \alias{wf_transfer}
 \title{ECMWF data transfer function}
 \usage{
-wf_transfer(email, url, path = tempdir(), filename = "ecmwf_tmp.nc")
+wf_transfer(email, url, path = tempdir(), filename = "ecmwf_tmp.nc",
+  verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -15,6 +16,8 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 \item{path}{path were to store the downloaded data}
 
 \item{filename}{filename to use for the downloaded data}
+
+\item{verbose}{show feedback on data transfers}
 }
 \value{
 a netCDF of data on disk as specified by a

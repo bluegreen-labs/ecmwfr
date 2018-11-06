@@ -9,7 +9,7 @@ wf_request(email, path = tempdir(), time_out = 3600,
   param = "165.128/166.128/167.128", dataset = "interim", step = "0", grid
   = "0.75/0.75", time = "00/06/12/18", date = "2014-07-01/to/2014-07-31",
   type = "an", class = "ei", area = "73.5/-27/33/45", format = "grib",
-  target = "tmp.grb"))
+  target = "tmp.grb"), verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -23,6 +23,8 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{request}{nested list with query parameters following the layout
 as specified on the ECMWF API page}
+
+\item{verbose}{show feedback on processing}
 }
 \value{
 a download query staging url or a netCDF of data on disk

@@ -4,7 +4,7 @@
 \alias{wf_services}
 \title{ECMWF services list}
 \usage{
-wf_services(email)
+wf_services(email, simplify = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and

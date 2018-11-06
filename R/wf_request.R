@@ -8,10 +8,11 @@
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param path path were to store the downloaded data
-#' @param time_out how long to wait on a download to start
+#' @param time_out how long to wait on a download to start (default = Inf)
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
+#' @param verbose show feedback on processing
 #' @return a download query staging url or a netCDF of data on disk
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -31,7 +32,7 @@
 wf_request <- function(
   email,
   path = tempdir(),
-  time_out = 3600,
+  time_out = Inf,
   transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
@@ -39,13 +40,15 @@ wf_request <- function(
                  dataset = "interim",
                  step = "0",
                  grid = "0.75/0.75",
-                 time = "00/06/12/18",
-                 date = "2014-07-01/to/2014-07-31",
+                 time = "00",
+                 date = "2014-07-01/to/2014-07-02",
                  type = "an",
                  class = "ei",
-                 area = "73.5/-27/33/45",
-                 format = "grib",
-                 target = "tmp.grb")){
+                 area = "50/10/51/11",
+                 format = "netcdf",
+                 target = "tmp.nc"),
+  verbose = TRUE
+  ){
 
   # check the login credentials
   if(missing(email)){
@@ -75,25 +78,25 @@ wf_request <- function(
     encode = "json"
     )
 
-  # line to trap general httr error (server not reachable etc.)
+  # trap general http error
+  if(httr::http_error(response)){
+    stop("Your request was malformed, check your request statement",
+         call. = FALSE)
+  }
 
   # grab content, to look at the status
   ct <- httr::content(response)
 
-  # if the status code is >= 400 stop
-  if(ct$code >= 400){
-    stop("Your request was malformed, check your request statement",
-         call. = FALSE)
+  # some verbose feedback
+  if(verbose){
+    message("Your data request will be served at url endpoint:")
+    message(ct$href)
   }
 
   # only return the content of the query
   if(!transfer){
     return(ct)
   }
-
-  # set spinner count for some feedback
-  # downloads can take a while it seems
-  spinner_count <- 1
 
   # start time-out counter
   time_out_start <- Sys.time()
@@ -102,27 +105,26 @@ wf_request <- function(
   # with status code 303
   while(ct$code == 202){
 
-    # update spinner count
-    spinner_count <- ifelse(spinner_count < 4, spinner_count + 1, 1)
-
-    # update spinner message
-    message(paste0(c("-","\\","|","/")[spinner_count],
-                   " Your request is ",
-                   ct$status,
-                   ", waiting on server response...\r"), appendLF = FALSE)
-
-    # sleep for the time (in seconds) provided
-    # in the content returned upon query
-    Sys.sleep(ct$retry)
+    if(verbose){
+      # let a spinner spin for "retry" seconds
+      spinner(as.numeric(ct$retry))
+    } else {
+      # sleep
+      Sys.sleep(ct$retry)
+    }
 
     # check the status of the download, no download
     ct <- wf_status(email = email, url = ct$href)
   }
 
+  print("bla")
+
   # if the http code is 303 (a redirect)
   # follow this query and download the data
   if(ct$code == 303){
-    wf_transfer(email = email)
+    wf_transfer(email = email,
+                url = ct$href,
+                verbose = verbose)
   }
 
   # Copy data from temporary file to final location
@@ -146,5 +148,7 @@ wf_request <- function(
   }
 
   # delete the request upon succesful download
-  wf_delete(email = email, url = ct$href)
+  wf_delete(email = email,
+            url = ct$href,
+            verbose = verbose)
 }

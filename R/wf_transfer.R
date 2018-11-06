@@ -8,6 +8,7 @@
 #' @param url url to query
 #' @param path path were to store the downloaded data
 #' @param filename filename to use for the downloaded data
+#' @param verbose show feedback on data transfers
 #' @return a netCDF of data on disk as specified by a
 #' \code{\link[ecmwfr]{wf_request}}
 #' @keywords data download, climate, re-analysis
@@ -29,7 +30,8 @@ wf_transfer <- function(
   email,
   url,
   path = tempdir(),
-  filename = "ecmwf_tmp.nc"
+  filename = "ecmwf_tmp.nc",
+  verbose = TRUE
 ){
 
   # check the login credentials
@@ -45,21 +47,37 @@ wf_transfer <- function(
 
   # provide some feedback on the url which is
   # downloaded
-  message("Downloading request at:")
-  message(url)
+  if(verbose){
+    message("Staging data transfer at url endpoint:")
+    message(url)
 
-  # submit download query
-  response <- httr::GET(
-    url,
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json",
-      "From" = email,
-      "X-ECMWF-KEY" = key),
-    httr::progress(),
-    encode = "json",
-    httr::write_disk(path = ecmwf_tmp_file, overwrite = TRUE)
-  )
+    # submit download query
+    response <- httr::GET(
+      url,
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = email,
+        "X-ECMWF-KEY" = key),
+      httr::progress(con = stderr()),
+      encode = "json",
+      httr::write_disk(path = ecmwf_tmp_file, overwrite = TRUE)
+    )
+  } else {
+
+    # submit download query
+    response <- httr::GET(
+      url,
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = email,
+        "X-ECMWF-KEY" = key),
+      encode = "json",
+      httr::write_disk(path = ecmwf_tmp_file, overwrite = TRUE)
+    )
+  }
+
 
   # trap errors on download, return a general error statement
   if (httr::http_error(response)){

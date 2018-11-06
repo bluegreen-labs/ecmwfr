@@ -5,6 +5,7 @@
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
+#' @param verbose show feedback on processing
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
@@ -22,7 +23,8 @@
 
 wf_delete <- function(
   email,
-  url
+  url,
+  verbose = TRUE
 ){
 
   # check the login credentials
@@ -45,7 +47,11 @@ wf_delete <- function(
 
   # check purging of request
   if(response$status == 204){
-    message("Request purged from queue!")
+    if (verbose){
+      message("Request purged from queue!")
+    } else {
+      invisible()
+    }
   } else {
     warning("Request not purged from queue, check download!")
   }

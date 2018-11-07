@@ -4,7 +4,7 @@ cache: packages
 warnings_are_errors: false
 
 before_install:
-  - sudo apt-get install --yes udunits-bin libudunits2-dev
+  - sudo apt-get install --yes udunits-bin libudunits2-dev libsodium-dev
 
 r:
   - release

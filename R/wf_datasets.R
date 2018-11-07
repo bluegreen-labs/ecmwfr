@@ -49,6 +49,11 @@ wf_datasets <- function(
     encode = "json"
   )
 
+  # trap errors
+  if (httr::http_error(response)){
+    stop("Your request failed", call. = FALSE)
+  }
+
   # check the content, and status of the
   # download
   ct <- httr::content(response)

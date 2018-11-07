@@ -15,7 +15,7 @@ spinner <- function(seconds){
 
     # update spinner message
     message(paste0(c("-","\\","|","/")[spinner_count],
-                   " Continuously polling server for a data transfer. \r"),
+                   " polling server for a data transfer\r"),
             appendLF = FALSE)
 
     # update spinner count

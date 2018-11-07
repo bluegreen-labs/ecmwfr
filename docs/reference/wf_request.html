@@ -79,6 +79,18 @@ allows NetCDF downloads, and will override calls for grib data." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/ecmwfr_vignette.html">ecmwfr</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -120,9 +132,9 @@ allows NetCDF downloads, and will override calls for grib data.</p>
     <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>email</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3600</span>,
   <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>request</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='st'>"oper"</span>, <span class='kw'>levtype</span> <span class='kw'>=</span> <span class='st'>"sfc"</span>,
   <span class='kw'>param</span> <span class='kw'>=</span> <span class='st'>"165.128/166.128/167.128"</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"interim"</span>, <span class='kw'>step</span> <span class='kw'>=</span> <span class='st'>"0"</span>, <span class='kw'>grid</span>
-  <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00/06/12/18"</span>, <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-31"</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"an"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>, <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"73.5/-27/33/45"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"grib"</span>,
-  <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"tmp.grb"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00"</span>, <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-02"</span>, <span class='kw'>type</span> <span class='kw'>=</span>
+  <span class='st'>"an"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>, <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"50/10/51/11"</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>, <span class='kw'>target</span> <span class='kw'>=</span>
+  <span class='st'>"tmp.nc"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,7 +150,7 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
     </tr>
     <tr>
       <th>time_out</th>
-      <td><p>how long to wait on a download to start</p></td>
+      <td><p>how long to wait on a download to start (default = 3600)</p></td>
     </tr>
     <tr>
       <th>transfer</th>
@@ -162,8 +174,7 @@ as specified on the ECMWF API page</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='wf_set_key.html'>wf_set_key</a></code>
-<code><a href='wf_transfer.html'>wf_transfer</a></code>
-<code><a href='wf_status.html'>wf_status</a></code></p></div>
+<code><a href='wf_transfer.html'>wf_transfer</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

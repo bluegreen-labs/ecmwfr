@@ -25,7 +25,7 @@ a netCDF of data on disk as specified by a
 }
 \description{
 Returns the contents of the requested url as a netCDF file downloaded
-to disk.
+to disk or the current status of the requested transfer.
 }
 \examples{
 
@@ -39,7 +39,6 @@ wf_get_key(email = "test@mail.com")
 }
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
-\code{\link[ecmwfr]{wf_status}}
 \code{\link[ecmwfr]{wf_request}}
 }
 \keyword{climate,}

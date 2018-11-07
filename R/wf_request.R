@@ -8,7 +8,7 @@
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param path path were to store the downloaded data
-#' @param time_out how long to wait on a download to start (default = Inf)
+#' @param time_out how long to wait on a download to start (default = 3600)
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
@@ -17,7 +17,6 @@
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
-#' \code{\link[ecmwfr]{wf_status}}
 #' @export
 #' @examples
 #'
@@ -32,7 +31,7 @@
 wf_request <- function(
   email,
   path = tempdir(),
-  time_out = Inf,
+  time_out = 3600,
   transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
@@ -89,7 +88,7 @@ wf_request <- function(
 
   # some verbose feedback
   if(verbose){
-    message("Your data request will be served at url endpoint:")
+    message("Staging data transfer at url endpoint:")
     message(ct$href)
   }
 
@@ -98,12 +97,12 @@ wf_request <- function(
     return(ct)
   }
 
-  # start time-out counter
-  time_out_start <- Sys.time()
+  # set time-out counter
+  time_out <- Sys.time() + time_out
 
   # keep waiting for the download order to come online
   # with status code 303
-  while(ct$code == 202){
+  while(ct$code == 202 & Sys.time() < time_out){
 
     if(verbose){
       # let a spinner spin for "retry" seconds
@@ -113,18 +112,10 @@ wf_request <- function(
       Sys.sleep(ct$retry)
     }
 
-    # check the status of the download, no download
-    ct <- wf_status(email = email, url = ct$href)
-  }
-
-  print("bla")
-
-  # if the http code is 303 (a redirect)
-  # follow this query and download the data
-  if(ct$code == 303){
-    wf_transfer(email = email,
-                url = ct$href,
-                verbose = verbose)
+    # attempt a download
+    ct <- wf_transfer(email = email,
+                      url = ct$href,
+                      verbose = verbose)
   }
 
   # Copy data from temporary file to final location
@@ -144,7 +135,7 @@ wf_request <- function(
     # cleanup of temporary file
     invisible(file.remove(ecmwf_tmp_file))
   } else {
-    message("Output path == tempdir(), file not copied and removed!")
+    message("- file not copied and removed (path == tempdir())")
   }
 
   # delete the request upon succesful download

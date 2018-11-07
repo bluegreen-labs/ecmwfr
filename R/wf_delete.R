@@ -48,7 +48,7 @@ wf_delete <- function(
   # check purging of request
   if(response$status == 204){
     if (verbose){
-      message("Request purged from queue!")
+      message("- request purged from queue!")
     } else {
       invisible()
     }

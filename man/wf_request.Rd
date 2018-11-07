@@ -7,9 +7,9 @@
 wf_request(email, path = tempdir(), time_out = 3600,
   transfer = FALSE, request = list(stream = "oper", levtype = "sfc",
   param = "165.128/166.128/167.128", dataset = "interim", step = "0", grid
-  = "0.75/0.75", time = "00/06/12/18", date = "2014-07-01/to/2014-07-31",
-  type = "an", class = "ei", area = "73.5/-27/33/45", format = "grib",
-  target = "tmp.grb"), verbose = TRUE)
+  = "0.75/0.75", time = "00", date = "2014-07-01/to/2014-07-02", type =
+  "an", class = "ei", area = "50/10/51/11", format = "netcdf", target =
+  "tmp.nc"), verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -17,7 +17,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{path}{path were to store the downloaded data}
 
-\item{time_out}{how long to wait on a download to start}
+\item{time_out}{how long to wait on a download to start (default = 3600)}
 
 \item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
 
@@ -48,7 +48,6 @@ wf_get_key(email = "test@mail.com")
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_transfer}}
-\code{\link[ecmwfr]{wf_status}}
 }
 \keyword{climate,}
 \keyword{data}

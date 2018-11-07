@@ -5,7 +5,7 @@ warnings_are_errors: false
 
 before_install:
   - sudo apt-get install -y udunits-bin libudunits2-dev
-  - sudo add-apt-repository ppa:ondrej/php -y
+  - sudo add-apt-repository ppa:chris-lea/libsodium -y
   - sudo apt-get -qq update
   - sudo apt-get install -y libsodium-dev
 

@@ -4,7 +4,10 @@ cache: packages
 warnings_are_errors: false
 
 before_install:
-  - sudo apt-get install --yes udunits-bin libudunits2-dev libsodium-dev
+  - sudo apt-get install -y udunits-bin libudunits2-dev
+  - sudo add-apt-repository ppa:ondrej/php -y
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libsodium-dev
 
 r:
   - release

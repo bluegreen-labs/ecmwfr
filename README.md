@@ -4,7 +4,7 @@
 
 # ecmwfr
 
-Programmatic interface to the ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home). Allows for easy downloads of ECMWF [public data](https://confluence.ecmwf.int/display/WEBAPI/Access+ECMWF+Public+Datasets).
+Programmatic interface to the ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home). Allows for easy downloads of ECMWF [public data](http://apps.ecmwf.int/datasets/).
 
 ## Installation
 

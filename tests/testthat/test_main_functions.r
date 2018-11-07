@@ -1,26 +1,18 @@
 # test functions without parameters
 # only can fail upon server error
-test_that("test wf_set_key()",{
 
-  expect_silent(
-    wf_set_key(email = "john.smith@example.com",
-               key = "XXXXXXXXXXXXXXXXXXXXXX")
-  )
+opts <- options(keyring_warn_for_env_fallback = FALSE)
+on.exit(options(opts), add = TRUE)
 
-  expect_error(
-    wf_set_key(key = "XXXXXXXXXXXXXXXXXXXXXX")
-  )
+test_that("set, get", {
 
+  skip_on_cran()
+
+  service <- random_service()
+  username <- random_username()
+  password <- random_password()
+
+  expect_silent(wf_set_key(username, password))
+  expect_equal(wf_get_key(username), password)
 })
 
-test_that("test wf_get_key()",{
-
-  expect_silent(
-    wf_get_key(email = "john.smith@example.com")
-  )
-
-  expect_error(
-    wf_get_key()
-  )
-
-})

@@ -75,7 +75,7 @@ wf_transfer <- function(
 
     # write binary file
     f <- file(ecmwf_tmp_file, "wb")
-    writeBin(d, f)
+    writeBin(ct, f)
     close(f)
 
     # return element to exit while loop, including

@@ -35,7 +35,7 @@ wf_request <- function(
   transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
-                 param = "165.128/166.128/167.128",
+                 param = "167.128/228.128",
                  dataset = "interim",
                  step = "0",
                  grid = "0.75/0.75",

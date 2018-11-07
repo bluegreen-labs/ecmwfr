@@ -6,9 +6,9 @@
 \usage{
 wf_request(email, path = tempdir(), time_out = 3600,
   transfer = FALSE, request = list(stream = "oper", levtype = "sfc",
-  param = "165.128/166.128/167.128", dataset = "interim", step = "0", grid
-  = "0.75/0.75", time = "00", date = "2014-07-01/to/2014-07-02", type =
-  "an", class = "ei", area = "50/10/51/11", format = "netcdf", target =
+  param = "167.128/228.128", dataset = "interim", step = "0", grid =
+  "0.75/0.75", time = "00", date = "2014-07-01/to/2014-07-02", type = "an",
+  class = "ei", area = "50/10/51/11", format = "netcdf", target =
   "tmp.nc"), verbose = TRUE)
 }
 \arguments{

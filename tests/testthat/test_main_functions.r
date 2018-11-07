@@ -8,9 +8,8 @@ test_that("set, get", {
 
   skip_on_cran()
 
-  service <- random_service()
-  username <- random_username()
-  password <- random_password()
+  username <- "joe@example.com"
+  password <- "horriblepassword"
 
   expect_silent(wf_set_key(username, password))
   expect_equal(wf_get_key(username), password)

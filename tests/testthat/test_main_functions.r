@@ -71,3 +71,15 @@ test_that("test transfer function - no login", {
   #skip_on_cran()
   expect_error(wf_transfer())
 })
+
+
+test_that("test request (transfer) function", {
+  #skip_on_cran()
+  expect_message(wf_request(
+    email = "koenhufkens@gmail.com",
+    transfer = TRUE,
+    request = my_request,
+    time_out = 60))
+})
+
+

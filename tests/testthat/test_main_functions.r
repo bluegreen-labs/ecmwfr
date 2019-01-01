@@ -67,11 +67,19 @@ test_that("test request (transfer) function", {
     time_out = 60))
 })
 
+test_that("test request (transfer) function - time out", {
+  #skip_on_cran()
+  expect_output(str(wf_request(
+    email = "koenhufkens@gmail.com",
+    transfer = TRUE,
+    request = my_request,
+    time_out = 1)))
+})
+
 test_that("test transfer function - no login", {
   #skip_on_cran()
   expect_error(wf_transfer())
 })
-
 
 test_that("test request (transfer) function", {
   #skip_on_cran()
@@ -82,4 +90,8 @@ test_that("test request (transfer) function", {
     time_out = 60))
 })
 
+test_that("test delete function - no login", {
+  #skip_on_cran()
+  expect_error(wf_delete())
+})
 

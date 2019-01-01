@@ -116,7 +116,7 @@ wf_request <- function(
       message(ct$href)
       message("There is a limit of 3 active and 20 queued jobs.")
       message("Delete the job using wf_delete() upon completion!")
-      return(invisible())
+      return(ct)
     }
 
     if(verbose){

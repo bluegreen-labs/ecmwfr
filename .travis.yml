@@ -7,6 +7,8 @@ before_install:
   - sudo add-apt-repository ppa:chris-lea/libsodium -y
   - sudo apt-get -qq update
   - sudo apt-get install -y libsodium-dev
+  - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
+  - sudo apt-get install -y libnetcdf-dev netcdf-bin
 
 r:
   - release

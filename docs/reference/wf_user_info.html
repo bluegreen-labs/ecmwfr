@@ -147,15 +147,11 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# }
-<span class='co'># NOT RUN {</span>
-<span class='co'># set key</span>
-<span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)
-
+    <pre class="examples"><div class='input'>
+</div><div class='input'><span class='co'># set key</span>
+<span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
 <span class='co'># get user info</span>
-<span class='fu'>wf_user_info</span>(<span class='st'>"test@mail.com"</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>wf_user_info</span>(<span class='st'>"test@mail.com"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; <span class='error'>Error: Your request failed</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

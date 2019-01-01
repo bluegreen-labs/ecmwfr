@@ -18,10 +18,13 @@ Imports:
 License: AGPL-3
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests:
     knitr,
     rmarkdown,
     covr,
-    testthat
+    testthat,
+    raster,
+    maps,
+    ncdf4
 VignetteBuilder: knitr

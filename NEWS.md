@@ -1,3 +1,10 @@
+# ecmwfr 0.0.3
+
+* unit checks with encrypted key
+* good CI coverage >90%
+* verbose feedback on wf_request()
+* rOpenSci syntax and ok, gp() ok
+
 # ecmwfr 0.0.2
 
 * working verion, yeah!

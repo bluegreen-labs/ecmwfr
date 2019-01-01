@@ -57,7 +57,7 @@ wf_transfer <- function(
 
   # trap errors on download, return a general error statement
   if (httr::http_error(response)){
-    stop("Your requested download failed", call. = FALSE)
+    stop("Your requested download failed - check url", call. = FALSE)
   }
 
   # check the content, and status of the download
@@ -66,7 +66,7 @@ wf_transfer <- function(
 
   # write raw data to file from memory
   # if not return url + passing code
-  if (class(ct)=="raw"){
+  if (class(ct) == "raw"){
 
     if(verbose){
       message("- polling server for a data transfer")

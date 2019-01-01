@@ -76,6 +76,23 @@ test_that("test request (transfer) function - time out", {
     time_out = 1)))
 })
 
+test_that("test request (transfer) function - no transfer", {
+  #skip_on_cran()
+  ct <- wf_request(
+    email = "koenhufkens@gmail.com",
+    transfer = FALSE,
+    request = my_request)
+
+  expect_output(str(ct))
+  expect_message(wf_delete(email = "koenhufkens@gmail.com",
+                           url = ct$href))
+})
+
+test_that("test request (transfer) function - no email", {
+  #skip_on_cran()
+  expect_error(wf_request())
+})
+
 test_that("test transfer function - no login", {
   #skip_on_cran()
   expect_error(wf_transfer())
@@ -94,4 +111,3 @@ test_that("test delete function - no login", {
   #skip_on_cran()
   expect_error(wf_delete())
 })
-

@@ -35,7 +35,7 @@ wf_request <- function(
   transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
-                 param = "167.128/228.128",
+                 param = "167.128",
                  dataset = "interim",
                  step = "0",
                  grid = "0.75/0.75",
@@ -102,7 +102,22 @@ wf_request <- function(
 
   # keep waiting for the download order to come online
   # with status code 303
-  while(ct$code == 202 & Sys.time() < time_out){
+  while(ct$code == 202){
+
+    # exit routine when the time out
+    # is reached, create message to consult
+    # the ecmwf website to download the data
+    # or retain the download url and use
+    # wf_transfer()
+    if(Sys.time() > time_out){
+      message("Please use the MARS job list to track your jobs at:")
+      message("https://apps.ecmwf.int/webmars/joblist/")
+      message("and retry download using wf_transfer() for url:")
+      message(ct$href)
+      message("There is a limit of 3 active and 20 queued jobs.")
+      message("Delete the job using wf_delete() upon completion!")
+      return(invisible())
+    }
 
     if(verbose){
       # let a spinner spin for "retry" seconds
@@ -139,6 +154,7 @@ wf_request <- function(
   }
 
   # delete the request upon succesful download
+  # to free up other download slots
   wf_delete(email = email,
             url = ct$href,
             verbose = verbose)

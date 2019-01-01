@@ -2,7 +2,6 @@ language: R
 sudo: required
 cache: packages
 warnings_are_errors: false
-
 before_install:
   - sudo apt-get install -y udunits-bin libudunits2-dev
   - sudo add-apt-repository ppa:chris-lea/libsodium -y
@@ -19,3 +18,7 @@ r_packages:
 
 after_success:
   - Rscript -e 'covr::codecov()'
+
+env:
+  global:
+    secure: WOJef7AsHT4MjFvDReBuD6RHGKONM2SIdzXkmLnt/eYm/A6yp8/aUoqsJMgTlta/G+NI5YH7tAbwCOrulgbyPfPmv6K6CEd4e9ZKeiv/fcd63QkvqSneiA79VFD+QiTG65ihec1plr+EzFj2mKQqRzm2/NNMZZUc+gRGlFwOCXdtzu9jxJxplYvZjWW85EeBlqS8rNXJaTItQnsz7hVeaajlgjNX8THbSALOBVbdZ1OJPuMd5Cg1OiaWm1Eu14tRnS+rqPgXqZB4O1OmhsYSJuy1WmiyPpoh5YW3+/NThat/yjsEGTOnkDERGFsfkNNAAHqkSEy9sYNFTb0wqV9wWTmv80kwnylO2tELR0VZz20niu1CyWmkoYktv9/nrcFupIMTf1jPSAA4auaT5wzRPa4EXExsTsRyiBKUnJU4hhXpXLgBbAHiN/qTmsfT1zHrxZBE0vPmwgPyG6W5rmaKWsvPOrL4bunKS0fMyXXm8moYqDLBWR3FImbIsm9W1CXpAB1PUBl3GpueGnPHxw+n96q9QbWIS2jHK/IwQgFd3hcTt0B0fsZeyPdnTSC4i5HIFTnldb+tOcPLwxG39eY9V+LQLbD8yfObAez3lL77CSi+p0JPGxGkIjGu6EVBgr6aCmBVqLWWQw6+8NiPou7beMDmLG/Lo3r3GDNiAc/Kvwc=

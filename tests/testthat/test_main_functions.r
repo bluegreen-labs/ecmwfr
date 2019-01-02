@@ -17,49 +17,64 @@ my_request <- list(stream = "oper",
                    format = "netcdf",
                    target = "tmp.nc")
 
-# set password
+# set password using encrypted key
+# if provided, otherwise just continue
+# assuming a valid keychain value (see
+# additional check below)
 key <- system("echo $KEY", intern = TRUE)
-wf_set_key(email = "koenhufkens@gmail.com",
-           key = key)
+if(key != "" & key != "$KEY"){
+  wf_set_key(email = "koenhufkens@gmail.com",
+             key = system("echo $KEY", intern = TRUE))
+}
+rm(key)
 
-# check returned decrypted key
+# Check if a password is not set. This traps the inconsistent
+# behavious between systems while accomodating for encrypted
+# keys on Travis CI. Mostly this deals with the sandboxed
+# checks on linux which can't access the global keychain or
+# environmental variables (hence fail to retrieve the api key).
+# This also allows for very basic checks on r-hub.
+# No checks should be skiped on either Travis CI or OSX.
+skip_check <- try(wf_get_key(email = "koenhufkens@gmail.com"))
+skip_check <- inherits(skip_check, "try-error")
+print(skip_check)
+
+# check keychain management
 test_that("set, get secret key", {
-  #skip_on_cran()
-  expect_equal(wf_get_key(email = "koenhufkens@gmail.com"), key)
+  expect_silent(wf_set_key(email = "johndoe@hotmail.com",
+                           key = "XXX"))
+  expect_output(str(wf_get_key(email = "johndoe@hotmail.com")))
 })
 
 test_that("test dataset function", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_output(str(wf_datasets(email = "koenhufkens@gmail.com")))
 })
 
 test_that("test dataset function - no login", {
-  skip_on_cran()
   expect_error(wf_datasets())
 })
 
 test_that("test services function", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_output(str(wf_services(email = "koenhufkens@gmail.com")))
 })
 
 test_that("test services function - no login", {
-  #skip_on_cran()
   expect_error(wf_services())
 })
 
 test_that("test user info function", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_output(str(wf_user_info(email = "koenhufkens@gmail.com")))
 })
 
 test_that("test user info function - no login", {
-  #skip_on_cran()
   expect_error(wf_user_info())
 })
 
 test_that("test request (transfer) function", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_message(wf_request(
     email = "koenhufkens@gmail.com",
     transfer = TRUE,
@@ -68,7 +83,7 @@ test_that("test request (transfer) function", {
 })
 
 test_that("test request (transfer) function - time out", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_output(str(wf_request(
     email = "koenhufkens@gmail.com",
     transfer = TRUE,
@@ -77,7 +92,7 @@ test_that("test request (transfer) function - time out", {
 })
 
 test_that("test request (transfer) function - no transfer", {
-  #skip_on_cran()
+  skip_if(skip_check)
   ct <- wf_request(
     email = "koenhufkens@gmail.com",
     transfer = FALSE,
@@ -89,17 +104,15 @@ test_that("test request (transfer) function - no transfer", {
 })
 
 test_that("test request (transfer) function - no email", {
-  #skip_on_cran()
   expect_error(wf_request())
 })
 
 test_that("test transfer function - no login", {
-  #skip_on_cran()
   expect_error(wf_transfer())
 })
 
 test_that("test request (transfer) function", {
-  #skip_on_cran()
+  skip_if(skip_check)
   expect_message(wf_request(
     email = "koenhufkens@gmail.com",
     transfer = TRUE,
@@ -108,6 +121,5 @@ test_that("test request (transfer) function", {
 })
 
 test_that("test delete function - no login", {
-  #skip_on_cran()
   expect_error(wf_delete())
 })

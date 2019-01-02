@@ -79,7 +79,7 @@ wf_request <- function(
 
   # trap general http error
   if(httr::http_error(response)){
-    stop("Your request was malformed, check your request statement",
+    stop(httr::content(response),
          call. = FALSE)
   }
 

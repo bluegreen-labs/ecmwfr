@@ -42,8 +42,11 @@ check_cran <- function() {
   }
 }
 
-# do cran check
-cran <- check_cran()
+# do cran check + local check
+# for images render sites locally
+# with Sys.setenv("LOCAL" = "true")
+cran <- any(check_cran(),
+            identical(tolower(Sys.getenv("LOCAL")), "true"))
 ```
 
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
@@ -120,9 +123,9 @@ wf_request(
   verbose = FALSE)
 ```
 
-This operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on [the ECMWF website](https://apps.ecmwf.int/webmars/joblist/), and provided with a download url which can be sued with the `wt_transer()` funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!
+This operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on [the ECMWF website](https://apps.ecmwf.int/webmars/joblist/), and provided with a download url which can be sued with the `wt_transfer()` funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued! 
 
-We can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
+If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
 
 ```{r fig.width = 7, fig.height = 7, eval = cran}
 s <- raster::stack("~/tmp.nc")

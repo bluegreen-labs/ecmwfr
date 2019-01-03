@@ -8,11 +8,32 @@ Programmatic interface to the ['ECMWF' web API services](https://confluence.ecmw
 
 ## Installation
 
-To install the toolbox in R run the following commands in a R terminal
+### stable release
 
-```R
-if(!require(devtools)){install.packages(devtools)}
+To install the current stable release use a CRAN repository:
+
+``` r
+install.packages("ecmwfr")
+library("ecmwfr")
+```
+
+### development release
+
+To install the development releases of the package run the following
+commands:
+
+``` r
+if(!require(devtools)){install.packages("devtools")}
 devtools::install_github("khufkens/ecmwfr")
+library("ecmwfr")
+```
+
+Vignettes are not rendered by default, if you want to include additional
+documentation please use:
+
+``` r
+if(!require(devtools)){install.packages("devtools")}
+devtools::install_github("khufkens/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
 
@@ -42,6 +63,9 @@ wf_get_key(email = "john.smith@example.com")
 # the output should be the key you provided
 # "XXXXXXXXXXXXXXXXXXXXXX"
 ```
+
+Before you can download any data you have to make sure to accept the terms and conditions here:
+[https://apps.ecmwf.int/datasets/licences/general/](https://apps.ecmwf.int/datasets/licences/general/).
 
 ### Data Requests
 

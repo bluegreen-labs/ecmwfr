@@ -42,15 +42,14 @@ check_cran <- function() {
   }
 }
 
-# do cran check + local check
-# for images render sites locally
-# with Sys.setenv("LOCAL" = "true")
-cran <- any(check_cran(),
-            identical(tolower(Sys.getenv("LOCAL")), "true"))
-```
+# do cran check
+cran <- check_cran()
 
-[![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
-<a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
+# for local render set to true
+# mainly important for rendering
+# a website using pkgdown
+#cran <- TRUE
+```
 
 # ecmwfr
 

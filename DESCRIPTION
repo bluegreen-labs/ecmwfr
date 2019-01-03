@@ -1,13 +1,14 @@
 Package: ecmwfr
 Title: Interface to the 'ECMWF' Data Web Services
 Version: 1.0.0
-Authors@R: person("Hufkens","Koen",
-		  email="koen.hufkens@gmail.com",
-		  role=c("aut", "cre"),
-		  comment = c(ORCID = "0000-0002-5070-8109"))
+Authors@R: person(
+      family = "Hufkens",
+      given = "Koen",
+		  email = "koen.hufkens@gmail.com",
+		  role = c("aut", "cre"))
 Description: Programmatic interface to the 'ECMWF' public dataset 
     web services (<https://www.ecmwf.int/>). Allows for easy downloads of
-    climate data directly to your R workspace or your computer.
+    climate data directly to your R work space or your computer.
 URL: https://github.com/khufkens/ecmwfr
 BugReports: https://github.com/khufkens/ecmwfr/issues
 Depends:

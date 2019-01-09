@@ -48,7 +48,7 @@ cran <- check_cran()
 # for local render set to true
 # mainly important for rendering
 # a website using pkgdown
-cran <- TRUE
+#cran <- TRUE
 ```
 
 # ecmwfr

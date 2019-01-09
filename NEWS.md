@@ -1,3 +1,8 @@
+# # ecmwfr 1.0.0
+
+* major version
+* CRAN release
+
 # ecmwfr 0.0.3
 
 * unit checks with encrypted key

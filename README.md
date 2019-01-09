@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
 [![codecov](https://codecov.io/gh/khufkens/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/ecmwfr)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwwfr)](https://cran.r-project.org/package=ecmwwfr)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwwfr)](https://cran.r-project.org/package=ecmwwfr)
 <a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 
 # ecmwfr

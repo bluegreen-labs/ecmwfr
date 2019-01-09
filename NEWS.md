@@ -1,4 +1,4 @@
-# # ecmwfr 1.0.0
+# ecmwfr 1.0.0
 
 * major version
 * CRAN release

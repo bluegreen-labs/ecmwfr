@@ -48,7 +48,7 @@ cran <- check_cran()
 # for local render set to true
 # mainly important for rendering
 # a website using pkgdown
-#cran <- TRUE
+cran <- TRUE
 ```
 
 # ecmwfr
@@ -57,17 +57,18 @@ Programmatic interface to the ['ECMWF' web API services](https://confluence.ecmw
 
 ## Setup
 
-Before starting save your provided ECMWF key to your local keychain. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.
+Before starting save your provided ECMWF key to your local keychain. In this example I use my R development account with the key hidden using Xs. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.
 
 ```{r eval = FALSE}
 # set a key to the keychain
-wf_set_key(email = "john.smith@example.com",
+wf_set_key(email = "khrdev@outlook.com",
            key = "XXXXXXXXXXXXXXXXXXXXXX")
 
 # you can retrieve the key using
-wf_get_key(email = "john.smith@example.com")
+wf_get_key(email = "khrdev@outlook.com")
 
 # the output should be the key you provided
+# in this case represented by the fake X string.
 # "XXXXXXXXXXXXXXXXXXXXXX"
 ```
 

@@ -25,17 +25,21 @@ library(ecmwfr)
 
 # import the encrypted key if desired
 # (does not exist locally)
-if(system("echo $KEY", intern = TRUE) != ""){
+key <- system("echo $KEY", intern = TRUE)
+if(key != "" & key != "$KEY"){
   wf_set_key(email = "khrdev@outlook.com",
              key = system("echo $KEY", intern = TRUE))
 }
+rm(key)
 
 # check cran, same routine as skip_on_cran()
 # but not dependent on testthat which might
 # not be available on user systems (not required
 # only suggested)
 check_cran <- function() {
-  if (identical(tolower(Sys.getenv("NOT_CRAN")), "true")) {
+  key <- try(wf_get_key("khrdev@outlook.com"))
+  if (identical(tolower(Sys.getenv("NOT_CRAN")), "true") &
+      !inherits(key, "try-error")){
     return(TRUE)
   } else {
     return(FALSE)
@@ -45,7 +49,7 @@ check_cran <- function() {
 # do cran check
 cran <- check_cran()
 
-# for local render set to true
+# for local render force to true
 # mainly important for rendering
 # a website using pkgdown
 #cran <- TRUE

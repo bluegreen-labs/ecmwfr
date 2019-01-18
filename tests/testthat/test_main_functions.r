@@ -39,7 +39,8 @@ skip_check <- try(wf_get_key(email = "khrdev@outlook.com"))
 skip_check <- inherits(skip_check, "try-error")
 
 # check keychain management
-test_that("set, get secret key", {
+test_that("set, get secret key",{
+  skip_if(skip_check)
   expect_silent(wf_set_key(email = "johndoe@hotmail.com",
                            key = "XXX"))
   expect_output(str(wf_get_key(email = "johndoe@hotmail.com")))

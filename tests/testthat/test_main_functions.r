@@ -117,7 +117,7 @@ test_that("test request (transfer) function", {
     email = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
-    time_out = 60))
+    time_out = 180))
 })
 
 test_that("test delete function - no login", {

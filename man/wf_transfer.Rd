@@ -29,12 +29,13 @@ to disk or the current status of the requested transfer.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 
-# get key
-wf_get_key(email = "test@mail.com")
+# request data and grab url and try a transfer
+r <- wf_request("test@email.com")
+wf_transfer("test@email.com", url = r$href)
 }
 }
 \seealso{

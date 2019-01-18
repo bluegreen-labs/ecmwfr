@@ -7,7 +7,7 @@
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' @param path path were to store the downloaded data
+#' @param path path where to store the downloaded data
 #' @param time_out how long to wait on a download to start (default = 3600)
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
@@ -20,12 +20,12 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'
-#' # get key
-#' wf_get_key(email = "test@mail.com")
+#' # get the default test data
+#' wf_request(email = "test@mail.com")
 #'}
 
 wf_request <- function(

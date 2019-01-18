@@ -15,7 +15,7 @@ wf_request(email, path = tempdir(), time_out = 3600,
 \item{email}{email address used to sign up for the ECMWF data service and
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
-\item{path}{path were to store the downloaded data}
+\item{path}{path where to store the downloaded data}
 
 \item{time_out}{how long to wait on a download to start (default = 3600)}
 
@@ -37,12 +37,12 @@ allows NetCDF downloads, and will override calls for grib data.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 
-# get key
-wf_get_key(email = "test@mail.com")
+# get the default test data
+wf_request(email = "test@mail.com")
 }
 }
 \seealso{

@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'

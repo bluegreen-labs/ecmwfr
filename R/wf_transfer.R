@@ -66,7 +66,7 @@ wf_transfer <- function(
   ct <- httr::content(response)
 
   # write raw data to file from memory
-  # if not return url + passing code
+  # if not returned url + passing code
   if (class(ct) == "raw"){
 
     if(verbose){
@@ -81,9 +81,11 @@ wf_transfer <- function(
 
     # return element to exit while loop, including
     # the url to close the connection
-    return(data.frame(code = "downloaded",
+    invisible(
+      return(data.frame(code = "downloaded",
                       href = url,
                       stringsAsFactors = FALSE))
+    )
   } else {
    return(ct)
   }

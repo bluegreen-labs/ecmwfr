@@ -104,7 +104,7 @@ wf_request(
 
 ```
 
-This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.
+This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: [https://apps.ecmwf.int/webmars/joblist/](https://apps.ecmwf.int/webmars/joblist/).
 
 ## Acknowledgements
 

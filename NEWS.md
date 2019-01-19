@@ -1,3 +1,9 @@
+# ecmwfr 1.0.1
+
+* accidental CRAN violation fixed
+* `wf_transfer()` separate downloads allowed
+* checks for binary downloads (larger files)
+
 # ecmwfr 1.0.0
 
 * major version
@@ -7,7 +13,7 @@
 
 * unit checks with encrypted key
 * good CI coverage >90%
-* verbose feedback on wf_request()
+* verbose feedback on `wf_request()`
 * rOpenSci syntax and ok, gp() ok
 
 # ecmwfr 0.0.2

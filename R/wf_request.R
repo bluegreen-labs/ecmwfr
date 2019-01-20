@@ -21,6 +21,7 @@
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' @export
 #' @examples
+#' @author Koen Kufkens
 #'
 #' \donttest{
 #' # set key

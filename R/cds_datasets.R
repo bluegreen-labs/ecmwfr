@@ -10,10 +10,11 @@
 #' @param verbose boolean, default \code{FALSE}.
 #' @return returns a nested list or data frame with the ECMWF datasets
 #' @keywords data download, climate, re-analysis
-#' @seealso \code{\link[ecmwfr]{wf_set_key}}
-#' \code{\link[ecmwfr]{wf_transfer}}
-#' \code{\link[ecmwfr]{wf_request}}
+#' @seealso \code{\link[ecmwfr]{cds_set_key}}
+#' \code{\link[ecmwfr]{cds_transfer}}
+#' \code{\link[ecmwfr]{cds_request}}
 #' @export
+#' @author Reto Stauffer
 #' @examples
 #'
 #' \donttest{
@@ -27,8 +28,8 @@ cds_datasets <- function(user, simplify = TRUE, verbose = FALSE) {
   if(missing(user)){
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
   } else if(is.null(user)) {
-      tmp <- cds_key_from_file(verbose = verbose)
-      user <- tmp$user; key <- tmp$key; rm(tmp)
+    tmp  <- cds_key_from_file(verbose = verbose)
+    user <- tmp$user; key <- tmp$key; rm(tmp)
   } else {
     # get key from uername
     key <- cds_get_key(user)

@@ -1,4 +1,3 @@
-navbar:
 
 home:
   links:
@@ -6,6 +5,20 @@ home:
     href: https://apps.ecmwf.int/datasets
   - text: "Copernicus CDS"
     href: https://cds.climate.copernicus.eu
+
+navbar:
+  left:
+    - text: "Articles"
+      menu:
+        - text: "ECMWF"
+          href: articles/ecmwf_vignette.html
+        - text: "CDS: ERA-5 Demo"
+          href: articles/era5_vignette.html
+        - text: "Changelog"
+    - text: "Changelog"
+      href: news/index.html
+    - text: "Contact"
+      href: contact.html
 
 
 reference:
@@ -18,6 +31,7 @@ reference:
       - wf_services
       - wf_datasets
       - wf_request
+      - wf_transfer
       - wf_delete
   - title: "Copernicus CDS"
     contents: 
@@ -25,6 +39,8 @@ reference:
       - cds_get_key
       - cds_key_from_file
       - cds_datasets
+      - cds_productinfo
       - cds_request
+      - cds_transfer
       - cds_delete
 

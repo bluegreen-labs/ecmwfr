@@ -70,16 +70,7 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -87,12 +78,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ecmwfr_vignette.html">ecmwfr</a>
+      <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
+    <li>
+      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+    </li>
+    <li class="dropdown-header">Changelog</li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="../contact.html">Contact</a>
 </li>
       </ul>
       
@@ -140,7 +138,8 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list with the <code>user</code> name and <code>key</code>.</p>
+    <p>Returns a list with the <code>user</code>, <code>email</code>, and <code>key</code>.
+ <code>email == user</code>, used to simplify the calls.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -153,6 +152,9 @@
 #&gt; 
 #&gt; $key
 #&gt; [1] "1fc0276b-e77b-4f20-8cac-1882391b9d3f"
+#&gt; 
+#&gt; $email
+#&gt; [1] "3258"
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

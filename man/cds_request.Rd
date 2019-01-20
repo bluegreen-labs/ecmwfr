@@ -68,12 +68,12 @@ nc <- ncdf4::nc_open("era5-demo.nc")
 image(sort(ncdf4::ncvar_get(nc, "longitude")),
       sort(ncdf4::ncvar_get(nc, "latitude")),
       ncdf4::ncvar_get(nc, "t"))
-ncdf4:nc_close(nc)
+ncdf4::nc_close(nc)
 
 # Alternatively (as an alternative to use local keyring):
 # store user information in .cdsapirc and set user = NULL
 # to use login information from .cdsapirc:
-cds_request(user = NULL,   # use .cdsapirc
+cds_request(user = NULL,             # use .cdsapirc
             request = era_request,   # the request
             transfer = TRUE,         # download the file
             path = ".")              # store data in current working directory
@@ -84,7 +84,7 @@ nc <- ncdf4::nc_open("era5-demo.nc")
 image(sort(ncdf4::ncvar_get(nc, "longitude")),
       sort(ncdf4::ncvar_get(nc, "latitude")),
       ncdf4::ncvar_get(nc, "t"))
-ncdf4:nc_close(nc)
+ncdf4::nc_close(nc)
 }
 }
 \seealso{

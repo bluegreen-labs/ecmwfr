@@ -1,7 +1,7 @@
 
 
-```{r}
-suppressPackageStartupMessages("ecmwfr")
+```{r, echo = FALSE, figure = FALSE}
+suppressPackageStartupMessages(library("ecmwfr"))
 ```
 
 ## Downloading ERA-5 Reanalysis Data from the Copernicus Climate Data Service
@@ -89,7 +89,8 @@ The data set as specified above can be downloaded calling the
 cds_request(user = NULL,         # use .cdsapirc file!
             request = request,   # use our request specification from above
             transfer = TRUE,     # download data as soon as ready
-            path = ".")          # store the netcdf file (era5-demo.nc) here
+            path = ".",          # store the netcdf file (era5-demo.nc) here
+            verbose = FALSE)
 ```
 
 Depending on the request (the amount of data you are asking for) the
@@ -131,8 +132,7 @@ if ( ! "ncdf4" %in% rownames(installed.packages()) ) {
           xlab = "longitude", ylab = "latitude",
          main = sprintf("ERA-5 Demo Data, Temperature on 850ha%s", xtra))
     if ( "maps" %in% rownames(installed.packages()) ) maps::map(add = TRUE)
-    contour(x = lons ,y = lats, z = data, labels = NA, add = TRUE, col = "white")
-
+    contour(x = lons ,y = lats, z = data, drawlabels = FALSE, add = TRUE, col = "white")
 
     # Close NetCDF connection
     ncdf4::nc_close(nc)
@@ -141,17 +141,22 @@ if ( ! "ncdf4" %in% rownames(installed.packages()) ) {
 
 ### Downloading Data (Temporal Example)
 
+Rather than only downloading one spatial field (longitude/latitude field for
+one specific time) we can also ask for a set of different time steps.
+The request below is downloading _total precipitation_ for January 2000
+trough February 2000, 00 UTC to 23 UTC (full day, hourly temporal resolution)
+for a tiny area around Innsbruck, Austria for demonstration purposes only.
 
 ```{r, echo = TRUE}
 request <- list(
-        "dataset"        = "reanalysis-era5-pressure-levels",
+        "dataset"        = "reanalysis-era5-single-levels",
         "product_type"   = "reanalysis",
-        "variable"       = "vertical_velocity",
-        "pressure_level" = "850",
-        "year"   = sprintf("%04d", 2000:2014),
-        "month"  = sprintf("%02d", 1:12),
-        "day"    = sprintf("%02d", 1:31, 1:31),
-        "time"   = "00:00",
+        "variable"       = "total_precipitation",
+        "year"   = "2000",
+        "month"  = sprintf("%02d", 1:2),
+        "day"    = sprintf("%02d", 1:31),
+        "time"   = sprintf("%02d", 0:23),
+        "area"   = "47/10.50/46.50/11",
         "format" = "netcdf",
         "target" = "era5-ts-demo.nc")
 devtools::load_all("../")
@@ -159,50 +164,26 @@ cds_request(user = NULL,         # use .cdsapirc file!
             request = request,   # use our request specification from above
             transfer = TRUE,     # download data as soon as ready
             path = ".",          # store the netcdf file (era5-demo.nc) here
-            verbose = TRUE)
+            verbose = FALSE)
 ```
 
-Depending on the request (the amount of data you are asking for) the
-request function may tike a while! Please note: if you try to download
-larger amounts of data it is suggested to split the data sets, e.g.,
-download year-by-year, or even month-by-month, if you are trying to download
-several varaiables/fields.
-
-Once the retrieval has finished you should now be the owner of a NetCDF
-containing the requested information located in the current working directory,
-called `era5-demo.nc`.
-
-Let's have a look (requires the _R_ package `netcdf`, and, in the best case,
-the _R_ package `colorspace`:
+Once the request is finished and the data set has been downloaded (`era5-ts-demo.nc`)
+we can extract the information from the NetCDF file and create a time series plot:
 
 ```{r, echo = TRUE, fig = TRUE, width = 12, height = 8}
 # Check if netcdf is available:
 if ( ! "ncdf4" %in% rownames(installed.packages()) ) {
     print("Whoops, ncdf4 not installed, skip this example ...")
 } else {
-    # Getting some colors
-    if ( ! "colorspace" %in% rownames(installed.packages()) ) {
-        col <- rainbow(50)[1:40]
-        xtra <- "\nNote: you should not use RGB rainbow colors!"
-    } else {
-        col <- colorspace::qualitative_hcl(100, h1 = 0, h2 = 270)
-        xtra <- ""
-    }
-
     # Open NetCDF file 'era4-demo.nc'
-    nc <- ncdf4::nc_open("era5-demo.nc")
+    nc <- ncdf4::nc_open("era5-ts-demo.nc")
     # Reading NetCDF data
-    lons <- sort(ncdf4::ncvar_get(nc, "longitude"))
-    lats <- sort(ncdf4::ncvar_get(nc, "latitude"))
-    data <- ncdf4::ncvar_get(nc, "t")
+    time <- as.POSIXct(ncdf4::ncvar_get(nc, "time") * 3600, origin = "1900-01-01 00:00")
+    data <- ncdf4::ncvar_get(nc, "tp")[1,1,]
 
     # Plotting an image
-    image(x = lons ,y = lats, z = data, col = col,
-          xlab = "longitude", ylab = "latitude",
-         main = sprintf("ERA-5 Demo Data, Temperature on 850ha%s", xtra))
-    if ( "maps" %in% rownames(installed.packages()) ) maps::map(add = TRUE)
-    contour(x = lons ,y = lats, z = data, labels = NA, add = TRUE, col = "white")
-
+    plot(time, 1000. * data, type = "o", xlab = "date/time", ylab = "total precipitation [mm/h]",
+         main = sprintf("ERA-5 Demo Data, Total Precipitation Time Series"))
 
     # Close NetCDF connection
     ncdf4::nc_close(nc)

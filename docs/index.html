@@ -40,15 +40,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -57,12 +48,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/ecmwfr_vignette.html">ecmwfr</a>
+      <a href="articles/ecmwf_vignette.html">ECMWF</a>
     </li>
+    <li>
+      <a href="articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+    </li>
+    <li class="dropdown-header">Changelog</li>
   </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="contact.html">Contact</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -209,7 +207,6 @@ my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.r
 era_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(
         <span class="st">"dataset"</span> =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
         <span class="st">"product_type"</span> =<span class="st"> "reanalysis"</span>,
-        <span class="st">"format"</span> =<span class="st"> "netcdf"</span>,
         <span class="st">"variable"</span> =<span class="st"> "temperature"</span>,
         <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
         <span class="st">"year"</span> =<span class="st"> "2000"</span>,
@@ -234,7 +231,7 @@ nc &lt;-<span class="st"> </span>ncdf4<span class="op">::</span><span class="kw"
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/image">image</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"longitude"</span>)),
       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"latitude"</span>)),
       ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"t"</span>))
-ncdf4<span class="op">:</span><span class="kw">nc_close</span>(nc)
+ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/nc_close">nc_close</a></span>(nc)
 
 <span class="co"># If you have created a .cdsapirc file in your local</span>
 <span class="co"># home directory you can also tell cds_request to use</span>
@@ -249,7 +246,7 @@ nc &lt;-<span class="st"> </span>ncdf4<span class="op">::</span><span class="kw"
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/image">image</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"longitude"</span>)),
       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sort">sort</a></span>(ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"latitude"</span>)),
       ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get">ncvar_get</a></span>(nc, <span class="st">"t"</span>))
-ncdf4<span class="op">:</span><span class="kw">nc_close</span>(nc)</code></pre></div>
+ncdf4<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/ncdf4/topics/nc_close">nc_close</a></span>(nc)</code></pre></div>
 <p>The CDS services are quite fast, however, if you request a lot of variables, multiple levels, and data over several years these requests might take quite a while! <strong>Note</strong>: If you need to download larger amounts of data it is suggested to split the downloads, e.g., download the data in junks (e.g., month-by-month, or year-by-year). A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.</p>
 </div>
 </div>

@@ -11,6 +11,7 @@
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
+#' @author Koen Kufkens
 #' @examples
 #'
 #' \donttest{

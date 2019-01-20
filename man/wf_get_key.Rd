@@ -29,5 +29,8 @@ wf_get_key(email = "test@mail.com")
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 }
+\author{
+Koen Kufkens
+}
 \keyword{key}
 \keyword{management}

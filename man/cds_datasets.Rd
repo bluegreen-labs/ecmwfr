@@ -30,9 +30,12 @@ cds_services(user = NULL)
 }
 }
 \seealso{
-\code{\link[ecmwfr]{wf_set_key}}
-\code{\link[ecmwfr]{wf_transfer}}
-\code{\link[ecmwfr]{wf_request}}
+\code{\link[ecmwfr]{cds_set_key}}
+\code{\link[ecmwfr]{cds_transfer}}
+\code{\link[ecmwfr]{cds_request}}
+}
+\author{
+Reto Stauffer
 }
 \keyword{climate,}
 \keyword{data}

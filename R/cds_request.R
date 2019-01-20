@@ -186,9 +186,9 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
       }
 
       # Loading current state of request
-      request <- GET(sprintf("https://cds.climate.copernicus.eu/api/v2/tasks/%s", ct$request_id),
-                     authenticate(user, key),
-                     encode = "json")
+      request <- httr::GET(sprintf("https://cds.climate.copernicus.eu/api/v2/tasks/%s", ct$request_id),
+                           httr::authenticate(user, key),
+                           encode = "json")
       ct <- httr::content(request)
 
       # If status == completed: download. Else, loop and wait.
@@ -213,11 +213,10 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # The latter to facilitate package integration.
   if (path != tempdir()) {
     # copy temporary file to final destination
-    if ( verbose ) cat(sprintf("- move %s -> %s\n",
-                               file.path(path, tmp_file),
-                               file.path(path, request$target)))
-    file.rename(file.path(path, tmp_file),
-                file.path(path, request$target))
+    src <- file.path(path, tmp_file)
+    dst <- file.path(path, request$target)
+    if(verbose) cat("Rename file: %s -> %s\n", src, dst)
+    file.rename(src, dst)
 
   } else {
     message("- file not copied and removed (path == tempdir())")

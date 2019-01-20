@@ -1,5 +1,10 @@
-# load default server names
+#' load default server names
+#'
+#' @author Koen Kufkens
 ecmwf_server <- function(id) "https://api.ecmwf.int/v1/"
+
+#' @rdname ecmwf_server
+#' @author Reto Stauffer
 cds_server   <- function(id) {
     url <- "https://cds.climate.copernicus.eu/api/v2"
     if(missing(id)) return(url)
@@ -13,6 +18,7 @@ cds_server   <- function(id) {
 #' @param seconds integer, seconds to sleep
 #' @param id character missing (default) or a string which will
 #'    be displayed as 'id'.
+#' @author Koen Kufkens, Reto Stauffer
 spinner <- function(seconds, id) {
 
   # set start time, counter
@@ -20,7 +26,7 @@ spinner <- function(seconds, id) {
   spinner_count <- 1
 
   # Missing id:
-  id <- if (missing(id)) "" else sprintf(" (id: %d)", id)
+  id <- if (missing(id)) "" else sprintf(" (id: %s)", id)
 
   if(length(seconds) == 0) seconds <- 1
   while(Sys.time() <= start_time + seconds){

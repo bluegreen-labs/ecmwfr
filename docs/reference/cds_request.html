@@ -72,16 +72,7 @@ allows NetCDF downloads, and will override calls for grib data." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -89,12 +80,19 @@ allows NetCDF downloads, and will override calls for grib data." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ecmwfr_vignette.html">ecmwfr</a>
+      <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
+    <li>
+      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+    </li>
+    <li class="dropdown-header">Changelog</li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="../contact.html">Contact</a>
 </li>
       </ul>
       
@@ -181,10 +179,70 @@ as specified on the CDS API page</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><div class='input'><span class='co'># set key</span>
+</div><div class='input'><span class='co'># Use local keyring:</span>
 <span class='fu'><a href='cds_set_key.html'>cds_set_key</a></span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"1234"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"abcd1345foo"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
-<span class='co'># get key</span>
-<span class='fu'><a href='cds_get_key.html'>cds_get_key</a></span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"1234"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; [1] "abcd1345foo"</div></pre>
+<span class='co'># Specify request </span>
+<span class='no'>era_request</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(
+            <span class='st'>"dataset"</span> <span class='kw'>=</span> <span class='st'>"reanalysis-era5-pressure-levels"</span>,
+            <span class='st'>"product_type"</span> <span class='kw'>=</span> <span class='st'>"reanalysis"</span>,
+            <span class='st'>"format"</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
+            <span class='st'>"variable"</span> <span class='kw'>=</span> <span class='st'>"temperature"</span>,
+            <span class='st'>"pressure_level"</span> <span class='kw'>=</span> <span class='st'>"850"</span>,
+            <span class='st'>"year"</span> <span class='kw'>=</span> <span class='st'>"2000"</span>,
+            <span class='st'>"month"</span> <span class='kw'>=</span> <span class='st'>"04"</span>,
+            <span class='st'>"day"</span> <span class='kw'>=</span> <span class='st'>"04"</span>,
+            <span class='st'>"time"</span> <span class='kw'>=</span> <span class='st'>"00:00"</span>,
+            <span class='st'>"area"</span> <span class='kw'>=</span> <span class='st'>"70/-20/00/60"</span>,
+            <span class='st'>"format"</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
+            <span class='st'>"target"</span> <span class='kw'>=</span> <span class='st'>"era5-demo.nc"</span>)
+
+<span class='co'># Request data/download file using 'user = "1234"'.</span>
+<span class='co'># Note: requires that you have stored the login information</span>
+<span class='co'># via 'cds_set_key()' (see above).</span>
+<span class='fu'>cds_request</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"1234"</span>,           <span class='co'># user ID (for authentification)</span>
+            <span class='kw'>request</span> <span class='kw'>=</span> <span class='no'>era_request</span>,   <span class='co'># the request</span>
+            <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,         <span class='co'># download the file</span>
+            <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>)              <span class='co'># store data in current working directory</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; <span class='message'>No encoding supplied: defaulting to UTF-8.</span></div><div class='output co'>#&gt; <span class='error'>Error: &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"&gt;</span>
+#&gt; <span class='error'>&lt;html&gt;</span>
+#&gt; <span class='error'>&lt;head&gt;</span>
+#&gt; <span class='error'>&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;</span>
+#&gt; <span class='error'>&lt;title&gt;401 Authorization Required&lt;/title&gt;</span>
+#&gt; <span class='error'>&lt;/head&gt;</span>
+#&gt; <span class='error'>&lt;body bgcolor="white"&gt;</span>
+#&gt; <span class='error'>&lt;center&gt;&lt;h1&gt;401 Authorization Required&lt;/h1&gt;&lt;/center&gt;</span>
+#&gt; <span class='error'>&lt;hr&gt;</span>
+#&gt; <span class='error'>&lt;center&gt;nginx/1.14.0&lt;/center&gt;</span>
+#&gt; <span class='error'>&lt;/body&gt;</span>
+#&gt; <span class='error'>&lt;/html&gt;</span></div><div class='input'>
+<span class='co'># (Ugly) demo plot to see if we got what we expect,</span>
+<span class='co'># requires the ncdf4 library to be installed.</span>
+<span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/nc_open'>nc_open</a></span>(<span class='st'>"era5-demo.nc"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"longitude"</span>)),
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"latitude"</span>)),
+      <span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"t"</span>))</div><div class='input'><span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/nc_close'>nc_close</a></span>(<span class='no'>nc</span>)
+
+<span class='co'># Alternatively (as an alternative to use local keyring):</span>
+<span class='co'># store user information in .cdsapirc and set user = NULL</span>
+<span class='co'># to use login information from .cdsapirc:</span>
+<span class='fu'>cds_request</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,             <span class='co'># use .cdsapirc</span>
+            <span class='kw'>request</span> <span class='kw'>=</span> <span class='no'>era_request</span>,   <span class='co'># the request</span>
+            <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,         <span class='co'># download the file</span>
+            <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"."</span>)              <span class='co'># store data in current working directory</span></div><div class='output co'>#&gt; CDS login information loaded from .cdsapirc
+#&gt; - user ID:  3258
+#&gt; - key:      1fc02******</div><div class='output co'>#&gt; <span class='message'>Staging data transfer at url endpoint:</span></div><div class='output co'>#&gt; Request preparation completed, transfer
+#&gt; - Downloading "https://cds.climate.copernicus.eu/api/v2/tasks/23ff70bf-a809-4b69-903c-817c9309c56d"
+#&gt; CDS login information loaded from .cdsapirc
+#&gt; - user ID:  3258
+#&gt; - key:      1fc02******</div><div class='output co'>#&gt; <span class='message'>- polling server for a data transfer</span></div><div class='output co'>#&gt; <span class='message'>- writing file to disk ("./ecmwfr_1cda7489790d.nc")</span></div><div class='output co'>#&gt; Rename file: %s -&gt; %s
+#&gt;  ./ecmwfr_1cda7489790d.nc ./era5-demo.ncCDS login information loaded from .cdsapirc
+#&gt; - user ID:  3258
+#&gt; - key:      1fc02******</div><div class='output co'>#&gt; <span class='message'>- request purged from queue!</span></div><div class='input'>
+<span class='co'># (Ugly) demo plot to see if we got what we expect,</span>
+<span class='co'># requires the ncdf4 library to be installed.</span>
+<span class='no'>nc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/nc_open'>nc_open</a></span>(<span class='st'>"era5-demo.nc"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"longitude"</span>)),
+      <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"latitude"</span>)),
+      <span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/ncvar_get'>ncvar_get</a></span>(<span class='no'>nc</span>, <span class='st'>"t"</span>))</div><div class='img'><img src='cds_request-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw pkg'>ncdf4</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/ncdf4/topics/nc_close'>nc_close</a></span>(<span class='no'>nc</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

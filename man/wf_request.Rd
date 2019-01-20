@@ -37,7 +37,12 @@ you can only stage requests, logging the request URLs to submit download
 queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
 allows NetCDF downloads, and will override calls for grib data.
 }
-\examples{
+\seealso{
+\code{\link[ecmwfr]{wf_set_key}}
+\code{\link[ecmwfr]{wf_transfer}}
+}
+\author{
+Koen Kufkens
 
 \donttest{
 # set key
@@ -46,10 +51,6 @@ wf_set_key(email = "test@mail.com", key = "123")
 # get key
 wf_get_key(email = "test@mail.com")
 }
-}
-\seealso{
-\code{\link[ecmwfr]{wf_set_key}}
-\code{\link[ecmwfr]{wf_transfer}}
 }
 \keyword{climate,}
 \keyword{data}

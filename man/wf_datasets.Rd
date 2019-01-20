@@ -36,6 +36,9 @@ wf_datasets("test@mail.com")
 \code{\link[ecmwfr]{wf_transfer}}
 \code{\link[ecmwfr]{wf_request}}
 }
+\author{
+Koen Kufkens
+}
 \keyword{climate,}
 \keyword{data}
 \keyword{download,}

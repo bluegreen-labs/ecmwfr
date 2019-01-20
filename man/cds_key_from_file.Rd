@@ -10,7 +10,8 @@ cds_key_from_file(verbose = FALSE)
 \item{verbose}{boolean, default is \code{FALSE}.}
 }
 \value{
-Returns a list with the \code{user} name and \code{key}.
+Returns a list with the \code{user}, \code{email}, and \code{key}.
+ \code{email == user}, used to simplify the calls.
 }
 \description{
 Reading username and secret key from .cdsapirc file

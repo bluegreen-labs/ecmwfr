@@ -72,16 +72,7 @@ allows NetCDF downloads, and will override calls for grib data." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -89,12 +80,19 @@ allows NetCDF downloads, and will override calls for grib data." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ecmwfr_vignette.html">ecmwfr</a>
+      <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
+    <li>
+      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+    </li>
+    <li class="dropdown-header">Changelog</li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="../contact.html">Contact</a>
 </li>
       </ul>
       
@@ -181,12 +179,6 @@ as specified on the ECMWF API page</p></td>
 <code><a href='wf_transfer.html'>wf_transfer</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><div class='input'><span class='co'># set key</span>
-<span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
-<span class='co'># get key</span>
-<span class='fu'><a href='wf_get_key.html'>wf_get_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; [1] "123"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,10 +188,15 @@ as specified on the ECMWF API page</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
+    <h2>Author</h2>
+    <p>Koen Kufkens</p>
+<p># set key
+wf_set_key(email = "test@mail.com", key = "123")
+
+# get key
+wf_get_key(email = "test@mail.com")</p>
   </div>
 </div>
 

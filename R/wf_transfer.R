@@ -4,7 +4,11 @@
 #' to disk or the current status of the requested transfer.
 #'
 #' @param email email address used to sign up for the ECMWF data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}} when
+#' calling \code{\link[ecmwfr]{wf_transfer}}.
+#' If set to \code{NULL} the \code{.ecmwfapirc} file will be used.
+#' @param user string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
+#' If set to \code{NULL} the \code{.cdsapirc} file will be used.
 #' @param url url to query
 #' @param path path were to store the downloaded data
 #' @param filename filename to use for the downloaded data
@@ -15,15 +19,7 @@
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
-#' @examples
-#'
-#' \donttest{
-#' # set key
-#' wf_set_key(email = "test@mail.com", key = "123")
-#'
-#' # get key
-#' wf_get_key(email = "test@mail.com")
-#'}
+#' @author Koen Kufkens
 
 wf_transfer <- function(
   email,
@@ -135,3 +131,8 @@ wf_transfer <- function(
     return(ct)
   }
 }
+
+#' @rdname wf_transfer
+#' @author Reto Stauffer
+#' @export
+cds_transfer <- function(user, ...) wf_transfer(email = user, ...)

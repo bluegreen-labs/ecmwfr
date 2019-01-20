@@ -8,6 +8,7 @@
 #' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' @export
+#' @author Koen Kufkens
 #' @examples
 #'
 #' \donttest{

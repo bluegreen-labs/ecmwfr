@@ -2,14 +2,20 @@
 % Please edit documentation in R/wf_transfer.R
 \name{wf_transfer}
 \alias{wf_transfer}
+\alias{cds_transfer}
 \title{ECMWF data transfer function}
 \usage{
-wf_transfer(email, url, path = tempdir(), filename = "ecmwf_tmp.nc",
+wf_transfer(email, url, type = "ecmwf", path = tempdir(),
+  filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
   verbose = TRUE)
+
+cds_transfer(user, ...)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}} when
+calling \code{\link[ecmwfr]{wf_transfer}}.
+If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
 
 \item{url}{url to query}
 
@@ -18,6 +24,9 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 \item{filename}{filename to use for the downloaded data}
 
 \item{verbose}{show feedback on data transfers}
+
+\item{user}{string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
+If set to \code{NULL} the \code{.cdsapirc} file will be used.}
 }
 \value{
 a netCDF of data on disk as specified by a
@@ -27,19 +36,14 @@ a netCDF of data on disk as specified by a
 Returns the contents of the requested url as a netCDF file downloaded
 to disk or the current status of the requested transfer.
 }
-\examples{
-
-\donttest{
-# set key
-wf_set_key(email = "test@mail.com", key = "123")
-
-# get key
-wf_get_key(email = "test@mail.com")
-}
-}
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_request}}
+}
+\author{
+Koen Kufkens
+
+Reto Stauffer
 }
 \keyword{climate,}
 \keyword{data}

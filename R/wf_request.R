@@ -20,8 +20,8 @@
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' @export
-#' @examples
 #' @author Koen Kufkens
+#' @examples
 #'
 #' \donttest{
 #' # set key
@@ -110,9 +110,13 @@ wf_request <- function(
   # set time-out counter
   time_out <- Sys.time() + time_out
 
+  # Temporary file name, will be used in combination with
+  # tempdir() when calling wf_transfer. The final file will
+  # be moved to "path" as soon as the download has been finished.
+  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
+
   # keep waiting for the download order to come online
   # with status code 303
-  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
   while(ct$code == 202){
 
     # exit routine when the time out
@@ -151,16 +155,12 @@ wf_request <- function(
   # The latter to facilitate package integration.
   if (path != tempdir()) {
     # copy temporary file to final destination
-    if ( verbose ) cat(sprintf("- copy file to: %s\n",
-                               file.path(path, request$target)))
-    file.copy(file.path(path, tmp_file),
-              file.path(path, request$target),
-              overwrite = TRUE,
-              copy.mode = FALSE)
-
-    # cleanup of temporary file
-    invisible(file.remove(file.path(path, tmp_file)))
+    src <- file.path(tempdir(), tmp_file)
+    dst <- file.path(path, request$target)
+    if ( verbose ) cat(sprintf("- move file: %s -> %s\n", src, dst))
+    file.rename(src, dst)
   } else {
+    dst <- file.path(path, tmp_file)
     message("- file not copied and removed (path == tempdir())")
   }
 
@@ -169,4 +169,7 @@ wf_request <- function(
   wf_delete(email = input_email,
             url = ct$href,
             verbose = verbose)
+
+  # return final file name/path
+  return(dst)
 }

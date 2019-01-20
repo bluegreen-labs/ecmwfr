@@ -19,6 +19,8 @@ If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
 
 \item{url}{url to query}
 
+\item{type}{character, one of \code{ecmwf} or \code{cds}}
+
 \item{path}{path were to store the downloaded data}
 
 \item{filename}{filename to use for the downloaded data}
@@ -27,6 +29,8 @@ If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
 
 \item{user}{string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
 If set to \code{NULL} the \code{.cdsapirc} file will be used.}
+
+\item{...}{forwarded to \code{\link[ecmwfr]{wf_transfer}}}
 }
 \value{
 a netCDF of data on disk as specified by a

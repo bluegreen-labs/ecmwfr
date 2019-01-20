@@ -7,6 +7,8 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{cds_set_key}}.
 #' Note: can also be set to \code{NULL}, in this case user and key will
 #' be read from the \code{.cdsapirc} file (located in your home folder).
+#' @param dataset character, name of the data set for which the product
+#' information should be loaded.
 #' @param show boolean, default \code{TRUE}. If \code{TRUE} the description
 #' will be shown in your browser.
 #' @param verbose boolean, default \code{FALSE}.
@@ -64,7 +66,7 @@ cds_productinfo <- function(user, dataset, show = TRUE, verbose = FALSE) {
         write(file = tmp_file, sprintf("<h2>%s</h2>%s", n, ct[[n]]), append = TRUE)
     write(file = tmp_file, "\n</body>\n</html>\n", append = TRUE)
     # Open in browser
-    browseURL(tmp_file)
+    utils::browseURL(tmp_file)
   }
 
   # return content

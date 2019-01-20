@@ -12,6 +12,9 @@ used to retrieve the token set by \code{\link[ecmwfr]{cds_set_key}}.
 Note: can also be set to \code{NULL}, in this case user and key will
 be read from the \code{.cdsapirc} file (located in your home folder).}
 
+\item{dataset}{character, name of the data set for which the product
+information should be loaded.}
+
 \item{show}{boolean, default \code{TRUE}. If \code{TRUE} the description
 will be shown in your browser.}
 

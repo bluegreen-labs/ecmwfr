@@ -146,6 +146,10 @@ If set to <code>NULL</code> the <code>.ecmwfapirc</code> file will be used.</p><
       <td><p>url to query</p></td>
     </tr>
     <tr>
+      <th>type</th>
+      <td><p>character, one of <code>ecmwf</code> or <code>cds</code></p></td>
+    </tr>
+    <tr>
       <th>path</th>
       <td><p>path were to store the downloaded data</p></td>
     </tr>
@@ -161,6 +165,10 @@ If set to <code>NULL</code> the <code>.ecmwfapirc</code> file will be used.</p><
       <th>user</th>
       <td><p>string, user ID when calling <code>cds_transfer</code>.
 If set to <code>NULL</code> the <code>.cdsapirc</code> file will be used.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>forwarded to <code>wf_transfer</code></p></td>
     </tr>
     </table>
     

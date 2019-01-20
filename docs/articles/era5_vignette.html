@@ -153,6 +153,7 @@
             <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
             <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
             <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## [1] "./era5-demo.nc"</code></pre>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
 <p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>.</p>
 <p>Let’s have a look (requires the <em>R</em> package <code>netcdf</code>, and, in the best case, the <em>R</em> package <code>colorspace</code>:</p>
@@ -210,6 +211,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
             <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
             <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
             <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## [1] "./era5-ts-demo.nc"</code></pre>
 <p>Once the request is finished and the data set has been downloaded (<code>era5-ts-demo.nc</code>) we can extract the information from the NetCDF file and create a time series plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check if netcdf is available:</span>
 <span class="cf">if</span> ( <span class="op">!</span><span class="st"> "ncdf4"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/colnames">rownames</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/installed.packages">installed.packages</a></span>()) ) {

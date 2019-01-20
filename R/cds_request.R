@@ -147,8 +147,12 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # set time-out counter
   time_out <- Sys.time() + time_out
 
-  # If return ct$state == "completed": transfer
+  # Temporary file name, will be used in combination with
+  # tempdir() when calling wf_transfer. The final file will
+  # be moved to "path" as soon as the download has been finished.
   tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
+
+  # If return ct$state == "completed": transfer
   if ( ct$state == "completed" ) {
     if(verbose) cat("Request preparation completed, transfer\n")
     ct <- wf_transfer(email    = input_user,
@@ -199,7 +203,6 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
       ct <- wf_transfer(email    = input_user,
                         url      = ct$request_id,
                         type     = "cds",
-                        path     = path,
                         filename = tmp_file,
                         verbose  = verbose)
     }
@@ -213,12 +216,13 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # The latter to facilitate package integration.
   if (path != tempdir()) {
     # copy temporary file to final destination
-    src <- file.path(path, tmp_file)
+    src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
     if(verbose) cat("Rename file: %s -> %s\n", src, dst)
     file.rename(src, dst)
 
   } else {
+    dst <- file.path(tempdir(), tmp_file)
     message("- file not copied and removed (path == tempdir())")
   }
 
@@ -230,5 +234,8 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
             url     = ct$href,
             type    = "cds",
             verbose = verbose)
+
+  # return final file name/path
+  return(dst)
 }
 

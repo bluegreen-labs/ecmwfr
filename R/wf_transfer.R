@@ -10,9 +10,11 @@
 #' @param user string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
 #' If set to \code{NULL} the \code{.cdsapirc} file will be used.
 #' @param url url to query
+#' @param type character, one of \code{ecmwf} or \code{cds}
 #' @param path path were to store the downloaded data
 #' @param filename filename to use for the downloaded data
 #' @param verbose show feedback on data transfers
+#' @param ... forwarded to \code{\link[ecmwfr]{wf_transfer}}
 #' @return a netCDF of data on disk as specified by a
 #' \code{\link[ecmwfr]{wf_request}}
 #' @keywords data download, climate, re-analysis

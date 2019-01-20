@@ -111,6 +111,7 @@ wf_request <- function(
 
   # keep waiting for the download order to come online
   # with status code 303
+  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
   while(ct$code == 202){
 
     # exit routine when the time out
@@ -137,30 +138,27 @@ wf_request <- function(
     }
 
     # attempt a download
-    ct <- wf_transfer(email = input_email,
-                      url = ct$href,
-                      type = "ecmwf",
-                      verbose = verbose)
+    ct <- wf_transfer(email    = input_email,
+                      url      = ct$href,
+                      type     = "ecmwf",
+                      filename = tmp_file,
+                      verbose  = verbose)
   }
 
   # Copy data from temporary file to final location
   # and delete original, with an exception for tempdir() location.
   # The latter to facilitate package integration.
   if (path != tempdir()) {
-
-    # create temporary output file
-    ecmwf_tmp_file <- file.path(tempdir(), "ecmwf_tmp.nc")
-
     # copy temporary file to final destination
     if ( verbose ) cat(sprintf("- copy file to: %s\n",
                                file.path(path, request$target)))
-    file.copy(ecmwf_tmp_file,
+    file.copy(file.path(path, tmp_file),
               file.path(path, request$target),
               overwrite = TRUE,
               copy.mode = FALSE)
 
     # cleanup of temporary file
-    invisible(file.remove(ecmwf_tmp_file))
+    invisible(file.remove(file.path(path, tmp_file)))
   } else {
     message("- file not copied and removed (path == tempdir())")
   }

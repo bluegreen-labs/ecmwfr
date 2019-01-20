@@ -28,9 +28,9 @@
 wf_transfer <- function(
   email,
   url,
-  type,
+  type = "ecmwf",
   path = tempdir(),
-  filename = "ecmwf_tmp.nc",
+  filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
   verbose = TRUE
 ){
 
@@ -42,6 +42,10 @@ wf_transfer <- function(
     stop("Please provide ECMWF login email / url!")
   }
 
+  # If the URL is not an URL but an ID: generate URL
+  if (! grepl("^https?://.*$", url)) url <- get(sprintf("%s_server", type))(url)
+  if(verbose) cat(sprintf("- Downloading \"%s\"\n", url))
+  
   # get key from email
   if(type == "cds") {
     if(is.null(email)) {
@@ -60,18 +64,44 @@ wf_transfer <- function(
   }
 
   # create temporary output file
-  ecmwf_tmp_file <- file.path(path, filename)
+  tmp_file <- file.path(path, filename)
 
-  # download query
-  response <- httr::GET(
-    url,
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json",
-      "From" = email,
-      "X-ECMWF-KEY" = key),
-    encode = "json"
-  )
+  # -----------------------
+  # download requext (cds)
+  if(type == "cds") {
+    # Download information about request (including location)
+    response <- httr::GET(url,
+      httr::authenticate(email, key),
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json"),
+      encode = "json"
+    )
+    # Check if connection is a file connection
+    # or a request information:
+    tmp <- httr::content(response)
+    if (!inherits(tmp, "raw")) {
+        response <- response <- httr::GET(tmp$location,
+          httr::authenticate(email, key),
+          httr::add_headers(
+            "Accept" = "application/json",
+            "Content-Type" = "application/json"),
+          encode = "json"
+        )
+    }
+  # -----------------------
+  # Download request (ecmwf)
+  } else {
+    response <- httr::GET(
+      url,
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = email,
+        "X-ECMWF-KEY" = key),
+      encode = "json"
+    )
+  }
 
   # trap errors on download, return a general error statement
   if (httr::http_error(response)){
@@ -88,11 +118,11 @@ wf_transfer <- function(
 
     if(verbose){
       message("- polling server for a data transfer")
-      message("- writing file to disk              ")
+      message(sprintf("- writing file to disk (\"%s\")", tmp_file))
     }
 
     # write binary file
-    f <- file(ecmwf_tmp_file, "wb")
+    f <- file(tmp_file, "wb")
     writeBin(ct, f)
     close(f)
 
@@ -102,6 +132,6 @@ wf_transfer <- function(
                       href = url,
                       stringsAsFactors = FALSE))
   } else {
-   return(ct)
+    return(ct)
   }
 }

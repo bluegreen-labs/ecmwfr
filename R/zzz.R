@@ -1,13 +1,26 @@
 # load default server names
-ecmwf_server <- function(){'https://api.ecmwf.int/v1/'}
-cds_server   <- function() "https://cds.climate.copernicus.eu/api/v2"
+ecmwf_server <- function(id) "https://api.ecmwf.int/v1/"
+cds_server   <- function(id) {
+    url <- "https://cds.climate.copernicus.eu/api/v2"
+    if(missing(id)) return(url)
+    return(file.path(url, "tasks", id))
+}
 
-# simple spinner
-spinner <- function(seconds){
+#' Simple progress spinner
+#'
+#' Shows a spinner while waiting for a request to be processed.
+#'
+#' @param seconds integer, seconds to sleep
+#' @param id character missing (default) or a string which will
+#'    be displayed as 'id'.
+spinner <- function(seconds, id) {
 
   # set start time, counter
   start_time <- Sys.time()
   spinner_count <- 1
+
+  # Missing id:
+  id <- if (missing(id)) "" else sprintf(" (id: %d)", id)
 
   if(length(seconds) == 0) seconds <- 1
   while(Sys.time() <= start_time + seconds){
@@ -17,7 +30,7 @@ spinner <- function(seconds){
 
     # update spinner message
     message(paste0(c("-","\\","|","/")[spinner_count],
-                   " polling server for a data transfer\r"),
+                   " polling server for a data transfer", id, "\r"),
             appendLF = FALSE)
 
     # update spinner count

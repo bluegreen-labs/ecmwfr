@@ -119,36 +119,27 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   }
 
   # grab content, to look at the status
-  cat("XXXXXXXXXXXXXXXXXXXX first content\n")
   ct <- httr::content(response)
 
-  # We need to keep the request_id and location for later!
-  print(ct)
-  request_id <- ct$request_id
-  location   <- ct$location
-
-
-  print(ct)
-  print(url)
-  response <- httr::POST(
-    sprintf("%s/tasks/%s", cds_server(), request_id),
-    httr::authenticate(user, key),
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json"),
-    encode = "json"
-  )
-  print(httr:content(response))
-  stop('xxxxxxxxxxx----------------------------')
+  # Show message if user exits the function.
+  exit_msg <- paste("Note that your request has been submitted to CDS.",
+               "Even after exiting this function your request is still",
+               "beeing processed! Your request ID is:\n\n%2$s\n\n",
+               "You can download the file as soon as processed by calling:\n\n",
+               "wf_download(\"%s$2\", type = \"cds\")\n\n",
+               "Or cancel the request:\n\n",
+               "wf_delete(<user>, \"%1$s/tasks/%2$s\", type = \"cds\")\n\n",
+               "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.",
+               "to manage (downoload, retry, delete) your requests or",
+               "to get ID's from previous requests.", sep = "")
+  on.exit(message(sprintf(exit_msg, cds_server(), ct$request_id)))
 
   # some verbose feedback
   if(verbose){
     message("Staging data transfer at url endpoint:")
-    message(location)
   }
 
   # only return the content of the query
-  cat("XXXXXXXXXXXXXXXXXXXX no transfer?\n")
   if(!transfer){
     return(ct)
   }
@@ -157,20 +148,20 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   time_out <- Sys.time() + time_out
 
   # If return ct$state == "completed": transfer
+  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
   if ( ct$state == "completed" ) {
-    cat("XXXXXXXXXXXXXXXXXXXX state completed\n")
     if(verbose) cat("Request preparation completed, transfer\n")
-    ct <- wf_transfer(email   = input_user,
-                      url     = location,
-                      type    = "cds",
-                      verbose = verbose)
+    ct <- wf_transfer(email    = input_user,
+                      url      = ct$request_id,
+                      type     = "cds",
+                      path     = path,
+                      filename = tmp_file,
+                      verbose  = verbose)
   } else {
-    cat("XXXXXXXXXXXXXXXXXXXX state not completed, wayt\n")
     # keep waiting for the download order to come online
     # with status code 303
     if (verbose) cat("Waiting for request to be processed\n")
     while(ct$state != "completed"){
-        cat("XXXXXXXXXXXXXXXXXXXX waitng ....\n")
 
       # exit routine when the time out
       # is reached, create message to consult
@@ -178,53 +169,56 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
       # or retain the download url and use
       # wf_transfer()
       if(Sys.time() > time_out){
-        message("Please use the MARS job list to track your jobs at:")
-        message("https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
-        message("and retry download using wf_transfer() for url:")
-        message(ct$location)
-        message("Delete the job using cds_delete() upon completion!")
+        message("Timeout exceeded!")
+        message("Please use the job list to track your jobs at:")
+        message("https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.")
+        message("Finished jobs can be downloaded via the web interface.")
+        message("Delete the job using wt_delete() upon completion using")
+        message(sprintf("the job id \"%s\"", ct$request_id))
         return(ct)
       }
 
       if(verbose){
         # let a spinner spin for "retry" seconds
-        spinner(as.numeric(ct$retry))
+        spinner(as.numeric(ct$retry), ct$request_id)
       } else {
         Sys.sleep(ct$retry)
       }
 
+      # Loading current state of request
+      request <- GET(sprintf("https://cds.climate.copernicus.eu/api/v2/tasks/%s", ct$request_id),
+                     authenticate(user, key),
+                     encode = "json")
+      ct <- httr::content(request)
+
+      # If status == completed: download. Else, loop and wait.
+      if(is.null(ct$status)) next
+      if(ct$status != "completed") next
+
       if(verbose) cat("- Starting transfer\n")
-      print("print input_user and location")
-      print(input_user)
-      print(location)
-      ct <- wf_transfer(email   = input_user,
-                        url     = location,
-                        type    = "cds",
-                        verbose = verbose)
-      if ( ct[["stateing server for a data transfer"]] == "queued" )
-          ct$state = "queed"
-      print(ct)
+      ct <- wf_transfer(email    = input_user,
+                        url      = ct$request_id,
+                        type     = "cds",
+                        path     = path,
+                        filename = tmp_file,
+                        verbose  = verbose)
     }
   }
+
+  # Delete on-exit message
+  on.exit()
 
   # Copy data from temporary file to final location
   # and delete original, with an exception for tempdir() location.
   # The latter to facilitate package integration.
   if (path != tempdir()) {
-
-    # create temporary output file
-    ecmwf_tmp_file <- file.path(tempdir(), "ecmwf_tmp.nc")
-
     # copy temporary file to final destination
-    if ( verbose ) cat(sprintf("- copy file to: %s\n",
+    if ( verbose ) cat(sprintf("- move %s -> %s\n",
+                               file.path(path, tmp_file),
                                file.path(path, request$target)))
-    file.copy(ecmwf_tmp_file,
-              file.path(path, request$target),
-              overwrite = TRUE,
-              copy.mode = FALSE)
+    file.rename(file.path(path, tmp_file),
+                file.path(path, request$target))
 
-    # cleanup of temporary file
-    invisible(file.remove(ecmwf_tmp_file))
   } else {
     message("- file not copied and removed (path == tempdir())")
   }
@@ -233,10 +227,9 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # to free up other download slots
   # Calling 'wf_delete' with 'type = "cds"' and input_user as
   # 'email'.
-  print(ct)
-  wf_delete(email = input_user,
-            url = sprintf("%s/tasks/%s", cds_server(), request_id),
-            type = "cds",
+  wf_delete(email   = input_user,
+            url     = ct$href,
+            type    = "cds",
             verbose = verbose)
 }
 

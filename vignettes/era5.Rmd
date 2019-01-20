@@ -1,0 +1,233 @@
+
+
+```{r}
+suppressPackageStartupMessages("ecmwfr")
+```
+
+## Downloading ERA-5 Reanalysis Data from the Copernicus Climate Data Service
+
+[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting
+data sets for research, education, and applied earth sciences on their
+[Climate Data Store](https://cds.climate.copernicus.eu) (CDS) servers.
+Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int)
+high-resolution reanalysis data set which replaces
+ERA Interim (which was ERA-4, version 4).
+
+The R package `ecmwfr` provides a handy interface to download these data sets.
+This page provides some examples how to retrieve ERA-5 reanalysis data.
+
+### Before Downloading Data
+
+Before you will be able to download any data you need to get a free personal
+account. 
+
+* [Register yourself for CDS services](https://cds.climate.copernicus.eu/user/register)
+* [Terms and conditions](https://cds.climate.copernicus.eu/disclaimer-privacy)
+
+To retrieve data `ecmwfr` provides two options: use [`cds_set_key`](../references/cds_set_key.html)
+to add the login details to your local keyring, or create a file called
+`.cdsapirc` in your user home directory to provide the user login details.
+More details about the local `.cdsapirc` file can be found
+[here](https://cds.climate.copernicus.eu/api-how-to).
+
+Once you are in possession of your user login details (namely your user ID and
+a secret key) you can use `ecmwfr` to send data requests to CDS and/or download
+data sets. **Note** that this page will always make use of the `.cdsapirc` file.
+Thus, the `user` input option will always be set to `user = NULL`. However, feel
+free to use the [`cds_set_key()`](../references/cds_set_key.html) function to
+add the login details to your local keyring (requires the `keyring` package to
+be installed) and provide `user = "<your user id>"` when calling the
+[`cds_request()`](../references/cds_request.html) function (and all othres depending
+on your user details).
+
+### The Request Syntax
+
+CDS data retreivals are based on a list which defines the data set to be downloaded.
+These definitions are called `requests` (for those who are familiar with MARS: these
+are MARS requests). A `request` defined the data set to be downloaded (the product),
+the variables and time periods, the spatial extent, and/or the data format.
+
+An example:
+
+```{r, echo = TRUE}
+request <- list(
+        "dataset"        = "reanalysis-era5-pressure-levels",
+        "product_type"   = "reanalysis",
+        "variable"       = "temperature",
+        "pressure_level" = "850",
+        "year"   = "2000",
+        "month"  = "04",
+        "day"    = "04",
+        "time"   = "00:00",
+        "area"   = "70/-20/30/60",
+        "format" = "netcdf",
+        "target" = "era5-demo.nc")
+```
+
+This is the "demo" request and it specifies the following:
+
+* `dataset`: downloading ERA-5 reanalysis on pressure levels,
+* `product_type`: which are reanalysis data (deterministic),
+* `variable`: we would like to get `temperature` data ...
+* `pressure_level`: ... on the 850 hectopascal level,
+* `year`/`month`/`day`: for April 4, 2000,
+* `time`: valid at 00:00 UTC (date/time always in UTC),
+* `area`: for a custom subset covering northern Europe,
+* `format`: as a NetCDF file,
+* `target`: stored as `era5-demo.nc` on our local machine.
+
+In _R_ the `request` variable is a named list which defines
+the data set to be downloaded.
+
+### Downloading Data (Spatial Example)
+
+The data set as specified above can be downloaded calling the
+`cds_retrieve` function:
+
+
+```{r, echo = TRUE}
+cds_request(user = NULL,         # use .cdsapirc file!
+            request = request,   # use our request specification from above
+            transfer = TRUE,     # download data as soon as ready
+            path = ".")          # store the netcdf file (era5-demo.nc) here
+```
+
+Depending on the request (the amount of data you are asking for) the
+request function may tike a while! Please note: if you try to download
+larger amounts of data it is suggested to split the data sets, e.g.,
+download year-by-year, or even month-by-month, if you are trying to download
+several varaiables/fields.
+
+Once the retrieval has finished you should now be the owner of a NetCDF
+containing the requested information located in the current working directory,
+called `era5-demo.nc`.
+
+Let's have a look (requires the _R_ package `netcdf`, and, in the best case,
+the _R_ package `colorspace`:
+
+```{r, echo = TRUE, fig = TRUE, width = 12, height = 8}
+# Check if netcdf is available:
+if ( ! "ncdf4" %in% rownames(installed.packages()) ) {
+    print("Whoops, ncdf4 not installed, skip this example ...")
+} else {
+    # Getting some colors
+    if ( ! "colorspace" %in% rownames(installed.packages()) ) {
+        col <- rainbow(50)[1:40]
+        xtra <- "\nNote: you should not use RGB rainbow colors!"
+    } else {
+        col <- colorspace::qualitative_hcl(100, h1 = 0, h2 = 270)
+        xtra <- ""
+    }
+
+    # Open NetCDF file 'era4-demo.nc'
+    nc <- ncdf4::nc_open("era5-demo.nc")
+    # Reading NetCDF data
+    lons <- sort(ncdf4::ncvar_get(nc, "longitude"))
+    lats <- sort(ncdf4::ncvar_get(nc, "latitude"))
+    data <- ncdf4::ncvar_get(nc, "t")
+
+    # Plotting an image
+    image(x = lons ,y = lats, z = data, col = col,
+          xlab = "longitude", ylab = "latitude",
+         main = sprintf("ERA-5 Demo Data, Temperature on 850ha%s", xtra))
+    if ( "maps" %in% rownames(installed.packages()) ) maps::map(add = TRUE)
+    contour(x = lons ,y = lats, z = data, labels = NA, add = TRUE, col = "white")
+
+
+    # Close NetCDF connection
+    ncdf4::nc_close(nc)
+}
+```
+
+### Downloading Data (Temporal Example)
+
+
+```{r, echo = TRUE}
+request <- list(
+        "dataset"        = "reanalysis-era5-pressure-levels",
+        "product_type"   = "reanalysis",
+        "variable"       = "vertical_velocity",
+        "pressure_level" = "850",
+        "year"   = sprintf("%04d", 2000:2014),
+        "month"  = sprintf("%02d", 1:12),
+        "day"    = sprintf("%02d", 1:31, 1:31),
+        "time"   = "00:00",
+        "format" = "netcdf",
+        "target" = "era5-ts-demo.nc")
+devtools::load_all("../")
+cds_request(user = NULL,         # use .cdsapirc file!
+            request = request,   # use our request specification from above
+            transfer = TRUE,     # download data as soon as ready
+            path = ".",          # store the netcdf file (era5-demo.nc) here
+            verbose = TRUE)
+```
+
+Depending on the request (the amount of data you are asking for) the
+request function may tike a while! Please note: if you try to download
+larger amounts of data it is suggested to split the data sets, e.g.,
+download year-by-year, or even month-by-month, if you are trying to download
+several varaiables/fields.
+
+Once the retrieval has finished you should now be the owner of a NetCDF
+containing the requested information located in the current working directory,
+called `era5-demo.nc`.
+
+Let's have a look (requires the _R_ package `netcdf`, and, in the best case,
+the _R_ package `colorspace`:
+
+```{r, echo = TRUE, fig = TRUE, width = 12, height = 8}
+# Check if netcdf is available:
+if ( ! "ncdf4" %in% rownames(installed.packages()) ) {
+    print("Whoops, ncdf4 not installed, skip this example ...")
+} else {
+    # Getting some colors
+    if ( ! "colorspace" %in% rownames(installed.packages()) ) {
+        col <- rainbow(50)[1:40]
+        xtra <- "\nNote: you should not use RGB rainbow colors!"
+    } else {
+        col <- colorspace::qualitative_hcl(100, h1 = 0, h2 = 270)
+        xtra <- ""
+    }
+
+    # Open NetCDF file 'era4-demo.nc'
+    nc <- ncdf4::nc_open("era5-demo.nc")
+    # Reading NetCDF data
+    lons <- sort(ncdf4::ncvar_get(nc, "longitude"))
+    lats <- sort(ncdf4::ncvar_get(nc, "latitude"))
+    data <- ncdf4::ncvar_get(nc, "t")
+
+    # Plotting an image
+    image(x = lons ,y = lats, z = data, col = col,
+          xlab = "longitude", ylab = "latitude",
+         main = sprintf("ERA-5 Demo Data, Temperature on 850ha%s", xtra))
+    if ( "maps" %in% rownames(installed.packages()) ) maps::map(add = TRUE)
+    contour(x = lons ,y = lats, z = data, labels = NA, add = TRUE, col = "white")
+
+
+    # Close NetCDF connection
+    ncdf4::nc_close(nc)
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

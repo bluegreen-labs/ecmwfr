@@ -39,6 +39,8 @@ devtools::install_github("khufkens/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
 
+## Use: ECMWF services
+
 Create a ECMWF account by [self registering](https://apps.ecmwf.int/registration/) and retrieving your key at https://api.ecmwf.int/v1/key/ after you log in. The key is a long series of numbers and characters (X in the example below).
 
 ```json
@@ -48,8 +50,6 @@ Create a ECMWF account by [self registering](https://apps.ecmwf.int/registration
     "email" : "john.smith@example.com"
 }
 ```
-
-## Use
 
 ### Setup
 
@@ -105,6 +105,130 @@ wf_request(
 ```
 
 This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.
+
+
+## Use: Copernicus Climate Data Store (CDS)
+
+Create a free CDS user account by [self
+registering](https://cds.climate.copernicus.eu/user/register). Once your user
+account has been verified you can get your personal _user ID_ and _key_ by
+visiting the [user profile](https://cds.climate.copernicus.eu/user).  This
+information is required to be able to retrieve data via the `ecmwfr` package.
+Two different ways to use your login are available: use the `ecmwf`
+[`cds_set_key`](references/cds_set_key.html) function to store your login
+information in the system keyring, or store your login information in a file
+called `.cdsapirc` located in your user's home directory. The `.cdsapirc` file
+is a simple ASCII file which will look similar to this:
+
+```json
+url: https://cds.climate.copernicus.eu/api/v2
+key: 1234:abcd1234-foo-bar-98765431-XXXXXXXXXX
+```
+
+More details can be found here: [How to use the CDS
+API](https://cds.climate.copernicus.eu/api-how-to).  The `ecmwfr` package will
+also use this file, if preferr to do so (see
+[`cds_key_from_file`](references/cds_from_file.html)).
+
+### Setup
+
+If you preferr to use your local keychain (rather than using the `.cdsapirc`
+file) you have to save your login information first.  The package does not
+allow you to use your key inline in scripts to limit security issues when
+sharing scripts on github or otherwise.
+
+```R
+# set a key to the keychain
+cdf_set_key(user = "1234", key = "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX")
+
+# you can retrieve the key using
+cds_get_key(user = "1234")
+
+# the output should be the key you provided
+# "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"
+```
+
+Before you can download any data you have to make sure to accept the terms and
+conditions here: Before downloading and processing data from CDS please make
+sure you acceppt the terms and conditions which can be found here: [Copernicus
+Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
+
+### Data Requests
+
+To download data use the [`cds_request`](references/cds_request.html) function,
+together with your _user ID_ and a request string syntax [as
+documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax).
+Instead of `json` formatting the function uses a simple `R` list for all the
+arguments.  **Note**: the simplest way to get the requests is to go to the CDS
+website which offers an interactive interface to create these requests.  E.g.,
+for
+
+* ERA-5 reanalysis:
+   * [pressure level data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
+   * [surface data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
+* ...
+
+```R
+# this is an example of a request for
+# downloading 'ERA-5' reanalysis data for
+# 2000-04-04 00:00 UTC, temperature on
+# 850 hectopascal for an area covering
+# northern Europe.
+# File will be stored as "era5-demo.nc" (netcdf format).
+era_request <- list(
+        "dataset" = "reanalysis-era5-pressure-levels",
+        "product_type" = "reanalysis",
+        "variable" = "temperature",
+        "pressure_level" = "850",
+        "year" = "2000",
+        "month" = "04",
+        "day" = "04",
+        "time" = "00:00",
+        "area" = "70/-20/00/60",
+        "format" = "netcdf",
+        "target" = "era5-demo.nc")
+
+
+# If you have stored your user login information
+# in the keyring by calling cds_set_key you can
+# call:
+cds_request(user = "1234", # user ID (for authentification)
+  request = era_request,   # the request
+  transfer = TRUE,         # download the file
+  path = ".")              # store data in current working directory
+
+# Test plot, requires ncdf4
+nc <- ncdf4::nc_open("era5-demo.nc")
+image(sort(ncdf4::ncvar_get(nc, "longitude")),
+      sort(ncdf4::ncvar_get(nc, "latitude")),
+      ncdf4::ncvar_get(nc, "t"))
+ncdf4::nc_close(nc)
+
+# If you have created a .cdsapirc file in your local
+# home directory you can also tell cds_request to use
+# the file by setting user = NULL:
+cds_request(user = NULL,   # use .cdsapirc
+  request = era_request,   # the request
+  transfer = TRUE,         # download the file
+  path = ".")              # store data in current working directory
+
+# Test plot, requires ncdf4
+nc <- ncdf4::nc_open("era5-demo.nc")
+image(sort(ncdf4::ncvar_get(nc, "longitude")),
+      sort(ncdf4::ncvar_get(nc, "latitude")),
+      ncdf4::ncvar_get(nc, "t"))
+ncdf4::nc_close(nc)
+```
+
+The CDS services are quite fast, however, if you request a lot of variables,
+multiple levels, and data over several years these requests might take quite a
+while!  **Note**: If you need to download larger amounts of data it is
+suggested to split the downloads, e.g., download the data in junks (e.g.,
+month-by-month, or year-by-year).  A progress indicator will keep you informed
+on the status of your request. Keep in mind that all data downloaded will be
+buffered in memory limiting the downloads to ~6GB on low end systems.
+
+
 
 ## Acknowledgements
 

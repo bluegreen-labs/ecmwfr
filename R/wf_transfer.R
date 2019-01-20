@@ -28,18 +28,36 @@
 wf_transfer <- function(
   email,
   url,
+  type,
   path = tempdir(),
   filename = "ecmwf_tmp.nc",
   verbose = TRUE
 ){
 
+  # wf_transfer is used for both, ecmwf and cds data transfer.
+  # To get correct email/key or user/key we need the type argument.
+  type <- match.arg(type, c("ecmwf", "cds"))
   # check the login credentials
   if(missing(email) | missing(url)){
     stop("Please provide ECMWF login email / url!")
   }
 
   # get key from email
-  key <- wf_get_key(email)
+  if(type == "cds") {
+    if(is.null(email)) {
+      tmp   <- cds_key_from_file(verbose = verbose)
+      email <- tmp$user; key <- tmp$key; rm(tmp)
+    } else {
+      key <- cds_get_key(email)
+    }
+  } else {
+    if(is.null(email)) {
+      tmp   <- wf_key_from_file(verbose = verbose)
+      email <- tmp$user; key <- tmp$key; rm(tmp)
+    } else {
+      key <- wf_get_key(email)
+    }
+  }
 
   # create temporary output file
   ecmwf_tmp_file <- file.path(path, filename)

@@ -7,6 +7,8 @@
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
+#' Can also be set to \code{NULL}, in this case email and key will be loaded
+#' from the \code{.ecmwfapirc} file (located in your home folder).
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default = 3600)
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
@@ -54,8 +56,15 @@ wf_request <- function(
     stop("Please provide ECMWF login credentials and data request!")
   }
 
+  # We need to keep the original email for later!
+  input_email <- email
   # get key from email
-  key <- wf_get_key(email)
+  if(is.null(email)) {
+    tmp <- wf_key_from_file(verbose)
+    user <- tmp$user; key <- tmp$key; rm(tmp)
+  } else {
+    key <- wf_get_key(email)
+  }
 
   # force the use of netcdf
   request$format <- "netcdf"
@@ -128,8 +137,9 @@ wf_request <- function(
     }
 
     # attempt a download
-    ct <- wf_transfer(email = email,
+    ct <- wf_transfer(email = input_email,
                       url = ct$href,
+                      type = "ecmwf",
                       verbose = verbose)
   }
 
@@ -142,6 +152,8 @@ wf_request <- function(
     ecmwf_tmp_file <- file.path(tempdir(), "ecmwf_tmp.nc")
 
     # copy temporary file to final destination
+    if ( verbose ) cat(sprintf("- copy file to: %s\n",
+                               file.path(path, request$target)))
     file.copy(ecmwf_tmp_file,
               file.path(path, request$target),
               overwrite = TRUE,
@@ -155,7 +167,7 @@ wf_request <- function(
 
   # delete the request upon succesful download
   # to free up other download slots
-  wf_delete(email = email,
+  wf_delete(email = input_email,
             url = ct$href,
             verbose = verbose)
 }

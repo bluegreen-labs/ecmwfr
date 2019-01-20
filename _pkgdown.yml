@@ -1,0 +1,30 @@
+navbar:
+
+home:
+  links:
+  - text: "ECMWF Public Datasets"
+    href: https://apps.ecmwf.int/datasets
+  - text: "Copernicus CDS"
+    href: https://cds.climate.copernicus.eu
+
+
+reference:
+  - title: "ECMWF Data"
+    contents: 
+      - wf_set_key
+      - wf_get_key
+      - wf_key_from_file
+      - wf_user_info
+      - wf_services
+      - wf_datasets
+      - wf_request
+      - wf_delete
+  - title: "Copernicus CDS"
+    contents: 
+      - cds_set_key
+      - cds_get_key
+      - cds_key_from_file
+      - cds_datasets
+      - cds_request
+      - cds_delete
+

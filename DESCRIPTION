@@ -1,26 +1,35 @@
 Package: ecmwfr
-Title: Interface to the 'ECMWF' Data Web Services
+Title: Interface to 'ECMWF' and 'CDS' Data Web Services
 Version: 1.0.0
-Authors@R: person(
-      family = "Hufkens",
-      given = "Koen",
-		  email = "koen.hufkens@gmail.com",
-		  role = c("aut", "cre"))
+Authors@R: c(person(
+               family = "Hufkens",
+               given = "Koen",
+               email = "koen.hufkens@gmail.com",
+               role = c("aut", "cre")),
+             person(
+               family = "Stauffer",
+               given = "Reto",
+               email = "Reto.Stauffer@uibk.ac.at",
+               role = c("ctb"),
+               comment = c(ORCID = "0000-0002-3798-5507"))
+           )
 Description: Programmatic interface to the 'ECMWF' public dataset 
-    web services (<https://www.ecmwf.int/>). Allows for easy downloads of
+    web services (<https://www.ecmwf.int/>) and Copernicus
+    Climate Data Store (CDS; <https://cds.climate.copernicus.eu>).
+    Allows for easy downloads of
     climate data directly to your R work space or your computer.
 URL: https://github.com/khufkens/ecmwfr
 BugReports: https://github.com/khufkens/ecmwfr/issues
 Depends:
     R (>= 3.4)
 Imports:
-    httr,
-    keyring
+    httr
 License: AGPL-3
 LazyData: true
 ByteCompile: true
 RoxygenNote: 6.1.1
 Suggests:
+    keyring,
     knitr,
     rmarkdown,
     covr,

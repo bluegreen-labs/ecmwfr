@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ECMWF dataset list — wf_datasets • ecmwfr</title>
+<title>Get secret CDS token — cds_get_key • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="ECMWF dataset list — wf_datasets" />
+<meta property="og:title" content="Get secret CDS token — cds_get_key" />
 
-<meta property="og:description" content="Returns a list of datasets" />
+<meta property="og:description" content="Returns you token set by cds_set_key." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,52 +114,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ECMWF dataset list</h1>
-    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_datasets.R'><code>R/wf_datasets.R</code></a></small>
-    <div class="hidden name"><code>wf_datasets.Rd</code></div>
+    <h1>Get secret CDS token</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/cds_key.R'><code>R/cds_key.R</code></a></small>
+    <div class="hidden name"><code>cds_get_key.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns a list of datasets</p>
+    <p>Returns you token set by <code><a href='cds_set_key.html'>cds_set_key</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_datasets</span>(<span class='no'>email</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>cds_get_key</span>(<span class='no'>user</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>email</th>
-      <td><p>email address used to sign up for the ECMWF data service and
-used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
-    </tr>
-    <tr>
-      <th>simplify</th>
-      <td><p>simplify the output, logical (default = <code>TRUE</code>)</p></td>
+      <th>user</th>
+      <td><p>chracter, user id used to sign up for the CDS data server</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>returns a nested list or data frame with the ECMWF datasets</p>
+    <p>the key set using <code><a href='cds_set_key.html'>cds_set_key</a></code> saved
+in the keychain</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Wrapper function for <code><a href='wf_set_key.html'>wf_set_key</a></code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='wf_set_key.html'>wf_set_key</a></code>
-<code><a href='wf_transfer.html'>wf_transfer</a></code>
-<code><a href='wf_request.html'>wf_request</a></code></p></div>
+    <div class='dont-index'><p><code><a href='cds_set_key.html'>cds_set_key</a></code>, <code><a href='cds_key_from_file.html'>cds_key_from_file</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 </div><div class='input'><span class='co'># set key</span>
-<span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
-<span class='co'># get a list of services</span>
-<span class='fu'><a href='wf_services.html'>wf_services</a></span>(<span class='st'>"test@mail.com"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; <span class='error'>Error: Your request failed</span></div><div class='input'>
-<span class='co'># get a list of datasets</span>
-<span class='fu'>wf_datasets</span>(<span class='st'>"test@mail.com"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; <span class='error'>Error: Your request failed</span></div></pre>
+<span class='fu'><a href='cds_set_key.html'>cds_set_key</a></span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"1234"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"abc123foo"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
+<span class='co'># get key</span>
+<span class='fu'>cds_get_key</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"1234"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; [1] "abc123foo"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -168,11 +165,15 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Koen Kufkens, Reto Stauffer</p>
   </div>
 </div>
 

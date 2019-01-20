@@ -1,5 +1,6 @@
 # load default server names
 ecmwf_server <- function(){'https://api.ecmwf.int/v1/'}
+cds_server   <- function() "https://cds.climate.copernicus.eu/api/v2"
 
 # simple spinner
 spinner <- function(seconds){
@@ -8,6 +9,7 @@ spinner <- function(seconds){
   start_time <- Sys.time()
   spinner_count <- 1
 
+  if(length(seconds) == 0) seconds <- 1
   while(Sys.time() <= start_time + seconds){
 
     # slow down while loop

@@ -13,7 +13,9 @@ wf_request(email, path = tempdir(), time_out = 3600,
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
+Can also be set to \code{NULL}, in this case email and key will be loaded
+from the \code{.ecmwfapirc} file (located in your home folder).}
 
 \item{path}{path were to store the downloaded data}
 

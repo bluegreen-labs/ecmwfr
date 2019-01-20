@@ -23,3 +23,6 @@ wf_set_key <- function(email, key){
                      email,
                      password = key)
 }
+
+# Used to simplify the calls
+ecmwf_set_key <- wf_set_key

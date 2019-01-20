@@ -32,52 +32,61 @@
 #' # Use local keyring:
 #' cds_set_key(user = "1234", key = "abcd1345foo")
 #'
-#' # Specify request 
-#' era_request <- list(
-#'             "dataset" = "reanalysis-era5-pressure-levels",
-#'             "product_type" = "reanalysis",
-#'             "format" = "netcdf",
-#'             "variable" = "temperature",
-#'             "pressure_level" = "850",
-#'             "year" = "2000",
-#'             "month" = "04",
-#'             "day" = "04",
-#'             "time" = "00:00",
-#'             "area" = "70/-20/00/60",
-#'             "format" = "netcdf",
-#'             "target" = "era5-demo.nc")
+#' # Specify request, a pressure-level request
+#' # for ERA-5 reanalysis data, temperature 850 hPa.
+#' # One time step, user-defined sub-area, NetCDF.
+#' request_pl <- list(
+#'               "dataset"      = "reanalysis-era5-pressure-levels",
+#'               "product_type" = "reanalysis",
+#'               "format"       = "netcdf",
+#'               "variable"     = "temperature",
+#'               "pressure_level" = "850",
+#'               "year"   = "2000",
+#'               "month"  = "04",
+#'               "day"    = "04",
+#'               "time"   = "00:00",
+#'               "area"   = "70/-20/00/60",
+#'               "format" = "netcdf",
+#'               "target" = "era5-demo.nc")
 #'
 #' # Request data/download file using 'user = "1234"'.
 #' # Note: requires that you have stored the login information
 #' # via 'cds_set_key()' (see above).
 #' cds_request(user = "1234",           # user ID (for authentification)
-#'             request = era_request,   # the request
+#'             request = request_pl,    # the request
 #'             transfer = TRUE,         # download the file
 #'             path = ".")              # store data in current working directory
-#'
-#' # (Ugly) demo plot to see if we got what we expect,
-#' # requires the ncdf4 library to be installed.
-#' nc <- ncdf4::nc_open("era5-demo.nc")
-#' image(sort(ncdf4::ncvar_get(nc, "longitude")),
-#'       sort(ncdf4::ncvar_get(nc, "latitude")),
-#'       ncdf4::ncvar_get(nc, "t"))
-#' ncdf4::nc_close(nc)
 #'
 #' # Alternatively (as an alternative to use local keyring):
 #' # store user information in .cdsapirc and set user = NULL
 #' # to use login information from .cdsapirc:
 #' cds_request(user = NULL,             # use .cdsapirc
-#'             request = era_request,   # the request
+#'             request = request_pl,    # the request
 #'             transfer = TRUE,         # download the file
 #'             path = ".")              # store data in current working directory
 #'
-#' # (Ugly) demo plot to see if we got what we expect,
-#' # requires the ncdf4 library to be installed.
-#' nc <- ncdf4::nc_open("era5-demo.nc")
-#' image(sort(ncdf4::ncvar_get(nc, "longitude")),
-#'       sort(ncdf4::ncvar_get(nc, "latitude")),
-#'       ncdf4::ncvar_get(nc, "t"))
-#' ncdf4::nc_close(nc)
+#' # Second request, surface-level (or single-level) request
+#' # for ERA-5 reanalysis data, total precipitation.
+#' # One time step, user-defined sub-area, NetCDF.
+#' request_sf <- list(
+#'               "dataset"      = "reanalysis-era5-single-levels",
+#'               "product_type" = "reanalysis",
+#'               "format"       = "netcdf",
+#'               "variable"     = "total_precipitation",
+#'               "year"   = "2000",
+#'               "month"  = "04",
+#'               "day"    = "04",
+#'               "time"   = "00:00",
+#'               "area"   = "70/-20/00/60",
+#'               "format" = "netcdf",
+#'               "target" = "era5-demo.nc")
+#'
+#' # Surface level request, using '.cdsapirc' login file
+#' cds_request(user = NULL,             # use .cdsapirc
+#'             request = request_sf,    # the request
+#'             transfer = TRUE,         # download the file
+#'             path = ".")              # store data in current working directory
+#'
 #'}
 
 cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
@@ -158,7 +167,6 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
     ct <- wf_transfer(email    = input_user,
                       url      = ct$request_id,
                       type     = "cds",
-                      path     = path,
                       filename = tmp_file,
                       verbose  = verbose)
   } else {
@@ -218,7 +226,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
     # copy temporary file to final destination
     src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
-    if(verbose) cat("Rename file: %s -> %s\n", src, dst)
+    if(verbose) cat(sprintf("Rename file: %s -> %s\n", src, dst))
     file.rename(src, dst)
 
   } else {

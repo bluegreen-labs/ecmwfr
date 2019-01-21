@@ -5,6 +5,7 @@
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param simplify simplify the output, logical (default = \code{TRUE})
+#' @param verbose boolean, default \code{FALSE}
 #' @return returns a nested list or data frame with the ECMWF datasets
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -25,18 +26,22 @@
 #' wf_datasets("test@mail.com")
 #'}
 
-wf_datasets <- function(
-  email,
-  simplify = TRUE
-){
+wf_datasets <- function(email, simplify = TRUE, verbose = FALSE){
 
   # check the login credentials
   if(missing(email)){
     stop("Please provide ECMWF login email / url!")
   }
 
+  # We need to keep the original email for later!
   # get key from email
-  key <- wf_get_key(email)
+  if(is.null(email)) {
+    tmp   <- wf_key_from_file(verbose)
+    email <- tmp$user; key <- tmp$key; rm(tmp)
+  } else {
+    key   <- wf_get_key(email)
+  }
+
 
   # query the status url provided
   response <- httr::GET(

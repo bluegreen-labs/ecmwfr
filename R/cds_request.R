@@ -107,10 +107,6 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
     key <- cds_get_key(user)
   }
 
-  # force the use of netcdf
-  request$format <- "netcdf"
-  request$target <- paste0(tools::file_path_sans_ext(request$target), ".nc")
-
   # get the response from the query provided
   response <- httr::POST(
     sprintf("%s/resources/%s", cds_server(), request$dataset),
@@ -135,7 +131,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
                "Even after exiting this function your request is still",
                "beeing processed! Your request ID is:\n\n%2$s\n\n",
                "You can download the file as soon as processed by calling:\n\n",
-               "wf_download(\"%s$2\", type = \"cds\")\n\n",
+               "wf_download(\"%2$s\", type = \"cds\")\n\n",
                "Or cancel the request:\n\n",
                "wf_delete(<user>, \"%1$s/tasks/%2$s\", type = \"cds\")\n\n",
                "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.",
@@ -159,7 +155,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # Temporary file name, will be used in combination with
   # tempdir() when calling wf_transfer. The final file will
   # be moved to "path" as soon as the download has been finished.
-  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
+  tmp_file <- basename(tempfile("ecmwfr_"))
 
   # If return ct$state == "completed": transfer
   if ( ct$state == "completed" ) {
@@ -226,7 +222,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
     # copy temporary file to final destination
     src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
-    if(verbose) cat(sprintf("Rename file: %s -> %s\n", src, dst))
+    if(verbose) cat(sprintf("- move file: %s -> %s\n", src, dst))
     file.rename(src, dst)
 
   } else {

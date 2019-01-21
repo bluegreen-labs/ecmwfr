@@ -61,8 +61,8 @@ wf_request <- function(
   input_email <- email
   # get key from email
   if(is.null(email)) {
-    tmp <- wf_key_from_file(verbose)
-    user <- tmp$user; key <- tmp$key; rm(tmp)
+    tmp   <- wf_key_from_file(verbose)
+    email <- tmp$email; key <- tmp$key; rm(tmp)
   } else {
     key <- wf_get_key(email)
   }
@@ -71,13 +71,22 @@ wf_request <- function(
   request$format <- "netcdf"
   request$target <- paste0(tools::file_path_sans_ext(request$target),
                            ".nc")
+  # getting api url: different handling if 'dataset = "mars"',
+  # requests to 'dataset = "mars"' require a non-public user
+  # account (member states/commercial).
+  url <- if(request$dataset == "mars") {
+    sprintf("%s/services/mars/requests", ecmwf_server())
+  } else{
+    sprintf("%s/datasets/%s/requests", ecmwf_server(), request$dataset)
+  }
 
   # get the response from the query provided
   response <- httr::POST(
-    paste(ecmwf_server(),
-          "datasets",
-          request$dataset,
-          "requests", sep = "/"),
+    url,
+    #paste(ecmwf_server(),
+    #      "datasets",
+    #      request$dataset,
+    #      "requests", sep = "/"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",

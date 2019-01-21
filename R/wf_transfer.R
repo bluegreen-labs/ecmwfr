@@ -68,6 +68,7 @@ wf_transfer <- function(
   # download requext (cds)
   if(type == "cds") {
     # Download information about request (including location)
+    if(verbose) cat(sprintf("- GET: %s\n", url))
     response <- httr::GET(url,
       httr::authenticate(email, key),
       httr::add_headers(
@@ -79,6 +80,7 @@ wf_transfer <- function(
     # or a request information:
     tmp <- httr::content(response)
     if (!inherits(tmp, "raw")) {
+        if(verbose) cat(sprintf("- GET: %s\n", url))
         response <- response <- httr::GET(tmp$location,
           httr::authenticate(email, key),
           httr::add_headers(
@@ -90,6 +92,7 @@ wf_transfer <- function(
   # -----------------------
   # Download request (ecmwf)
   } else {
+    if(verbose) cat(sprintf("- GET: %s\n", url))
     response <- httr::GET(
       url,
       httr::add_headers(

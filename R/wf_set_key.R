@@ -5,6 +5,7 @@
 #'
 #' @param email email address used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
+#' @param service which service to use
 #' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
 #' @export
@@ -19,11 +20,14 @@
 #' wf_get_key(email = "test@mail.com")
 #'}
 
-wf_set_key <- function(email, key){
-  keyring::key_set_with_value("ecmwfr",
-                     email,
-                     password = key)
+wf_set_key <- function(email, key, service = "webapi"){
+  if(service == webapi){
+    keyring::key_set_with_value("ecmwfr_webapi",
+                       email,
+                       password = key)
+  }else{
+    keyring::key_set_with_value("ecmwfr_cds",
+                                email,
+                                password = key)
+  }
 }
-
-# Used to simplify the calls
-ecmwf_set_key <- wf_set_key

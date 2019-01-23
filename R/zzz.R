@@ -64,6 +64,25 @@ spinner <- function(seconds, id) {
   }
 }
 
+# Show message if user exits the function (interrupts execution)
+# or as soon as an error will be thrown.
+
+exit_message <- function(id, path, target){
+  exit_msg <-  paste(
+    "Even after exiting your request is still beeing processed!",
+    "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
+    "to manage (download, retry, delete) your requests",
+    "or to get ID's from previous requests.",
+    "Retry downloading as soon as as completed:",
+    sprintf("  - wf_transfer(<user>, \"%s\", \"cds\", \"%s\", \"%s\")",
+            id, path, file),
+    "Delete the job upon completion using:",
+    sprintf("  - wf_delete(<user>, \"%s\", \"cds\")", id),
+    sep = "\n  ")
+  message(sprintf("- Your request has been submitted to CDS.\n  %s", exit_msg))
+}
+
+
 # Startup message when attaching the package.
 .onAttach <- function(libname = find.package("ecmwfr"), pkgname = "ecmwfr") {
   vers <- as.character(utils::packageVersion("ecmwfr"))

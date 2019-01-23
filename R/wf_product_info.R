@@ -33,22 +33,19 @@
 #' @export
 #' @author Reto Stauffer
 
-cds_productinfo <- function(user, dataset, show = TRUE, verbose = FALSE) {
+wf_product_info <- function(
+  user,
+  dataset,
+  show = TRUE,
+  verbose = FALSE
+  ){
 
   # check the login credentials
   if(missing(user))
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
 
-  # get key. If 'user == NULL' load user login information from
-  # '~/.cdsapirc' file. Else load key via local keyring.
-  input_user <- user # Keep input 'user' for later!
-  if(is.null(user)) {
-      tmp  <- ecmwfr::cds_key_from_file(verbose = verbose)
-      user <- tmp$user; key <- tmp$key; rm(tmp)
-  } else {
-    # get key from uername
-    key <- cds_get_key(user)
-  }
+  # get key
+  key <- wf_get_key(email, service = "cds")
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.

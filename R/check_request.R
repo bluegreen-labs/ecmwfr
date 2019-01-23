@@ -22,18 +22,24 @@
 #' @export
 #' @author Reto Stauffer
 check_request <- function(x) {
+
     # If no 'dataset' is set: stop
     stopifnot(inherits(x, "list"))
-    if(!"dataset" %in% names(x))
+    if(!"dataset" %in% names(x)){
         stop("Request specification has to contain a \"dataset\" identifier.")
+    }
 
     # Check if function exists. If not, return
     cmd <- sprintf("check_request_%s", x$dataset)
-    check_user_request <- tryCatch(eval(parse(text = cmd)), error = function(e) e)
-    # Function not ound: return original list
+    check_user_request <- tryCatch(eval(parse(text = cmd)),
+                                   error = function(e) e)
+
+    # Function not found: return original list
     if(inherits(check_user_request, "error")) return(x)
+
     # If the evaluated cmd is not a function: return originl list
     if(!is.function(check_user_request)) return(x)
+
     # Else forward 'request' to function 'checkfun' and return the
     # result of the 'check_request_<dataset>' method.
     return(check_user_request(x))

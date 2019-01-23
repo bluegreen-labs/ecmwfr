@@ -13,7 +13,7 @@
 #' from the \code{.ecmwfapirc} file (located in your home folder).
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
-#' \code{3*3600} seconds for mars requests, \code{3600} seconds for all others).
+#' \code{3*3600} seconds).
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
@@ -51,10 +51,11 @@
 
 wf_request <- function(
   email,
+  service,
   request,
-  path = tempdir(),
-  time_out = ifelse(request$dataset == "mars", 3*3600, 3600),
   transfer = FALSE,
+  path = tempdir(),
+  time_out = 3*3600,
   verbose = TRUE
   ){
 
@@ -63,25 +64,8 @@ wf_request <- function(
     stop("Please provide ECMWF login credentials and data request!")
   }
 
-  # get key. If 'email == NULL' load user login information from
-  # '~/.ecmwfapirc' file. Else load key via local keyring.
-  input_email <- email # We need to keep the original email for later!
-  if(is.null(email)) {
-    tmp   <- wf_key_from_file(verbose)             # From file
-    email <- tmp$email; key <- tmp$key; rm(tmp)
-  } else {
-    key <- wf_get_key(email)                       # From keyring
-  }
-
-  # force the use of netcdf
-  #TODO: Reto, January 2019: forcing NetCDF is not cool. Do you rely
-  # on this default/fallback? Any back-issues when removing this part?
-  request$format <- "netcdf"
-  request$target <- paste0(tools::file_path_sans_ext(request$target),
-                           ".nc")
-
-  # checking request to avoid some of the common problems
-  request <- check_request(request)
+  # get key
+  key <- wf_get_key(email, service = service)
 
   # getting api url: different handling if 'dataset = "mars"',
   # requests to 'dataset = "mars"' require a non-public user
@@ -92,17 +76,30 @@ wf_request <- function(
     sprintf("%s/datasets/%s/requests", ecmwf_server(), request$dataset)
   }
 
-  # get the response from the query provided
-  response <- httr::POST(
-    url,
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json",
-      "From" = email,
-      "X-ECMWF-KEY" = key),
-    body = request,
-    encode = "json"
+  # depending on the service get the response
+  # for the query provided
+  if (service == "webapi"){
+    response <- httr::POST(
+      url,
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = email,
+        "X-ECMWF-KEY" = key),
+      body = request,
+      encode = "json"
+      )
+  } else {
+    response <- httr::POST(
+      sprintf("%s/resources/%s", cds_server(), request$dataset),
+      httr::authenticate(user, key),
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json"),
+      body = request,
+      encode = "json"
     )
+  }
 
   # trap general http error
   if(httr::http_error(response)){
@@ -119,6 +116,14 @@ wf_request <- function(
     message("  ", ct$href)
   }
 
+  # on exit show message
+  on.exit(
+    exit_message(
+      id = ct$request_id,
+      path = path,
+      file = request$target)
+    )
+
   # only return the content of the query
   if(!transfer){
     return(ct)
@@ -126,6 +131,8 @@ wf_request <- function(
 
   # set time-out counter
   if(verbose) message(sprintf("- timeout set to %.1f hours", time_out/3600))
+
+  # set time-out
   time_out <- Sys.time() + time_out
 
   # Temporary file name, will be used in combination with tempdir() when
@@ -138,25 +145,14 @@ wf_request <- function(
   while(ct$code == 202){
 
     # exit routine when the time out
-    # is reached, create message to consult
-    # the ecmwf website to download the data
-    # or retain the download url and use
-    # wf_transfer()
     if(Sys.time() > time_out){
       # Waiting for request to be finished timed out.
-      # Show note and return content of last http request.
-      message("  Please use the MARS job list to track your jobs at:")
-      message("  https://apps.ecmwf.int/webmars/joblist/")
-      message("  and retry download using wf_transfer():")
-      message(sprintf("  - wf_transfer(<user>, \"%s\", \"ecmwf\", \"%s\", \"%s\")",
-              ct$name, path, request$target))
-      # Mars has different limits (depending on the user).
-      if(request$dataset == "mars") {
-        message("  Note that there are user-dependent limits of active/queued jobs.")
-      } else {
-        message("  There is a limit of 3 active and 20 queued jobs.")
-        message("  Delete the job using wf_delete() upon completion!")
-      }
+      message("  Please use the ECMWF or CDS job list to track your jobs at:")
+      message("  https://apps.ecmwf.int/webmars/joblist/ or")
+      message("  https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
+      message("  and retry download using wf_transfer().")
+      message("  Note that there are user-dependent limits of submitted jobs.")
+      message("  Delete the job using wf_delete() upon completion!")
       return(ct)
     }
 
@@ -182,11 +178,15 @@ wf_request <- function(
   # and delete original, with an exception for tempdir() location.
   # The latter to facilitate package integration.
   if (path != tempdir()) {
-    # copy temporary file to final destination
+
     src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
-    if ( verbose ) cat(sprintf("- move file: %s -> %s\n", src, dst))
+
+    if ( verbose ){
+      message(sprintf("- move file: %s -> %s\n", src, dst))
+    }
     file.rename(src, dst)
+
   } else {
     dst <- file.path(path, tmp_file)
     message("- file not copied and removed (path == tempdir())")
@@ -204,11 +204,3 @@ wf_request <- function(
   # return final file name/path (dst = destination).
   return(invisible(dst))
 }
-
-
-
-
-
-
-
-

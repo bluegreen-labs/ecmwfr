@@ -31,24 +31,19 @@ wf_datasets <- function(
   email,
   service = "webapi",
   simplify = TRUE,
-  verbose = FALSE){
+  verbose = FALSE
+  ){
 
   # check the login credentials
   if(missing(email)){
     stop("Please provide ECMWF WebAPI or CDS login email / url!")
   }
 
-  # We need to keep the original email for later!
-  # get key from email
-  if(is.null(email)) {
-    tmp   <- wf_key_from_file(verbose)
-    email <- tmp$user; key <- tmp$key; rm(tmp)
-  } else {
-    key   <- wf_get_key(email)
-  }
+  # get key
+  key   <- wf_get_key(email, service = service)
 
-  if (service == "webapi"){
   # query the status url provided
+  if (service == "webapi"){
   response <- httr::GET(
     paste(ecmwf_server(),
           "datasets", sep = "/"),
@@ -60,8 +55,6 @@ wf_datasets <- function(
     encode = "json"
   )
   } else {
-
-    # query the status url provided
     response <- httr::GET(sprintf("%s/resources/", cds_server()))
   }
 
@@ -75,7 +68,6 @@ wf_datasets <- function(
   ct <- httr::content(response)
 
   if(simplify){
-
     if(service == "webapi"){
       # reformat content
       ct <- do.call("rbind", lapply(ct$datasets, function(x){

@@ -40,6 +40,17 @@ a netCDF of data on disk as specified by a
 Returns the contents of the requested url as a netCDF file downloaded
 to disk or the current status of the requested transfer.
 }
+\examples{
+
+\dontrun{
+# set key
+wf_set_key(email = "test@mail.com", key = "123")
+
+# request data and grab url and try a transfer
+r <- wf_request("test@email.com")
+wf_transfer("test@email.com", url = r$href)
+}
+}
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_request}}

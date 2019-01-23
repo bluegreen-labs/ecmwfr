@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
 [![codecov](https://codecov.io/gh/khufkens/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/ecmwfr)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwwfr)](https://cran.r-project.org/package=ecmwwfr)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwwfr)](https://cran.r-project.org/package=ecmwwfr)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 <a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 
 # ecmwfr
@@ -104,7 +104,7 @@ wf_request(
 
 ```
 
-This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.
+This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: [https://apps.ecmwf.int/webmars/joblist/](https://apps.ecmwf.int/webmars/joblist/).
 
 
 ## Use: Copernicus Climate Data Store (CDS)

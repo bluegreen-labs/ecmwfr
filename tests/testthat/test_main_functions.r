@@ -39,7 +39,8 @@ skip_check <- try(wf_get_key(email = "khrdev@outlook.com"))
 skip_check <- inherits(skip_check, "try-error")
 
 # check keychain management
-test_that("set, get secret key", {
+test_that("set, get secret key",{
+  skip_if(skip_check)
   expect_silent(wf_set_key(email = "johndoe@hotmail.com",
                            key = "XXX"))
   expect_output(str(wf_get_key(email = "johndoe@hotmail.com")))
@@ -116,9 +117,34 @@ test_that("test request (transfer) function", {
     email = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
-    time_out = 60))
+    time_out = 180))
 })
 
 test_that("test delete function - no login", {
   expect_error(wf_delete())
+})
+
+test_that("test request (transfer) function - larger download", {
+  skip_if(skip_check)
+
+  # large request
+  large_request <- list(stream = "oper",
+                 levtype = "sfc",
+                 param = "167.128",
+                 dataset = "interim",
+                 step = "0",
+                 grid = "0.75/0.75",
+                 time = "00",
+                 date = "2014-07-01/to/2015-07-02",
+                 type = "an",
+                 class = "ei",
+                 area = "50/10/61/21",
+                 format = "netcdf",
+                 target = "tmp.nc")
+
+  expect_message(wf_request(
+    email = "khrdev@outlook.com",
+    transfer = TRUE,
+    request = large_request,
+    time_out = 300))
 })

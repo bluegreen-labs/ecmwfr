@@ -18,7 +18,7 @@ Returns you token set by \code{\link[ecmwfr]{wf_set_key}}
 }
 \examples{
 
-\donttest{
+\dontrun{
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 

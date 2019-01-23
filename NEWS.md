@@ -31,6 +31,13 @@
   Moved `keyring` from `import` to `suggets` (only used if `wf_set_key`,
   `wf_get_key` or the `cds_*` wrappers are called).
 
+# ecmwfr 1.0.1
+
+* accidental CRAN violation fixed
+* `wf_transfer()` separate downloads allowed
+* checks for binary downloads (larger files)
+
+
 # ecmwfr 1.0.0
 
 * major version
@@ -40,7 +47,7 @@
 
 * unit checks with encrypted key
 * good CI coverage >90%
-* verbose feedback on wf_request()
+* verbose feedback on `wf_request()`
 * rOpenSci syntax and ok, gp() ok
 
 # ecmwfr 0.0.2

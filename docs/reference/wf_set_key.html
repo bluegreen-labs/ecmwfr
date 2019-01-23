@@ -66,7 +66,7 @@ a service called &quot;ecmwfr&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -149,10 +149,13 @@ a service called "ecmwfr".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div><div class='input'><span class='co'># set key</span>
-<span class='fu'>wf_set_key</span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># set key</span>
+<span class='fu'>wf_set_key</span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)
+
 <span class='co'># get key</span>
-<span class='fu'><a href='wf_get_key.html'>wf_get_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; [1] "123"</div></pre>
+<span class='fu'><a href='wf_get_key.html'>wf_get_key</a></span>(<span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

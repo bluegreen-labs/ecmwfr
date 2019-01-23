@@ -17,7 +17,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 Can also be set to \code{NULL}, in this case email and key will be loaded
 from the \code{.ecmwfapirc} file (located in your home folder).}
 
-\item{path}{path were to store the downloaded data}
+\item{path}{path where to store the downloaded data}
 
 \item{time_out}{how long to wait on a download to start (default =
 \code{3*3600} seconds for mars requests, \code{3600} seconds for all others).}
@@ -42,12 +42,12 @@ to identify possible problems.
 }
 \examples{
 
-\donttest{
+\dontrun{
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 
-# get key
-wf_get_key(email = "test@mail.com")
+# get the default test data
+wf_request(email = "test@mail.com")
 }
 }
 \seealso{

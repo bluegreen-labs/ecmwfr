@@ -14,6 +14,8 @@
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
 #' \code{3*3600} seconds for mars requests, \code{3600} seconds for all others).
+#' @param path path where to store the downloaded data
+#' @param time_out how long to wait on a download to start (default = 3600)
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
@@ -26,12 +28,12 @@
 #' @author Koen Kufkens
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'
-#' # get key
-#' wf_get_key(email = "test@mail.com")
+#' # get the default test data
+#' wf_request(email = "test@mail.com")
 #'}
 
 wf_request <- function(

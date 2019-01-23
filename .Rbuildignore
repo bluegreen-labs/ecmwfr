@@ -1,13 +1,41 @@
+
+# Exclude travis-related files
+# .travis.yml   travis config
+# create_apirc  creates .cdsapirc and .ecmwfapirc
+#               on travis-ci.org. NOTE: requires
+#               four exported variables:
+#               CDSAPIUSER:    CDS user id
+#               CDSAPIKEY:     CDS login secret key
+#               ECMWFAPIEMAIL: ECMWF user e-mail address
+#               ECMWFAPIKEY:   ECMWF login secret key
 ^\.travis\.yml$
+^create_apirc$
+
+# Ignore pkgdown
+^_pkgdown\.yml$
+^pkgdown$
+
+# Doc folder and vignettes
+^docs$
+^vignettes\/.*$
+
+# Exclude download tests, should not be
+# tested, only for local tests as some of the
+# requests require a member-state user account
+# and can take an hour and more.
+^tests\/download_.*\.R$
+
+# R-markdown files in the root folder.
+^LICENSE$
+^CONDUCT\.md$
+^NEWS\.md$
+^README\.md$
+^contact\.md$
+^cran-comments\.md$
+
+# Stuff
 ^.*\.Rproj$
 ^.*\.Renviron$
 ^\.Rproj\.user$
-^README\.Rmd$
-^README\.md$
-^_config\.yml$
-^cran-comments\.md$
-^CONDUCT\.md$
-^NEWS\.md$
-^LICENSE$
-^docs$
 ^\.httr-oauth$
+

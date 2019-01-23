@@ -2,25 +2,25 @@
 % Please edit documentation in R/wf_user_info.R
 \name{wf_user_info}
 \alias{wf_user_info}
-\title{ECMWF user info query}
+\title{ECMWF WebAPI user info query}
 \usage{
-wf_user_info(email)
+wf_user_info(user)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
+\item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 }
 \value{
 returns a data frame with user info
 }
 \description{
-Returns user info
+Returns user info for the ECMWF WebAPI
 }
 \examples{
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
 
 # get user info
 wf_user_info("test@mail.com")

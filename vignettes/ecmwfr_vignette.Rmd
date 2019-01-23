@@ -97,34 +97,33 @@ datasets <- wf_datasets(email = "khrdev@outlook.com")
 head(datasets)
 ```
 
-## Data Requests
+## ECMWF Data Requests (Public Data Sets)
 
 To download data use the wf_request() function, together with your email and a request string syntax [as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the arguments.
 
 ```{r eval = cran}
 # this is an example of a request
-my_request <- list(stream = "oper",
-                  levtype = "sfc",
-                  param = "167.128",
-                  dataset = "interim",
-                  step = "0",
-                  grid = "0.75/0.75",
-                  time = "00",
-                  date = "2014-07-01/to/2014-07-31",
-                  type = "an",
-                  class = "ei",
-                  area = "73.5/-27/33/45",
-                  format = "netcdf",
-                  target = "tmp.nc")
+my_request <- list(stream  = "oper",
+                   levtype = "sfc",
+                   param   = "167.128",
+                   dataset = "interim",
+                   step    = "0",
+                   grid    = "0.75/0.75",
+                   time    = "00",
+                   date    = "2014-07-01/to/2014-07-31",
+                   type    = "an",
+                   class   = "ei",
+                   area    = "73.5/-27/33/45",
+                   format  = "netcdf",
+                   target  = "tmp.nc")
 
 # an example download using fw_request()
 # using the above request list()
-wf_request(
-  email = "khrdev@outlook.com",
-  transfer = TRUE,
-  path = "~",
-  request = my_request,
-  verbose = FALSE)
+wf_request(email    = "khrdev@outlook.com",   # use keyring option
+           transfer = TRUE,                   # wait for request to be finished an download
+           path     = "~",                    # store in 'home folder'
+           request  = my_request,             # product specification
+           verbose  = FALSE)
 ```
 
 This operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on [the ECMWF website](https://apps.ecmwf.int/webmars/joblist/), and provided with a download url which can be sued with the `wt_transfer()` funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued! 
@@ -138,3 +137,45 @@ print(s)
 raster::plot(s[[1]], main = "2 meter temperature (Kelvin)")
 maps::map("world", add = TRUE)
 ```
+
+
+## ECMWF mars Requests
+
+The `ecmwfr` package ([`wf_request()`](../references/wf_request.html)) also
+allows to submit _mars_ requests. Note that this requires a member state login
+or a commercial user account!
+
+The `ecmwfr` syntax for _mars_ requests is identical to the ones to the public
+ECMWF API except that one has to specify `dataset = "mars"`.
+The example below downloads the 2 meter temperature forecast (parameter `167`)
+from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (`step`).
+A NetCDF file with a regular `0.125 x 0.125` degree horizontal resolution for
+a custom area in northern Europe will be downloaded (`area`).
+**Note** that the `grid` specification _is required_ if `format = "netcdf"`
+as grib to netcdf conversion is only able for regular longitude-latitude grids.
+
+```{r mars example, eval = FALSE}
+# this is an example of a request
+my_request <- list("dataset" = "mars",
+                   "class"   = "od",
+                   "date"    = "2019-01-22",
+                   "expver"  = "1",
+                   "levtype" = "sfc",
+                   "param"   = "167.128",
+                   "step"    = "0",
+                   "stream"  = "oper",
+                   "time"    = "12",
+                   "type"    = "fc",
+                   "grid"    = "0.125/0.125",
+                   "area"    = "50/0/30/15",
+                   "format"  = "netcdf",
+                   "target"  = "mars-data.nc")
+
+# Submit mars request and wait for netcdf file
+wf_request(email    = NULL,        # use ~/.ecmwfapirc file
+           transfer = TRUE,        # wait for request to be finished an download
+           path     = ".",         # store data to current directory
+           request  = my_request,  # request/product specification
+           verbose  = FALSE)
+```
+

@@ -4,50 +4,67 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(email, path = tempdir(), time_out = 3600,
-  transfer = FALSE, request = list(stream = "oper", levtype = "sfc",
-  param = "167.128", dataset = "interim", step = "0", grid = "0.75/0.75",
-  time = "00", date = "2014-07-01/to/2014-07-02", type = "an", class =
-  "ei", area = "50/10/51/11", format = "netcdf", target = "tmp.nc"),
-  verbose = TRUE)
+wf_request(email, service = "webapi", request, transfer = FALSE,
+  path = tempdir(), time_out = 3 * 3600, verbose = TRUE)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
-
-\item{path}{path where to store the downloaded data}
-
-\item{time_out}{how long to wait on a download to start (default = 3600)}
-
-\item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
-
 \item{request}{nested list with query parameters following the layout
 as specified on the ECMWF API page}
 
+\item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
+
+\item{path}{path were to store the downloaded data}
+
+\item{time_out}{how long to wait on a download to start (default =
+\code{3*3600} seconds).}
+
 \item{verbose}{show feedback on processing}
+
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 }
 \value{
-a download query staging url or a netCDF of data on disk
+a download query staging url or (invisible) filename of the NetCDF
+file on your local disc
 }
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
 queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
 allows NetCDF downloads, and will override calls for grib data.
+Note that the function will do some basic checks on the \code{request} input
+to identify possible problems.
 }
 \examples{
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
+
+request <-  = list(stream = "oper",
+   levtype = "sfc",
+   param = "167.128",
+   dataset = "interim",
+   step = "0",
+   grid = "0.75/0.75",
+   time = "00",
+   date = "2014-07-01/to/2014-07-02",
+   type = "an",
+   class = "ei",
+   area = "50/10/51/11",
+   format = "netcdf",
+   target = "tmp.nc")
 
 # get the default test data
-wf_request(email = "test@mail.com")
+wf_request(user = "test@mail.com", request = request)
 }
 }
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_transfer}}
+}
+\author{
+Koen Kufkens
 }
 \keyword{climate,}
 \keyword{data}

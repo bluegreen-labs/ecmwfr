@@ -2,15 +2,18 @@
 #'
 #' Deletes a staged download from the queue
 #'
-#' @param email email address used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing
+#' @param service character, one of \code{ecmwf} or \code{cds} depending
+#' on the data set to be deleted.
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
+#' @author Koen Kufkens
 #' @examples
 #'
 #' \dontrun{
@@ -22,28 +25,44 @@
 #'}
 
 wf_delete <- function(
-  email,
+  user,
   url,
+  service = "webapi",
   verbose = TRUE
 ){
 
   # check the login credentials
-  if(missing(email) | missing(url)){
-    stop("Please provide ECMWF login email / url!")
+  if(missing(user) | missing(url)){
+    stop("Please provide ECMWF login user / url!")
   }
 
-  # get key from email
-  key <- wf_get_key(email)
+  # match arguments, if not stop
+  service <- match.arg(service, c("webapi", "cds"))
+
+  # get key
+  key <- wf_get_key(user, service = service)
 
   # remove a queued download
-  response <- httr::DELETE(
-    url,
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json",
-      "From" = email,
-      "X-ECMWF-KEY" = key)
-  )
+  # Differs for ecmwf and cds requests.
+  # For CDS: note that 'user' is simply a copy of 'user'
+  if(type == "cds") {
+    response <- httr::DELETE(
+      url,
+      httr::authenticate(user, key),
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json")
+    )
+  } else {
+    response <- httr::DELETE(
+      url,
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = user,
+        "X-ECMWF-KEY" = key)
+    )
+  }
 
   # check purging of request
   if(response$status == 204){

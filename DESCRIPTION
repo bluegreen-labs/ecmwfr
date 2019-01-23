@@ -1,14 +1,23 @@
 Package: ecmwfr
-Title: Interface to the 'ECMWF' Data Web Services
-Version: 1.0.1
-Authors@R: person(
-      family = "Hufkens",
-      given = "Koen",
-		  email = "koen.hufkens@gmail.com",
-		  role = c("aut", "cre"))
-Description: Programmatic interface to the 'ECMWF' public dataset 
-    web services (<https://www.ecmwf.int/>). Allows for easy downloads of
-    climate data directly to your R work space or your computer.
+Title: Interface to 'ECMWF' and 'CDS' Data Web Services
+Version: 1.0.2
+Authors@R: c(person(
+               family = "Hufkens",
+               given = "Koen",
+               email = "koen.hufkens@gmail.com",
+               role = c("aut", "cre")),
+             person(
+               family = "Stauffer",
+               given = "Reto",
+               email = "Reto.Stauffer@uibk.ac.at",
+               role = c("ctb"),
+               comment = c(ORCID = "0000-0002-3798-5507"))
+           )
+Description: Programmatic interface to the European Centre for Medium-Range
+    Weather Forecasts public and restricted dataset web services (ECMWF;
+    <https://www.ecmwf.int/>) as well as Copernicus's Climate Data Store (CDS;
+    <https://cds.climate.copernicus.eu>). Allows for easy downloads of weather 
+    forecasts and climate data directly to your R work space or your computer.
 URL: https://github.com/khufkens/ecmwfr
 BugReports: https://github.com/khufkens/ecmwfr/issues
 Depends:
@@ -27,5 +36,6 @@ Suggests:
     testthat,
     raster,
     maps,
-    ncdf4
+    ncdf4,
+    stars
 VignetteBuilder: knitr

@@ -30,6 +30,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Changelog" />
 
 
@@ -60,22 +62,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -83,12 +76,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/ecmwfr_vignette.html">ecmwfr</a>
+      <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
+    <li>
+      <a href="../articles/cds_vignette.html">CDS</a>
+    </li>
+    <li class="dropdown-header">Changelog</li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
+</li>
+<li>
+  <a href="../contact.html">Contact</a>
 </li>
       </ul>
       
@@ -115,9 +115,9 @@
       <small>Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ecmwfr-101" class="section level1">
+    <div id="ecmwfr-1-0-1" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-101" class="anchor"></a>ecmwfr 1.0.1<small> Unreleased </small>
+<a href="#ecmwfr-1-0-1" class="anchor"></a>ecmwfr 1.0.1<small> 2019-01-19 </small>
 </h1>
 <ul>
 <li>accidental CRAN violation fixed</li>
@@ -126,18 +126,18 @@
 <li>checks for binary downloads (larger files)</li>
 </ul>
 </div>
-    <div id="ecmwfr-100" class="section level1">
+    <div id="ecmwfr-1-0-0" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-100" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
+<a href="#ecmwfr-1-0-0" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
 </h1>
 <ul>
 <li>major version</li>
 <li>CRAN release</li>
 </ul>
 </div>
-    <div id="ecmwfr-003" class="section level1">
+    <div id="ecmwfr-0-0-3" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-003" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
+<a href="#ecmwfr-0-0-3" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>unit checks with encrypted key</li>
@@ -147,17 +147,17 @@
 <li>rOpenSci syntax and ok, gp() ok</li>
 </ul>
 </div>
-    <div id="ecmwfr-002" class="section level1">
+    <div id="ecmwfr-0-0-2" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-002" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
+<a href="#ecmwfr-0-0-2" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>working verion, yeah!</li>
 </ul>
 </div>
-    <div id="ecmwfr-001" class="section level1">
+    <div id="ecmwfr-0-0-1" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-001" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
+<a href="#ecmwfr-0-0-1" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>experimental release</li>
@@ -170,11 +170,11 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#ecmwfr-101">1.0.1</a></li>
-        <li><a href="#ecmwfr-100">1.0.0</a></li>
-        <li><a href="#ecmwfr-003">0.0.3</a></li>
-        <li><a href="#ecmwfr-002">0.0.2</a></li>
-        <li><a href="#ecmwfr-001">0.0.1</a></li>
+        <li><a href="#ecmwfr-1-0-1">1.0.1</a></li>
+        <li><a href="#ecmwfr-1-0-0">1.0.0</a></li>
+        <li><a href="#ecmwfr-0-0-3">0.0.3</a></li>
+        <li><a href="#ecmwfr-0-0-2">0.0.2</a></li>
+        <li><a href="#ecmwfr-0-0-1">0.0.1</a></li>
       </ul>
     </div>
   </div>
@@ -187,7 +187,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>

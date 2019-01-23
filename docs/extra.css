@@ -1,0 +1,20 @@
+
+/* Custom block styling for notifications */
+
+.notification {
+    background-color: #F8F8F8;
+    border-left: .5em solid #337ab7;
+    padding: .7em;
+    margin: 1em 0;
+}
+.notification h3 { color: #337ab7; }
+
+/* Warning note */
+.notification.warning    { border-color: #FF7733; }
+.notification.warning h3 { color:        #FF7733; }
+             .warning    { color:        #FF7733; }
+
+/* Message info */
+.notification.info    { border-color: #036a07; }
+.notification.info h3 { color:        #036a07; }
+             .info    { color:        #036a07; }

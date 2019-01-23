@@ -4,20 +4,25 @@
 \alias{wf_transfer}
 \title{ECMWF data transfer function}
 \usage{
-wf_transfer(email, url, path = tempdir(), filename = "ecmwf_tmp.nc",
+wf_transfer(email, url, service = "webapi", path = tempdir(),
+  filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
   verbose = TRUE)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
-
 \item{url}{url to query}
+
+\item{service}{which service to use, one of \code{webapi} or \code{cds}}
 
 \item{path}{path were to store the downloaded data}
 
 \item{filename}{filename to use for the downloaded data}
 
 \item{verbose}{show feedback on data transfers}
+
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
+
+\item{...}{forwarded to \code{\link[ecmwfr]{wf_transfer}}}
 }
 \value{
 a netCDF of data on disk as specified by a
@@ -41,6 +46,9 @@ wf_transfer("test@email.com", url = r$href)
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_request}}
+}
+\author{
+Koen Kufkens
 }
 \keyword{climate,}
 \keyword{data}

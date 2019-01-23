@@ -4,12 +4,14 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(email, key)
+wf_set_key(user, key, service = "webapi")
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service}
+\item{user}{user (email address) used to sign up for the ECMWF data service}
 
 \item{key}{token provided by ECMWF}
+
+\item{service}{which service to use}
 }
 \description{
 Saves the token to your local keychain under
@@ -19,14 +21,17 @@ a service called "ecmwfr".
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
 
 # get key
-wf_get_key(email = "test@mail.com")
+wf_get_key(user = "test@mail.com")
 }
 }
 \seealso{
 \code{\link[ecmwfr]{wf_get_key}}
+}
+\author{
+Koen Kufkens
 }
 \keyword{key}
 \keyword{management}

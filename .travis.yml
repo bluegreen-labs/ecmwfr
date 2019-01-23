@@ -12,13 +12,13 @@ before_install:
 
 
 install:
-  - echo "url: https://cds.climate.copernicus.eu/api/v2" | tee -a ~/.cdsapirc
-  - echo "key: $CDSAPIUSER:$CDSAPIRC" | tee -a ~/.cdsapirc
+  - echo "url: https://cds.climate.copernicus.eu/api/v2" >> ~/.cdsapirc
+  - echo "key: $CDSAPIUSER:$CDSAPIRC" >> ~/.cdsapirc
     ##- echo > -e "url: https\://cds.climate.copernicus.eu/api/v2\nkey\\: CDSAPIUSER:CDSAPIRC" > ~/.cdsapirc
 
 r:
   - release
-  - devel
+  #  - devel
 
 r_packages:
   - devtools

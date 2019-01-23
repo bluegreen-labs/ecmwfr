@@ -28,10 +28,6 @@ from the \code{.ecmwfapirc} file (located in your home folder).}
 as specified on the ECMWF API page}
 
 \item{verbose}{show feedback on processing}
-
-\item{path}{path where to store the downloaded data}
-
-\item{time_out}{how long to wait on a download to start (default = 3600)}
 }
 \value{
 a download query staging url or a netCDF of data on disk

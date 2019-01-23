@@ -22,11 +22,8 @@ my_request <- list(stream = "oper",
 # assuming a valid keychain value (see
 # additional check below)
 # Using environment variables (travis)
-if(apikey != "" & apikey != "$KEY"){
-  wf_set_key(email = Sys.getenv("ECMWFAPIEMAIL"),
-             key   = Sys.getenv("ECMWFAPIKEY"))
-}
-rm(key)
+wf_set_key(email = Sys.getenv("ECMWFAPIEMAIL"),
+           key   = Sys.getenv("ECMWFAPIKEY"))
 
 # Check if a password is not set. This traps the inconsistent
 # behavious between systems while accomodating for encrypted

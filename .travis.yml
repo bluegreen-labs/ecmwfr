@@ -15,7 +15,7 @@ before_install:
 
 r:
   - release
-  #  - devel
+  - devel
 
 r_packages:
   - knitr

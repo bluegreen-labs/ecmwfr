@@ -41,7 +41,10 @@ wf_transfer <- function(
   }
 
   # If the URL is not an URL but an ID: generate URL
-  if (! grepl("^https?://.*$", url)) url <- get(sprintf("%s_server", type))(url)
+  if (!grepl("^https?://.*$", url)) {
+      if(verbose) message("- input is a request ID, generate url")
+      url <- get(sprintf("%s_server", type))(url)
+  }
   if(verbose) cat(sprintf("- Downloading \"%s\"\n", url))
   
   # get key from email
@@ -103,6 +106,7 @@ wf_transfer <- function(
       encode = "json"
     )
   }
+  print(response)
 
   # trap errors on download, return a general error statement
   if (httr::http_error(response)){

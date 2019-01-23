@@ -1,4 +1,5 @@
 # set options
+library("ecmwfr")
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 

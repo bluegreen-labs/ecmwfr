@@ -30,6 +30,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="CDS delete request — cds_delete" />
 
 <meta property="og:description" content="Deletes a staged download from the queue" />
@@ -80,7 +82,7 @@
       <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
     <li>
-      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+      <a href="../articles/cds_vignette.html">CDS</a>
     </li>
     <li class="dropdown-header">Changelog</li>
   </ul>
@@ -136,7 +138,8 @@ Can also be <code>NULL</code> if you preferr to use the <code>.cdsapirc</code> f
     </tr>
     <tr>
       <th>url</th>
-      <td><p>task url for request</p></td>
+      <td><p>task url for request OR the character with the request ID.
+If an ID is given the url will be auto-generated.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

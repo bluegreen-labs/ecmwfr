@@ -21,11 +21,25 @@ will be shown in your browser.}
 \item{verbose}{boolean, default \code{FALSE}.}
 }
 \value{
-invisible return of the list as retrieved from the CDS server.
+Downloads a (html) product description from CDS. If
+\code{show = FALSE} a list with product details will be returned.
+If \code{show = TRUE} the product information will be shown in a local
+browser window (plus invisible return of the details as if \code{show}
+whould be set \code{FALSE}).
 }
 \description{
 Shows and returns detailed product information about a specific data set
 (see \code{\link[ecmwfr]{cds_datasets}}).
+}
+\examples{
+\donttest{
+   # Opend description in browser
+   cds_productinfo(NULL, "reanalysis-era5-single-levels")
+
+   # Return information
+   info <- cds_productinfo(NULL, "reanalysis-era5-single-levels", show = FALSE)
+   names(info)
+}
 }
 \seealso{
 \code{\link[ecmwfr]{cds_datasets}}.

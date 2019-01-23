@@ -12,3 +12,4 @@
 ^docs$
 ^\.httr-oauth$
 ^vignettes/*$
+^tests/download_.*R$

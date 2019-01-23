@@ -11,7 +11,8 @@ cds_delete(user, url, verbose = TRUE)
 used to retrieve the token set by \code{\link[ecmwfr]{cds_set_key}}.
 Can also be \code{NULL} if you preferr to use the \code{.cdsapirc} file.}
 
-\item{url}{task url for request}
+\item{url}{task url for request OR the character with the request ID.
+If an ID is given the url will be auto-generated.}
 
 \item{verbose}{show feedback on processing}
 }

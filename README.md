@@ -76,18 +76,18 @@ To download data use the wf_request() function, together with your email and a r
 ```R
 # this is an example of a request
 my_request <- list(stream = "oper",
-                  levtype = "sfc",
-                  param = "165.128/166.128/167.128",
-                  dataset = "interim",
-                  step = "0",
-                  grid = "0.75/0.75",
-                  time = "00/06/12/18",
-                  date = "2014-07-01/to/2014-07-31",
-                  type = "an",
-                  class = "ei",
-                  area = "73.5/-27/33/45",
-                  format = "netcdf",
-                  target = "tmp.nc")
+                   levtype = "sfc",
+                   param = "165.128/166.128/167.128",
+                   dataset = "interim",
+                   step = "0",
+                   grid = "0.75/0.75",
+                   time = "00/06/12/18",
+                   date = "2014-07-01/to/2014-07-31",
+                   type = "an",
+                   class = "ei",
+                   area = "73.5/-27/33/45",
+                   format = "netcdf",
+                   target = "tmp.nc")
 
 # an example download using fw_request()
 # using the above request list()
@@ -130,6 +130,7 @@ API](https://cds.climate.copernicus.eu/api-how-to).  The `ecmwfr` package will
 also use this file, if preferr to do so (see
 [`cds_key_from_file`](references/cds_from_file.html)).
 
+
 ### Setup
 
 If you preferr to use your local keychain (rather than using the `.cdsapirc`
@@ -156,68 +157,50 @@ Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclai
 ### Data Requests
 
 To download data use the [`cds_request`](references/cds_request.html) function,
-together with your _user ID_ and a request string syntax [as
-documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax).
+together with your _user ID_ and a request string syntax
+[as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax).
 Instead of `json` formatting the function uses a simple `R` list for all the
 arguments.  **Note**: the simplest way to get the requests is to go to the CDS
 website which offers an interactive interface to create these requests.  E.g.,
-for
+for ERA-5 reanalysis:
 
-* ERA-5 reanalysis:
-   * [pressure level data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
-   * [surface data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
+* [pressure level data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
+* [surface data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
 * ...
 
 ```R
-# this is an example of a request for
-# downloading 'ERA-5' reanalysis data for
-# 2000-04-04 00:00 UTC, temperature on
-# 850 hectopascal for an area covering
-# northern Europe.
+# This is an example of a request for # downloading 'ERA-5' reanalysis data for
+# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering #
+northern Europe.
 # File will be stored as "era5-demo.nc" (netcdf format).
-era_request <- list(
-        "dataset" = "reanalysis-era5-pressure-levels",
-        "product_type" = "reanalysis",
-        "variable" = "temperature",
-        "pressure_level" = "850",
-        "year" = "2000",
-        "month" = "04",
-        "day" = "04",
-        "time" = "00:00",
-        "area" = "70/-20/00/60",
-        "format" = "netcdf",
-        "target" = "era5-demo.nc")
+request <- list("dataset" = "reanalysis-era5-pressure-levels",
+                "product_type" = "reanalysis",
+                "variable" = "temperature",
+                "pressure_level" = "850",
+                "year" = "2000",
+                "month" = "04",
+                "day" = "04",
+                "time" = "00:00",
+                "area" = "70/-20/00/60",
+                "format" = "netcdf",
+                "target" = "era5-demo.nc")
 
 
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
 # call:
-cds_request(user = "1234", # user ID (for authentification)
-  request = era_request,   # the request
-  transfer = TRUE,         # download the file
-  path = ".")              # store data in current working directory
-
-# Test plot, requires ncdf4
-nc <- ncdf4::nc_open("era5-demo.nc")
-image(sort(ncdf4::ncvar_get(nc, "longitude")),
-      sort(ncdf4::ncvar_get(nc, "latitude")),
-      ncdf4::ncvar_get(nc, "t"))
-ncdf4::nc_close(nc)
+file <- cds_request(user     = "1234",   # user ID (for authentification)
+                    request  = request,  # the request
+                    transfer = TRUE,     # download the file
+                    path     = ".")      # store data in current working directory
 
 # If you have created a .cdsapirc file in your local
 # home directory you can also tell cds_request to use
 # the file by setting user = NULL:
-cds_request(user = NULL,   # use .cdsapirc
-  request = era_request,   # the request
-  transfer = TRUE,         # download the file
-  path = ".")              # store data in current working directory
-
-# Test plot, requires ncdf4
-nc <- ncdf4::nc_open("era5-demo.nc")
-image(sort(ncdf4::ncvar_get(nc, "longitude")),
-      sort(ncdf4::ncvar_get(nc, "latitude")),
-      ncdf4::ncvar_get(nc, "t"))
-ncdf4::nc_close(nc)
+file <- cds_request(user     = NULL,     # use ~/.cdsapirc
+                    request  = request,  # the request
+                    transfer = TRUE,     # download the file
+                    path     = ".")      # store data in current working directory
 ```
 
 The CDS services are quite fast, however, if you request a lot of variables,
@@ -227,7 +210,6 @@ suggested to split the downloads, e.g., download the data in junks (e.g.,
 month-by-month, or year-by-year).  A progress indicator will keep you informed
 on the status of your request. Keep in mind that all data downloaded will be
 buffered in memory limiting the downloads to ~6GB on low end systems.
-
 
 
 ## Acknowledgements

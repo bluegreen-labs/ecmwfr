@@ -1,0 +1,214 @@
+---
+title: "cds"
+author: "Reto Stauffer"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cds functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, echo = FALSE, figure = FALSE}
+suppressPackageStartupMessages(library("ecmwfr"))
+```
+
+## Downloading Data Sets from Copernicus's Climate Data Store
+
+[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting
+data sets for research, education, and applied earth sciences on their
+[Climate Data Store](https://cds.climate.copernicus.eu) (CDS).
+Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int)
+high-resolution reanalysis data set which replaces ERA Interim (which was
+ERA-4; version 4).
+
+The R package `ecmwfr` provides a handy interface to download these data sets.
+This article provides some examples how to retrieve some of the CDS data sets.
+
+## Before Downloading Data
+
+Before you will be able to download any data you need to get a free personal
+account. 
+
+* [Register yourself for CDS services](https://cds.climate.copernicus.eu/user/register)
+* [Terms and conditions](https://cds.climate.copernicus.eu/disclaimer-privacy)
+
+To retrieve data `ecmwfr` provides two options: use [`cds_set_key()`](../references/cds_set_key.html)
+to add the login details to your local keyring (requires the _R_ package
+[`keyring`](https://CRAN.R-project.org/package=keyring)), or create a file called
+`~/.cdsapirc` to provide your personal user login information.
+More details about the local `~/.cdsapirc` file
+[can be found here](https://cds.climate.copernicus.eu/api-how-to).
+
+Once you are in possession of your personal user (namely your user ID and a
+secret key) `ecmwfr` allows to send requests to CDS and/or download the data.
+**Note**: the examples on this page will always make use of the `~/.cdsapirc`
+option.
+Thus, the `user` input option will always be set to `NULL`. However, feel free
+to use the [`cds_set_key()`](../references/cds_set_key.html) function to add
+the login details to your local keyring.  set `user = "<your user id>"` when
+calling [`cds_request()`](../references/cds_request.html) (and all other calls
+depending on your user details).
+
+## The Request Syntax
+
+CDS data retrievals are based on a `list` object which specifies the data set to
+be downloaded.  These definitions are called `requests` (for those who are
+familiar with _mars_: these are basically _mars_ requests). A `request` defined
+the type of the `dataset`, the `variable`s to be downloaded, the time period,
+output `format`, `target` location, a custom `area`l extent, and other details.
+
+The request syntax is available for a range of different CDS data sets.
+Check the [CDS Dataset](https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset)
+website to see a list of available datasets and to check whether API
+requests are allowed or not (go to _Download Data_, select some data,
+show request by clicking _Show API Request_ (red button, bottom of page).
+
+An ERA-5 example:
+
+```{r, echo = TRUE}
+# Specify the data set
+request <- list("dataset"        = "reanalysis-era5-pressure-levels",
+                "product_type"   = "reanalysis",
+                "variable"       = "temperature",
+                "pressure_level" = "850",
+                "year"           = "2000",
+                "month"          = "04",
+                "day"            = "04",
+                "time"           = "00:00",
+                "area"           = "70/-20/30/60",
+                "format"         = "netcdf",
+                "target"         = "era5-demo.nc")
+```
+
+This is the "demo" request and it specifies the following:
+
+* `dataset`: downloading ERA-5 reanalysis on pressure level(s)
+* `product_type`: (deterministic) reanalysis data
+* `variable`/`pressure_level`: requesting temperature on 850 hectopascal
+* `year`/`month`/`day`: April 4, 2000 (one day in this example)
+* `time`: valid at 00:00 UTC (date/time always in UTC),
+* `area`: custom subset covering northern Europe
+* `format`: output format NetCDF
+* `target`: local output file `era5-demo.nc`
+
+## ERA-5 Reanalysis Data
+
+### Example 1: Download Data for One Specific Date/Time
+
+The data set as specified above can be downloaded calling the
+`cds_retrieve` function:
+
+
+```{r eval = FALSE, echo = TRUE}
+# Specify data set
+request <- list("dataset"        = "reanalysis-era5-pressure-levels",
+                "product_type"   = "reanalysis",
+                "variable"       = "temperature",
+                "pressure_level" = "850",
+                "year"           = "2000",
+                "month"          = "04",
+                "day"            = "04",
+                "time"           = "00:00",
+                "area"           = "70/-20/30/60",
+                "format"         = "netcdf",
+                "target"         = "era5-demo.nc")
+
+# Start downloading the data
+file <- cds_request(user = NULL,         # use the ~/.cdsapirc file
+                    request = request,   # use our request specification from above
+                    transfer = TRUE,     # download data as soon as ready
+                    path = ".",          # store the netcdf file (era5-demo.nc) here
+                    verbose = FALSE)
+```
+
+Depending on the request (the amount of data you are asking for) the
+request function may tike a while! Please note: if you try to download
+larger amounts of data it is suggested to split the data sets, e.g.,
+download year-by-year, or even month-by-month, if you are trying to download
+several varaiables/fields.
+
+Once the retrieval has finished you should now be the owner of a NetCDF
+containing the requested information located in the current working directory,
+called `era5-demo.nc`.
+
+
+### Example 2: Downloading Time Periods
+
+Rather than only downloading data for one specific date/time
+one is also allowed to specify a range of days/time period.
+The request below is downloading _total precipitation_ for January 2000
+trough February 2000, 00 UTC to 23 UTC (full day, hourly temporal resolution)
+for a tiny area around Innsbruck, Austria for demonstration purposes only.
+
+```{r eval = FALSE, echo = TRUE}
+# Specify data set
+request <- list("dataset"        = "reanalysis-era5-single-levels",
+                "product_type"   = "reanalysis",
+                "variable"       = "total_precipitation",
+                "year"           = "2000",
+                "month"          = sprintf("%02d", 1:2),
+                "day"            = sprintf("%02d", 1:31),
+                "time"           = sprintf("%02d", 0:23),
+                "area"           = "47/10.50/46.50/11",
+                "format"         = "netcdf",
+                "target"         = "era5-ts-demo.nc")
+
+# Start downloading the data
+file <- cds_request(user = NULL,         # use .cdsapirc file!
+                    request = request,   # use our request specification from above
+                    transfer = TRUE,     # download data as soon as ready
+                    path = ".",          # store the netcdf file (era5-demo.nc) here
+                    verbose = FALSE)
+```
+
+
+<div class="notification info">
+<h3>Date period specification:</h3>
+For those familiar to ECMWFs _mars_ syntax: CDS does not
+accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment.
+It is possible to specify one specific date via `date = "2000-01-01"` or
+multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` but
+not via `".../to/..."`.
+</div>
+
+
+## Soil Moisture Gridded Data
+
+Another data set available via CDS is a global gridded soil moisture data set
+estimated from satellite observations based on the ESA
+Climate Change Initiative soil moisture version 03.3.
+
+The following request is downloading _monthly averages_ for the
+year 2018 (all months, `"01"` to `"12"`). More details can be found
+[on the product overview page](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-soil-moisture?tab=overview) (or try calling
+[`cds_productinfo(NULL, "satellite-soil-moisture")`](../references/cds_productinfo.html)).
+
+```{r eval = FALSE, echo = TRUE}
+# Specify data set
+request <- list("dataset"          = "satellite-soil-moisture",
+                "format"           = "zip",
+                "variable"         = "volumetric_surface_soil_moisture",
+                "time_aggregation" = "month_average",
+                "year"             = "2018",
+                "month"            = sprintf("%02d", 1:12),
+                "day"              = "01",
+                "type_of_sensor"   = "combined_passive_and_active",
+                "type_of_record"   = "icdr",
+                "version"          = "v201706.0.0",
+                "target"           = "soilmoisture-demo.zip")
+
+# Start downloading the data
+file <- cds_request(user = NULL,         # use .cdsapirc file!
+                    request = request,   # use our request specification from above
+                    transfer = TRUE,     # download data as soon as ready
+                    path = ".",          # store the netcdf file (era5-demo.nc) here
+                    verbose = FALSE)
+```
+
+
+
+
+
+

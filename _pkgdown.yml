@@ -12,8 +12,8 @@ navbar:
       menu:
         - text: "ECMWF"
           href: articles/ecmwf_vignette.html
-        - text: "CDS: ERA-5 Demo"
-          href: articles/era5_vignette.html
+        - text: "CDS"
+          href: articles/cds_vignette.html
         - text: "Changelog"
     - text: "Changelog"
       href: news/index.html
@@ -43,4 +43,7 @@ reference:
       - cds_request
       - cds_transfer
       - cds_delete
+  - title: "Helper Functions"
+    contents:
+      - check_request
 

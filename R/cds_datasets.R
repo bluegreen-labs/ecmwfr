@@ -24,10 +24,14 @@
 
 cds_datasets <- function(user, simplify = TRUE, verbose = FALSE) {
 
-  # check the login credentials
-  if(missing(user)){
+  # No user, no fun!
+  if(missing(user))
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
-  } else if(is.null(user)) {
+
+  # check the login credentials
+  # If 'user == NULL' load user login information from
+  # '~/.cdsapirc' file. Else load key via local keyring.
+  if(is.null(user)) {
     tmp  <- cds_key_from_file(verbose = verbose)
     user <- tmp$user; key <- tmp$key; rm(tmp)
   } else {

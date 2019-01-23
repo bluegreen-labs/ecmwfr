@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CDS dataset list — cds_datasets • ecmwfr</title>
+<title>Check requests — check_request • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,9 +32,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="CDS dataset list — cds_datasets" />
+<meta property="og:title" content="Check requests — check_request" />
 
-<meta property="og:description" content="Returns a list of datasets available on the climate data store servers." />
+<meta property="og:description" content="There are some parameter combinations which are not allowed
+and will result in an error when sending the requests to
+via API. the check_request function tries
+to avoid these problems before sending a request. See 'Details'." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,66 +117,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>CDS dataset list</h1>
-    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/cds_datasets.R'><code>R/cds_datasets.R</code></a></small>
-    <div class="hidden name"><code>cds_datasets.Rd</code></div>
+    <h1>Check requests</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/check_request.R'><code>R/check_request.R</code></a></small>
+    <div class="hidden name"><code>check_request.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Returns a list of datasets available on the climate data store servers.</p>
+    <p>There are some parameter combinations which are not allowed
+and will result in an error when sending the requests to
+via API. the <code>check_request</code> function tries
+to avoid these problems before sending a request. See 'Details'.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cds_datasets</span>(<span class='no'>user</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>check_request</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>user</th>
-      <td><p>string, user ID used to sign up for the CDS data service and
-used to retrieve the token set by <code><a href='cds_set_key.html'>cds_set_key</a></code>.
-Note: can also be set to <code>NULL</code>, in this case user and key will
-be read from the <code>.cdsapirc</code> file (located in your home folder).</p></td>
-    </tr>
-    <tr>
-      <th>simplify</th>
-      <td><p>simplify the output, logical (default = <code>TRUE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>boolean, default <code>FALSE</code>.</p></td>
+      <th>x</th>
+      <td><p>list of parameters (as for <code>wf_request</code>,
+<code><a href='cds_request.html'>cds_request</a></code>).</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>returns a nested list or data frame with the ECMWF datasets</p>
+    <p>Some of the checks:</p><ul>
+<li><p>will raise an error if the <code>dataset</code> identifier is missing.</p></li>
+<li><p>if <code>dataset = "mars"</code> and <code>format = "netcdf"</code>: if no
+      <code>grid</code> specification is given: stop. Reason: grib to netcdf
+      conversion will only work on a regular_ll grid.</p></li>
+</ul>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='cds_set_key.html'>cds_set_key</a></code>
-<code><a href='wf_transfer.html'>cds_transfer</a></code>
-<code><a href='cds_request.html'>cds_request</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div><div class='input'><span class='co'># get a list of services</span>
-<span class='fu'>cds_services</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; <span class='error'>Error in cds_services(user = NULL): could not find function "cds_services"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
     <h2>Author</h2>
     <p>Reto Stauffer</p>

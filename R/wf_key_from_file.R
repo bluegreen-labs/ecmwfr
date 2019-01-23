@@ -39,10 +39,10 @@ wf_key_from_file <- function(verbose = FALSE) {
   email <- strsplit(email, ":")[[1L]][2L]
   email <- as.character(parse(text = regmatches(email, regexpr("[^\\S]*", email))))
 
+  # Message
   if(verbose) {
-      cat("CDS login information loaded from .ecmwfapirc\n")
-      cat(sprintf("- email:    %s\n", email))
-      cat(sprintf("- key:      %s\n", paste(substr(key, 0, 5), "******", sep = "")))
+      message(sprintf("- ECMWF login (from .ecmwfapirc): email: %s, key = %s",
+              email, paste(substr(key, 0, 5), "******", sep = "")))
   }
 
   # Return named list

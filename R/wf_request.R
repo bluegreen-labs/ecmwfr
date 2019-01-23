@@ -4,13 +4,16 @@
 #' you can only stage requests, logging the request URLs to submit download
 #' queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
 #' allows NetCDF downloads, and will override calls for grib data.
+#' Note that the function will do some basic checks on the \code{request} input
+#' to identify possible problems.
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' Can also be set to \code{NULL}, in this case email and key will be loaded
 #' from the \code{.ecmwfapirc} file (located in your home folder).
 #' @param path path were to store the downloaded data
-#' @param time_out how long to wait on a download to start (default = 3600)
+#' @param time_out how long to wait on a download to start (default =
+#' \code{3*3600} seconds for mars requests, \code{3600} seconds for all others).
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
@@ -34,7 +37,7 @@
 wf_request <- function(
   email,
   path = tempdir(),
-  time_out = 3600,
+  time_out = ifelse(request$dataset == "mars", 3*3600, 3600),
   transfer = FALSE,
   request = list(stream = "oper",
                  levtype = "sfc",
@@ -57,20 +60,26 @@ wf_request <- function(
     stop("Please provide ECMWF login credentials and data request!")
   }
 
-  # We need to keep the original email for later!
-  input_email <- email
-  # get key from email
+  # get key. If 'email == NULL' load user login information from
+  # '~/.ecmwfapirc' file. Else load key via local keyring.
+  input_email <- email # We need to keep the original email for later!
   if(is.null(email)) {
-    tmp   <- wf_key_from_file(verbose)
+    tmp   <- wf_key_from_file(verbose)             # From file
     email <- tmp$email; key <- tmp$key; rm(tmp)
   } else {
-    key <- wf_get_key(email)
+    key <- wf_get_key(email)                       # From keyring
   }
 
   # force the use of netcdf
+  #TODO: Reto, January 2019: forcing NetCDF is not cool. Do you rely
+  # on this default/fallback? Any back-issues when removing this part?
   request$format <- "netcdf"
   request$target <- paste0(tools::file_path_sans_ext(request$target),
                            ".nc")
+
+  # checking request to avoid some of the common problems
+  request <- check_request(request)
+
   # getting api url: different handling if 'dataset = "mars"',
   # requests to 'dataset = "mars"' require a non-public user
   # account (member states/commercial).
@@ -83,10 +92,6 @@ wf_request <- function(
   # get the response from the query provided
   response <- httr::POST(
     url,
-    #paste(ecmwf_server(),
-    #      "datasets",
-    #      request$dataset,
-    #      "requests", sep = "/"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
@@ -107,8 +112,8 @@ wf_request <- function(
 
   # some verbose feedback
   if(verbose){
-    message("Staging data transfer at url endpoint:")
-    message(ct$href)
+    message("- staging data transfer at url endpoint:")
+    message("  ", ct$href)
   }
 
   # only return the content of the query
@@ -117,15 +122,16 @@ wf_request <- function(
   }
 
   # set time-out counter
+  if(verbose) message(sprintf("- timeout set to %.1 hours", time_out/3600))
   time_out <- Sys.time() + time_out
 
-  # Temporary file name, will be used in combination with
-  # tempdir() when calling wf_transfer. The final file will
-  # be moved to "path" as soon as the download has been finished.
-  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
+  # Temporary file name, will be used in combination with tempdir() when
+  # calling wf_transfer. The final file will be moved to the user-defined
+  # 'path' as soon as the download has been finished.
+  tmp_file <- basename(tempfile("ecmwfr_"))
 
   # keep waiting for the download order to come online
-  # with status code 303
+  # with status code 303. 202 = connection accepted, but job queued.
   while(ct$code == 202){
 
     # exit routine when the time out
@@ -134,12 +140,20 @@ wf_request <- function(
     # or retain the download url and use
     # wf_transfer()
     if(Sys.time() > time_out){
-      message("Please use the MARS job list to track your jobs at:")
-      message("https://apps.ecmwf.int/webmars/joblist/")
-      message("and retry download using wf_transfer() for url:")
-      message(ct$href)
-      message("There is a limit of 3 active and 20 queued jobs.")
-      message("Delete the job using wf_delete() upon completion!")
+      # Waiting for request to be finished timed out.
+      # Show note and return content of last http request.
+      message("  Please use the MARS job list to track your jobs at:")
+      message("  https://apps.ecmwf.int/webmars/joblist/")
+      message("  and retry download using wf_transfer():")
+      message(sprintf("  - wf_transfer(<user>, \"%s\", \"ecmwf\", \"%s\", \"%s\")",
+              ct$name, path, request$target))
+      # Mars has different limits (depending on the user).
+      if(request$dataset == "mars") {
+        message("  Note that there are user-dependent limits of active/queued jobs.")
+      } else {
+        message("  There is a limit of 3 active and 20 queued jobs.")
+        message("  Delete the job using wf_delete() upon completion!")
+      }
       return(ct)
     }
 
@@ -151,7 +165,9 @@ wf_request <- function(
       Sys.sleep(ct$retry)
     }
 
-    # attempt a download
+    # attempt a download. Use 'input_email', can also
+    # be NULL (load user information from '.ecmwfapirc'
+    # file inside wf_transfer).
     ct <- wf_transfer(email    = input_email,
                       url      = ct$href,
                       type     = "ecmwf",
@@ -174,11 +190,22 @@ wf_request <- function(
   }
 
   # delete the request upon succesful download
-  # to free up other download slots
-  wf_delete(email = input_email,
-            url = ct$href,
-            verbose = verbose)
+  # to free up other download slots. Not possible
+  # for ECMWF mars requests (skip)
+  if(!request$dataset == "mars") {
+    wf_delete(email   = input_email,
+              url     = ct$href,
+              verbose = verbose)
+  }
 
-  # return final file name/path
+  # return final file name/path (dst = destination).
   return(dst)
 }
+
+
+
+
+
+
+
+

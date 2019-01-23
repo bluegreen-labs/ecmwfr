@@ -4,13 +4,15 @@
 \alias{wf_datasets}
 \title{ECMWF dataset list}
 \usage{
-wf_datasets(email, simplify = TRUE)
+wf_datasets(email, simplify = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{simplify}{simplify the output, logical (default = \code{TRUE})}
+
+\item{verbose}{boolean, default \code{FALSE}}
 }
 \value{
 returns a nested list or data frame with the ECMWF datasets

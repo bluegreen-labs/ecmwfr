@@ -14,7 +14,11 @@
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
-ecmwf_server <- function(id) "https://api.ecmwf.int/v1/"
+ecmwf_server <- function(id) {
+    url <- "https://api.ecmwf.int/v1"
+    if(missing(id)) return(url)
+    return(file.path(url, "services/mars/requests", id))
+}
 
 # @rdname ecmwf_server
 # @author Reto Stauffer

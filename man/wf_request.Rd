@@ -4,12 +4,12 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(email, path = tempdir(), time_out = 3600,
-  transfer = FALSE, request = list(stream = "oper", levtype = "sfc",
-  param = "167.128", dataset = "interim", step = "0", grid = "0.75/0.75",
-  time = "00", date = "2014-07-01/to/2014-07-02", type = "an", class =
-  "ei", area = "50/10/51/11", format = "netcdf", target = "tmp.nc"),
-  verbose = TRUE)
+wf_request(email, path = tempdir(), time_out = ifelse(request$dataset
+  == "mars", 3 * 3600, 3600), transfer = FALSE, request = list(stream =
+  "oper", levtype = "sfc", param = "167.128", dataset = "interim", step =
+  "0", grid = "0.75/0.75", time = "00", date = "2014-07-01/to/2014-07-02",
+  type = "an", class = "ei", area = "50/10/51/11", format = "netcdf",
+  target = "tmp.nc"), verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -19,7 +19,8 @@ from the \code{.ecmwfapirc} file (located in your home folder).}
 
 \item{path}{path were to store the downloaded data}
 
-\item{time_out}{how long to wait on a download to start (default = 3600)}
+\item{time_out}{how long to wait on a download to start (default =
+\code{3*3600} seconds for mars requests, \code{3600} seconds for all others).}
 
 \item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
 
@@ -36,6 +37,8 @@ Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
 queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
 allows NetCDF downloads, and will override calls for grib data.
+Note that the function will do some basic checks on the \code{request} input
+to identify possible problems.
 }
 \examples{
 

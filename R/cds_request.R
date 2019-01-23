@@ -3,8 +3,7 @@
 #'
 #' Stage a data request, and optionally download the data to disk. Alternatively
 #' you can only stage requests, logging the request URLs to submit download
-#' queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
-#' allows NetCDF downloads, and will override calls for grib data.
+#' queries later on using \code{\link[ecmwfr]{wf_transfer}}.
 #'
 #' @param user username you used to register the API key
 #' when calling \code{\link[ecmwfr]{cds_set_key}}. Note: can also be set to \code{NULL}
@@ -92,13 +91,14 @@
 cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
                         time_out = 3600,verbose = TRUE) {
 
-  # check the login credentials
-  if(missing(user)){
-    stop("Please provide the user name you used to store the CDS secret key!")
-  }
+  # No user, no fun!
+  if(missing(user))
+    stop("Please provide CDS user ID (or set user = NULL, see manual)")
 
-  # We need to keep the original input_user for later!
-  input_user <- user
+  # check the login credentials
+  # If 'user == NULL' load user login information from
+  # '~/.cdsapirc' file. Else load key via local keyring.
+  input_user <- user # We need to keep the original input_user for later!
   # get key from email
   if (is.null(user)) {
     tmp  <- cds_key_from_file(verbose = verbose)
@@ -106,6 +106,9 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   } else {
     key <- cds_get_key(user)
   }
+
+  # checking request to avoid some of the common problems
+  request <- check_request(request)
 
   # get the response from the query provided
   response <- httr::POST(
@@ -126,22 +129,23 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   # grab content, to look at the status
   ct <- httr::content(response)
 
-  # Show message if user exits the function.
-  exit_msg <- paste("Note that your request has been submitted to CDS.",
-               "Even after exiting this function your request is still",
-               "beeing processed! Your request ID is:\n\n%2$s\n\n",
-               "You can download the file as soon as processed by calling:\n\n",
-               "wf_download(\"%2$s\", type = \"cds\")\n\n",
-               "Or cancel the request:\n\n",
-               "wf_delete(<user>, \"%1$s/tasks/%2$s\", type = \"cds\")\n\n",
-               "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.",
-               "to manage (downoload, retry, delete) your requests or",
-               "to get ID's from previous requests.", sep = "")
-  on.exit(message(sprintf(exit_msg, cds_server(), ct$request_id)))
+  # Show message if user exits the function (interrupts execution)
+  # or as soon as an error will be thrown.
+  exit_msg <-  paste("Even after exiting this function your request is still beeing processed!",
+               "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
+               "to manage (downoload, retry, delete) your requests",
+               "or to get ID's from previous requests.",
+               "Retry downloading as soon as as completed:",
+               sprintf("  - wf_transfer(<user>, \"%s\", \"cds\", \"%s\", \"%s\")",
+                       ct$request_id, path, request$target),
+               "Delete the job upon completion using:",
+               sprintf("  - wf_delete(<user>, \"%s\", \"cds\")", ct$request_id),
+               sep = "\n  ")
+  on.exit(message(sprintf("- Your request has been submitted to CDS.\n  %s", exit_msg)))
 
   # some verbose feedback
   if(verbose){
-    message("Staging data transfer at url endpoint:")
+    message("- staging data transfer at url endpoint:")
   }
 
   # only return the content of the query
@@ -159,7 +163,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
 
   # If return ct$state == "completed": transfer
   if ( ct$state == "completed" ) {
-    if(verbose) cat("Request preparation completed, transfer\n")
+    if(verbose) message("- request preparation completed, transfer data\n")
     ct <- wf_transfer(email    = input_user,
                       url      = ct$request_id,
                       type     = "cds",
@@ -168,7 +172,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
   } else {
     # keep waiting for the download order to come online
     # with status code 303
-    if (verbose) cat("Waiting for request to be processed\n")
+    if (verbose) message("- waiting for request to be processed\n")
     while(ct$state != "completed"){
 
       # exit routine when the time out
@@ -177,58 +181,63 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
       # or retain the download url and use
       # wf_transfer()
       if(Sys.time() > time_out){
-        message("Timeout exceeded!")
-        message("Please use the job list to track your jobs at:")
-        message("https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.")
-        message("Finished jobs can be downloaded via the web interface.")
-        message("Delete the job using wt_delete() upon completion using")
-        message(sprintf("the job id \"%s\"", ct$request_id))
+        message("- Timeout exceeded!")
+        message("  Please use the job list to track your jobs at:")
+        message("  https://cds.climate.copernicus.eu/cdsapp#!/yourrequests.")
+        message("  Finished jobs can be downloaded via the web interface.")
+        message("  Retry downloading as soon as as completed:")
+        message(sprintf("  - wf_transfer(<user>, \"%s\", \"cds\", \"%s\", \"%s\")",
+                        ct$request_id, path, request$target))
+        message("  Delete the job upon completion using:")
+        message(sprintf("  - wf_delete(<user>, \"%s\", \"cds\")",
+                        ct$request_id))
         return(ct)
       }
 
       if(verbose){
         # let a spinner spin for "retry" seconds
-        spinner(as.numeric(ct$retry), ct$request_id)
+        spinner(as.numeric(ifelse(!is.null(ct$retry), ct$retry, 10)), ct$request_id)
       } else {
-        Sys.sleep(ct$retry)
+        Sys.sleep(as.numeric(ifelse(!is.null(ct$retry), ct$retry, 10)))
       }
 
       # Loading current state of request
-      request <- httr::GET(sprintf("https://cds.climate.copernicus.eu/api/v2/tasks/%s", ct$request_id),
-                           httr::authenticate(user, key),
-                           encode = "json")
-      ct <- httr::content(request)
+      response <- httr::GET(sprintf("https://cds.climate.copernicus.eu/api/v2/tasks/%s", ct$request_id),
+                            httr::authenticate(user, key),
+                            encode = "json")
+      ct <- httr::content(response)
 
-      # If status == completed: download. Else, loop and wait.
-      if(is.null(ct$status)) next
-      if(ct$status != "completed") next
+      # If ct$state is empty: continue
+      # If ct$state == "failed": drop error message, return NULL.
+      # If ct$state != "completed": continue, else ...
+      # ... (state == "completed") start data transfer.
+      if(is.null(ct$state)) {
+        ct$state <- "wait"; next
+      } else if(ct$state == "failed") {
+        cds_request_failed(ct); on.exit(); return(NULL)
+      } else if(ct$state != "completed") {
+        next
+      }
 
-      if(verbose) cat("- Starting transfer\n")
+      # Start data transfer as ct$state == "completed"
+      if(verbose) message("- Starting transfer\n")
       ct <- wf_transfer(email    = input_user,
                         url      = ct$request_id,
                         type     = "cds",
                         filename = tmp_file,
                         verbose  = verbose)
+      break # End loop (file downloaded, all fine)
     }
   }
 
-  # Delete on-exit message
+  # Delete on-exit-message
   on.exit()
 
-  # Copy data from temporary file to final location
-  # and delete original, with an exception for tempdir() location.
-  # The latter to facilitate package integration.
-  if (path != tempdir()) {
-    # copy temporary file to final destination
-    src <- file.path(tempdir(), tmp_file)
-    dst <- file.path(path, request$target)
-    if(verbose) cat(sprintf("- move file: %s -> %s\n", src, dst))
-    file.rename(src, dst)
-
-  } else {
-    dst <- file.path(tempdir(), tmp_file)
-    message("- file not copied and removed (path == tempdir())")
-  }
+  # Move file to final location.
+  src <- file.path(tempdir(), tmp_file)
+  dst <- file.path(path, request$target)
+  if(verbose) message(sprintf("- move file: %s -> %s\n", src, dst))
+  file.rename(src, dst)
 
   # delete the request upon succesful download
   # to free up other download slots
@@ -241,5 +250,21 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
 
   # return final file name/path
   return(dst)
+}
+
+
+cds_request_failed <- function(x) {
+  if(!"error" %in% names(x)) {
+    message("[!] ERROR: Server returned an error. Return NULL.")
+  } else {
+    message("[!] ERROR: Server returned an error, return NULL. Reason:")
+    for(n in names(x$error)) {
+      if(n == "context") next
+      message(sprintf("    - %s:  %s", toupper(n), as.character(x$error[[n]])))
+    }
+    if("context" %in% names(x$error))
+      message(sprintf("    - CONTEXT:  %s", as.character(x$error$context)))
+  }
+  message("\n")
 }
 

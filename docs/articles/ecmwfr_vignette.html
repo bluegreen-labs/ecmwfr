@@ -9,7 +9,8 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="ecmwfr">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="ecmwfr">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -47,7 +48,7 @@
       <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
     <li>
-      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+      <a href="../articles/cds_vignette.html">CDS</a>
     </li>
     <li class="dropdown-header">Changelog</li>
   </ul>
@@ -81,7 +82,7 @@
       <h1>ecmwfr</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2019-01-20</h4>
+            <h4 class="date">2019-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/../vignettes/ecmwfr_vignette.Rmd"><code>../vignettes/ecmwfr_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>ecmwfr_vignette.Rmd</code></div>
@@ -126,33 +127,32 @@ services &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf
 datasets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_datasets.html">wf_datasets</a></span>(<span class="dt">email =</span> <span class="st">"khrdev@outlook.com"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(datasets)</code></pre></div>
 </div>
-<div id="data-requests" class="section level2">
+<div id="ecmwf-data-requests-public-data-sets" class="section level2">
 <h2 class="hasAnchor">
-<a href="#data-requests" class="anchor"></a>Data Requests</h2>
+<a href="#ecmwf-data-requests-public-data-sets" class="anchor"></a>ECMWF Data Requests (Public Data Sets)</h2>
 <p>To download data use the wf_request() function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is an example of a request</span>
-my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream =</span> <span class="st">"oper"</span>,
-                  <span class="dt">levtype =</span> <span class="st">"sfc"</span>,
-                  <span class="dt">param =</span> <span class="st">"167.128"</span>,
-                  <span class="dt">dataset =</span> <span class="st">"interim"</span>,
-                  <span class="dt">step =</span> <span class="st">"0"</span>,
-                  <span class="dt">grid =</span> <span class="st">"0.75/0.75"</span>,
-                  <span class="dt">time =</span> <span class="st">"00"</span>,
-                  <span class="dt">date =</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,
-                  <span class="dt">type =</span> <span class="st">"an"</span>,
-                  <span class="dt">class =</span> <span class="st">"ei"</span>,
-                  <span class="dt">area =</span> <span class="st">"73.5/-27/33/45"</span>,
-                  <span class="dt">format =</span> <span class="st">"netcdf"</span>,
-                  <span class="dt">target =</span> <span class="st">"tmp.nc"</span>)
+my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream  =</span> <span class="st">"oper"</span>,
+                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,
+                   <span class="dt">param   =</span> <span class="st">"167.128"</span>,
+                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,
+                   <span class="dt">step    =</span> <span class="st">"0"</span>,
+                   <span class="dt">grid    =</span> <span class="st">"0.75/0.75"</span>,
+                   <span class="dt">time    =</span> <span class="st">"00"</span>,
+                   <span class="dt">date    =</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,
+                   <span class="dt">type    =</span> <span class="st">"an"</span>,
+                   <span class="dt">class   =</span> <span class="st">"ei"</span>,
+                   <span class="dt">area    =</span> <span class="st">"73.5/-27/33/45"</span>,
+                   <span class="dt">format  =</span> <span class="st">"netcdf"</span>,
+                   <span class="dt">target  =</span> <span class="st">"tmp.nc"</span>)
 
 <span class="co"># an example download using fw_request()</span>
 <span class="co"># using the above request list()</span>
-<span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(
-  <span class="dt">email =</span> <span class="st">"khrdev@outlook.com"</span>,
-  <span class="dt">transfer =</span> <span class="ot">TRUE</span>,
-  <span class="dt">path =</span> <span class="st">"~"</span>,
-  <span class="dt">request =</span> my_request,
-  <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">email    =</span> <span class="st">"khrdev@outlook.com"</span>,   <span class="co"># use keyring option</span>
+           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,                   <span class="co"># wait for request to be finished an download</span>
+           <span class="dt">path     =</span> <span class="st">"~"</span>,                    <span class="co"># store in 'home folder'</span>
+           <span class="dt">request  =</span> my_request,             <span class="co"># product specification</span>
+           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>This operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on <a href="https://apps.ecmwf.int/webmars/joblist/">the ECMWF website</a>, and provided with a download url which can be sued with the <code>wt_transfer()</code> funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!</p>
 <p>If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/stack">stack</a></span>(<span class="st">"~/tmp.nc"</span>)
@@ -160,6 +160,34 @@ my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.r
 
 raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(s[[<span class="dv">1</span>]], <span class="dt">main =</span> <span class="st">"2 meter temperature (Kelvin)"</span>)
 maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/maps/topics/map">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+</div>
+<div id="ecmwf-mars-requests" class="section level2">
+<h2 class="hasAnchor">
+<a href="#ecmwf-mars-requests" class="anchor"></a>ECMWF mars Requests</h2>
+<p>The <code>ecmwfr</code> package (<a href="../references/wf_request.html"><code><a href="../reference/wf_request.html">wf_request()</a></code></a>) also allows to submit <em>mars</em> requests. Note that this requires a member state login or a commercial user account!</p>
+<p>The <code>ecmwfr</code> syntax for <em>mars</em> requests is identical to the ones to the public ECMWF API except that one has to specify <code>dataset = "mars"</code>. The example below downloads the 2 meter temperature forecast (parameter <code>167</code>) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (<code>step</code>). A NetCDF file with a regular <code>0.125 x 0.125</code> degree horizontal resolution for a custom area in northern Europe will be downloaded (<code>area</code>). <strong>Note</strong> that the <code>grid</code> specification <em>is required</em> if <code>format = "netcdf"</code> as grib to netcdf conversion is only able for regular longitude-latitude grids.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is an example of a request</span>
+my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "mars"</span>,
+                   <span class="st">"class"</span>   =<span class="st"> "od"</span>,
+                   <span class="st">"date"</span>    =<span class="st"> "2019-01-22"</span>,
+                   <span class="st">"expver"</span>  =<span class="st"> "1"</span>,
+                   <span class="st">"levtype"</span> =<span class="st"> "sfc"</span>,
+                   <span class="st">"param"</span>   =<span class="st"> "167.128"</span>,
+                   <span class="st">"step"</span>    =<span class="st"> "0"</span>,
+                   <span class="st">"stream"</span>  =<span class="st"> "oper"</span>,
+                   <span class="st">"time"</span>    =<span class="st"> "12"</span>,
+                   <span class="st">"type"</span>    =<span class="st"> "fc"</span>,
+                   <span class="st">"grid"</span>    =<span class="st"> "0.125/0.125"</span>,
+                   <span class="st">"area"</span>    =<span class="st"> "50/0/30/15"</span>,
+                   <span class="st">"format"</span>  =<span class="st"> "netcdf"</span>,
+                   <span class="st">"target"</span>  =<span class="st"> "mars-data.nc"</span>)
+
+<span class="co"># Submit mars request and wait for netcdf file</span>
+<span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">email    =</span> <span class="ot">NULL</span>,        <span class="co"># use ~/.ecmwfapirc file</span>
+           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,        <span class="co"># wait for request to be finished an download</span>
+           <span class="dt">path     =</span> <span class="st">"."</span>,         <span class="co"># store data to current directory</span>
+           <span class="dt">request  =</span> my_request,  <span class="co"># request/product specification</span>
+           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
 </div>
   </div>
@@ -173,7 +201,8 @@ maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentati
 <a href="#ecmwfr">ecmwfr</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#setup">Setup</a></li>
       <li><a href="#listing-ancillary-data">Listing Ancillary data</a></li>
-      <li><a href="#data-requests">Data Requests</a></li>
+      <li><a href="#ecmwf-data-requests-public-data-sets">ECMWF Data Requests (Public Data Sets)</a></li>
+      <li><a href="#ecmwf-mars-requests">ECMWF mars Requests</a></li>
       </ul>
 </li>
       </ul>

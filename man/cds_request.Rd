@@ -30,8 +30,7 @@ a download query staging url or a netCDF of data on disk
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
-queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
-allows NetCDF downloads, and will override calls for grib data.
+queries later on using \code{\link[ecmwfr]{wf_transfer}}.
 }
 \examples{
 

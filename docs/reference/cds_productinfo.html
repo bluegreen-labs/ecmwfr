@@ -30,6 +30,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="CDS product list for a given dataset — cds_productinfo" />
 
 <meta property="og:description" content="Shows and returns detailed product information about a specific data set
@@ -81,7 +83,7 @@
       <a href="../articles/ecmwf_vignette.html">ECMWF</a>
     </li>
     <li>
-      <a href="../articles/era5_vignette.html">CDS: ERA-5 Demo</a>
+      <a href="../articles/cds_vignette.html">CDS</a>
     </li>
     <li class="dropdown-header">Changelog</li>
   </ul>
@@ -155,13 +157,25 @@ will be shown in your browser.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>invisible return of the list as retrieved from the CDS server.</p>
+    <p>Downloads a (html) product description from CDS. If
+<code>show = FALSE</code> a list with product details will be returned.
+If <code>show = TRUE</code> the product information will be shown in a local
+browser window (plus invisible return of the details as if <code>show</code>
+whould be set <code>FALSE</code>).</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='cds_datasets.html'>cds_datasets</a></code>.</p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>   <span class='co'># Opend description in browser</span>
+   <span class='fu'>cds_productinfo</span>(<span class='kw'>NULL</span>, <span class='st'>"reanalysis-era5-single-levels"</span>)
+
+   <span class='co'># Return information</span>
+   <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>cds_productinfo</span>(<span class='kw'>NULL</span>, <span class='st'>"reanalysis-era5-single-levels"</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>info</span>)</div><div class='output co'>#&gt; [1] "slug"          "name"          "id"            "type"         
+#&gt; [5] "rich_abstract" "terms"         "wms_sample"   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -171,7 +185,9 @@ will be shown in your browser.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     <p>Reto Stauffer</p>

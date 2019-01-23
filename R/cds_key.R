@@ -80,9 +80,8 @@ cds_key_from_file <- function(verbose = FALSE) {
   res <- stats::setNames(do.call(list, as.list(strsplit(content, ":")[[1]])), c("user", "key"))
 
   if(verbose) {
-      cat("CDS login information loaded from .cdsapirc\n")
-      cat(sprintf("- user ID:  %s\n", res$user))
-      cat(sprintf("- key:      %s\n", paste(substr(res$key, 0, 5), "******", sep = "")))
+      message(sprintf("- CDS login (from .cdsapirc): user ID: %s, key = %s",
+          res$user, paste(substr(res$key, 0, 5), "******", sep = "")))
   }
   # Append "user = email": for cds the 'user' is used, however
   # to be able to simplify the calls returning both, user and email!

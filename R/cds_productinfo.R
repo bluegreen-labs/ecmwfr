@@ -12,7 +12,22 @@
 #' @param show boolean, default \code{TRUE}. If \code{TRUE} the description
 #' will be shown in your browser.
 #' @param verbose boolean, default \code{FALSE}.
-#' @return invisible return of the list as retrieved from the CDS server.
+#'
+#' @return Downloads a (html) product description from CDS. If
+#' \code{show = FALSE} a list with product details will be returned.
+#' If \code{show = TRUE} the product information will be shown in a local
+#' browser window (plus invisible return of the details as if \code{show}
+#' whould be set \code{FALSE}).
+#'
+#' @examples
+#' \donttest{
+#'    # Opend description in browser
+#'    cds_productinfo(NULL, "reanalysis-era5-single-levels")
+#'
+#'    # Return information
+#'    info <- cds_productinfo(NULL, "reanalysis-era5-single-levels", show = FALSE)
+#'    names(info)
+#' }
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{cds_datasets}}.
 #' @export
@@ -20,13 +35,14 @@
 
 cds_productinfo <- function(user, dataset, show = TRUE, verbose = FALSE) {
 
-  # Keep input 'user' for later!
-  input_user <- user
-
   # check the login credentials
-  if(missing(user)){
+  if(missing(user))
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
-  } else if(is.null(user)) {
+
+  # get key. If 'user == NULL' load user login information from
+  # '~/.cdsapirc' file. Else load key via local keyring.
+  input_user <- user # Keep input 'user' for later!
+  if(is.null(user)) {
       tmp  <- ecmwfr::cds_key_from_file(verbose = verbose)
       user <- tmp$user; key <- tmp$key; rm(tmp)
   } else {

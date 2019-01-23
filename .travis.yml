@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get install -y libsodium-dev
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
-  - printf "url: https://cds.climate.copernicus.eu/api/v2\nkey: %s:%s" ${CDSAPIUSER} ${CDSAPIRC} > ~/.cdsapirc
+  - echo -e "url: https://cds.climate.copernicus.eu/api/v2\nkey: ${CDSAPIUSER} ${CDSAPIRC}" > ~/.cdsapirc
 
 r:
   - release

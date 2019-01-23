@@ -18,8 +18,18 @@
 #' wf_get_key(email = "test@mail.com")
 #'}
 
-wf_set_key <- function(email, key){
-  keyring::key_set_with_value("ecmwfr",
-                     email,
-                     password = key)
+wf_set_key <- function(
+  email,
+  key,
+  service = "webapi"
+){
+  if(service == "webapi"){
+    keyring::key_set_with_value("ecmwfr_webapi",
+                       email,
+                       password = key)
+  } else {
+    keyring::key_set_with_value("ecmwfr_cds",
+                                email,
+                                password = key)
+  }
 }

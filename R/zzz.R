@@ -1,5 +1,13 @@
 # load default server names
-ecmwf_server <- function(){'https://api.ecmwf.int/v1/'}
+ecmwf_server <- function(server = "webapi"){
+  # return default webapi
+  # if not return CDS server endpoint
+  if(server == "webapi"){
+    'https://api.ecmwf.int/v1/'
+  } else {
+    'https://cds.climate.copernicus.eu/api/v2/'
+  }
+}
 
 # simple spinner
 spinner <- function(seconds){

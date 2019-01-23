@@ -2,7 +2,7 @@
 #'
 #' Deletes a staged download from the queue
 #'
-#' @param user user (email address) used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing

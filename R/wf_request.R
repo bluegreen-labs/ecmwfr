@@ -66,7 +66,7 @@ wf_request <- function(
   }
 
   # get key
-  key <- wf_get_key(email, service = service)
+  key <- wf_get_key(user, service = service)
 
   # getting api url: different handling if 'dataset = "mars"',
   # requests to 'dataset = "mars"' require a non-public user
@@ -173,7 +173,7 @@ wf_request <- function(
     # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
-    ct <- wf_transfer(user    = input_email,
+    ct <- wf_transfer(user    = user,
                       url      = ct$href,
                       service  = "webapi",
                       filename = tmp_file,
@@ -204,7 +204,7 @@ wf_request <- function(
   # to free up other download slots. Not possible
   # for ECMWF mars requests (skip)
   if(!request$dataset == "mars") {
-    wf_delete(user   = input_email,
+    wf_delete(user   = user,
               url     = ct$href,
               verbose = verbose)
   }

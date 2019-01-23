@@ -2,7 +2,7 @@
 #'
 #' Returns a list of datasets
 #'
-#' @param email email address used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param service service to use ecmwf webapi or cds (default = "webapi")
 #' @param simplify simplify the output, logical (default = \code{TRUE})
@@ -28,34 +28,35 @@
 #'}
 
 wf_datasets <- function(
-  email,
+  user,
   service = "webapi",
   simplify = TRUE,
   verbose = FALSE
   ){
 
   # check the login credentials
-  if(missing(email)){
+  if(missing(user)){
     stop("Please provide ECMWF WebAPI or CDS login email / url!")
   }
 
   # get key
-  key   <- wf_get_key(email, service = service)
+  key <- wf_get_key(user, service = service)
+  url <- wf_server()
+  print(url)
 
   # query the status url provided
   if (service == "webapi"){
   response <- httr::GET(
-    paste(ecmwf_server(),
-          "datasets", sep = "/"),
+    paste0(wf_server(),"/datasets"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
-      "From" = email,
+      "From" = user,
       "X-ECMWF-KEY" = key),
-    encode = "json"
-  )
+    encode = "json")
   } else {
-    response <- httr::GET(sprintf("%s/resources/", cds_server()))
+    response <- httr::GET(sprintf("%s/resources/",
+                                  wf_server(service = "cds")))
   }
 
   # trap errors
@@ -78,7 +79,7 @@ wf_datasets <- function(
       # reformat content
       ct <- data.frame(name = unlist(ct),
                        url = sprintf("%s/resources/%s",
-                                     cds_server(), unlist(ct)))
+                                     wf_server(), unlist(ct)))
     }
   }
 

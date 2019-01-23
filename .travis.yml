@@ -10,8 +10,6 @@ before_install:
   - sudo apt-get install -y libsodium-dev
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
-  # Create ~/.cdsapirc and ~/.ecmwfapirc file
-  - source create_apirc
 
 r:
   - release
@@ -24,9 +22,8 @@ r_packages:
 
 after_success:
   - Rscript -e 'covr::codecov()'
-#
+
+# DON'T CHANGE THE CREDENTIALS!!
 env:
-  - ONTRAVIS="true"
-#env:
-#  global:
-#  - secure: EGhmZm/vFU9Hh/3Rybbe/z22w6IEKp9OSL23OXpNQw0YBbbbJsBl6XhiZcCNypTCOBGwRFoRJcBq+L33TVxsOFMOXzXmXCpM3x9rWnad2QGlaF5qT9KKaU06Sn3s1c8s0o/cHf0q9qeN/ncfIH4qQ9wpK5/FaEpsJ8Sdol0cXgjH+/BfCt4joPq2ujiWVPXK0oQ2vz6mBCaa03OGoz3+tcThXA66IghkBw719/1Wmrdf4P5AczOTyUQr055fMc8RtllWozFcTSIFWLCHXrgPaTR5AONGTt9n/szDngxSO2DQWQbllhb/0wo38WPayiWJ8HAW11thq8Npg6wXHQjesZXGgWOjPq12t0a/QH+qLxC3oa6njrrTBdH+CelnkKrA2h5CzoREbxrG8NiFxc2LdVgf2WcPCYBqJFOPHTZS8DZApm+jJ9kSNsZ2UTZvcsHqpkflUqPTRjq+IUlVSYIj4/SsisZo00gVujJ9LZf7SHcImriKZ1ogsTz3uxwKu/8zFEWGDnAvwut4kQGwTXI6jdnXjX+FfakNANZjxwnqCMqyMSa5mZ+owYOUlSHLd/+8+KeRTapm8efRnx7OHbDGciFlgOV3vWQ9stdDBkqC7ZrAgY/NcpafI22NBphJTTem6pJJcGRgSKQedbYP6InCG/K/ZZlVmKLICdwIWMSQtJA=
+  global:
+  - secure: EGhmZm/vFU9Hh/3Rybbe/z22w6IEKp9OSL23OXpNQw0YBbbbJsBl6XhiZcCNypTCOBGwRFoRJcBq+L33TVxsOFMOXzXmXCpM3x9rWnad2QGlaF5qT9KKaU06Sn3s1c8s0o/cHf0q9qeN/ncfIH4qQ9wpK5/FaEpsJ8Sdol0cXgjH+/BfCt4joPq2ujiWVPXK0oQ2vz6mBCaa03OGoz3+tcThXA66IghkBw719/1Wmrdf4P5AczOTyUQr055fMc8RtllWozFcTSIFWLCHXrgPaTR5AONGTt9n/szDngxSO2DQWQbllhb/0wo38WPayiWJ8HAW11thq8Npg6wXHQjesZXGgWOjPq12t0a/QH+qLxC3oa6njrrTBdH+CelnkKrA2h5CzoREbxrG8NiFxc2LdVgf2WcPCYBqJFOPHTZS8DZApm+jJ9kSNsZ2UTZvcsHqpkflUqPTRjq+IUlVSYIj4/SsisZo00gVujJ9LZf7SHcImriKZ1ogsTz3uxwKu/8zFEWGDnAvwut4kQGwTXI6jdnXjX+FfakNANZjxwnqCMqyMSa5mZ+owYOUlSHLd/+8+KeRTapm8efRnx7OHbDGciFlgOV3vWQ9stdDBkqC7ZrAgY/NcpafI22NBphJTTem6pJJcGRgSKQedbYP6InCG/K/ZZlVmKLICdwIWMSQtJA=

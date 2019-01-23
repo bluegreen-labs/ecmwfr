@@ -7,7 +7,7 @@
 wf_delete(user, url, service = "webapi", verbose = TRUE)
 }
 \arguments{
-\item{user}{user (email address) used to sign up for the ECMWF data service and
+\item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{url}{url to query}

@@ -44,15 +44,16 @@ wf_product_info <- function(
   }
 
   # get key
-  key <- wf_get_key(email, service = "cds")
+  key <- wf_get_key(user, service = "cds")
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.
-  ds <- wf_datasets(email = email, service = "cds")
+  ds <- wf_datasets(user = user, service = "cds")
   dataset <- match.arg(dataset, ds$name)
 
   # query the status url provided
-  response <- httr::GET(sprintf("%s/resources/%s", cds_server(), dataset))
+  response <- httr::GET(sprintf("%s/resources/%s", wf_server(service = "cds"),
+                                dataset))
 
   # trap errors
   if (httr::http_error(response)){

@@ -1,4 +1,3 @@
-#
 # Returns the url of the data servers for downloading
 # public ECMWF data sets or data sets for the Copernicus CDS.
 #
@@ -13,7 +12,7 @@
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
-wf_server <- function(id, service = "webapi") {
+ecmwf_server <- function(id, service = "webapi") {
 
   # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
@@ -22,8 +21,10 @@ wf_server <- function(id, service = "webapi") {
   webapi_url <- "https://api.ecmwf.int/v1"
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
 
+  # return url depending on service or id
   if (service == "webapi"){
-      if(missing(id)){ return(webapi_url)
+    if(missing(id)){
+      return(webapi_url)
     } else {
       return(file.path(webapi_url, "services/mars/requests", id))
     }
@@ -83,7 +84,6 @@ exit_message <- function(id, path, target){
     sep = "\n  ")
   message(sprintf("- Your request has been submitted to CDS.\n  %s", exit_msg))
 }
-
 
 # Startup message when attaching the package.
 .onAttach <- function(libname = find.package("ecmwfr"), pkgname = "ecmwfr") {

@@ -25,7 +25,7 @@ wf_set_key <- function(
   key,
   service = "webapi"
 ){
-  if(service == webapi){
+  if(service == "webapi"){
     keyring::key_set_with_value("ecmwfr_webapi",
                        user,
                        password = key)

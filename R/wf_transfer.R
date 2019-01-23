@@ -22,7 +22,7 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(user = "test@mail.com", key = "123")
 #'
 #' # request data and grab url and try a transfer
 #' r <- wf_request("test@email.com")
@@ -30,7 +30,7 @@
 #'}
 
 wf_transfer <- function(
-  email,
+  user,
   url,
   service = "webapi",
   path = tempdir(),
@@ -53,7 +53,7 @@ wf_transfer <- function(
   }
 
   # get key
-  key <- wf_get_key(email, service = service)
+  key <- wf_get_key(user, service = service)
 
   # create (temporary) output file
   tmp_file <- file.path(path, filename)
@@ -61,7 +61,7 @@ wf_transfer <- function(
   # download routine depends on service queried
   if(type == "cds") {
     response <- httr::GET(url,
-      httr::authenticate(email, key),
+      httr::authenticate(user, key),
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json"),
@@ -73,7 +73,7 @@ wf_transfer <- function(
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json",
-        "From" = email,
+        "From" = user,
         "X-ECMWF-KEY" = key),
       encode = "json"
     )

@@ -4,15 +4,10 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(email, service, request, transfer = FALSE, path = tempdir(),
-  time_out = 3 * 3600, verbose = TRUE)
+wf_request(email, service = "webapi", request, transfer = FALSE,
+  path = tempdir(), time_out = 3 * 3600, verbose = TRUE)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-Can also be set to \code{NULL}, in this case email and key will be loaded
-from the \code{.ecmwfapirc} file (located in your home folder).}
-
 \item{request}{nested list with query parameters following the layout
 as specified on the ECMWF API page}
 
@@ -24,6 +19,9 @@ as specified on the ECMWF API page}
 \code{3*3600} seconds).}
 
 \item{verbose}{show feedback on processing}
+
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 }
 \value{
 a download query staging url or (invisible) filename of the NetCDF
@@ -41,7 +39,7 @@ to identify possible problems.
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
 
 request <-  = list(stream = "oper",
    levtype = "sfc",
@@ -58,7 +56,7 @@ request <-  = list(stream = "oper",
    target = "tmp.nc")
 
 # get the default test data
-wf_request(email = "test@mail.com", request = request)
+wf_request(user = "test@mail.com", request = request)
 }
 }
 \seealso{

@@ -4,10 +4,10 @@
 \alias{wf_get_key}
 \title{Get secret ECMWF token}
 \usage{
-wf_get_key(email, service = "webapi")
+wf_get_key(user, service = "webapi")
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service}
+\item{user}{user (email address) used to sign up for the ECMWF data service}
 
 \item{service}{which service to use}
 }
@@ -22,10 +22,10 @@ Returns you token set by \code{\link[ecmwfr]{wf_set_key}}
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
 
 # get key
-wf_get_key(email = "test@mail.com")
+wf_get_key(user = "test@mail.com")
 }
 }
 \seealso{

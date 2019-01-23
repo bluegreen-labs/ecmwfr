@@ -7,10 +7,8 @@
 #' Note that the function will do some basic checks on the \code{request} input
 #' to identify possible problems.
 #'
-#' @param email email address used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' Can also be set to \code{NULL}, in this case email and key will be loaded
-#' from the \code{.ecmwfapirc} file (located in your home folder).
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
 #' \code{3*3600} seconds).
@@ -29,7 +27,7 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(user = "test@mail.com", key = "123")
 #'
 #' request <-  = list(stream = "oper",
 #'    levtype = "sfc",
@@ -46,12 +44,12 @@
 #'    target = "tmp.nc")
 #'
 #' # get the default test data
-#' wf_request(email = "test@mail.com", request = request)
+#' wf_request(user = "test@mail.com", request = request)
 #'}
 
 wf_request <- function(
   email,
-  service,
+  service = "webapi",
   request,
   transfer = FALSE,
   path = tempdir(),
@@ -59,8 +57,11 @@ wf_request <- function(
   verbose = TRUE
   ){
 
+  # match arguments, if not stop
+  service <- match.arg(service, c("webapi", "cds"))
+
   # check the login credentials
-  if(missing(email)){
+  if(missing(email) || missing(request)){
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
@@ -71,9 +72,9 @@ wf_request <- function(
   # requests to 'dataset = "mars"' require a non-public user
   # account (member states/commercial).
   url <- if(request$dataset == "mars") {
-    sprintf("%s/services/mars/requests", ecmwf_server())
+    sprintf("%s/services/mars/requests", wf_server())
   } else{
-    sprintf("%s/datasets/%s/requests", ecmwf_server(), request$dataset)
+    sprintf("%s/datasets/%s/requests", wf_server(), request$dataset)
   }
 
   # depending on the service get the response
@@ -84,14 +85,15 @@ wf_request <- function(
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json",
-        "From" = email,
+        "From" = user,
         "X-ECMWF-KEY" = key),
       body = request,
       encode = "json"
       )
   } else {
     response <- httr::POST(
-      sprintf("%s/resources/%s", cds_server(), request$dataset),
+      sprintf("%s/resources/%s", wf_server(service = "cds"),
+              request$dataset),
       httr::authenticate(user, key),
       httr::add_headers(
         "Accept" = "application/json",
@@ -168,10 +170,10 @@ wf_request <- function(
       Sys.sleep(ct$retry)
     }
 
-    # attempt a download. Use 'input_email', can also
+    # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
-    ct <- wf_transfer(email    = input_email,
+    ct <- wf_transfer(user    = input_email,
                       url      = ct$href,
                       service  = "webapi",
                       filename = tmp_file,
@@ -202,7 +204,7 @@ wf_request <- function(
   # to free up other download slots. Not possible
   # for ECMWF mars requests (skip)
   if(!request$dataset == "mars") {
-    wf_delete(email   = input_email,
+    wf_delete(user   = input_email,
               url     = ct$href,
               verbose = verbose)
   }

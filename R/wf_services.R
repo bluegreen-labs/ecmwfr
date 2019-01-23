@@ -2,7 +2,7 @@
 #'
 #' Returns a list of services
 #'
-#' @param email email address used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @return returns a nested list or data frame with the ECMWF services
@@ -15,7 +15,7 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(email = "test@mail.com", key = "123")
+#' wf_set_key(user = "test@mail.com", key = "123")
 #'
 #' # get a list of services
 #' wf_services("test@mail.com")
@@ -25,26 +25,26 @@
 #'}
 
 wf_services <- function(
-  email,
+  user,
   simplify = TRUE
 ){
 
   # check the login credentials
-  if(missing(email)){
-    stop("Please provide ECMWF login email / url!")
+  if(missing(user)){
+    stop("Please provide ECMWF login user / url!")
   }
 
-  # get key from email
-  key <- wf_get_key(email)
+  # get key from user
+  key <- wf_get_key(user)
 
   # query the status url provided
   response <- httr::GET(
-    paste(ecmwf_server(),
+    paste(wf_server(),
           "services", sep = "/"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
-      "From" = email,
+      "From" = user,
       "X-ECMWF-KEY" = key),
     encode = "json"
   )

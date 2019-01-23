@@ -3,12 +3,8 @@
 #' Returns the contents of the requested url as a netCDF file downloaded
 #' to disk or the current status of the requested transfer.
 #'
-#' @param email email address used to sign up for the ECMWF data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}} when
-#' calling \code{\link[ecmwfr]{wf_transfer}}.
-#' If set to \code{NULL} the \code{.ecmwfapirc} file will be used.
-#' @param user string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
-#' If set to \code{NULL} the \code{.cdsapirc} file will be used.
+#' @param user user (email address) used to sign up for the ECMWF data service,
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.
 #' @param url url to query
 #' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param path path were to store the downloaded data
@@ -38,12 +34,11 @@ wf_transfer <- function(
   url,
   service = "webapi",
   path = tempdir(),
-  filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
+  filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
   verbose = TRUE
 ){
 
-  # wf_transfer is used for both, ecmwf and cds data transfer.
-  # To get correct email/key or user/key we need the service argument.
+  # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
 
   # check the login credentials
@@ -60,7 +55,7 @@ wf_transfer <- function(
   # get key
   key <- wf_get_key(email, service = service)
 
-  # create temporary output file
+  # create (temporary) output file
   tmp_file <- file.path(path, filename)
 
   # download routine depends on service queried

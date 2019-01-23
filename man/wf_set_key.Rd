@@ -4,10 +4,10 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(email, key, service = "webapi")
+wf_set_key(user, key, service = "webapi")
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service}
+\item{user}{user (email address) used to sign up for the ECMWF data service}
 
 \item{key}{token provided by ECMWF}
 

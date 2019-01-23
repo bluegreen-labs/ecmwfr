@@ -4,10 +4,10 @@
 \alias{wf_services}
 \title{ECMWF services list}
 \usage{
-wf_services(email, simplify = TRUE)
+wf_services(user, simplify = TRUE)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
+\item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{simplify}{simplify the output, logical (default = \code{TRUE})}
@@ -22,7 +22,7 @@ Returns a list of services
 
 \dontrun{
 # set key
-wf_set_key(email = "test@mail.com", key = "123")
+wf_set_key(user = "test@mail.com", key = "123")
 
 # get a list of services
 wf_services("test@mail.com")

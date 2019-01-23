@@ -57,10 +57,12 @@ Before starting save the provided key to your local keychain. The package does n
 
 ```R
 # set a key to the keychain
-wf_set_key(email = "john.smith@example.com", key = "XXXXXXXXXXXXXXXXXXXXXX")
+wf_set_key(email = "john.smith@example.com",
+           key = "XXXXXXXXXXXXXXXXXXXXXX",
+           service = "webapi")
 
 # you can retrieve the key using
-wf_get_key(email = "john.smith@example.com")
+wf_get_key(email = "john.smith@example.com", service = "webapi")
 
 # the output should be the key you provided
 # "XXXXXXXXXXXXXXXXXXXXXX"
@@ -114,22 +116,13 @@ registering](https://cds.climate.copernicus.eu/user/register). Once your user
 account has been verified you can get your personal _user ID_ and _key_ by
 visiting the [user profile](https://cds.climate.copernicus.eu/user).  This
 information is required to be able to retrieve data via the `ecmwfr` package.
-Two different ways to use your login are available: use the `ecmwf`
-[`cds_set_key`](references/cds_set_key.html) function to store your login
-information in the system keyring, or store your login information in a file
-called `.cdsapirc` located in your user's home directory. The `.cdsapirc` file
-is a simple ASCII file which will look similar to this:
+Use the `ecmwf` [`wf_set_key`](references/cds_set_key.html) function to store
+your login information in the system keyring (see below).
 
 ```json
 url: https://cds.climate.copernicus.eu/api/v2
 key: 1234:abcd1234-foo-bar-98765431-XXXXXXXXXX
 ```
-
-More details can be found here: [How to use the CDS
-API](https://cds.climate.copernicus.eu/api-how-to).  The `ecmwfr` package will
-also use this file, if preferr to do so (see
-[`cds_key_from_file`](references/cds_from_file.html)).
-
 
 ### Setup
 
@@ -140,10 +133,12 @@ sharing scripts on github or otherwise.
 
 ```R
 # set a key to the keychain
-cdf_set_key(user = "1234", key = "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX")
+wf_set_key(user = "1234",
+            key = "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX",
+            service = "cds")
 
 # you can retrieve the key using
-cds_get_key(user = "1234")
+wf_get_key(user = "1234", service = "cds")
 
 # the output should be the key you provided
 # "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"
@@ -189,28 +184,20 @@ request <- list("dataset" = "reanalysis-era5-pressure-levels",
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
 # call:
-file <- cds_request(user     = "1234",   # user ID (for authentification)
-                    request  = request,  # the request
-                    transfer = TRUE,     # download the file
-                    path     = ".")      # store data in current working directory
+file <- wf_request(user     = "1234",   # user ID (for authentification)
+                   request  = request,  # the request
+                   transfer = TRUE,     # download the file
+                   path     = ".")      # store data in current working directory
 
-# If you have created a .cdsapirc file in your local
-# home directory you can also tell cds_request to use
-# the file by setting user = NULL:
-file <- cds_request(user     = NULL,     # use ~/.cdsapirc
-                    request  = request,  # the request
-                    transfer = TRUE,     # download the file
-                    path     = ".")      # store data in current working directory
 ```
 
 The CDS services are quite fast, however, if you request a lot of variables,
 multiple levels, and data over several years these requests might take quite a
 while!  **Note**: If you need to download larger amounts of data it is
 suggested to split the downloads, e.g., download the data in junks (e.g.,
-month-by-month, or year-by-year).  A progress indicator will keep you informed
+month-by-month, or year-by-year). A progress indicator will keep you informed
 on the status of your request. Keep in mind that all data downloaded will be
 buffered in memory limiting the downloads to ~6GB on low end systems.
-
 
 ## Acknowledgements
 

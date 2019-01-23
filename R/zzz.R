@@ -14,18 +14,27 @@
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
-ecmwf_server <- function(id) {
-    url <- "https://api.ecmwf.int/v1"
-    if(missing(id)) return(url)
-    return(file.path(url, "services/mars/requests", id))
-}
+wf_server <- function(id, service = "webapi") {
 
-# @rdname ecmwf_server
-# @author Reto Stauffer
-cds_server   <- function(id) {
-    url <- "https://cds.climate.copernicus.eu/api/v2"
-    if(missing(id)) return(url)
-    return(file.path(url, "tasks", id))
+  # match arguments, if not stop
+  service <- match.arg(service, c("webapi", "cds"))
+
+  # set base urls
+  webapi_url <- "https://api.ecmwf.int/v1"
+  cds_url <- "https://cds.climate.copernicus.eu/api/v2"
+
+  if (service == "webapi"){
+      if(missing(id)){ return(webapi_url)
+    } else {
+      return(file.path(webapi_url, "services/mars/requests", id))
+    }
+  } else {
+    if(missing(id)){
+      return(cds_url)
+    } else {
+      return(file.path(cds_url, "tasks", id))
+    }
+  }
 }
 
 # Simple progress spinner
@@ -85,4 +94,3 @@ exit_message <- function(id, path, target){
                "     - https://www.ecmwf.int/en/terms-use\n")
   if(interactive()) packageStartupMessage(txt)
 }
-

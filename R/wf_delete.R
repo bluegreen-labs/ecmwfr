@@ -2,7 +2,7 @@
 #'
 #' Deletes a staged download from the queue
 #'
-#' @param email email address used to sign up for the ECMWF data service and
+#' @param user user (email address) used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing
@@ -25,30 +25,30 @@
 #'}
 
 wf_delete <- function(
-  email,
+  user,
   url,
-  service = "ecmwf",
+  service = "webapi",
   verbose = TRUE
 ){
 
   # check the login credentials
-  if(missing(email) | missing(url)){
-    stop("Please provide ECMWF login email / url!")
+  if(missing(user) | missing(url)){
+    stop("Please provide ECMWF login user / url!")
   }
 
-  # Checking input argument 'type'
-  service <- match.arg(service, c("ecmwf", "cds"))
+  # match arguments, if not stop
+  service <- match.arg(service, c("webapi", "cds"))
 
   # get key
-  key <- wf_get_key(email, service = service)
+  key <- wf_get_key(user, service = service)
 
   # remove a queued download
   # Differs for ecmwf and cds requests.
-  # For CDS: note that 'email' is simply a copy of 'user'
+  # For CDS: note that 'user' is simply a copy of 'user'
   if(type == "cds") {
     response <- httr::DELETE(
       url,
-      httr::authenticate(email, key),
+      httr::authenticate(user, key),
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json")
@@ -59,7 +59,7 @@ wf_delete <- function(
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json",
-        "From" = email,
+        "From" = user,
         "X-ECMWF-KEY" = key)
     )
   }

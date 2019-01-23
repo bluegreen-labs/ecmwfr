@@ -5,15 +5,10 @@
 \title{ECMWF data transfer function}
 \usage{
 wf_transfer(email, url, service = "webapi", path = tempdir(),
-  filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
+  filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
   verbose = TRUE)
 }
 \arguments{
-\item{email}{email address used to sign up for the ECMWF data service and
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}} when
-calling \code{\link[ecmwfr]{wf_transfer}}.
-If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
-
 \item{url}{url to query}
 
 \item{service}{which service to use, one of \code{webapi} or \code{cds}}
@@ -24,8 +19,8 @@ If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
 
 \item{verbose}{show feedback on data transfers}
 
-\item{user}{string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
-If set to \code{NULL} the \code{.cdsapirc} file will be used.}
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
 \item{...}{forwarded to \code{\link[ecmwfr]{wf_transfer}}}
 }

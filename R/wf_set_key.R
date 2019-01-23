@@ -3,7 +3,7 @@
 #' Saves the token to your local keychain under
 #' a service called "ecmwfr".
 #'
-#' @param email email address used to sign up for the ECMWF data service
+#' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
 #' @param service which service to use
 #' @keywords key management
@@ -20,14 +20,14 @@
 #' wf_get_key(email = "test@mail.com")
 #'}
 
-wf_set_key <- function(email, key, service = "webapi"){
+wf_set_key <- function(user, key, service = "webapi"){
   if(service == webapi){
     keyring::key_set_with_value("ecmwfr_webapi",
-                       email,
+                       user,
                        password = key)
   }else{
     keyring::key_set_with_value("ecmwfr_cds",
-                                email,
+                                user,
                                 password = key)
   }
 }

@@ -48,7 +48,7 @@ wf_product_info <- function(
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.
-  ds <- ecmwfr::wf_datasets(email = email, service = "cds")
+  ds <- wf_datasets(email = email, service = "cds")
   dataset <- match.arg(dataset, ds$name)
 
   # query the status url provided

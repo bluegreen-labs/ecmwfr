@@ -1,21 +1,7 @@
-
-# Exclude travis-related files
-# .travis.yml   travis config
-# create_apirc  creates .cdsapirc and .ecmwfapirc
-#               on travis-ci.org. NOTE: requires
-#               four exported variables:
-#               CDSAPIUSER:    CDS user id
-#               CDSAPIKEY:     CDS login secret key
-#               ECMWFAPIEMAIL: ECMWF user e-mail address
-#               ECMWFAPIKEY:   ECMWF login secret key
+# docs and unit tests
 ^\.travis\.yml$
-^create_apirc$
-
-# Ignore pkgdown
 ^_pkgdown\.yml$
 ^pkgdown$
-
-# Doc folder and vignettes
 ^docs$
 ^vignettes\/.*$
 
@@ -38,4 +24,3 @@
 ^.*\.Renviron$
 ^\.Rproj\.user$
 ^\.httr-oauth$
-

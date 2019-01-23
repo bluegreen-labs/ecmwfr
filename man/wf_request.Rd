@@ -30,7 +30,8 @@ as specified on the ECMWF API page}
 \item{verbose}{show feedback on processing}
 }
 \value{
-a download query staging url or a netCDF of data on disk
+a download query staging url or (invisible) filename of the NetCDF
+file on your local disc
 }
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively

@@ -18,7 +18,8 @@
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @param verbose show feedback on processing
-#' @return a download query staging url or a netCDF of data on disk
+#' @return a download query staging url or (invisible) filename of the NetCDF
+#' file on your local disc
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
@@ -199,7 +200,7 @@ wf_request <- function(
   }
 
   # return final file name/path (dst = destination).
-  return(dst)
+  return(invisible(dst))
 }
 
 

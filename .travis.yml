@@ -2,8 +2,6 @@ language: R
 sudo: required
 cache: packages
 
-install:
-    - bash create_apirc.sh
 warnings_are_errors: true
 before_install:
   - sudo apt-get install -y udunits-bin libudunits2-dev
@@ -13,11 +11,9 @@ before_install:
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
 
-
+# Create ~/.cdsapirc and ~/.ecmwfapirc file
 install:
-  - echo "url: https://cds.climate.copernicus.eu/api/v2" >> ~/.cdsapirc
-  - echo "key: $CDSAPIUSER:$CDSAPIRC" >> ~/.cdsapirc
-    ##- echo > -e "url: https\://cds.climate.copernicus.eu/api/v2\nkey\\: CDSAPIUSER:CDSAPIRC" > ~/.cdsapirc
+    - bash create_apirc.sh
 
 r:
   - release

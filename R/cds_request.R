@@ -249,7 +249,7 @@ cds_request <- function(user, request, transfer = TRUE, path = tempdir(),
             verbose = verbose)
 
   # return final file name/path
-  return(dst)
+  return(invisible(dst))
 }
 
 

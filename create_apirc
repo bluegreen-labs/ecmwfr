@@ -21,5 +21,12 @@ EOF
     cat ~/.ecmwfapirc
     echo "========================================="
 
+else
+
+    echo "========================================="
+    echo "Not on travis.ci, do not create api files."
+    echo "========================================="
+
 fi
+
 

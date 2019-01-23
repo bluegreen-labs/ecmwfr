@@ -3,21 +3,7 @@
 # products (ECMWF public/closed, CDS ERA-5, ...)
 # -------------------------------------------------------------------
 library("ecmwfr")
-devtools::load_all("../")
 
-
-req <- list(
-    "dataset" = "mars",
-    "class" = "e4",
-    "date" = "1993-01-05",
-    "expver" = "1",
-    "levtype" = "sfc",
-    "param" = "164.128",
-    "stream" = "oper",
-    "time" = "12:00:00",
-    "type" = "an",
-    "target" = "_ecmwf_era40.nc")
-file <- wf_request(NULL, request = req, transfer = TRUE, path = ".", verbose = TRUE)
 
 # -------------------------------------------------------------------
 # ECMWF IFS Forecasts (requires member state/commercial user account!)

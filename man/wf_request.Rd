@@ -17,7 +17,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 Can also be set to \code{NULL}, in this case email and key will be loaded
 from the \code{.ecmwfapirc} file (located in your home folder).}
 
-\item{path}{path where to store the downloaded data}
+\item{path}{path were to store the downloaded data}
 
 \item{time_out}{how long to wait on a download to start (default =
 \code{3*3600} seconds for mars requests, \code{3600} seconds for all others).}
@@ -28,6 +28,10 @@ from the \code{.ecmwfapirc} file (located in your home folder).}
 as specified on the ECMWF API page}
 
 \item{verbose}{show feedback on processing}
+
+\item{path}{path where to store the downloaded data}
+
+\item{time_out}{how long to wait on a download to start (default = 3600)}
 }
 \value{
 a download query staging url or a netCDF of data on disk

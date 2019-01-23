@@ -3,7 +3,6 @@
 # products (ECMWF public/closed, CDS ERA-5, ...)
 # -------------------------------------------------------------------
 library("ecmwfr")
-devtools::load_all("../")
 
 # -------------------------------------------------------------------
 # ECMWF IFS Forecasts (requires member state/commercial user account!)

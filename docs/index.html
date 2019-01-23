@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -139,7 +139,6 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <h3 class="hasAnchor">
 <a href="#data-requests" class="anchor"></a>Data Requests</h3>
 <p>To download data use the wf_request() function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments.</p>
-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is an example of a request</span>
 my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream =</span> <span class="st">"oper"</span>,
                    <span class="dt">levtype =</span> <span class="st">"sfc"</span>,
@@ -167,8 +166,7 @@ my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.r
   <span class="dt">transfer =</span> <span class="ot">TRUE</span>,
   <span class="dt">path =</span> <span class="st">"~"</span>,
   <span class="dt">request =</span> my_request)</code></pre></div>
-<p>This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.</p>
-
+<p>This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: <a href="https://apps.ecmwf.int/webmars/joblist/" class="uri">https://apps.ecmwf.int/webmars/joblist/</a>.</p>
 </div>
 </div>
 <div id="use-copernicus-climate-data-store-cds" class="section level2">

@@ -124,7 +124,7 @@ wf_request <- function(
   }
 
   # set time-out counter
-  if(verbose) message(sprintf("- timeout set to %.1 hours", time_out/3600))
+  if(verbose) message(sprintf("- timeout set to %.1f hours", time_out/3600))
   time_out <- Sys.time() + time_out
 
   # Temporary file name, will be used in combination with tempdir() when

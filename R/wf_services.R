@@ -39,8 +39,7 @@ wf_services <- function(
 
   # query the status url provided
   response <- httr::GET(
-    paste(wf_server(),
-          "services", sep = "/"),
+    paste0(wf_server(),"/services"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",

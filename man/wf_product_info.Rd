@@ -4,16 +4,17 @@
 \alias{wf_product_info}
 \title{CDS product list for a given dataset}
 \usage{
-wf_product_info(user, dataset, simplify = TRUE, verbose = FALSE)
+wf_product_info(user, dataset, service = "webapi", simplify = TRUE,
+  verbose = FALSE)
 }
 \arguments{
-\item{user}{string, user ID used to sign up for the CDS data service and
-used to retrieve the token set by \code{\link[ecmwfr]{cds_set_key}}.
-Note: can also be set to \code{NULL}, in this case user and key will
-be read from the \code{.cdsapirc} file (located in your home folder).}
+\item{user}{string, user ID used to sign up for the CDS data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
 \item{dataset}{character, name of the data set for which the product
 information should be loaded.}
+
+\item{service}{which service to use, one of \code{webapi} or \code{cds}}
 
 \item{simplify}{boolean, default \code{TRUE}. If \code{TRUE} the description
 will be returned as tidy data instead of a nested list.}
@@ -26,7 +27,7 @@ Downloads a tidy data frame with product descriptions from CDS. If
 }
 \description{
 Shows and returns detailed product information about a specific data set
-(see \code{\link[ecmwfr]{cds_datasets}}).
+(see \code{\link[ecmwfr]{wf_datasets}}).
 }
 \examples{
 \donttest{
@@ -40,10 +41,10 @@ Shows and returns detailed product information about a specific data set
 }
 }
 \seealso{
-\code{\link[ecmwfr]{cds_datasets}}.
+\code{\link[ecmwfr]{wf_datasets}}.
 }
 \author{
-Reto Stauffer
+Reto Stauffer, Koen Hufkens
 }
 \keyword{climate,}
 \keyword{data}

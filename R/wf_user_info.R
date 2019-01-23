@@ -34,7 +34,7 @@ wf_user_info <- function(
 
   # query the status url provided
   response <- httr::GET(
-    paste(ecmwf_server(),
+    paste(wf_server(),
           "/who-am-i", sep = "/"),
     httr::add_headers(
       "Accept" = "application/json",

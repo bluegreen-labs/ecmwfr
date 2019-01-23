@@ -42,14 +42,13 @@ wf_transfer <- function(
   service <- match.arg(service, c("webapi", "cds"))
 
   # check the login credentials
-  if(missing(email) | missing(url)){
+  if(missing(user) || missing(url)){
     stop("Please provide ECMWF login email / url!")
   }
 
   # If the URL is not an URL but an ID: generate URL
-  if (!grepl("^https?://.*$", url)) {
-      if(verbose) message("- input is a request ID, generate url")
-      url <- get(sprintf("%s_server", service))(url)
+  if (service == "cds") {
+      url <- wf_server(id = url, service = service)
   }
 
   # get key
@@ -59,7 +58,7 @@ wf_transfer <- function(
   tmp_file <- file.path(path, filename)
 
   # download routine depends on service queried
-  if(type == "cds") {
+  if(service == "cds") {
     response <- httr::GET(url,
       httr::authenticate(user, key),
       httr::add_headers(
@@ -90,11 +89,11 @@ wf_transfer <- function(
 
   # write raw data to file from memory
   # if not returned url + passing code
-  if (class(ct) == "raw"){
+  if (class(ct) == "raw" && service == "webapi"){
 
     if(verbose){
       message("- polling server for a data transfer")
-      message(sprintf("- writing file to disk (\"%s\")", tmp_file))
+      message(sprintf("- writing data to disk (\"%s\")", tmp_file))
     }
 
     # write binary file
@@ -102,35 +101,30 @@ wf_transfer <- function(
     writeBin(ct, f)
     close(f)
 
-    # return element to exit while loop, including
-    # the url to close the connection
-    invisible(
-      return(data.frame(code = "downloaded",
-                        href = url,
-                        stringsAsFactors = FALSE))
-    )
-  } else {
-
-    # if no transfer of data is initiated check the format
-    # especially for the CDS downloads and the state variable
-    if (service == "cds"){
-
-      # if the transfer failed, return error and stop()
-      if(ct$state == "failed") {
-        message("Data transfer failed!")
-        stop(ct$error)
-      }
-
-      # if empty provide a wait state
-      if(is.null(ct$state)){
-        ct$code <- 202
-      }
-
-      # if completed
-      if("completed" == ct$state){
-        ct$code <- 303
-      }
-    }
-    return(ct)
+    # set 302 code to exit loop
+    ct$code <- 302
   }
+
+  if (service == "cds"){
+
+    # if the transfer failed, return error and stop()
+    if(ct$state == "failed") {
+      message("Data transfer failed!")
+      stop(ct$error)
+    }
+
+    if(ct$state != "complete" || is.null(ct$state)){
+      ct$code <- 202
+    }
+
+    # if completed / should not happen but still there
+    if("completed" == ct$state){
+        ct$code <- 302
+        httr::GET(ct$location,
+                  httr::write_disk(tmp_file, overwrite = TRUE))
+    }
+  }
+
+  # return state variable
+  return(invisible(ct))
 }

@@ -5,8 +5,7 @@
 #' via API. the \code{\link[ecmwfr]{check_request}} function tries
 #' to avoid these problems before sending a request. See 'Details'.
 #'
-#' @param x list of parameters (as for \code{\link[emcwfr]{wf_request}},
-#' \code{\link[ecmwfr]{cds_request}}).
+#' @param x list of parameters (as for \code{\link[ecmwfr]{wf_request}})
 #' @return Returns the request (might, to avoid problems, modify the
 #' user request.
 #'

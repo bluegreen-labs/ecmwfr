@@ -1,14 +1,13 @@
 #' CDS product list for a given dataset
 #'
 #' Shows and returns detailed product information about a specific data set
-#' (see \code{\link[ecmwfr]{cds_datasets}}).
+#' (see \code{\link[ecmwfr]{wf_datasets}}).
 #'
-#' @param user string, user ID used to sign up for the CDS data service and
-#' used to retrieve the token set by \code{\link[ecmwfr]{cds_set_key}}.
-#' Note: can also be set to \code{NULL}, in this case user and key will
-#' be read from the \code{.cdsapirc} file (located in your home folder).
+#' @param user string, user ID used to sign up for the CDS data service,
+#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.
 #' @param dataset character, name of the data set for which the product
 #' information should be loaded.
+#' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param simplify boolean, default \code{TRUE}. If \code{TRUE} the description
 #' will be returned as tidy data instead of a nested list.
 #' @param verbose boolean, default \code{FALSE}.
@@ -27,13 +26,14 @@
 #'    names(info)
 #' }
 #' @keywords data download, climate, re-analysis
-#' @seealso \code{\link[ecmwfr]{cds_datasets}}.
+#' @seealso \code{\link[ecmwfr]{wf_datasets}}.
 #' @export
-#' @author Reto Stauffer
+#' @author Reto Stauffer, Koen Hufkens
 
 wf_product_info <- function(
   user,
   dataset,
+  service = "webapi",
   simplify = TRUE,
   verbose = FALSE
   ){
@@ -43,17 +43,32 @@ wf_product_info <- function(
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
   }
 
+  # match arguments, if not stop
+  service <- match.arg(service, c("webapi", "cds"))
+
   # get key
-  key <- wf_get_key(user, service = "cds")
+  key <- wf_get_key(user, service = service)
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.
-  ds <- wf_datasets(user = user, service = "cds")
+  ds <- wf_datasets(user = user, service = service)
   dataset <- match.arg(dataset, ds$name)
 
   # query the status url provided
-  response <- httr::GET(sprintf("%s/resources/%s", wf_server(service = "cds"),
-                                dataset))
+  if (service == "webapi"){
+    response <- httr::GET(
+      paste0(wf_server(),"/datasets/",dataset),
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = user,
+        "X-ECMWF-KEY" = key),
+      encode = "json")
+  } else {
+    response <- httr::GET(sprintf("%s/resources/%s",
+                                  wf_server(service = "cds"),
+                                  dataset))
+  }
 
   # trap errors
   if (httr::http_error(response)){
@@ -70,6 +85,8 @@ wf_product_info <- function(
     # instead of html which is useless for processing and documentation
     # (only a visual aid) return a tidy data frame (instead of a list)
     # with data which is easily machine readable
+    # use xml2 or rvest to mangle html abstracts etc. who the hell serves
+    # up html anyway?
     return(ct)
   }
 

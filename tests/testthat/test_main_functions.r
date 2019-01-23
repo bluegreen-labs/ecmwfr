@@ -3,7 +3,7 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 # format request (see below)
-my_request <- list(stream = "oper",
+wf_request <- list(stream = "oper",
                    levtype = "sfc",
                    param = "165.128",
                    dataset = "interim",
@@ -13,9 +13,20 @@ my_request <- list(stream = "oper",
                    date = "2014-07-01/to/2014-07-31",
                    type = "an",
                    class = "ei",
-                   area = "73.5/-27/33/45",
+                   area = "51/0/50/1",
                    format = "netcdf",
                    target = "tmp.nc")
+
+# set password using encrypted key
+# if provided, otherwise just continue
+# assuming a valid keychain value (see
+# additional check below)
+key <- system("echo $KEY", intern = TRUE)
+if(key != "" & key != "$KEY"){
+  wf_set_key(user = "khrdev@outlook.com",
+             key = system("echo $KEY", intern = TRUE))
+}
+rm(key)
 
 # Check if a password is not set. This traps the inconsistent
 # behavious between systems while accomodating for encrypted

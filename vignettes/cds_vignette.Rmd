@@ -117,7 +117,7 @@ request <- list("dataset"        = "reanalysis-era5-pressure-levels",
                 "target"         = "era5-demo.nc")
 
 # Start downloading the data
-ncfile <- cds_request(user = NULL,         # use the ~/.cdsapirc file
+ncfile <- wf_request(user = NULL,         # use the ~/.cdsapirc file
                       request = request,   # use our request specification from above
                       transfer = TRUE,     # download data as soon as ready
                       path = ".",          # store the netcdf file (era5-demo.nc) here

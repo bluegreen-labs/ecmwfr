@@ -42,10 +42,15 @@ wf_delete <- function(
   # get key
   key <- wf_get_key(user, service = service)
 
+  # If the URL is not an URL but an ID: generate URL
+  if (service == "cds") {
+    url <- wf_server(id = url, service = service)
+  }
+
   # remove a queued download
   # Differs for ecmwf and cds requests.
   # For CDS: note that 'user' is simply a copy of 'user'
-  if(type == "cds") {
+  if(service == "cds") {
     response <- httr::DELETE(
       url,
       httr::authenticate(user, key),

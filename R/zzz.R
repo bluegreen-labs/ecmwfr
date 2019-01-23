@@ -12,7 +12,7 @@
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
-ecmwf_server <- function(id, service = "webapi") {
+wf_server <- function(id, service = "webapi") {
 
   # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
@@ -70,19 +70,32 @@ spinner <- function(seconds){
 
 # Show message if user exits the function (interrupts execution)
 # or as soon as an error will be thrown.
-exit_message <- function(id, path, target){
-  exit_msg <-  paste(
+exit_message <- function(url, service, path, file){
+
+  job_list <- ifelse(service == "webapi",
+    "  Visit https://apps.ecmwf.int/webmars/joblist/",
+    "  Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
+
+  intro <-  paste(
     "Even after exiting your request is still beeing processed!",
-    "Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
-    "to manage (download, retry, delete) your requests",
-    "or to get ID's from previous requests.",
-    "Retry downloading as soon as as completed:",
-    sprintf("  - wf_transfer(<user>, \"%s\", \"cds\", \"%s\", \"%s\")",
-            id, path, file),
-    "Delete the job upon completion using:",
-    sprintf("  - wf_delete(<user>, \"%s\", \"cds\")", id),
-    sep = "\n  ")
-  message(sprintf("- Your request has been submitted to CDS.\n  %s", exit_msg))
+    job_list,
+    "  to manage (download, retry, delete) your requests",
+    "  or to get ID's from previous requests.\n\n", sep = "\n")
+
+  options <- paste(
+    "- Retry downloading as soon as as completed:\n",
+    "  wf_transfer(<user>,\n url = '",url,
+    "',\n path = '",path,
+    "',\n filename = '",file,
+    "',\n service = \'", service,"')\n\n",
+    "- Delete the job upon completion using:\n",
+    "  wf_delete(<user>,\n url ='",url,"')\n\n",
+    sep = "")
+
+  # combine all messages
+  exit_msg <- paste(intro, options, sep = "")
+  message(sprintf("- Your request has been submitted as a %s request.\n\n  %s",
+                  toupper(service),exit_msg))
 }
 
 # Startup message when attaching the package.

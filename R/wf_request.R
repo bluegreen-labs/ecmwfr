@@ -15,6 +15,7 @@
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
+#' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param verbose show feedback on processing
 #' @return a download query staging url or (invisible) filename of the NetCDF
 #' file on your local disc
@@ -48,7 +49,7 @@
 #'}
 
 wf_request <- function(
-  email,
+  user,
   service = "webapi",
   request,
   transfer = FALSE,
@@ -61,7 +62,7 @@ wf_request <- function(
   service <- match.arg(service, c("webapi", "cds"))
 
   # check the login credentials
-  if(missing(email) || missing(request)){
+  if(missing(user) || missing(request)){
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
@@ -76,6 +77,8 @@ wf_request <- function(
   } else{
     sprintf("%s/datasets/%s/requests", wf_server(), request$dataset)
   }
+
+  # Code below could be replaced by a wf_transfer() call
 
   # depending on the service get the response
   # for the query provided
@@ -112,70 +115,77 @@ wf_request <- function(
   # grab content, to look at the status
   ct <- httr::content(response)
 
-  # some verbose feedback
-  if(verbose){
-    message("- staging data transfer at url endpoint:")
-    message("  ", ct$href)
+  # first run is always 202
+  if(service == "cds"){
+    ct$code = 202
   }
 
-  # on exit show message
-  on.exit(
-    exit_message(
-      id = ct$request_id,
-      path = path,
-      file = request$target)
-    )
+  # some verbose feedback
+  if(verbose){
+    message("- staging data transfer at url endpoint or request id:")
+    message("  ", ifelse(service == "cds",ct$request_id, ct$href), "\n")
+  }
 
   # only return the content of the query
   if(!transfer){
-    return(ct)
+    message("  No download requests will be made, however...\n")
+    exit_message(
+        url = ifelse(service == "cds",ct$request_id, ct$href),
+        path = path,
+        file = request$target,
+        service = service)
+    return(invisible(ct))
   }
 
   # set time-out counter
-  if(verbose) message(sprintf("- timeout set to %.1f hours", time_out/3600))
+  if(verbose){
+    message(sprintf("- timeout set to %.1f hours", time_out/3600))
+  }
 
   # set time-out
   time_out <- Sys.time() + time_out
 
   # Temporary file name, will be used in combination with tempdir() when
-  # calling wf_transfer. The final file will be moved to the user-defined
-  # 'path' as soon as the download has been finished.
-  tmp_file <- basename(tempfile("ecmwfr_"))
+  # calling wf_transfer.
+  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
 
   # keep waiting for the download order to come online
   # with status code 303. 202 = connection accepted, but job queued.
   # http error codes (>400) will be trapped by the wf_transfer()
   # function call
-  while(ct$code == 202){
+  while(ct$code == 202){ # check formatting state variable CDS
 
     # exit routine when the time out
     if(Sys.time() > time_out){
       if(verbose){
-        # Waiting for request to be finished timed out.
-        message("  Please use the ECMWF or CDS job list to track your jobs at:")
-        message("  https://apps.ecmwf.int/webmars/joblist/ or")
-        message("  https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
-        message("  and retry download using wf_transfer().")
-        message("  Note that there are user-dependent limits of submitted jobs.")
-        message("  Delete the job using wf_delete() upon completion!")
+        message("  Your download timed out, however ...\n")
+        exit_message(
+          url = ifelse(service == "cds",ct$request_id, ct$href),
+          path = path,
+          file = request$target,
+          service = service)
       }
       return(ct)
     }
 
+    # set retry rate, dynamic for WebAPI, static 10 seconds CDS
+    retry <- as.numeric(ifelse(service == "cds", 5, ct$retry))
+
     if(verbose){
       # let a spinner spin for "retry" seconds
-      spinner(as.numeric(ct$retry))
+      spinner(retry)
     } else {
       # sleep
-      Sys.sleep(ct$retry)
+      Sys.sleep(retry)
     }
 
     # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
     ct <- wf_transfer(user    = user,
-                      url      = ct$href,
-                      service  = "webapi",
+                      url      = ifelse(service == "cds",
+                                        ct$request_id, ct$href),
+                      service  = service,
                       filename = tmp_file,
                       verbose  = verbose)
   }
@@ -205,8 +215,10 @@ wf_request <- function(
   # for ECMWF mars requests (skip)
   if(!request$dataset == "mars") {
     wf_delete(user   = user,
-              url     = ct$href,
-              verbose = verbose)
+              url     = ifelse(service == "cds",
+                               ct$request_id, ct$href),
+              verbose = verbose,
+              service = service)
   }
 
   # return final file name/path (dst = destination).

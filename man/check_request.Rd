@@ -7,8 +7,7 @@
 check_request(x)
 }
 \arguments{
-\item{x}{list of parameters (as for \code{\link[emcwfr]{wf_request}},
-\code{\link[ecmwfr]{cds_request}}).}
+\item{x}{list of parameters (as for \code{\link[ecmwfr]{wf_request}})}
 }
 \value{
 Returns the request (might, to avoid problems, modify the

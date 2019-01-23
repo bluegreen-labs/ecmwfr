@@ -4,30 +4,30 @@ on.exit(options(opts), add = TRUE)
 
 # format request (see below)
 request_pl <- list(
-   "dataset"        = "reanalysis-era5-pressure-levels",
-   "product_type"   = "reanalysis",
-   "format"         = "netcdf",
-   "variable"       = "temperature",
-   "pressure_level" = "850",
-   "year"   = "2000",
-   "month"  = "04",
-   "day"    = "04",
-   "time"   = "00:00",
-   "area"   = "70/-20/00/60",
-   "format" = "netcdf",
-   "target" = "era5-demo.nc")
+              "dataset"        = "reanalysis-era5-pressure-levels",
+              "product_type"   = "reanalysis",
+              "format"         = "netcdf",
+              "variable"       = "temperature",
+              "pressure_level" = "850",
+              "year"           = "2000",
+              "month"          = "04",
+              "day"            = "04",
+              "time"           = "00:00",
+              "area"           = "70/-20/00/60",
+              "format"         = "netcdf",
+              "target"         = "era5-demo.nc")
 request_sf <- list(
-   "dataset"        = "reanalysis-era5-single-levels",
-   "product_type"   = "reanalysis",
-   "format"         = "netcdf",
-   "variable"       = "total_precipitation",
-   "year"   = "2000",
-   "month"  = "04",
-   "day"    = "04",
-   "time"   = "00:00",
-   "area"   = "70/-20/00/60",
-   "format" = "netcdf",
-   "target" = "era5-demo.nc")
+              "dataset"        = "reanalysis-era5-single-levels",
+              "product_type"   = "reanalysis",
+              "format"         = "netcdf",
+              "variable"       = "total_precipitation",
+              "year"           = "2000",
+              "month"          = "04",
+              "day"            = "04",
+              "time"           = "00:00",
+              "area"           = "70/-20/00/60",
+              "format"         = "netcdf",
+              "target"         = "era5-demo.nc")
 
 
 # Test if we get the correct key

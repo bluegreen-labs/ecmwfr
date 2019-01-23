@@ -157,24 +157,26 @@ request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify data set</span>
 request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
                 <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,
+                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
                 <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,
                 <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
                 <span class="st">"year"</span>           =<span class="st"> "2000"</span>,
                 <span class="st">"month"</span>          =<span class="st"> "04"</span>,
                 <span class="st">"day"</span>            =<span class="st"> "04"</span>,
                 <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,
-                <span class="st">"area"</span>           =<span class="st"> "70/-20/30/60"</span>,
+                <span class="st">"area"</span>           =<span class="st"> "70/-20/00/60"</span>,
                 <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
                 <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)
 
 <span class="co"># Start downloading the data</span>
-file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use the ~/.cdsapirc file</span>
-                    <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                    <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                    <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                    <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use the ~/.cdsapirc file</span>
+                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
+                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
+                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
+                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
-<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>.</p>
+<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>. Qucik check:</p>
+<p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 <div id="example-2-downloading-time-periods" class="section level3">
 <h3 class="hasAnchor">
@@ -193,11 +195,18 @@ request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
                 <span class="st">"target"</span>         =<span class="st"> "era5-ts-demo.nc"</span>)
 
 <span class="co"># Start downloading the data</span>
-file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
-                    <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                    <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                    <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                    <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/load_all">load_all</a></span>(<span class="st">".."</span>)</code></pre></div>
+<pre><code>## Loading ecmwfr</code></pre>
+<pre><code>## 
+##      This is 'ecmwfr' version  1.0.0 . Please respect the terms of use:
+##       - https://cds.climate.copernicus.eu/disclaimer-privacy
+##       - https://www.ecmwf.int/en/terms-use</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
+                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
+                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
+                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
+                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Let’s have a look what we have in there (for grid point <code>11E 47N</code>): <img src="cds_vignette_files/figure-html/temporal-plot-1.png" width="768"></p>
 <div class="notification info">
 <h3>
 Date period specification:
@@ -210,14 +219,14 @@ Date period specification:
 <h2 class="hasAnchor">
 <a href="#soil-moisture-gridded-data" class="anchor"></a>Soil Moisture Gridded Data</h2>
 <p>Another data set available via CDS is a global gridded soil moisture data set estimated from satellite observations based on the ESA Climate Change Initiative soil moisture version 03.3.</p>
-<p>The following request is downloading <em>monthly averages</em> for the year 2018 (all months, <code>"01"</code> to <code>"12"</code>). More details can be found <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-soil-moisture?tab=overview">on the product overview page</a> (or try calling <a href="../references/cds_productinfo.html"><code><a href="../reference/cds_productinfo.html">cds_productinfo(NULL, "satellite-soil-moisture")</a></code></a>).</p>
+<p>The following request is downloading <em>monthly averages</em> for January 2018 (month<code>"01"</code>, year <code>"2018"</code>). More details can be found <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-soil-moisture?tab=overview">on the product overview page</a> (or try calling <a href="../references/cds_productinfo.html"><code><a href="../reference/cds_productinfo.html">cds_productinfo(NULL, "satellite-soil-moisture")</a></code></a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify data set</span>
 request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>          =<span class="st"> "satellite-soil-moisture"</span>,
                 <span class="st">"format"</span>           =<span class="st"> "zip"</span>,
                 <span class="st">"variable"</span>         =<span class="st"> "volumetric_surface_soil_moisture"</span>,
                 <span class="st">"time_aggregation"</span> =<span class="st"> "month_average"</span>,
                 <span class="st">"year"</span>             =<span class="st"> "2018"</span>,
-                <span class="st">"month"</span>            =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%02d"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),
+                <span class="st">"month"</span>            =<span class="st"> "01"</span>,
                 <span class="st">"day"</span>              =<span class="st"> "01"</span>,
                 <span class="st">"type_of_sensor"</span>   =<span class="st"> "combined_passive_and_active"</span>,
                 <span class="st">"type_of_record"</span>   =<span class="st"> "icdr"</span>,
@@ -225,11 +234,11 @@ request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
                 <span class="st">"target"</span>           =<span class="st"> "soilmoisture-demo.zip"</span>)
 
 <span class="co"># Start downloading the data</span>
-file &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
-                    <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                    <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                    <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                    <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
+                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
+                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
+                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
+                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
 </div>
   </div>
 

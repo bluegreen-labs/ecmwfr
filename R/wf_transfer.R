@@ -116,7 +116,6 @@ wf_transfer <- function(
       encode = "json"
     )
   }
-  print(response)
 
   # trap errors on download, return a general error statement
   if (httr::http_error(response)){

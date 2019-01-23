@@ -10,7 +10,7 @@ vignette: >
 ---
 
 
-```{r, echo = FALSE, figure = FALSE}
+```{r startup, echo = FALSE, figure = FALSE}
 suppressPackageStartupMessages(library("ecmwfr"))
 ```
 
@@ -67,7 +67,7 @@ show request by clicking _Show API Request_ (red button, bottom of page).
 
 An ERA-5 example:
 
-```{r, echo = TRUE}
+```{r demo request, echo = TRUE}
 # Specify the data set
 request <- list("dataset"        = "reanalysis-era5-pressure-levels",
                 "product_type"   = "reanalysis",
@@ -101,26 +101,27 @@ The data set as specified above can be downloaded calling the
 `cds_retrieve` function:
 
 
-```{r eval = FALSE, echo = TRUE}
+```{r spatial-request, echo = TRUE}
 # Specify data set
 request <- list("dataset"        = "reanalysis-era5-pressure-levels",
                 "product_type"   = "reanalysis",
+                "format"         = "netcdf",
                 "variable"       = "temperature",
                 "pressure_level" = "850",
                 "year"           = "2000",
                 "month"          = "04",
                 "day"            = "04",
                 "time"           = "00:00",
-                "area"           = "70/-20/30/60",
+                "area"           = "70/-20/00/60",
                 "format"         = "netcdf",
                 "target"         = "era5-demo.nc")
 
 # Start downloading the data
-file <- cds_request(user = NULL,         # use the ~/.cdsapirc file
-                    request = request,   # use our request specification from above
-                    transfer = TRUE,     # download data as soon as ready
-                    path = ".",          # store the netcdf file (era5-demo.nc) here
-                    verbose = FALSE)
+ncfile <- cds_request(user = NULL,         # use the ~/.cdsapirc file
+                      request = request,   # use our request specification from above
+                      transfer = TRUE,     # download data as soon as ready
+                      path = ".",          # store the netcdf file (era5-demo.nc) here
+                      verbose = FALSE)
 ```
 
 Depending on the request (the amount of data you are asking for) the
@@ -131,7 +132,42 @@ several varaiables/fields.
 
 Once the retrieval has finished you should now be the owner of a NetCDF
 containing the requested information located in the current working directory,
-called `era5-demo.nc`.
+called `era5-demo.nc`. Qucik check:
+
+```{r spatial-plot, echo = FALSE, figure = TRUE, fig.width = 8, fig.height = 6}
+library("ncdf4")
+library("maps")
+
+# Open NetCDF file, read data, close file handler.
+nc <- nc_open(ncfile)
+lons <- ncvar_get(nc, "longitude")
+lats <- sort(ncvar_get(nc, "latitude"))
+data <- ncvar_get(nc, "t") - 273.15
+nc_close(nc)
+
+# Plotting 2d-field
+cols <- c("#7E71CB", "#7082D1", "#5F91D6", "#4E9FD8", "#3BABD8", "#28B6D7", "#1ABFD4", 
+          "#1CC7D0", "#2BCDCA", "#3ED2C4", "#51D5BC", "#63D8B4", "#73D9AB", "#83D8A1",
+          "#91D697", "#9ED38C", "#AACF82", "#B4CA78", "#BDC36F", "#C4BB68", "#CAB262",
+          "#CEA95F", "#D19E5E", "#D2925F", "#D18563", "#CF7868", "#CB696E", "#C65A74")
+layout(matrix(1:2, ncol = 2), width = c(10,2))
+par(mar = rep(0.5, 4), oma = c(4,4,2,4))
+# Map
+image(x = lons, y = lats, z = data, col = rev(cols), xlab = NA, ylab = NA, main = NA)
+map(add = TRUE)
+mtext(side = 1, line = 2.5, "longitude")
+mtext(side = 2, line = 2.5, "latitude")
+mtext(side = 3, line = 1.0, font = 2, cex = 1.2, "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
+# Legend
+w <- diff(range(data)) / (length(cols) - 1)
+y <- seq(min(data), max(data), length = length(cols)) - w/2
+plot(NA, xlim = c(0,1), ylim = range(data), xaxs = "i", yaxs = "i", xaxt = "n", yaxt = "n")
+rect(0, y, 1, y + w, col = cols, border = NA)
+axis(side = 4, at = pretty(range(data)))
+mtext(side = 4, outer = TRUE, line = 2, "Temperature [C]")
+box()
+```
+
 
 
 ### Example 2: Downloading Time Periods
@@ -142,7 +178,7 @@ The request below is downloading _total precipitation_ for January 2000
 trough February 2000, 00 UTC to 23 UTC (full day, hourly temporal resolution)
 for a tiny area around Innsbruck, Austria for demonstration purposes only.
 
-```{r eval = FALSE, echo = TRUE}
+```{r temporal-request, echo = TRUE}
 # Specify data set
 request <- list("dataset"        = "reanalysis-era5-single-levels",
                 "product_type"   = "reanalysis",
@@ -156,12 +192,51 @@ request <- list("dataset"        = "reanalysis-era5-single-levels",
                 "target"         = "era5-ts-demo.nc")
 
 # Start downloading the data
-file <- cds_request(user = NULL,         # use .cdsapirc file!
-                    request = request,   # use our request specification from above
-                    transfer = TRUE,     # download data as soon as ready
-                    path = ".",          # store the netcdf file (era5-demo.nc) here
-                    verbose = FALSE)
+devtools::load_all("..")
+ncfile <- cds_request(user = NULL,         # use .cdsapirc file!
+                      request = request,   # use our request specification from above
+                      transfer = TRUE,     # download data as soon as ready
+                      path = ".",          # store the netcdf file (era5-demo.nc) here
+                      verbose = FALSE)
 ```
+
+Let's have a look what we have in there (for grid point `11E 47N`):
+```{r temporal-plot, echo = FALSE, fig = TRUE, fig.width = 8, fig.height = 6}
+# Open NetCDF file, read data, close file handler.
+library("ncdf4")
+nc <- nc_open(ncfile)
+time <- as.POSIXct(ncvar_get(nc, "time") * 3600, origin = "1900-01-01", tz = "UTC")
+lons <- ncvar_get(nc, "longitude")
+lats <- ncvar_get(nc, "latitude")
+i    <- which.min(abs(lons - 11))
+j    <- which.min(abs(lats - 47))
+data <- ncvar_get(nc, "tp", start = c(i,j,1), count = c(1,1,-1)) * 1e3
+nc_close(nc)
+
+# Calculate polygon coordinates
+x  <- as.numeric(time); x <- c(head(x,1), x, tail(x,1))
+y1 <- c(-1, cumsum(data), -1) 
+y2 <- c(-1, data,  -1)
+ndays <- as.integer(diff(range(time)), unit = "days")
+# Cumulative sum
+par(mar = c(4.2,4.2,2,4.2))
+plot(NA, xlab = "date/time [UTC]", ylab = "cumulative precipitation sum [mm]",
+     main = sprintf("ERA-5 Hourly Precipitation Sum (over %d days)", ndays),
+     xaxs = "i", xaxt = "n", xlim = range(time), yaxs = "i", ylim = c(0, max(y1)) * 1.05)
+polygon(x, y1, col = "#D7009810", border = "#D70098")
+abline(h = pretty(cumsum(data)), lwd = .5, lty = 2)
+at <- as.POSIXct(pretty(time), origin = "1970-01-01", tz = "UTC")
+axis(side = 1, at = at, labels = strftime(at, "%Y-%m-%d"))
+# Plotting hourly sums
+par(new = TRUE)
+plot(NA, type = "n", xlab = NA, ylab = NA, main = NA,
+     xaxs = "i", xaxt = "n", xlim = range(time),
+     yaxs = "i", yaxt = "n", ylim = c(0, max(data)) * 1.05)
+polygon(x, y2, col = "#007DDD50", border = "#007DDD")
+axis(side = 4, at = pretty(data))
+mtext(side = 4, line = 2.5, "daily precipitation sum [mm]")
+```
+
 
 
 <div class="notification info">
@@ -180,8 +255,8 @@ Another data set available via CDS is a global gridded soil moisture data set
 estimated from satellite observations based on the ESA
 Climate Change Initiative soil moisture version 03.3.
 
-The following request is downloading _monthly averages_ for the
-year 2018 (all months, `"01"` to `"12"`). More details can be found
+The following request is downloading _monthly averages_ for
+January 2018 (month`"01"`, year `"2018"`). More details can be found
 [on the product overview page](https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-soil-moisture?tab=overview) (or try calling
 [`cds_productinfo(NULL, "satellite-soil-moisture")`](../references/cds_productinfo.html)).
 
@@ -192,7 +267,7 @@ request <- list("dataset"          = "satellite-soil-moisture",
                 "variable"         = "volumetric_surface_soil_moisture",
                 "time_aggregation" = "month_average",
                 "year"             = "2018",
-                "month"            = sprintf("%02d", 1:12),
+                "month"            = "01",
                 "day"              = "01",
                 "type_of_sensor"   = "combined_passive_and_active",
                 "type_of_record"   = "icdr",
@@ -200,15 +275,11 @@ request <- list("dataset"          = "satellite-soil-moisture",
                 "target"           = "soilmoisture-demo.zip")
 
 # Start downloading the data
-file <- cds_request(user = NULL,         # use .cdsapirc file!
-                    request = request,   # use our request specification from above
-                    transfer = TRUE,     # download data as soon as ready
-                    path = ".",          # store the netcdf file (era5-demo.nc) here
-                    verbose = FALSE)
+ncfile <- cds_request(user = NULL,         # use .cdsapirc file!
+                      request = request,   # use our request specification from above
+                      transfer = TRUE,     # download data as soon as ready
+                      path = ".",          # store the netcdf file (era5-demo.nc) here
+                      verbose = FALSE)
 ```
-
-
-
-
 
 

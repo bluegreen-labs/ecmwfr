@@ -6,5 +6,5 @@
     txt <- paste("\n     This is 'ecmwfr' version ", vers,". Please respect the terms of use:\n",
                  "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
                  "     - https://www.ecmwf.int/en/terms-use\n")
-    packageStartupMessage(txt)
+    if(interactive()) packageStartupMessage(txt)
 }

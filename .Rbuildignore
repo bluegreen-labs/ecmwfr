@@ -1,3 +1,4 @@
+^create_apirc.sh$
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^.*\.Renviron$

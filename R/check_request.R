@@ -10,7 +10,7 @@
 #'
 #' @param x list of parameters (as for \code{\link[emcwfr]{wf_request}},
 #' \code{\link[ecmwfr]{cds_request}}).
-#' @returns Returns the request (might, to avoid problems, modify the
+#' @return Returns the request (might, to avoid problems, modify the
 #' user request.
 #'
 #' @details

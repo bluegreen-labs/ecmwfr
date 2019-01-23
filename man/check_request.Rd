@@ -10,6 +10,10 @@ check_request(x)
 \item{x}{list of parameters (as for \code{\link[emcwfr]{wf_request}},
 \code{\link[ecmwfr]{cds_request}}).}
 }
+\value{
+Returns the request (might, to avoid problems, modify the
+user request.
+}
 \description{
 There are some parameter combinations which are not allowed
 and will result in an error when sending the requests to

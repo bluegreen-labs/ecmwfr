@@ -31,28 +31,30 @@
 #' # set key
 #' wf_set_key(email = "test@mail.com", key = "123")
 #'
+#' request <-  = list(stream = "oper",
+#'    levtype = "sfc",
+#'    param = "167.128",
+#'    dataset = "interim",
+#'    step = "0",
+#'    grid = "0.75/0.75",
+#'    time = "00",
+#'    date = "2014-07-01/to/2014-07-02",
+#'    type = "an",
+#'    class = "ei",
+#'    area = "50/10/51/11",
+#'    format = "netcdf",
+#'    target = "tmp.nc")
+#'
 #' # get the default test data
-#' wf_request(email = "test@mail.com")
+#' wf_request(email = "test@mail.com", request = request)
 #'}
 
 wf_request <- function(
   email,
+  request,
   path = tempdir(),
   time_out = ifelse(request$dataset == "mars", 3*3600, 3600),
   transfer = FALSE,
-  request = list(stream = "oper",
-                 levtype = "sfc",
-                 param = "167.128",
-                 dataset = "interim",
-                 step = "0",
-                 grid = "0.75/0.75",
-                 time = "00",
-                 date = "2014-07-01/to/2014-07-02",
-                 type = "an",
-                 class = "ei",
-                 area = "50/10/51/11",
-                 format = "netcdf",
-                 target = "tmp.nc"),
   verbose = TRUE
   ){
 

@@ -10,7 +10,7 @@
 # by calling the 'task' urls. If an \code{id} is given the
 # corresponding 'task' url will be returned. Used in
 # \code{\link[ecmwfr]{cds_request} and \code{\link[ecmwfr]{cds_transfer}}
-# (to be more explicit: in \code{\link[ecmwfr]{wf_transfer} if 
+# (to be more explicit: in \code{\link[ecmwfr]{wf_transfer} if
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
@@ -63,3 +63,13 @@ spinner <- function(seconds, id) {
     spinner_count <- ifelse(spinner_count < 4, spinner_count + 1, 1)
   }
 }
+
+# Startup message when attaching the package.
+.onAttach <- function(libname = find.package("ecmwfr"), pkgname = "ecmwfr") {
+  vers <- as.character(utils::packageVersion("ecmwfr"))
+  txt <- paste("\n     This is 'ecmwfr' version ", vers,". Please respect the terms of use:\n",
+               "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
+               "     - https://www.ecmwf.int/en/terms-use\n")
+  if(interactive()) packageStartupMessage(txt)
+}
+

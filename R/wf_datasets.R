@@ -4,6 +4,7 @@
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
+#' @param service service to use ecmwf webapi or cds (default = "webapi")
 #' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @param verbose boolean, default \code{FALSE}
 #' @return returns a nested list or data frame with the ECMWF datasets
@@ -26,11 +27,15 @@
 #' wf_datasets("test@mail.com")
 #'}
 
-wf_datasets <- function(email, simplify = TRUE, verbose = FALSE){
+wf_datasets <- function(
+  email,
+  service = "webapi",
+  simplify = TRUE,
+  verbose = FALSE){
 
   # check the login credentials
   if(missing(email)){
-    stop("Please provide ECMWF login email / url!")
+    stop("Please provide ECMWF WebAPI or CDS login email / url!")
   }
 
   # We need to keep the original email for later!
@@ -42,7 +47,7 @@ wf_datasets <- function(email, simplify = TRUE, verbose = FALSE){
     key   <- wf_get_key(email)
   }
 
-
+  if (service == "webapi"){
   # query the status url provided
   response <- httr::GET(
     paste(ecmwf_server(),
@@ -54,6 +59,11 @@ wf_datasets <- function(email, simplify = TRUE, verbose = FALSE){
       "X-ECMWF-KEY" = key),
     encode = "json"
   )
+  } else {
+
+    # query the status url provided
+    response <- httr::GET(sprintf("%s/resources/", cds_server()))
+  }
 
   # trap errors
   if (httr::http_error(response)){
@@ -65,11 +75,19 @@ wf_datasets <- function(email, simplify = TRUE, verbose = FALSE){
   ct <- httr::content(response)
 
   if(simplify){
-    # reformat content
-    ct <- do.call("rbind", lapply(ct$datasets, function(x){
-      return(data.frame(x['name'], x['href'], stringsAsFactors = FALSE))
-    }))
-    colnames(ct) <- c("name","url")
+
+    if(service == "webapi"){
+      # reformat content
+      ct <- do.call("rbind", lapply(ct$datasets, function(x){
+        return(data.frame(x['name'], x['href'], stringsAsFactors = FALSE))
+      }))
+      colnames(ct) <- c("name","url")
+    } else {
+      # reformat content
+      ct <- data.frame(name = unlist(ct),
+                       url = sprintf("%s/resources/%s",
+                                     cds_server(), unlist(ct)))
+    }
   }
 
   # return content

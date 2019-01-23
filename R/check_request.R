@@ -1,6 +1,3 @@
-
-
-
 #' Check requests
 #'
 #' There are some parameter combinations which are not allowed

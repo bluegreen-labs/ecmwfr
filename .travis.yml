@@ -12,8 +12,8 @@ before_install:
 
 
 install:
-  - sudo "url: https\://cds.climate.copernicus.eu/api/v2" > ~/.cdsapirc
-  - sudo "key: $CDSAPIUSER:$CDSAPIRC" >> ~/.cdsapirc
+  - sudo "url: https://cds.climate.copernicus.eu/api/v2" | tee -a ~/.cdsapirc
+  - sudo "key: $CDSAPIUSER:$CDSAPIRC" | tee -a ~/.cdsapirc
     ##- echo > -e "url: https\://cds.climate.copernicus.eu/api/v2\nkey\\: CDSAPIUSER:CDSAPIRC" > ~/.cdsapirc
 
 r:

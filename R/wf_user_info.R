@@ -1,6 +1,6 @@
-#' ECMWF user info query
+#' ECMWF WebAPI user info query
 #'
-#' Returns user info
+#' Returns user info for the ECMWF WebAPI
 #'
 #' @param email email address used to sign up for the ECMWF data service and
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}

@@ -10,7 +10,7 @@
 #' @param user string, user ID when calling \code{\link[ecmwfr]{cds_transfer}}.
 #' If set to \code{NULL} the \code{.cdsapirc} file will be used.
 #' @param url url to query
-#' @param type character, one of \code{ecmwf} or \code{cds}
+#' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param path path were to store the downloaded data
 #' @param filename filename to use for the downloaded data
 #' @param verbose show feedback on data transfers
@@ -36,15 +36,16 @@
 wf_transfer <- function(
   email,
   url,
-  type = "ecmwf",
+  service = "webapi",
   path = tempdir(),
   filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
   verbose = TRUE
 ){
 
   # wf_transfer is used for both, ecmwf and cds data transfer.
-  # To get correct email/key or user/key we need the type argument.
-  type <- match.arg(type, c("ecmwf", "cds"))
+  # To get correct email/key or user/key we need the service argument.
+  service <- match.arg(service, c("webapi", "cds"))
+
   # check the login credentials
   if(missing(email) | missing(url)){
     stop("Please provide ECMWF login email / url!")
@@ -53,35 +54,17 @@ wf_transfer <- function(
   # If the URL is not an URL but an ID: generate URL
   if (!grepl("^https?://.*$", url)) {
       if(verbose) message("- input is a request ID, generate url")
-      url <- get(sprintf("%s_server", type))(url)
+      url <- get(sprintf("%s_server", service))(url)
   }
-  if(verbose) cat(sprintf("- Downloading \"%s\"\n", url))
-  
-  # get key from email
-  if(type == "cds") {
-    if(is.null(email)) {
-      tmp   <- cds_key_from_file(verbose = verbose)
-      email <- tmp$user; key <- tmp$key; rm(tmp)
-    } else {
-      key <- cds_get_key(email)
-    }
-  } else {
-    if(is.null(email)) {
-      tmp   <- wf_key_from_file(verbose = verbose)
-      email <- tmp$user; key <- tmp$key; rm(tmp)
-    } else {
-      key <- wf_get_key(email)
-    }
-  }
+
+  # get key
+  key <- wf_get_key(email, service = service)
 
   # create temporary output file
   tmp_file <- file.path(path, filename)
 
-  # -----------------------
-  # download requext (cds)
+  # download routine depends on service queried
   if(type == "cds") {
-    # Download information about request (including location)
-    if(verbose) cat(sprintf("- GET: %s\n", url))
     response <- httr::GET(url,
       httr::authenticate(email, key),
       httr::add_headers(
@@ -89,23 +72,7 @@ wf_transfer <- function(
         "Content-Type" = "application/json"),
       encode = "json"
     )
-    # Check if connection is a file connection
-    # or a request information:
-    tmp <- httr::content(response)
-    if (!inherits(tmp, "raw")) {
-        if(verbose) cat(sprintf("- GET: %s\n", url))
-        response <- response <- httr::GET(tmp$location,
-          httr::authenticate(email, key),
-          httr::add_headers(
-            "Accept" = "application/json",
-            "Content-Type" = "application/json"),
-          encode = "json"
-        )
-    }
-  # -----------------------
-  # Download request (ecmwf)
   } else {
-    if(verbose) cat(sprintf("- GET: %s\n", url))
     response <- httr::GET(
       url,
       httr::add_headers(
@@ -117,7 +84,7 @@ wf_transfer <- function(
     )
   }
 
-  # trap errors on download, return a general error statement
+  # trap (http) errors on download, return a general error statement
   if (httr::http_error(response)){
     stop("Your requested download failed - check url", call. = FALSE)
   }
@@ -144,15 +111,31 @@ wf_transfer <- function(
     # the url to close the connection
     invisible(
       return(data.frame(code = "downloaded",
-                      href = url,
-                      stringsAsFactors = FALSE))
+                        href = url,
+                        stringsAsFactors = FALSE))
     )
   } else {
+
+    # if no transfer of data is initiated check the format
+    # especially for the CDS downloads and the state variable
+    if (service == "cds"){
+
+      # if the transfer failed, return error and stop()
+      if(ct$state == "failed") {
+        message("Data transfer failed!")
+        stop(ct$error)
+      }
+
+      # if empty provide a wait state
+      if(is.null(ct$state)){
+        ct$code <- 202
+      }
+
+      # if completed
+      if("completed" == ct$state){
+        ct$code <- 303
+      }
+    }
     return(ct)
   }
 }
-
-#' @rdname wf_transfer
-#' @author Reto Stauffer
-#' @export
-cds_transfer <- function(user, ...) wf_transfer(email = user, ...)

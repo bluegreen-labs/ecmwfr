@@ -4,12 +4,8 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(email, path = tempdir(), time_out = ifelse(request$dataset
-  == "mars", 3 * 3600, 3600), transfer = FALSE, request = list(stream =
-  "oper", levtype = "sfc", param = "167.128", dataset = "interim", step =
-  "0", grid = "0.75/0.75", time = "00", date = "2014-07-01/to/2014-07-02",
-  type = "an", class = "ei", area = "50/10/51/11", format = "netcdf",
-  target = "tmp.nc"), verbose = TRUE)
+wf_request(email, service, request, transfer = FALSE, path = tempdir(),
+  time_out = 3 * 3600, verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -17,15 +13,15 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 Can also be set to \code{NULL}, in this case email and key will be loaded
 from the \code{.ecmwfapirc} file (located in your home folder).}
 
-\item{path}{path were to store the downloaded data}
-
-\item{time_out}{how long to wait on a download to start (default =
-\code{3*3600} seconds for mars requests, \code{3600} seconds for all others).}
+\item{request}{nested list with query parameters following the layout
+as specified on the ECMWF API page}
 
 \item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
 
-\item{request}{nested list with query parameters following the layout
-as specified on the ECMWF API page}
+\item{path}{path were to store the downloaded data}
+
+\item{time_out}{how long to wait on a download to start (default =
+\code{3*3600} seconds).}
 
 \item{verbose}{show feedback on processing}
 }
@@ -47,8 +43,22 @@ to identify possible problems.
 # set key
 wf_set_key(email = "test@mail.com", key = "123")
 
+request <-  = list(stream = "oper",
+   levtype = "sfc",
+   param = "167.128",
+   dataset = "interim",
+   step = "0",
+   grid = "0.75/0.75",
+   time = "00",
+   date = "2014-07-01/to/2014-07-02",
+   type = "an",
+   class = "ei",
+   area = "50/10/51/11",
+   format = "netcdf",
+   target = "tmp.nc")
+
 # get the default test data
-wf_request(email = "test@mail.com")
+wf_request(email = "test@mail.com", request = request)
 }
 }
 \seealso{

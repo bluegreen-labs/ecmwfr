@@ -9,23 +9,21 @@
 #' be read from the \code{.cdsapirc} file (located in your home folder).
 #' @param dataset character, name of the data set for which the product
 #' information should be loaded.
-#' @param show boolean, default \code{TRUE}. If \code{TRUE} the description
-#' will be shown in your browser.
+#' @param simplify boolean, default \code{TRUE}. If \code{TRUE} the description
+#' will be returned as tidy data instead of a nested list.
 #' @param verbose boolean, default \code{FALSE}.
 #'
-#' @return Downloads a (html) product description from CDS. If
-#' \code{show = FALSE} a list with product details will be returned.
-#' If \code{show = TRUE} the product information will be shown in a local
-#' browser window (plus invisible return of the details as if \code{show}
-#' whould be set \code{FALSE}).
+#' @return Downloads a tidy data frame with product descriptions from CDS. If
+#' \code{simplify = FALSE} a list with product details will be returned.
 #'
 #' @examples
 #' \donttest{
 #'    # Opend description in browser
-#'    cds_productinfo(NULL, "reanalysis-era5-single-levels")
+#'    wf_product_info(NULL, "reanalysis-era5-single-levels")
 #'
 #'    # Return information
-#'    info <- cds_productinfo(NULL, "reanalysis-era5-single-levels", show = FALSE)
+#'    info <- wf_product_info(NULL,
+#'     "reanalysis-era5-single-levels", show = FALSE)
 #'    names(info)
 #' }
 #' @keywords data download, climate, re-analysis
@@ -36,20 +34,21 @@
 wf_product_info <- function(
   user,
   dataset,
-  show = TRUE,
+  simplify = TRUE,
   verbose = FALSE
   ){
 
   # check the login credentials
-  if(missing(user))
+  if(missing(user) || missing(dataset)){
     stop("Please provide CDS user ID (or set user = NULL, see manual)")
+  }
 
   # get key
   key <- wf_get_key(email, service = "cds")
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.
-  ds <- ecmwfr::cds_datasets(user = input_user)
+  ds <- ecmwfr::wf_datasets(email = email, service = "cds")
   dataset <- match.arg(dataset, ds$name)
 
   # query the status url provided
@@ -65,27 +64,14 @@ wf_product_info <- function(
   ct <- httr::content(response)
 
   # Write temporary html file
-  if(show) {
-    tmp_file <- tempfile("emcwfr_info_", fileext = ".html")
-    write(file = tmp_file, "<!DOCTYPE html>
-          <html>
-          <head>
-          <style>
-             body { font-family: arial, sans-serif; }
-          </style>
-          </head>
-          <body>")
-    for(n in names(ct))
-        write(file = tmp_file, sprintf("<h2>%s</h2>%s", n, ct[[n]]), append = TRUE)
-    write(file = tmp_file, "\n</body>\n</html>\n", append = TRUE)
-    # Open in browser
-    utils::browseURL(tmp_file)
+  if(simplify){
+    # TODO:
+    # instead of html which is useless for processing and documentation
+    # (only a visual aid) return a tidy data frame (instead of a list)
+    # with data which is easily machine readable
+    return(ct)
   }
 
   # return content
-  invisible(ct)
+  return(ct)
 }
-
-
-
-

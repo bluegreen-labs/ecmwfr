@@ -61,7 +61,7 @@ wf_request <- function(
 
   # check the login credentials
   if(missing(email)){
-    stop("Please provide ECMWF login credentials and data request!")
+    stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
   # get key
@@ -142,17 +142,21 @@ wf_request <- function(
 
   # keep waiting for the download order to come online
   # with status code 303. 202 = connection accepted, but job queued.
+  # http error codes (>400) will be trapped by the wf_transfer()
+  # function call
   while(ct$code == 202){
 
     # exit routine when the time out
     if(Sys.time() > time_out){
-      # Waiting for request to be finished timed out.
-      message("  Please use the ECMWF or CDS job list to track your jobs at:")
-      message("  https://apps.ecmwf.int/webmars/joblist/ or")
-      message("  https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
-      message("  and retry download using wf_transfer().")
-      message("  Note that there are user-dependent limits of submitted jobs.")
-      message("  Delete the job using wf_delete() upon completion!")
+      if(verbose){
+        # Waiting for request to be finished timed out.
+        message("  Please use the ECMWF or CDS job list to track your jobs at:")
+        message("  https://apps.ecmwf.int/webmars/joblist/ or")
+        message("  https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
+        message("  and retry download using wf_transfer().")
+        message("  Note that there are user-dependent limits of submitted jobs.")
+        message("  Delete the job using wf_delete() upon completion!")
+      }
       return(ct)
     }
 
@@ -169,7 +173,7 @@ wf_request <- function(
     # file inside wf_transfer).
     ct <- wf_transfer(email    = input_email,
                       url      = ct$href,
-                      type     = "ecmwf",
+                      service  = "webapi",
                       filename = tmp_file,
                       verbose  = verbose)
   }
@@ -183,8 +187,10 @@ wf_request <- function(
     dst <- file.path(path, request$target)
 
     if ( verbose ){
-      message(sprintf("- move file: %s -> %s\n", src, dst))
+      message(sprintf("- moved temporary file to -> %s", dst))
     }
+
+    # rename / move file
     file.rename(src, dst)
 
   } else {

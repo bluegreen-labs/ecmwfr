@@ -6,7 +6,7 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing
-#' @param type character, one of \code{ecmwf} or \code{cds} depending
+#' @param service character, one of \code{ecmwf} or \code{cds} depending
 #' on the data set to be deleted.
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -23,12 +23,11 @@
 #' # get key
 #' wf_get_key(email = "test@mail.com")
 #'}
-# TODO: example might need an update (if even required).
 
 wf_delete <- function(
   email,
   url,
-  type = "ecmwf",
+  service = "ecmwf",
   verbose = TRUE
 ){
 
@@ -38,15 +37,10 @@ wf_delete <- function(
   }
 
   # Checking input argument 'type'
-  type <- match.arg(type, c("ecmwf", "cds"))
+  service <- match.arg(service, c("ecmwf", "cds"))
 
   # get key
-  if(is.null(email)) {
-    tmp   <- get(sprintf("%s_key_from_file", type))(verbose)
-    email <- tmp$email; key <- tmp$key; rm(tmp)
-  } else {
-    key <- get(sprintf("%s_get_key", type))(email)
-  }
+  key <- wf_get_key(email, service = service)
 
   # remove a queued download
   # Differs for ecmwf and cds requests.

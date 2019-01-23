@@ -33,22 +33,17 @@ cds_server   <- function(id) {
 # Shows a spinner while waiting for a request to be processed.
 #
 # @param seconds integer, seconds to sleep
-# @param id character missing (default) or a string which will
-#    be displayed as 'id'.
+#
 # @details Shows a spinner while waiting for a request to be processed.
 # If \code{id} (character) is set, the request id will be shown in addition.
 #
 # @author Koen Kufkens, Reto Stauffer
-spinner <- function(seconds, id) {
+spinner <- function(seconds){
 
   # set start time, counter
   start_time <- Sys.time()
   spinner_count <- 1
 
-  # Missing id:
-  id <- if (missing(id)) "" else sprintf(" (id: %s)", id)
-
-  if(length(seconds) == 0) seconds <- 1
   while(Sys.time() <= start_time + seconds){
 
     # slow down while loop
@@ -56,7 +51,7 @@ spinner <- function(seconds, id) {
 
     # update spinner message
     message(paste0(c("-","\\","|","/")[spinner_count],
-                   " polling server for a data transfer", id, "\r"),
+                   " polling server for a data transfer\r"),
             appendLF = FALSE)
 
     # update spinner count
@@ -66,7 +61,6 @@ spinner <- function(seconds, id) {
 
 # Show message if user exits the function (interrupts execution)
 # or as soon as an error will be thrown.
-
 exit_message <- function(id, path, target){
   exit_msg <-  paste(
     "Even after exiting your request is still beeing processed!",

@@ -2,14 +2,11 @@
 % Please edit documentation in R/wf_transfer.R
 \name{wf_transfer}
 \alias{wf_transfer}
-\alias{cds_transfer}
 \title{ECMWF data transfer function}
 \usage{
-wf_transfer(email, url, type = "ecmwf", path = tempdir(),
+wf_transfer(email, url, service = "webapi", path = tempdir(),
   filename = basename(tempfile("ecmwfr_", fileext = ".nc")),
   verbose = TRUE)
-
-cds_transfer(user, ...)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -19,7 +16,7 @@ If set to \code{NULL} the \code{.ecmwfapirc} file will be used.}
 
 \item{url}{url to query}
 
-\item{type}{character, one of \code{ecmwf} or \code{cds}}
+\item{service}{which service to use, one of \code{webapi} or \code{cds}}
 
 \item{path}{path were to store the downloaded data}
 
@@ -57,8 +54,6 @@ wf_transfer("test@email.com", url = r$href)
 }
 \author{
 Koen Kufkens
-
-Reto Stauffer
 }
 \keyword{climate,}
 \keyword{data}

@@ -4,7 +4,7 @@
 \alias{wf_delete}
 \title{ECMWF delete request}
 \usage{
-wf_delete(email, url, type = "ecmwf", verbose = TRUE)
+wf_delete(email, url, service = "ecmwf", verbose = TRUE)
 }
 \arguments{
 \item{email}{email address used to sign up for the ECMWF data service and
@@ -12,7 +12,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{url}{url to query}
 
-\item{type}{character, one of \code{ecmwf} or \code{cds} depending
+\item{service}{character, one of \code{ecmwf} or \code{cds} depending
 on the data set to be deleted.}
 
 \item{verbose}{show feedback on processing}

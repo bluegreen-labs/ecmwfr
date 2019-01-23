@@ -3,7 +3,7 @@ sudo: required
 cache: packages
 
 install:
-    - echo "foo" > ~/foo.txt
+    - echo "foo\: bar" > ~/foo.txt
 #warnings_are_errors: true
 #before_install:
 #  - sudo apt-get install -y udunits-bin libudunits2-dev

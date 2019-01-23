@@ -10,10 +10,8 @@ before_install:
   - sudo apt-get install -y libsodium-dev
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
-
-# Create ~/.cdsapirc and ~/.ecmwfapirc file
-install:
-    - bash create_apirc.sh
+  # Create ~/.cdsapirc and ~/.ecmwfapirc file
+  - bash create_apirc.sh
 
 r:
   - release

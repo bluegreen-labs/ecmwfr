@@ -1,8 +1,15 @@
 #!/bin/bash
 
 cat <<EOF > ~/.cdsapirc
-url: http://retostauffer.org
-key: adfdfa:13431431424234234
+url: https://cds.climate.copernicus.eu/api/v2
+key: ${CDSAPIUSER}:${CDSAPIKEY}
 EOF
 
-cat ~/.cdsapirc
+cat <<EOF > ~/.ecmwfapirc
+{
+    "url"   : "https://api.ecmwf.int/v1",
+    "key"   : "${ECMWFAPIKEY}",
+    "email" : "${ECMWFAPIEMAIL}"
+}
+EOF
+

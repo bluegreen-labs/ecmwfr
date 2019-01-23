@@ -20,6 +20,7 @@ r:
   #  - devel
 
 r_packages:
+  - knitr
   - devtools
   - covr
 

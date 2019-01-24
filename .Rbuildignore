@@ -3,7 +3,7 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^docs$
-^vignettes\/.*$
+^data-raw$
 
 # Exclude download tests, should not be
 # tested, only for local tests as some of the

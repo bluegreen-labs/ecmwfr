@@ -24,6 +24,7 @@ wf_request <- list(stream = "oper",
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
+             service = "webapi",
              key = system("echo $KEY", intern = TRUE))
 }
 rm(key)
@@ -35,7 +36,7 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-skip_check <- try(wf_get_key(user = "khrdev@outlook.com"))
+skip_check <- try(wf_get_key(user = "khrdev@outlook.com", service = "webapi"))
 skip_check <- inherits(skip_check, "try-error")
 
 # check keychain management

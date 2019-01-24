@@ -46,19 +46,18 @@ check_request <- function(x) {
 
 check_request_mars <- function(x) {
     if(grepl("^netcdf$", tolower(x$format))) {
-        if(!"grid" %in% names(x))
-            stop(paste("'mars' requests: 'grid' definition required if 'format = \"netcdf\"'",
-                       "as grib to netcdf conversion is only possible for regular ll grids.!"))
+      if(!"grid" %in% names(x)){
+          stop("'mars' requests: 'grid' required if 'format = \"netcdf\"'")}
     }
     # Requires a target file name, the name
     # where the file will be stored on the ECMWF side.
     #TODO: if missing: use temporary file name? Would avoid
     # a user to submit different requests with the very same name
     # which would overwrite the previous one.
-    if(!"target" %in% names(x))
-        stop(paste("'mars' requests: require a 'target' variable in the request. Name",
-                   " of the file where the temporary file will be stored on the ECMWF server."))
-    return(x)
+    if(!"target" %in% names(x)){
+      stop("'mars' requests: require a 'target' variable in the request.")
+      return(x)
+    }
 }
 
 

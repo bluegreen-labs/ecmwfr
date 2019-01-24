@@ -25,6 +25,7 @@ cds_request <- list(
 key <- system("echo $CDS", intern = TRUE)
 if(key != "" & key != "$CDS"){
   wf_set_key(user = "2088",
+             service = "cds",
              key = system("echo $CDS", intern = TRUE))
 }
 rm(key)

@@ -117,7 +117,7 @@ wf_request <- function(
 
   # first run is always 202
   if(service == "cds"){
-    ct$code = 202
+    ct$code <- 202
   }
 
   # some verbose feedback

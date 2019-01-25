@@ -28,7 +28,6 @@ library(ecmwfr)
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
-             service = "webapi",
              key = system("echo $KEY", intern = TRUE))
 }
 rm(key)
@@ -38,7 +37,7 @@ rm(key)
 # not be available on user systems (not required
 # only suggested)
 check_cran <- function() {
-  key <- try(wf_get_key("khrdev@outlook.com", service = "webapi"))
+  key <- try(wf_get_key("khrdev@outlook.com"))
   if (identical(tolower(Sys.getenv("NOT_CRAN")), "true") &
       !inherits(key, "try-error")){
     return(TRUE)

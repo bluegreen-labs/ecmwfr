@@ -50,10 +50,6 @@ check_cran <- function() {
 # do cran check
 cran <- check_cran()
 
-# for local render force to true
-# mainly important for rendering
-# a website using pkgdown
-cran <- TRUE
 ```
 
 ## Downloading Data Sets from Copernicus's Climate Data Store
@@ -63,10 +59,7 @@ data sets for research, education, and applied earth sciences on their
 [Climate Data Store](https://cds.climate.copernicus.eu) (CDS).
 Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int)
 high-resolution reanalysis data set which replaces ERA Interim (which was
-ERA-4; version 4).
-
-The R package `ecmwfr` provides a handy interface to download these data sets.
-This article provides some examples how to retrieve some of the CDS data sets.
+ERA-4; version 4). The R package `ecmwfr` provides a convenient interface to download these data sets.
 
 ## Before Downloading Data
 
@@ -127,9 +120,9 @@ The data set as specified above can be downloaded calling the
 `wf_request` function:
 
 ```{r spatial-request, echo = TRUE, eval = FALSE}
-# Start downloading the data
+# Start downloading the data, the path of the file
+# will be returned as a variable (ncfile)
 ncfile <- wf_request(user = "2088",
-                     service = "cds",
                       request = request,   
                       transfer = TRUE,  
                       path = tempdir(),
@@ -147,7 +140,7 @@ containing the requested information located in the current working directory,
 called `era5-demo.nc`. Qucik check:
 
 ```{r echo = FALSE}
-ncfile <- "extdata/era5-demo.nc"
+ncfile <- system.file(package = "ecmwfr","extdata/cds.nc")
 ```
 
 ```{r spatial-plot, echo = FALSE, figure = TRUE, fig.width = 8, fig.height = 6}
@@ -157,7 +150,7 @@ raster::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
 maps::map("world", add = TRUE)
 ```
 
-### Date period specification
+## Date period specification
 
 For those familiar to ECMWFs _mars_ syntax: CDS does not
 accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment.

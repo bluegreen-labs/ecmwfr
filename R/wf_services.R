@@ -21,7 +21,7 @@
 #' wf_services("test@mail.com")
 #'
 #' # get a list of datasets
-#' wf_datasets("test@mail.com")
+#' wf_services("test@mail.com")
 #'}
 
 wf_services <- function(

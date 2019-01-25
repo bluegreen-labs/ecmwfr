@@ -28,7 +28,7 @@ wf_set_key(user = "test@mail.com", key = "123")
 wf_services("test@mail.com")
 
 # get a list of datasets
-wf_datasets("test@mail.com")
+wf_services("test@mail.com")
 }
 }
 \seealso{

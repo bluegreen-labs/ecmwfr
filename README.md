@@ -6,7 +6,7 @@
 
 # ecmwfr
 
-Programmatic interface to the ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home). Allows for easy downloads of ECMWF [public data](http://apps.ecmwf.int/datasets/).
+Programmatic interface to the European Centre for Medium-Range Weather Forecasts ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home) and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS'.
 
 ## Installation
 
@@ -73,7 +73,7 @@ Before you can download any data you have to make sure to accept the terms and c
 
 ### Data Requests
 
-To download data use the wf_request() function, together with your email and a request string syntax [as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the arguments.
+To download data use the wf_request() function, together with your email and a request string syntax [as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the arguments. Be sure to specify which service to use, in this case `webapi` is the correct service to request data from.
 
 ```R
 # this is an example of a request
@@ -99,11 +99,11 @@ my_request <- list(stream = "oper",
 # set by the path argument
 
 wf_request(
-  email = "john.smith@example.com",
+  email = "khrdev@outlook.com",
+  request = my_request,
+  service = "webapi",
   transfer = TRUE,
-  path = "~",
-  request = my_request)
-
+  path = "~")
 ```
 
 This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: [https://apps.ecmwf.int/webmars/joblist/](https://apps.ecmwf.int/webmars/joblist/).
@@ -114,14 +114,14 @@ This operation might take a while. A progress indicator will keep you informed o
 Create a free CDS user account by [self
 registering](https://cds.climate.copernicus.eu/user/register). Once your user
 account has been verified you can get your personal _user ID_ and _key_ by
-visiting the [user profile](https://cds.climate.copernicus.eu/user).  This
+visiting the [user profile](https://cds.climate.copernicus.eu/user). This
 information is required to be able to retrieve data via the `ecmwfr` package.
-Use the `ecmwf` [`wf_set_key`](references/cds_set_key.html) function to store
+Use the `ecmwf` [`wf_set_key`](references/wf_set_key.html) function to store
 your login information in the system keyring (see below).
 
 ```json
-url: https://cds.climate.copernicus.eu/api/v2
-key: 1234:abcd1234-foo-bar-98765431-XXXXXXXXXX
+UID: 1234
+API key: abcd1234-foo-bar-98765431-XXXXXXXXXX
 ```
 
 ### Setup
@@ -134,7 +134,7 @@ sharing scripts on github or otherwise.
 ```R
 # set a key to the keychain
 wf_set_key(user = "1234",
-            key = "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX",
+            key = "abcd1234-foo-bar-98765431-XXXXXXXXXX",
             service = "cds")
 
 # you can retrieve the key using
@@ -151,11 +151,12 @@ Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclai
 
 ### Data Requests
 
-To download data use the [`cds_request`](references/cds_request.html) function,
+To download data use the [`wf_request`](references/wf_request.html) function,
 together with your _user ID_ and a request string syntax
-[as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax).
-Instead of `json` formatting the function uses a simple `R` list for all the
-arguments.  **Note**: the simplest way to get the requests is to go to the CDS
+[as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the
+arguments. Be sure to specify the service you want to use in your query in this case `cds`.
+
+**Note**: the simplest way to get the requests is to go to the CDS
 website which offers an interactive interface to create these requests.  E.g.,
 for ERA-5 reanalysis:
 
@@ -186,6 +187,7 @@ request <- list("dataset" = "reanalysis-era5-pressure-levels",
 # call:
 file <- wf_request(user     = "1234",   # user ID (for authentification)
                    request  = request,  # the request
+                   service  = "cds",    # which climate service to use
                    transfer = TRUE,     # download the file
                    path     = ".")      # store data in current working directory
 

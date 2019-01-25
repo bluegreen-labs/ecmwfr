@@ -4,14 +4,12 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(user, service = "webapi", request, transfer = FALSE,
-  path = tempdir(), time_out = 3 * 3600, verbose = TRUE)
+wf_request(user, request, transfer = FALSE, path = tempdir(),
+  time_out = 3 * 3600, verbose = TRUE)
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
-
-\item{service}{which service to use, one of \code{webapi} or \code{cds}}
 
 \item{request}{nested list with query parameters following the layout
 as specified on the ECMWF API page}

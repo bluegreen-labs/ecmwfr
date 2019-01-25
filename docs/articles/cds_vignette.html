@@ -5,12 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>cds • ecmwfr</title>
+<title>CDS • ecmwfr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="cds">
+<script src="../pkgdown.js"></script><meta property="og:title" content="CDS">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -31,12 +30,21 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -45,19 +53,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/ecmwf_vignette.html">ECMWF</a>
-    </li>
-    <li>
       <a href="../articles/cds_vignette.html">CDS</a>
     </li>
-    <li class="dropdown-header">Changelog</li>
+    <li>
+      <a href="../articles/webapi_vignette.html">WebAPI</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
-</li>
-<li>
-  <a href="../contact.html">Contact</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -79,12 +83,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>cds</h1>
-                        <h4 class="author">Reto Stauffer</h4>
+      <h1>CDS</h1>
+                        <h4 class="author">Reto Stauffer, Koen Hufkens</h4>
             
-            <h4 class="date">2019-01-23</h4>
+            <h4 class="date">2019-01-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/../vignettes/cds_vignette.Rmd"><code>../vignettes/cds_vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/cds_vignette.Rmd"><code>vignettes/cds_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_vignette.Rmd</code></div>
 
     </div>
@@ -94,8 +98,7 @@
 <div id="downloading-data-sets-from-copernicuss-climate-data-store" class="section level2">
 <h2 class="hasAnchor">
 <a href="#downloading-data-sets-from-copernicuss-climate-data-store" class="anchor"></a>Downloading Data Sets from Copernicus’s Climate Data Store</h2>
-<p><a href="https://www.copernicus.eu/en">Copernicus.eu</a> provides a set of interesting data sets for research, education, and applied earth sciences on their <a href="https://cds.climate.copernicus.eu">Climate Data Store</a> (CDS). Among the different data sets there is the latest <a href="https://www.ecmwf.int">ECMWF</a> high-resolution reanalysis data set which replaces ERA Interim (which was ERA-4; version 4).</p>
-<p>The R package <code>ecmwfr</code> provides a handy interface to download these data sets. This article provides some examples how to retrieve some of the CDS data sets.</p>
+<p><a href="https://www.copernicus.eu/en">Copernicus.eu</a> provides a set of interesting data sets for research, education, and applied earth sciences on their <a href="https://cds.climate.copernicus.eu">Climate Data Store</a> (CDS). Among the different data sets there is the latest <a href="https://www.ecmwf.int">ECMWF</a> high-resolution reanalysis data set which replaces ERA Interim (which was ERA-4; version 4). The R package <code>ecmwfr</code> provides a convenient interface to download these data sets.</p>
 </div>
 <div id="before-downloading-data" class="section level2">
 <h2 class="hasAnchor">
@@ -105,27 +108,29 @@
 <li><a href="https://cds.climate.copernicus.eu/user/register">Register yourself for CDS services</a></li>
 <li><a href="https://cds.climate.copernicus.eu/disclaimer-privacy">Terms and conditions</a></li>
 </ul>
-<p>To retrieve data <code>ecmwfr</code> provides two options: use <a href="../references/cds_set_key.html"><code><a href="../reference/cds_set_key.html">cds_set_key()</a></code></a> to add the login details to your local keyring (requires the <em>R</em> package <a href="https://CRAN.R-project.org/package=keyring"><code>keyring</code></a>), or create a file called <code>~/.cdsapirc</code> to provide your personal user login information. More details about the local <code>~/.cdsapirc</code> file <a href="https://cds.climate.copernicus.eu/api-how-to">can be found here</a>.</p>
-<p>Once you are in possession of your personal user (namely your user ID and a secret key) <code>ecmwfr</code> allows to send requests to CDS and/or download the data. <strong>Note</strong>: the examples on this page will always make use of the <code>~/.cdsapirc</code> option. Thus, the <code>user</code> input option will always be set to <code>NULL</code>. However, feel free to use the <a href="../references/cds_set_key.html"><code><a href="../reference/cds_set_key.html">cds_set_key()</a></code></a> function to add the login details to your local keyring. set <code>user = "&lt;your user id&gt;"</code> when calling <a href="../references/cds_request.html"><code><a href="../reference/cds_request.html">cds_request()</a></code></a> (and all other calls depending on your user details).</p>
+<p>To retrieve data <code>ecmwfr</code> use <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code>to add the login details to your local keyring (requires the <em>R</em> package <a href="https://CRAN.R-project.org/package=keyring"><code>keyring</code></a>).</p>
+<p>Once you are in possession of your personal user (namely your user ID and a secret key) <code>ecmwfr</code> allows to send requests to CDS and/or download the data.</p>
 </div>
 <div id="the-request-syntax" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-request-syntax" class="anchor"></a>The Request Syntax</h2>
-<p>CDS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variable</code>s to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code>l extent, and other details.</p>
+<p>CDS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variable</code>s to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code> extent, and other details.</p>
 <p>The request syntax is available for a range of different CDS data sets. Check the <a href="https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset">CDS Dataset</a> website to see a list of available datasets and to check whether API requests are allowed or not (go to <em>Download Data</em>, select some data, show request by clicking <em>Show API Request</em> (red button, bottom of page).</p>
-<p>An ERA-5 example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify the data set</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,
-                <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,
-                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
-                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,
-                <span class="st">"month"</span>          =<span class="st"> "04"</span>,
-                <span class="st">"day"</span>            =<span class="st"> "04"</span>,
-                <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,
-                <span class="st">"area"</span>           =<span class="st"> "70/-20/30/60"</span>,
-                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
-                <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)</code></pre></div>
+<div id="an-era-5-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#an-era-5-example" class="anchor"></a>An ERA-5 example</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Specify the data set</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">                <span class="st">"month"</span>          =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">                <span class="st">"day"</span>            =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">                <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">                <span class="st">"area"</span>           =<span class="st"> "70/-20/30/60"</span>,</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">                <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)</a></code></pre></div>
 <p>This is the “demo” request and it specifies the following:</p>
 <ul>
 <li>
@@ -146,99 +151,24 @@ request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
 <code>target</code>: local output file <code>era5-demo.nc</code>
 </li>
 </ul>
-</div>
-<div id="era-5-reanalysis-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#era-5-reanalysis-data" class="anchor"></a>ERA-5 Reanalysis Data</h2>
-<div id="example-1-download-data-for-one-specific-datetime" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-1-download-data-for-one-specific-datetime" class="anchor"></a>Example 1: Download Data for One Specific Date/Time</h3>
-<p>The data set as specified above can be downloaded calling the <code>cds_retrieve</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify data set</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,
-                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
-                <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,
-                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
-                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,
-                <span class="st">"month"</span>          =<span class="st"> "04"</span>,
-                <span class="st">"day"</span>            =<span class="st"> "04"</span>,
-                <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,
-                <span class="st">"area"</span>           =<span class="st"> "70/-20/00/60"</span>,
-                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
-                <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)
-
-<span class="co"># Start downloading the data</span>
-ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use the ~/.cdsapirc file</span>
-                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>The data set as specified above can be downloaded calling the <code>wf_request</code> function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Start downloading the data, the path of the file</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># will be returned as a variable (ncfile)</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user =</span> <span class="st">"2088"</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                     <span class="dt">service =</span> <span class="st">"cds"</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">request =</span> request,   </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                      <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
 <p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>. Qucik check:</p>
 <p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
-<div id="example-2-downloading-time-periods" class="section level3">
-<h3 class="hasAnchor">
-<a href="#example-2-downloading-time-periods" class="anchor"></a>Example 2: Downloading Time Periods</h3>
-<p>Rather than only downloading data for one specific date/time one is also allowed to specify a range of days/time period. The request below is downloading <em>total precipitation</em> for January 2000 trough February 2000, 00 UTC to 23 UTC (full day, hourly temporal resolution) for a tiny area around Innsbruck, Austria for demonstration purposes only.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify data set</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-single-levels"</span>,
-                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,
-                <span class="st">"variable"</span>       =<span class="st"> "total_precipitation"</span>,
-                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,
-                <span class="st">"month"</span>          =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%02d"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>),
-                <span class="st">"day"</span>            =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%02d"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">31</span>),
-                <span class="st">"time"</span>           =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%02d"</span>, <span class="dv">0</span><span class="op">:</span><span class="dv">23</span>),
-                <span class="st">"area"</span>           =<span class="st"> "47/10.50/46.50/11"</span>,
-                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
-                <span class="st">"target"</span>         =<span class="st"> "era5-ts-demo.nc"</span>)
-
-<span class="co"># Start downloading the data</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/load_all">load_all</a></span>(<span class="st">".."</span>)</code></pre></div>
-<pre><code>## Loading ecmwfr</code></pre>
-<pre><code>## 
-##      This is 'ecmwfr' version  1.0.0 . Please respect the terms of use:
-##       - https://cds.climate.copernicus.eu/disclaimer-privacy
-##       - https://www.ecmwf.int/en/terms-use</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
-                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p>Let’s have a look what we have in there (for grid point <code>11E 47N</code>): <img src="cds_vignette_files/figure-html/temporal-plot-1.png" width="768"></p>
-<div class="notification info">
-<h3>
-Date period specification:
-</h3>
-<p>For those familiar to ECMWFs <em>mars</em> syntax: CDS does not accept <code>date = "2000-01-01/to/2000-12-31"</code> specifications at the moment. It is possible to specify one specific date via <code>date = "2000-01-01"</code> or multiple days via <code>date = ["2000-01-01","2000-01-02","2000-10-20"]</code> but not via <code>".../to/..."</code>.</p>
 </div>
-</div>
-</div>
-<div id="soil-moisture-gridded-data" class="section level2">
+<div id="date-period-specification" class="section level2">
 <h2 class="hasAnchor">
-<a href="#soil-moisture-gridded-data" class="anchor"></a>Soil Moisture Gridded Data</h2>
-<p>Another data set available via CDS is a global gridded soil moisture data set estimated from satellite observations based on the ESA Climate Change Initiative soil moisture version 03.3.</p>
-<p>The following request is downloading <em>monthly averages</em> for January 2018 (month<code>"01"</code>, year <code>"2018"</code>). More details can be found <a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/satellite-soil-moisture?tab=overview">on the product overview page</a> (or try calling <a href="../references/cds_productinfo.html"><code><a href="../reference/cds_productinfo.html">cds_productinfo(NULL, "satellite-soil-moisture")</a></code></a>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify data set</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>          =<span class="st"> "satellite-soil-moisture"</span>,
-                <span class="st">"format"</span>           =<span class="st"> "zip"</span>,
-                <span class="st">"variable"</span>         =<span class="st"> "volumetric_surface_soil_moisture"</span>,
-                <span class="st">"time_aggregation"</span> =<span class="st"> "month_average"</span>,
-                <span class="st">"year"</span>             =<span class="st"> "2018"</span>,
-                <span class="st">"month"</span>            =<span class="st"> "01"</span>,
-                <span class="st">"day"</span>              =<span class="st"> "01"</span>,
-                <span class="st">"type_of_sensor"</span>   =<span class="st"> "combined_passive_and_active"</span>,
-                <span class="st">"type_of_record"</span>   =<span class="st"> "icdr"</span>,
-                <span class="st">"version"</span>          =<span class="st"> "v201706.0.0"</span>,
-                <span class="st">"target"</span>           =<span class="st"> "soilmoisture-demo.zip"</span>)
-
-<span class="co"># Start downloading the data</span>
-ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_request.html">cds_request</a></span>(<span class="dt">user =</span> <span class="ot">NULL</span>,         <span class="co"># use .cdsapirc file!</span>
-                      <span class="dt">request =</span> request,   <span class="co"># use our request specification from above</span>
-                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download data as soon as ready</span>
-                      <span class="dt">path =</span> <span class="st">"."</span>,          <span class="co"># store the netcdf file (era5-demo.nc) here</span>
-                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<a href="#date-period-specification" class="anchor"></a>Date period specification</h2>
+<p>For those familiar to ECMWFs <em>mars</em> syntax: CDS does not accept <code>date = "2000-01-01/to/2000-12-31"</code> specifications at the moment. It is possible to specify one specific date via <code>date = "2000-01-01"</code> or multiple days via <code>date = ["2000-01-01","2000-01-02","2000-10-20"]</code> but not via <code>".../to/..."</code>.</p>
 </div>
   </div>
 
@@ -250,8 +180,7 @@ ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_
 <li><a href="#downloading-data-sets-from-copernicuss-climate-data-store">Downloading Data Sets from Copernicus’s Climate Data Store</a></li>
       <li><a href="#before-downloading-data">Before Downloading Data</a></li>
       <li><a href="#the-request-syntax">The Request Syntax</a></li>
-      <li><a href="#era-5-reanalysis-data">ERA-5 Reanalysis Data</a></li>
-      <li><a href="#soil-moisture-gridded-data">Soil Moisture Gridded Data</a></li>
+      <li><a href="#date-period-specification">Date period specification</a></li>
       </ul>
 </div>
       </div>
@@ -264,7 +193,7 @@ ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/cds_
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

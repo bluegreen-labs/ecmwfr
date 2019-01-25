@@ -2,14 +2,12 @@
 % Please edit documentation in R/wf_get_key.R
 \name{wf_get_key}
 \alias{wf_get_key}
-\title{Get secret ECMWF token}
+\title{Get secret ECMWF / CDS token}
 \usage{
-wf_get_key(user, service = "webapi")
+wf_get_key(user)
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service}
-
-\item{service}{which service to use}
 }
 \value{
 the key set using \code{\link[ecmwfr]{wf_set_key}} saved

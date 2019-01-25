@@ -47,7 +47,7 @@ wf_product_info <- function(
   service <- match.arg(service, c("webapi", "cds"))
 
   # get key
-  key <- wf_get_key(user, service = service)
+  key <- wf_get_key(user)
 
   # Get list of data sets to which the user can choose from.
   # Check if input 'dataset' is a valid choice.

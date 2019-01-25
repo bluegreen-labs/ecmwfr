@@ -24,7 +24,8 @@ Depends:
     R (>= 3.4)
 Imports:
     httr,
-    keyring
+    keyring,
+    memoise
 License: AGPL-3
 LazyData: true
 ByteCompile: true

@@ -40,7 +40,7 @@ wf_datasets <- function(
   }
 
   # get key
-  key <- wf_get_key(user, service = service)
+  key <- wf_get_key(user)
 
   # query the status url provided
   if (service == "webapi"){
@@ -59,7 +59,7 @@ wf_datasets <- function(
 
   # trap errors
   if (httr::http_error(response)){
-    stop("Your request failed", call. = FALSE)
+    stop("Your request failed - check credentials", call. = FALSE)
   }
 
   # check the content, and status of the

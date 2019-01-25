@@ -40,7 +40,7 @@ wf_delete <- function(
   service <- match.arg(service, c("webapi", "cds"))
 
   # get key
-  key <- wf_get_key(user, service = service)
+  key <- wf_get_key(user)
 
   # If the URL is not an URL but an ID: generate URL
   if (service == "cds") {

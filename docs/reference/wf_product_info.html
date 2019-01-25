@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ECMWF data request and download — wf_request • ecmwfr</title>
+<title>CDS product list for a given dataset — wf_product_info • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,14 +30,10 @@
 
 
 
-<meta property="og:title" content="ECMWF data request and download — wf_request" />
+<meta property="og:title" content="CDS product list for a given dataset — wf_product_info" />
 
-<meta property="og:description" content="Stage a data request, and optionally download the data to disk. Alternatively
-you can only stage requests, logging the request URLs to submit download
-queries later on using wf_transfer. The function only
-allows NetCDF downloads, and will override calls for grib data.
-Note that the function will do some basic checks on the request input
-to identify possible problems." />
+<meta property="og:description" content="Shows and returns detailed product information about a specific data set
+(see wf_datasets)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,96 +118,65 @@ to identify possible problems." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ECMWF data request and download</h1>
-    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_request.R'><code>R/wf_request.R</code></a></small>
-    <div class="hidden name"><code>wf_request.Rd</code></div>
+    <h1>CDS product list for a given dataset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_product_info.R'><code>R/wf_product_info.R</code></a></small>
+    <div class="hidden name"><code>wf_product_info.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Stage a data request, and optionally download the data to disk. Alternatively
-you can only stage requests, logging the request URLs to submit download
-queries later on using <code><a href='wf_transfer.html'>wf_transfer</a></code>. The function only
-allows NetCDF downloads, and will override calls for grib data.
-Note that the function will do some basic checks on the <code>request</code> input
-to identify possible problems.</p>
+    <p>Shows and returns detailed product information about a specific data set
+(see <code><a href='wf_datasets.html'>wf_datasets</a></code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='no'>request</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3</span> * <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_product_info</span>(<span class='no'>user</span>, <span class='no'>dataset</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>user</th>
-      <td><p>user (email address) used to sign up for the ECMWF data service,
-used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
+      <td><p>string, user ID used to sign up for the CDS data service,
+used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>character, name of the data set for which the product
+information should be loaded.</p></td>
     </tr>
     <tr>
       <th>service</th>
       <td><p>which service to use, one of <code>webapi</code> or <code>cds</code></p></td>
     </tr>
     <tr>
-      <th>request</th>
-      <td><p>nested list with query parameters following the layout
-as specified on the ECMWF API page</p></td>
-    </tr>
-    <tr>
-      <th>transfer</th>
-      <td><p>logical, download data TRUE or FALSE (default = FALSE)</p></td>
-    </tr>
-    <tr>
-      <th>path</th>
-      <td><p>path were to store the downloaded data</p></td>
-    </tr>
-    <tr>
-      <th>time_out</th>
-      <td><p>how long to wait on a download to start (default =
-<code>3*3600</code> seconds).</p></td>
+      <th>simplify</th>
+      <td><p>boolean, default <code>TRUE</code>. If <code>TRUE</code> the description
+will be returned as tidy data instead of a nested list.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>show feedback on processing</p></td>
+      <td><p>boolean, default <code>FALSE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a download query staging url or (invisible) filename of the NetCDF
-file on your local disc</p>
+    <p>Downloads a tidy data frame with product descriptions from CDS. If
+<code>simplify = FALSE</code> a list with product details will be returned.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='wf_set_key.html'>wf_set_key</a></code>
-<code><a href='wf_transfer.html'>wf_transfer</a></code></p></div>
+    <div class='dont-index'><p><code><a href='wf_datasets.html'>wf_datasets</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div># NOT RUN {
-# set key
-wf_set_key(user = "test@mail.com", key = "123")
-
-request <-  = list(stream = "oper",
-   levtype = "sfc",
-   param = "167.128",
-   dataset = "interim",
-   step = "0",
-   grid = "0.75/0.75",
-   time = "00",
-   date = "2014-07-01/to/2014-07-02",
-   type = "an",
-   class = "ei",
-   area = "50/10/51/11",
-   format = "netcdf",
-   target = "tmp.nc")
-
-# get the default test data
-wf_request(user = "test@mail.com", request = request)
-# }
-</pre>
+    <pre class="examples"><div class='input'>   <span class='co'># Opend description in browser</span>
+   <span class='fu'>wf_product_info</span>(<span class='kw'>NULL</span>, <span class='st'>"reanalysis-era5-single-levels"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Selecting ‘env’ backend. Secrets are stored in environment variables</span></div><div class='output co'>#&gt; <span class='error'>Error in b_env_get(self, private, service, username, keyring): Cannot find password</span></div><div class='input'>
+   <span class='co'># Return information</span>
+   <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>wf_product_info</span>(<span class='kw'>NULL</span>,
+    <span class='st'>"reanalysis-era5-single-levels"</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in wf_product_info(NULL, "reanalysis-era5-single-levels", show = FALSE): unused argument (show = FALSE)</span></div><div class='input'>   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>info</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'info' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -226,7 +191,7 @@ wf_request(user = "test@mail.com", request = request)
     </ul>
 
     <h2>Author</h2>
-    <p>Koen Kufkens</p>
+    <p>Reto Stauffer, Koen Hufkens</p>
   </div>
 </div>
 

@@ -15,7 +15,6 @@
 #' @param transfer logical, download data TRUE or FALSE (default = FALSE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
-#' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param verbose show feedback on processing
 #' @return a download query staging url or (invisible) filename of the NetCDF
 #' file on your local disc
@@ -50,7 +49,6 @@
 
 wf_request <- function(
   user,
-  service = "webapi",
   request,
   transfer = FALSE,
   path = tempdir(),
@@ -58,27 +56,25 @@ wf_request <- function(
   verbose = TRUE
   ){
 
-  # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds"))
-
   # check the login credentials
   if(missing(user) || missing(request)){
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
   # get key
-  key <- wf_get_key(user, service = service)
+  key <- wf_get_key(user)
+
+  # checks user login, the request layout and
+  # returns the service to use if successful
+  wf_check <- wf_check_request(user, request)
+
+  # split out data
+  service <- wf_check$service
+  url <- wf_check$url
 
   # getting api url: different handling if 'dataset = "mars"',
   # requests to 'dataset = "mars"' require a non-public user
   # account (member states/commercial).
-  url <- if(request$dataset == "mars") {
-    sprintf("%s/services/mars/requests", wf_server())
-  } else{
-    sprintf("%s/datasets/%s/requests", wf_server(), request$dataset)
-  }
-
-  # Code below could be replaced by a wf_transfer() call
 
   # depending on the service get the response
   # for the query provided

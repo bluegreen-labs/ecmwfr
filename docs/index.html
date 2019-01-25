@@ -9,14 +9,12 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Interface to 'ECMWF' and 'CDS' Data Web Services">
+<script src="pkgdown.js"></script><meta property="og:title" content="Interface to 'ECMWF' and 'CDS' Data Web Services">
 <meta property="og:description" content="Programmatic interface to the European Centre for Medium-Range
     Weather Forecasts public and restricted dataset web services (ECMWF;
     &lt;https://www.ecmwf.int/&gt;) as well as Copernicus's Climate Data Store (CDS;
-    &lt;https://cds.climate.copernicus.eu&gt;).
-    Allows for easy downloads of weather forecasts and
-    climate data directly to your R work space or your computer.">
+    &lt;https://cds.climate.copernicus.eu&gt;). Allows for easy downloads of weather 
+    forecasts and climate data directly to your R work space or your computer.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -36,12 +34,21 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="reference/index.html">Reference</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -50,19 +57,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/ecmwf_vignette.html">ECMWF</a>
-    </li>
-    <li>
       <a href="articles/cds_vignette.html">CDS</a>
     </li>
-    <li class="dropdown-header">Changelog</li>
+    <li>
+      <a href="articles/webapi_vignette.html">WebAPI</a>
+    </li>
   </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
-</li>
-<li>
-  <a href="contact.html">Contact</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -88,7 +91,7 @@
 <div id="ecmwfr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ecmwfr" class="anchor"></a>ecmwfr</h1></div>
-<p>Programmatic interface to the <a href="https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home">‘ECMWF’ web API services</a>. Allows for easy downloads of ECMWF <a href="http://apps.ecmwf.int/datasets/">public data</a>.</p>
+<p>Programmatic interface to the European Centre for Medium-Range Weather Forecasts <a href="https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home">‘ECMWF’ web API services</a> and Copernicus <a href="https://cds.climate.copernicus.eu">Climate Data Store</a> or ‘CDS’.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -96,141 +99,139 @@
 <h3 class="hasAnchor">
 <a href="#stable-release" class="anchor"></a>stable release</h3>
 <p>To install the current stable release use a CRAN repository:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"ecmwfr"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"ecmwfr"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</a></code></pre></div>
 </div>
 <div id="development-release" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development-release" class="anchor"></a>development release</h3>
 <p>To install the development releases of the package run the following commands:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(devtools)){<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)}
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"khufkens/ecmwfr"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(devtools)){<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)}</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"khufkens/ecmwfr"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</a></code></pre></div>
 <p>Vignettes are not rendered by default, if you want to include additional documentation please use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(devtools)){<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)}
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"khufkens/ecmwfr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(devtools)){<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)}</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"khufkens/ecmwfr"</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"ecmwfr"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="use-ecmwf-services" class="section level2">
 <h2 class="hasAnchor">
 <a href="#use-ecmwf-services" class="anchor"></a>Use: ECMWF services</h2>
 <p>Create a ECMWF account by <a href="https://apps.ecmwf.int/registration/">self registering</a> and retrieving your key at <a href="https://api.ecmwf.int/v1/key/" class="uri">https://api.ecmwf.int/v1/key/</a> after you log in. The key is a long series of numbers and characters (X in the example below).</p>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
-    <span class="dt">"url"</span>   <span class="fu">:</span> <span class="st">"https://api.ecmwf.int/v1"</span><span class="fu">,</span>
-    <span class="dt">"key"</span>   <span class="fu">:</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span><span class="fu">,</span>
-    <span class="dt">"email"</span> <span class="fu">:</span> <span class="st">"john.smith@example.com"</span>
-<span class="fu">}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">"url"</span>   <span class="fu">:</span> <span class="st">"https://api.ecmwf.int/v1"</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="dt">"key"</span>   <span class="fu">:</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">"email"</span> <span class="fu">:</span> <span class="st">"john.smith@example.com"</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="fu">}</span></a></code></pre></div>
 <div id="setup" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h3>
 <p>Before starting save the provided key to your local keychain. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set a key to the keychain</span>
-<span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>, <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>)
-
-<span class="co"># you can retrieve the key using</span>
-<span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>)
-
-<span class="co"># the output should be the key you provided</span>
-<span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">           <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>, <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: <a href="https://apps.ecmwf.int/datasets/licences/general/" class="uri">https://apps.ecmwf.int/datasets/licences/general/</a>.</p>
 </div>
 <div id="data-requests" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-requests" class="anchor"></a>Data Requests</h3>
-<p>To download data use the wf_request() function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this is an example of a request</span>
-my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream =</span> <span class="st">"oper"</span>,
-                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,
-                   <span class="dt">param =</span> <span class="st">"165.128/166.128/167.128"</span>,
-                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,
-                   <span class="dt">step =</span> <span class="st">"0"</span>,
-                   <span class="dt">grid =</span> <span class="st">"0.75/0.75"</span>,
-                   <span class="dt">time =</span> <span class="st">"00/06/12/18"</span>,
-                   <span class="dt">date =</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,
-                   <span class="dt">type =</span> <span class="st">"an"</span>,
-                   <span class="dt">class =</span> <span class="st">"ei"</span>,
-                   <span class="dt">area =</span> <span class="st">"73.5/-27/33/45"</span>,
-                   <span class="dt">format =</span> <span class="st">"netcdf"</span>,
-                   <span class="dt">target =</span> <span class="st">"tmp.nc"</span>)
-
-<span class="co"># an example download using fw_request()</span>
-<span class="co"># using the above request list()</span>
-<span class="co"># </span>
-<span class="co"># data will be transferred to disk</span>
-<span class="co"># and saved in your home directory (~)</span>
-<span class="co"># set by the path argument</span>
-
-<span class="kw"><a href="reference/wf_request.html">wf_request</a></span>(
-  <span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>,
-  <span class="dt">transfer =</span> <span class="ot">TRUE</span>,
-  <span class="dt">path =</span> <span class="st">"~"</span>,
-  <span class="dt">request =</span> my_request)</code></pre></div>
+<p>To download data use the wf_request() function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments. Be sure to specify which service to use, in this case <code>webapi</code> is the correct service to request data from.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># this is an example of a request</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream =</span> <span class="st">"oper"</span>,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                   <span class="dt">param =</span> <span class="st">"165.128/166.128/167.128"</span>,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">                   <span class="dt">step =</span> <span class="st">"0"</span>,</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">                   <span class="dt">grid =</span> <span class="st">"0.75/0.75"</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">                   <span class="dt">time =</span> <span class="st">"00/06/12/18"</span>,</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">                   <span class="dt">date =</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                   <span class="dt">type =</span> <span class="st">"an"</span>,</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">                   <span class="dt">class =</span> <span class="st">"ei"</span>,</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">                   <span class="dt">area =</span> <span class="st">"73.5/-27/33/45"</span>,</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">                   <span class="dt">format =</span> <span class="st">"netcdf"</span>,</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">                   <span class="dt">target =</span> <span class="st">"tmp.nc"</span>)</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co"># an example download using fw_request()</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co"># using the above request list()</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co"># </span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co"># data will be transferred to disk</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co"># and saved in your home directory (~)</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co"># set by the path argument</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="kw"><a href="reference/wf_request.html">wf_request</a></span>(</a>
+<a class="sourceLine" id="cb6-24" data-line-number="24">  <span class="dt">email =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">  <span class="dt">request =</span> my_request,</a>
+<a class="sourceLine" id="cb6-26" data-line-number="26">  <span class="dt">service =</span> <span class="st">"webapi"</span>,</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27">  <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-28" data-line-number="28">  <span class="dt">path =</span> <span class="st">"~"</span>)</a></code></pre></div>
 <p>This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: <a href="https://apps.ecmwf.int/webmars/joblist/" class="uri">https://apps.ecmwf.int/webmars/joblist/</a>.</p>
 </div>
 </div>
 <div id="use-copernicus-climate-data-store-cds" class="section level2">
 <h2 class="hasAnchor">
 <a href="#use-copernicus-climate-data-store-cds" class="anchor"></a>Use: Copernicus Climate Data Store (CDS)</h2>
-<p>Create a free CDS user account by <a href="https://cds.climate.copernicus.eu/user/register">self registering</a>. Once your user account has been verified you can get your personal <em>user ID</em> and <em>key</em> by visiting the <a href="https://cds.climate.copernicus.eu/user">user profile</a>. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Two different ways to use your login are available: use the <code>ecmwf</code> <a href="references/cds_set_key.html"><code>cds_set_key</code></a> function to store your login information in the system keyring, or store your login information in a file called <code>.cdsapirc</code> located in your user’s home directory. The <code>.cdsapirc</code> file is a simple ASCII file which will look similar to this:</p>
-<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="er">url:</span> <span class="er">https://cds.climate.copernicus.eu/api/v2</span>
-<span class="er">key:</span> <span class="er">1234:abcd1234-foo-bar-98765431-XXXXXXXXXX</span></code></pre></div>
-<p>More details can be found here: <a href="https://cds.climate.copernicus.eu/api-how-to">How to use the CDS API</a>. The <code>ecmwfr</code> package will also use this file, if preferr to do so (see <a href="references/cds_from_file.html"><code>cds_key_from_file</code></a>).</p>
+<p>Create a free CDS user account by <a href="https://cds.climate.copernicus.eu/user/register">self registering</a>. Once your user account has been verified you can get your personal <em>user ID</em> and <em>key</em> by visiting the <a href="https://cds.climate.copernicus.eu/user">user profile</a>. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Use the <code>ecmwf</code> <a href="references/wf_set_key.html"><code>wf_set_key</code></a> function to store your login information in the system keyring (see below).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="er">UID:</span> <span class="er">1234</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="er">API</span> <span class="er">key:</span> <span class="er">abcd1234-foo-bar-98765431-XXXXXXXXXX</span></a></code></pre></div>
 <div id="setup-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#setup-1" class="anchor"></a>Setup</h3>
 <p>If you preferr to use your local keychain (rather than using the <code>.cdsapirc</code> file) you have to save your login information first. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># set a key to the keychain</span>
-<span class="kw">cdf_set_key</span>(<span class="dt">user =</span> <span class="st">"1234"</span>, <span class="dt">key =</span> <span class="st">"1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>)
-
-<span class="co"># you can retrieve the key using</span>
-<span class="kw"><a href="reference/cds_get_key.html">cds_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>)
-
-<span class="co"># the output should be the key you provided</span>
-<span class="co"># "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">            <span class="dt">key =</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">            <span class="dt">service =</span> <span class="st">"cds"</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>, <span class="dt">service =</span> <span class="st">"cds"</span>)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: Before downloading and processing data from CDS please make sure you acceppt the terms and conditions which can be found here: <a href="https://cds.climate.copernicus.eu/disclaimer-privacy">Copernicus Climate Data Store Disclaimer/Privacy</a>.</p>
 </div>
 <div id="data-requests-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-requests-1" class="anchor"></a>Data Requests</h3>
-<p>To download data use the <a href="references/cds_request.html"><code>cds_request</code></a> function, together with your <em>user ID</em> and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments. <strong>Note</strong>: the simplest way to get the requests is to go to the CDS website which offers an interactive interface to create these requests. E.g., for ERA-5 reanalysis:</p>
+<p>To download data use the <a href="references/wf_request.html"><code>wf_request</code></a> function, together with your <em>user ID</em> and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments. Be sure to specify the service you want to use in your query in this case <code>cds</code>.</p>
+<p><strong>Note</strong>: the simplest way to get the requests is to go to the CDS website which offers an interactive interface to create these requests. E.g., for ERA-5 reanalysis:</p>
 <ul>
 <li><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form">pressure level data</a></li>
 <li><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form">surface data</a></li>
 <li>…</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is an example of a request for # downloading 'ERA-5' reanalysis data for</span>
-<span class="co"># 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering #</span>
-northern Europe.
-<span class="co"># File will be stored as "era5-demo.nc" (netcdf format).</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span> =<span class="st"> "reanalysis"</span>,
-                <span class="st">"variable"</span> =<span class="st"> "temperature"</span>,
-                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
-                <span class="st">"year"</span> =<span class="st"> "2000"</span>,
-                <span class="st">"month"</span> =<span class="st"> "04"</span>,
-                <span class="st">"day"</span> =<span class="st"> "04"</span>,
-                <span class="st">"time"</span> =<span class="st"> "00:00"</span>,
-                <span class="st">"area"</span> =<span class="st"> "70/-20/00/60"</span>,
-                <span class="st">"format"</span> =<span class="st"> "netcdf"</span>,
-                <span class="st">"target"</span> =<span class="st"> "era5-demo.nc"</span>)
-
-
-<span class="co"># If you have stored your user login information</span>
-<span class="co"># in the keyring by calling cds_set_key you can</span>
-<span class="co"># call:</span>
-file &lt;-<span class="st"> </span><span class="kw"><a href="reference/cds_request.html">cds_request</a></span>(<span class="dt">user     =</span> <span class="st">"1234"</span>,   <span class="co"># user ID (for authentification)</span>
-                    <span class="dt">request  =</span> request,  <span class="co"># the request</span>
-                    <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download the file</span>
-                    <span class="dt">path     =</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span>
-
-<span class="co"># If you have created a .cdsapirc file in your local</span>
-<span class="co"># home directory you can also tell cds_request to use</span>
-<span class="co"># the file by setting user = NULL:</span>
-file &lt;-<span class="st"> </span><span class="kw"><a href="reference/cds_request.html">cds_request</a></span>(<span class="dt">user     =</span> <span class="ot">NULL</span>,     <span class="co"># use ~/.cdsapirc</span>
-                    <span class="dt">request  =</span> request,  <span class="co"># the request</span>
-                    <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download the file</span>
-                    <span class="dt">path     =</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># This is an example of a request for # downloading 'ERA-5' reanalysis data for</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering #</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">northern Europe.</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># File will be stored as "era5-demo.nc" (netcdf format).</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "reanalysis-era5-pressure-levels"</span>,</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">                <span class="st">"product_type"</span> =<span class="st"> "reanalysis"</span>,</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                <span class="st">"variable"</span> =<span class="st"> "temperature"</span>,</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">                <span class="st">"year"</span> =<span class="st"> "2000"</span>,</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">                <span class="st">"month"</span> =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">                <span class="st">"day"</span> =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">                <span class="st">"time"</span> =<span class="st"> "00:00"</span>,</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">                <span class="st">"area"</span> =<span class="st"> "70/-20/00/60"</span>,</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">                <span class="st">"format"</span> =<span class="st"> "netcdf"</span>,</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">                <span class="st">"target"</span> =<span class="st"> "era5-demo.nc"</span>)</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co"># If you have stored your user login information</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co"># in the keyring by calling cds_set_key you can</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co"># call:</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21">file &lt;-<span class="st"> </span><span class="kw"><a href="reference/wf_request.html">wf_request</a></span>(<span class="dt">user     =</span> <span class="st">"1234"</span>,   <span class="co"># user ID (for authentification)</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22">                   <span class="dt">request  =</span> request,  <span class="co"># the request</span></a>
+<a class="sourceLine" id="cb9-23" data-line-number="23">                   <span class="dt">service  =</span> <span class="st">"cds"</span>,    <span class="co"># which climate service to use</span></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">                   <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download the file</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25">                   <span class="dt">path     =</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></a></code></pre></div>
 <p>The CDS services are quite fast, however, if you request a lot of variables, multiple levels, and data over several years these requests might take quite a while! <strong>Note</strong>: If you need to download larger amounts of data it is suggested to split the downloads, e.g., download the data in junks (e.g., month-by-month, or year-by-year). A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.</p>
 </div>
 </div>
@@ -252,10 +253,6 @@ file &lt;-<span class="st"> </span><span class="kw"><a href="reference/cds_reque
 <li>Browse source code at <br><a href="https://github.com/khufkens/ecmwfr">https://​github.com/​khufkens/​ecmwfr</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/khufkens/ecmwfr/issues">https://​github.com/​khufkens/​ecmwfr/​issues</a>
-</li>
-<li>ECMWF Public Datasets at <br><a href="https://apps.ecmwf.int/datasets">https://​apps.ecmwf.int/​datasets</a>
-</li>
-<li>Copernicus CDS at <br><a href="https://cds.climate.copernicus.eu">https://​cds.climate.copernicus.eu</a>
 </li>
 </ul>
 </div>
@@ -291,7 +288,7 @@ file &lt;-<span class="st"> </span><span class="kw"><a href="reference/cds_reque
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>

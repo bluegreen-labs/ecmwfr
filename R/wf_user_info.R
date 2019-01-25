@@ -34,8 +34,8 @@ wf_user_info <- function(
 
   # query the status url provided
   response <- httr::GET(
-    paste(wf_server(),
-          "/who-am-i", sep = "/"),
+    paste0(wf_server(),
+          "/who-am-i"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
@@ -46,7 +46,7 @@ wf_user_info <- function(
 
   # trap errors
   if (httr::http_error(response)){
-    stop("Your request failed", call. = FALSE)
+    stop("Your request failed - wrong user?", call. = FALSE)
   }
 
   # check the content, and status of the

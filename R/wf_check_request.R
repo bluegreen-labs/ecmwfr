@@ -37,24 +37,24 @@ wf_check_request <- memoise::memoise(function(
     }
   }
 
-  service <- do.call("rbind", lapply(c("webapi","cds"),
+  service <- do.call("rbind",
+                     lapply(c("webapi","cds"),
                                      function(service){
 
     dataset <- try(wf_datasets(user, service = service))
 
+    if(inherits(dataset,"try-error")){return(NULL)}
 
     if(request$dataset %in% dataset$name ||
        (request$dataset == "mars" && service == "webapi")){
       return(service)
-    } else {
-      return(NULL)
     }
   }))
 
   if(is.null(service)){
     stop(sprintf("Data identifier %s is not found in Web API or CDS datasets.
                  Or your login credentials do not match your request.",
-                 request$dataset))
+                 request$dataset), call. = FALSE)
   }
 
   url <- if(request$dataset == "mars" && service == "webapi") {
@@ -67,5 +67,5 @@ wf_check_request <- memoise::memoise(function(
   }
 
   # return service string
-  return(data.frame(service, url))
+  return(data.frame(service, url, stringsAsFactors = FALSE))
 })

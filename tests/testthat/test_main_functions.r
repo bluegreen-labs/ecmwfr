@@ -3,7 +3,7 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 # format request (see below)
-wf_request <- list(stream = "oper",
+my_request <- list(stream = "oper",
                    levtype = "sfc",
                    param = "165.128",
                    dataset = "interim",
@@ -24,7 +24,6 @@ wf_request <- list(stream = "oper",
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
-             service = "webapi",
              key = system("echo $KEY", intern = TRUE))
 }
 rm(key)
@@ -36,7 +35,7 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-skip_check <- try(wf_get_key(user = "khrdev@outlook.com", service = "webapi"))
+skip_check <- try(wf_get_key(user = "khrdev@outlook.com"))
 skip_check <- inherits(skip_check, "try-error")
 
 # check keychain management
@@ -114,11 +113,13 @@ test_that("test transfer function - no login", {
 
 test_that("test request (transfer) function", {
   skip_if(skip_check)
-  expect_message(wf_request(
+  expect_message(
+    wf_request(
     user = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
-    time_out = 180))
+    time_out = 180)
+    )
 })
 
 test_that("test delete function - no login", {

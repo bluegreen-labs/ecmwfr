@@ -13,10 +13,9 @@ cds_request <- list(
               "month"          = "04",
               "day"            = "04",
               "time"           = "00:00",
-              "area"           = "70/-20/00/60",
+              "area"           = "70/-10/30/40",
               "format"         = "netcdf",
               "target"         = "era5-demo.nc")
-
 
 # set password using encrypted key
 # if provided, otherwise just continue
@@ -25,7 +24,6 @@ cds_request <- list(
 key <- system("echo $CDS", intern = TRUE)
 if(key != "" & key != "$CDS"){
   wf_set_key(user = "2088",
-             service = "cds",
              key = system("echo $CDS", intern = TRUE))
 }
 rm(key)
@@ -37,7 +35,7 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-skip_check <- try(wf_get_key(user = "2088", service = "cds"))
+skip_check <- try(wf_get_key(user = "2088"))
 skip_check <- inherits(skip_check, "try-error")
 
 test_that("cds datasets returns data.frame or list", {
@@ -54,14 +52,12 @@ test_that("cds datasets returns data.frame or list", {
 test_that("cds request", {
   skip_if(skip_check)
     tmp <- wf_request(user = "2088",
-                      service = "cds",
                       request = cds_request,
                       transfer = TRUE)
 
     expect_true(inherits(tmp, "character"))
     expect_true(file.exists(tmp))
     expect_true(inherits(wf_request(user = "2088",
-                service = "cds",
                 request = cds_request,
                 transfer = FALSE), "list"))
 })

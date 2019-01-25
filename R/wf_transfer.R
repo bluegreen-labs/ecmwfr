@@ -101,8 +101,9 @@ wf_transfer <- function(
     writeBin(ct, f)
     close(f)
 
-    # set 302 code to exit loop
-    ct$code <- 302
+    # return data
+    return(invisible(list(code = 302,
+                          href = url)))
   }
 
   if (service == "cds"){
@@ -119,9 +120,13 @@ wf_transfer <- function(
 
     # if completed / should not happen but still there
     if("completed" == ct$state){
-        ct$code <- 302
-        httr::GET(ct$location,
+
+      # download file
+      httr::GET(ct$location,
                   httr::write_disk(tmp_file, overwrite = TRUE))
+
+      # return exit statement
+      ct$code <- 302
     }
   }
 

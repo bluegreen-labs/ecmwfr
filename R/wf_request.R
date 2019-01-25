@@ -179,7 +179,7 @@ wf_request <- function(
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
     ct <- wf_transfer(user    = user,
-                      url      = ifelse(service == "cds",
+                      url     = ifelse(service == "cds",
                                         ct$request_id, ct$href),
                       service  = service,
                       filename = tmp_file,
@@ -211,7 +211,7 @@ wf_request <- function(
   # for ECMWF mars requests (skip)
   if(!request$dataset == "mars") {
     wf_delete(user   = user,
-              url     = ifelse(service == "cds",
+              url    = ifelse(service == "cds",
                                ct$request_id, ct$href),
               verbose = verbose,
               service = service)

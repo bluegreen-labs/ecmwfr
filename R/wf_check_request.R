@@ -41,7 +41,8 @@ wf_check_request <- memoise::memoise(function(
                      lapply(c("webapi","cds"),
                                      function(service){
 
-    dataset <- try(wf_datasets(user, service = service))
+    dataset <- try(wf_datasets(user, service = service),
+                   silent = TRUE)
 
     if(inherits(dataset,"try-error")){return(NULL)}
 

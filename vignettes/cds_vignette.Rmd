@@ -48,7 +48,7 @@ check_cran <- function() {
 }
 
 # do cran check
-cran <- check_cran()
+#cran <- check_cran()
 
 ```
 

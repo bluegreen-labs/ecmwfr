@@ -35,24 +35,24 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-skip_check <- try(wf_get_key(user = "khrdev@outlook.com"))
-skip_check <- if (!inherits(skip_check, "try-error") &
-                  !ecmwf_running(wf_server(service = "cds"))) {
-  TRUE
-} else {
-  FALSE
-}
+login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
+login_check <- inherits(login_check, "try-error")
+server_check <- !ecmwf_running(wf_server(service = "webapi"))
+
+print(login_check)
 
 # check keychain management
 test_that("set, get secret key",{
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_silent(wf_set_key(user = "johndoe@hotmail.com",
                            key = "XXX"))
   expect_output(str(wf_get_key(user = "johndoe@hotmail.com")))
 })
 
 test_that("test dataset function", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_output(str(wf_datasets(user = "khrdev@outlook.com")))
 })
 
@@ -61,7 +61,8 @@ test_that("test dataset function - no login", {
 })
 
 test_that("test services function", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_output(str(wf_services(user = "khrdev@outlook.com")))
 })
 
@@ -70,7 +71,8 @@ test_that("test services function - no login", {
 })
 
 test_that("test user info function", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_output(str(wf_user_info(user = "khrdev@outlook.com")))
 })
 
@@ -79,7 +81,8 @@ test_that("test user info function - no login", {
 })
 
 test_that("test request (transfer) function", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_message(wf_request(
     user = "khrdev@outlook.com",
     transfer = TRUE,
@@ -88,7 +91,8 @@ test_that("test request (transfer) function", {
 })
 
 test_that("test request (transfer) function - time out", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_output(str(wf_request(
     user = "khrdev@outlook.com",
     transfer = TRUE,
@@ -97,7 +101,8 @@ test_that("test request (transfer) function - time out", {
 })
 
 test_that("test request (transfer) function - no transfer", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   ct <- wf_request(
     user = "khrdev@outlook.com",
     transfer = FALSE,
@@ -117,7 +122,8 @@ test_that("test transfer function - no login", {
 })
 
 test_that("test request (transfer) function", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
   expect_message(
     wf_request(
     user = "khrdev@outlook.com",
@@ -132,7 +138,8 @@ test_that("test delete function - no login", {
 })
 
 test_that("test request (transfer) function - larger download", {
-  skip_if(skip_check)
+  skip_if(login_check)
+  skip_if(server_check)
 
   # large request
   large_request <- list(stream = "oper",

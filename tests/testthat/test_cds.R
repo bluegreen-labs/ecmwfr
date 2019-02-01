@@ -35,65 +35,63 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-skip_check <- try(wf_get_key(user = "2088"))
-skip_check <- if(!inherits(skip_check, "try-error") &
-                 !ecmwf_running(wf_server(service = "cds"))){
-  TRUE
-} else {
-  FALSE
-}
-
-skip_check <- TRUE
+login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
+login_check <- inherits(login_check, "try-error")
+server_check <- !ecmwf_running(wf_server(service = "cds"))
 
 test_that("cds datasets returns data.frame or list", {
-  skip_if(skip_check)
-    expect_true(inherits(wf_datasets(user = "2088",
-                                     service = "cds",
-                                     simplify = TRUE), "data.frame"))
-    expect_true(inherits(wf_datasets(user = "2088",
-                                     service = "cds",
-                                     simplify = FALSE), "list"))
+  skip_if(login_check)
+  skip_if(server_check)
+  expect_true(inherits(wf_datasets(user = "2088",
+                                   service = "cds",
+                                   simplify = TRUE), "data.frame"))
+  expect_true(inherits(wf_datasets(user = "2088",
+                                   service = "cds",
+                                   simplify = FALSE), "list"))
 })
 
 # Testing the cds request function
 test_that("cds request", {
-  skip_if(skip_check)
-    tmp <- wf_request(user = "2088",
-                      request = cds_request,
-                      transfer = TRUE)
+  skip_if(login_check)
+  skip_if(server_check)
+  tmp <- wf_request(user = "2088",
+                    request = cds_request,
+                    transfer = TRUE)
 
-    expect_true(inherits(tmp, "character"))
-    expect_true(file.exists(tmp))
-    expect_true(inherits(wf_request(user = "2088",
-                request = cds_request,
-                transfer = FALSE), "list"))
+  expect_true(inherits(tmp, "character"))
+  expect_true(file.exists(tmp))
+  expect_true(inherits(wf_request(user = "2088",
+              request = cds_request,
+              transfer = FALSE), "list"))
 })
 
 # # Expecting error if required arguments are not set:
  test_that("required arguments missing for cds_* functions", {
-   skip_if(skip_check)
-     # CDS dataset (requires at least 'user')
-     expect_error(wf_dataset())
+   skip_if(login_check)
+   skip_if(server_check)
 
-     # CDS productinfo (requires at least 'user' and 'dataset')
-     expect_error(wf_product_info())
-     expect_error(wf_product_info(user = "2088",
-                                  service = "cds",
-                                  dataset = "foo"))
+   # CDS dataset (requires at least 'user')
+   expect_error(wf_dataset())
 
-     # CDS productinfo: product name which is not available
-     expect_output(str(wf_product_info(user = "2088",
-                                       service = "cds",
-                                       dataset = "satellite-methane")))
+   # CDS productinfo (requires at least 'user' and 'dataset')
+   expect_error(wf_product_info())
+   expect_error(wf_product_info(user = "2088",
+                                service = "cds",
+                                dataset = "foo"))
 
-     # CDS tranfer (forwarded to wf_transfer, requires at least
-     # 'user' and 'url)
-     expect_error(wf_transfer())
-     expect_error(wf_transfer(user = "2088",
-                              service = "cds",
-                              url = "http://google.com"))
-     # CDS transfer with wrong type
-     expect_error(wf_transfer(user = "2088",
-                              url = "http://google.com",
-                              service = "foo"))
+   # CDS productinfo: product name which is not available
+   expect_output(str(wf_product_info(user = "2088",
+                                     service = "cds",
+                                     dataset = "satellite-methane")))
+
+   # CDS tranfer (forwarded to wf_transfer, requires at least
+   # 'user' and 'url)
+   expect_error(wf_transfer())
+   expect_error(wf_transfer(user = "2088",
+                            service = "cds",
+                            url = "http://google.com"))
+   # CDS transfer with wrong type
+   expect_error(wf_transfer(user = "2088",
+                            url = "http://google.com",
+                            service = "foo"))
 })

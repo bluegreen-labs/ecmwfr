@@ -15,40 +15,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-
 # load the library
 library(ncdf4)
 library(raster)
 library(maps)
-library(ecmwfr)
-
-# import the encrypted key if desired
-# (does not exist locally)
-key <- system("echo $KEY", intern = TRUE)
-if(key != "" & key != "$KEY"){
-  wf_set_key(user = "2088",
-             key = system("echo $KEY", intern = TRUE))
-}
-rm(key)
-
-# check cran, same routine as skip_on_cran()
-# but not dependent on testthat which might
-# not be available on user systems (not required
-# only suggested)
-check_cran <- function() {
-  key <- try(wf_get_key("2088"))
-  if (identical(tolower(Sys.getenv("NOT_CRAN")), "true") &
-      !inherits(key, "try-error")){
-    return(TRUE)
-  } else {
-    return(FALSE)
-  }
-}
-
-# do cran check
-#cran <- check_cran()
-
 ```
 
 ## Downloading Data Sets from Copernicus's Climate Data Store
@@ -135,8 +105,7 @@ download year-by-year, or even month-by-month, if you are trying to download
 several varaiables/fields.
 
 Once the retrieval has finished you should now be the owner of a NetCDF
-containing the requested information located in the current working directory,
-called `era5-demo.nc`. Qucik check:
+containing the requested information located in the current working directory, called `era5-demo.nc`. Qucik check:
 
 ```{r echo = FALSE}
 ncfile <- system.file(package = "ecmwfr","extdata/cds.nc")

@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
       <h1>CDS</h1>
                         <h4 class="author">Reto Stauffer, Koen Hufkens</h4>
             
-            <h4 class="date">2019-01-25</h4>
+            <h4 class="date">2019-02-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/cds_vignette.Rmd"><code>vignettes/cds_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_vignette.Rmd</code></div>
@@ -155,11 +155,10 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Start downloading the data, the path of the file</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># will be returned as a variable (ncfile)</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user =</span> <span class="st">"2088"</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                     <span class="dt">service =</span> <span class="st">"cds"</span>,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">request =</span> request,   </a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  </a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">                      <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                      <span class="dt">request =</span> request,   </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                      <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
 <p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>. Qucik check:</p>
 <p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>

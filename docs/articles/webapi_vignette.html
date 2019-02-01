@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
       <h1>WebAPI</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2019-01-25</h4>
+            <h4 class="date">2019-02-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/webapi_vignette.Rmd"><code>vignettes/webapi_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>webapi_vignette.Rmd</code></div>
@@ -137,11 +137,10 @@
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co"># an example download using fw_request()</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co"># using the above request list()</span></a>
 <a class="sourceLine" id="cb2-18" data-line-number="18">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">           <span class="dt">service =</span> <span class="st">"webapi"</span>,</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">           <span class="dt">request  =</span> my_request,</a>
 <a class="sourceLine" id="cb2-20" data-line-number="20">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-21" data-line-number="21">           <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">           <span class="dt">request  =</span> my_request,</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-22" data-line-number="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>This operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on <a href="https://apps.ecmwf.int/webmars/joblist/">the ECMWF website</a>, and provided with a download url which can be sued with the <code>wt_transfer()</code> funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!</p>
 <p>If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/stack">stack</a></span>(ncfile)</a>

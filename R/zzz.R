@@ -107,3 +107,15 @@ exit_message <- function(url, service, path, file){
                "     - https://www.ecmwf.int/en/terms-use\n")
   if(interactive()) packageStartupMessage(txt)
 }
+
+# check if server is reachable
+# returns bolean TRUE if so
+ecmwf_running <- function(url){
+  ct <- try(httr::GET(url))
+  if(ct$status_code > 403){
+    FALSE
+  } else {
+    TRUE
+  }
+}
+

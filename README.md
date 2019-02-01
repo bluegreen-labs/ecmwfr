@@ -58,11 +58,10 @@ Before starting save the provided key to your local keychain. The package does n
 ```R
 # set a key to the keychain
 wf_set_key(email = "john.smith@example.com",
-           key = "XXXXXXXXXXXXXXXXXXXXXX",
-           service = "webapi")
+           key = "XXXXXXXXXXXXXXXXXXXXXX")
 
 # you can retrieve the key using
-wf_get_key(email = "john.smith@example.com", service = "webapi")
+wf_get_key(email = "john.smith@example.com")
 
 # the output should be the key you provided
 # "XXXXXXXXXXXXXXXXXXXXXX"
@@ -101,7 +100,6 @@ my_request <- list(stream = "oper",
 wf_request(
   email = "khrdev@outlook.com",
   request = my_request,
-  service = "webapi",
   transfer = TRUE,
   path = "~")
 ```
@@ -134,11 +132,10 @@ sharing scripts on github or otherwise.
 ```R
 # set a key to the keychain
 wf_set_key(user = "1234",
-            key = "abcd1234-foo-bar-98765431-XXXXXXXXXX",
-            service = "cds")
+            key = "abcd1234-foo-bar-98765431-XXXXXXXXXX")
 
 # you can retrieve the key using
-wf_get_key(user = "1234", service = "cds")
+wf_get_key(user = "1234")
 
 # the output should be the key you provided
 # "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"
@@ -187,7 +184,6 @@ request <- list("dataset" = "reanalysis-era5-pressure-levels",
 # call:
 file <- wf_request(user     = "1234",   # user ID (for authentification)
                    request  = request,  # the request
-                   service  = "cds",    # which climate service to use
                    transfer = TRUE,     # download the file
                    path     = ".")      # store data in current working directory
 

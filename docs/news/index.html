@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -118,24 +118,28 @@
       <small>Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ecmwfr-1-0-2" class="section level1">
+    <div id="ecmwfr-1-1-0" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-1-0-2" class="anchor"></a>ecmwfr 1.0.2<small> Unreleased </small>
+<a href="#ecmwfr-1-1-0" class="anchor"></a>ecmwfr 1.1.0<small> Unreleased </small>
 </h1>
 <ul>
-<li>inclusion of Copernicus CDS services, covering most of the ECMWF climate data</li>
+<li>inclusion of Copernicus CDS services by Reto Tauffer
+<ul>
+<li>now covering most of the ECMWF climate data products</li>
+</ul>
+</li>
 <li>consolidation of code by Reto Tauffer
 <ul>
 <li>integration in <code>wf_*()</code> vocabulary</li>
 <li>simplification of code and error messages</li>
 </ul>
 </li>
-<li>development release will fail
+<li>automated checks of the request statements
 <ul>
-<li>needs new unit checks</li>
-<li>rhub checks?</li>
+<li>ensures a consistent vocabulary with limited parameters</li>
 </ul>
 </li>
+<li>unit checks don’t fail upon unavailable service</li>
 </ul>
 </div>
     <div id="ecmwfr-1-0-1" class="section level1">
@@ -193,7 +197,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#ecmwfr-1-0-2">1.0.2</a></li>
+        <li><a href="#ecmwfr-1-1-0">1.1.0</a></li>
         <li><a href="#ecmwfr-1-0-1">1.0.1</a></li>
         <li><a href="#ecmwfr-1-0-0">1.0.0</a></li>
         <li><a href="#ecmwfr-0-0-3">0.0.3</a></li>

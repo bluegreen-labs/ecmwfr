@@ -1,12 +1,13 @@
-# ecmwfr 1.0.2
+# ecmwfr 1.1.0
 
-* inclusion of Copernicus CDS services, covering most of the ECMWF climate data
+* inclusion of Copernicus CDS services by Reto Tauffer
+  * now covering most of the ECMWF climate data products
 * consolidation of code by Reto Tauffer
   * integration in `wf_*()` vocabulary
   * simplification of code and error messages
-* development release will fail
-  * needs new unit checks
-  * rhub checks?
+* automated checks of the request statements
+  * ensures a consistent vocabulary with limited parameters
+* unit checks don't fail upon unavailable service
 
 # ecmwfr 1.0.1
 

@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -130,14 +130,13 @@
 <p>Before starting save the provided key to your local keychain. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">           <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co"># you can retrieve the key using</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>, <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># the output should be the key you provided</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: <a href="https://apps.ecmwf.int/datasets/licences/general/" class="uri">https://apps.ecmwf.int/datasets/licences/general/</a>.</p>
 </div>
 <div id="data-requests" class="section level3">
@@ -169,9 +168,8 @@
 <a class="sourceLine" id="cb6-23" data-line-number="23"><span class="kw"><a href="reference/wf_request.html">wf_request</a></span>(</a>
 <a class="sourceLine" id="cb6-24" data-line-number="24">  <span class="dt">email =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
 <a class="sourceLine" id="cb6-25" data-line-number="25">  <span class="dt">request =</span> my_request,</a>
-<a class="sourceLine" id="cb6-26" data-line-number="26">  <span class="dt">service =</span> <span class="st">"webapi"</span>,</a>
-<a class="sourceLine" id="cb6-27" data-line-number="27">  <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb6-28" data-line-number="28">  <span class="dt">path =</span> <span class="st">"~"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-26" data-line-number="26">  <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-27" data-line-number="27">  <span class="dt">path =</span> <span class="st">"~"</span>)</a></code></pre></div>
 <p>This operation might take a while. A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems. You can track ongoing jobs at in the joblist at: <a href="https://apps.ecmwf.int/webmars/joblist/" class="uri">https://apps.ecmwf.int/webmars/joblist/</a>.</p>
 </div>
 </div>
@@ -187,14 +185,13 @@
 <p>If you preferr to use your local keychain (rather than using the <code>.cdsapirc</code> file) you have to save your login information first. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>,</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">            <span class="dt">key =</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>,</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">            <span class="dt">service =</span> <span class="st">"cds"</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># you can retrieve the key using</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>, <span class="dt">service =</span> <span class="st">"cds"</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co"># the output should be the key you provided</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3">            <span class="dt">key =</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co"># "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: Before downloading and processing data from CDS please make sure you acceppt the terms and conditions which can be found here: <a href="https://cds.climate.copernicus.eu/disclaimer-privacy">Copernicus Climate Data Store Disclaimer/Privacy</a>.</p>
 </div>
 <div id="data-requests-1" class="section level3">
@@ -229,9 +226,8 @@
 <a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co"># call:</span></a>
 <a class="sourceLine" id="cb9-21" data-line-number="21">file &lt;-<span class="st"> </span><span class="kw"><a href="reference/wf_request.html">wf_request</a></span>(<span class="dt">user     =</span> <span class="st">"1234"</span>,   <span class="co"># user ID (for authentification)</span></a>
 <a class="sourceLine" id="cb9-22" data-line-number="22">                   <span class="dt">request  =</span> request,  <span class="co"># the request</span></a>
-<a class="sourceLine" id="cb9-23" data-line-number="23">                   <span class="dt">service  =</span> <span class="st">"cds"</span>,    <span class="co"># which climate service to use</span></a>
-<a class="sourceLine" id="cb9-24" data-line-number="24">                   <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download the file</span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25">                   <span class="dt">path     =</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-23" data-line-number="23">                   <span class="dt">transfer =</span> <span class="ot">TRUE</span>,     <span class="co"># download the file</span></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">                   <span class="dt">path     =</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></a></code></pre></div>
 <p>The CDS services are quite fast, however, if you request a lot of variables, multiple levels, and data over several years these requests might take quite a while! <strong>Note</strong>: If you need to download larger amounts of data it is suggested to split the downloads, e.g., download the data in junks (e.g., month-by-month, or year-by-year). A progress indicator will keep you informed on the status of your request. Keep in mind that all data downloaded will be buffered in memory limiting the downloads to ~6GB on low end systems.</p>
 </div>
 </div>

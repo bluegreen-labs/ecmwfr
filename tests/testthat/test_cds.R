@@ -36,7 +36,13 @@ rm(key)
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
 skip_check <- try(wf_get_key(user = "2088"))
-skip_check <- inherits(skip_check, "try-error")
+skip_check <- if(!inherits(skip_check, "try-error") &
+                 !ecmwf_running(wf_server(service = "cds"))){
+  TRUE
+} else {
+  FALSE
+}
+
 skip_check <- TRUE
 
 test_that("cds datasets returns data.frame or list", {

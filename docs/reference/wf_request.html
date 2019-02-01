@@ -68,7 +68,7 @@ to identify possible problems." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -138,8 +138,8 @@ to identify possible problems.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='no'>request</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3</span> * <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>user</span>, <span class='no'>request</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3</span> * <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,10 +148,6 @@ to identify possible problems.</p>
       <th>user</th>
       <td><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
-    </tr>
-    <tr>
-      <th>service</th>
-      <td><p>which service to use, one of <code>webapi</code> or <code>cds</code></p></td>
     </tr>
     <tr>
       <th>request</th>

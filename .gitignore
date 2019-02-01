@@ -4,7 +4,3 @@
 .RData
 .Ruserdata
 inst/doc
-
-# Ignore everything in vignettes, except Rmd
-vignettes/*
-!vignettes/*.Rmd

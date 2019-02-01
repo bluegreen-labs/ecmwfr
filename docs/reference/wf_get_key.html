@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get secret ECMWF token — wf_get_key • ecmwfr</title>
+<title>Get secret ECMWF / CDS token — wf_get_key • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Get secret ECMWF token — wf_get_key" />
+<meta property="og:title" content="Get secret ECMWF / CDS token — wf_get_key" />
 
 <meta property="og:description" content="Returns you token set by wf_set_key" />
 <meta name="twitter:card" content="summary" />
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get secret ECMWF token</h1>
+    <h1>Get secret ECMWF / CDS token</h1>
     <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_get_key.R'><code>R/wf_get_key.R</code></a></small>
     <div class="hidden name"><code>wf_get_key.Rd</code></div>
     </div>
@@ -128,7 +128,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_get_key</span>(<span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_get_key</span>(<span class='no'>user</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,10 +136,6 @@
     <tr>
       <th>user</th>
       <td><p>user (email address) used to sign up for the ECMWF data service</p></td>
-    </tr>
-    <tr>
-      <th>service</th>
-      <td><p>which service to use</p></td>
     </tr>
     </table>
     

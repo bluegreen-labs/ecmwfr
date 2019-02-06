@@ -16,7 +16,7 @@
 #' \code{simplify = FALSE} a list with product details will be returned.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #'    # Opend description in browser
 #'    wf_product_info(NULL, "reanalysis-era5-single-levels")
 #'

@@ -30,7 +30,7 @@ Shows and returns detailed product information about a specific data set
 (see \code{\link[ecmwfr]{wf_datasets}}).
 }
 \examples{
-\donttest{
+\dontrun{
    # Opend description in browser
    wf_product_info(NULL, "reanalysis-era5-single-levels")
 

@@ -39,7 +39,9 @@ to disk or the current status of the requested transfer.
 wf_set_key(user = "test@mail.com", key = "123")
 
 # request data and grab url and try a transfer
-r <- wf_request("test@email.com")
+r <- wf_request("test@email.com", transfer = FALSE)
+
+# check transfer, will download if available
 wf_transfer("test@email.com", url = r$href)
 }
 }

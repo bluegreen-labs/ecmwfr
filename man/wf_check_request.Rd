@@ -2,7 +2,7 @@
 % Please edit documentation in R/wf_check_request.R
 \name{wf_check_request}
 \alias{wf_check_request}
-\title{check ECMWF CDS data requests}
+\title{check ECMWF / CDS data requests}
 \usage{
 wf_check_request(user, request)
 }
@@ -17,7 +17,7 @@ as specified on the ECMWF API page}
 a data frame with the determined service and url service endpoint
 }
 \description{
-Check the validaty of a data request
+Check the validaty of a data request, and login credentials.
 }
 \seealso{
 \code{\link[ecmwfr]{wf_set_key}}

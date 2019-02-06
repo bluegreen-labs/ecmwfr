@@ -1,6 +1,6 @@
-#' check ECMWF CDS data requests
+#' check ECMWF / CDS data requests
 #'
-#' Check the validaty of a data request
+#' Check the validaty of a data request, and login credentials.
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
@@ -40,12 +40,9 @@ wf_check_request <- memoise::memoise(function(
   service <- do.call("rbind",
                      lapply(c("webapi","cds"),
                                      function(service){
-
     dataset <- try(wf_datasets(user, service = service),
                    silent = TRUE)
-
     if(inherits(dataset,"try-error")){return(NULL)}
-
     if(request$dataset %in% dataset$name ||
        (request$dataset == "mars" && service == "webapi")){
       return(service)

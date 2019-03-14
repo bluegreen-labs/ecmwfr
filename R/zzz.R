@@ -76,7 +76,7 @@ exit_message <- function(url, service, path, file){
     "  Visit https://apps.ecmwf.int/webmars/joblist/",
     "  Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
 
-  intro <-  paste(
+  intro <- paste(
     "Even after exiting your request is still beeing processed!",
     job_list,
     "  to manage (download, retry, delete) your requests",

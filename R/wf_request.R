@@ -52,7 +52,7 @@ wf_request <- function(
   request,
   transfer = FALSE,
   path = tempdir(),
-  time_out = 3*3600,
+  time_out = 3600,
   verbose = TRUE
   ){
 

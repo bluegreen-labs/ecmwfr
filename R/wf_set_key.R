@@ -39,7 +39,7 @@ wf_set_key <- function(user = NULL, key = NULL){
 
     key <- readline("API key: ")
 
-    if (nchar(user) != 32) {
+    if (nchar(key) != 32) {
       stop("Invalid key")
     }
   }

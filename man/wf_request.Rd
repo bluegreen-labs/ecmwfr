@@ -5,7 +5,7 @@
 \title{ECMWF data request and download}
 \usage{
 wf_request(user, request, transfer = FALSE, path = tempdir(),
-  time_out = 3 * 3600, verbose = TRUE)
+  time_out = 3600, verbose = TRUE)
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service,
@@ -24,14 +24,13 @@ as specified on the ECMWF API page}
 \item{verbose}{show feedback on processing}
 }
 \value{
-a download query staging url or (invisible) filename of the NetCDF
-file on your local disc
+a download query staging url or (invisible) filename of the file on
+your local disc
 }
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
-queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
-allows NetCDF downloads, and will override calls for grib data.
+queries later on using \code{\link[ecmwfr]{wf_transfer}}.
 Note that the function will do some basic checks on the \code{request} input
 to identify possible problems.
 }

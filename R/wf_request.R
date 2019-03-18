@@ -2,8 +2,7 @@
 #'
 #' Stage a data request, and optionally download the data to disk. Alternatively
 #' you can only stage requests, logging the request URLs to submit download
-#' queries later on using \code{\link[ecmwfr]{wf_transfer}}. The function only
-#' allows NetCDF downloads, and will override calls for grib data.
+#' queries later on using \code{\link[ecmwfr]{wf_transfer}}.
 #' Note that the function will do some basic checks on the \code{request} input
 #' to identify possible problems.
 #'
@@ -16,8 +15,8 @@
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @param verbose show feedback on processing
-#' @return a download query staging url or (invisible) filename of the NetCDF
-#' file on your local disc
+#' @return a download query staging url or (invisible) filename of the file on
+#' your local disc
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}

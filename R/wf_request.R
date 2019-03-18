@@ -198,7 +198,15 @@ wf_request <- function(
     }
 
     # rename / move file
-    file.rename(src, dst)
+    move <- try(file.rename(src, dst))
+
+    # check if the move was succesful
+    # fails for separate disks/partitions
+    # then copy and remove
+    if(inherits(move, "try-error")){
+      file.copy(src, dst)
+      file.remove(src)
+    }
 
   } else {
     dst <- file.path(path, tmp_file)

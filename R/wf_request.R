@@ -198,12 +198,12 @@ wf_request <- function(
     }
 
     # rename / move file
-    move <- try(file.rename(src, dst))
+    move <- suppressWarnings(file.rename(src, dst))
 
     # check if the move was succesful
     # fails for separate disks/partitions
     # then copy and remove
-    if(inherits(move, "try-error")){
+    if(!move){
       file.copy(src, dst)
       file.remove(src)
     }

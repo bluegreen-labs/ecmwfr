@@ -11,7 +11,13 @@ Authors@R: c(person(
                given = "Reto",
                email = "Reto.Stauffer@uibk.ac.at",
                role = c("ctb"),
-               comment = c(ORCID = "0000-0002-3798-5507"))
+               comment = c(ORCID = "0000-0002-3798-5507")),
+             person(
+               family = "Campitelli",
+               given = "Elio",
+               email = "elio.campitelli@cima.fcen.uba.ar",
+               role = c("ctb"),
+               comment = c(ORCID = "0000-0002-7742-9230"))
            )
 Description: Programmatic interface to the European Centre for Medium-Range
     Weather Forecasts public and restricted dataset web services (ECMWF;

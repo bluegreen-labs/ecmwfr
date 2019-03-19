@@ -4,7 +4,7 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(user, key)
+wf_set_key(user = NULL, key = NULL)
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service}
@@ -14,6 +14,10 @@ wf_set_key(user, key)
 \description{
 Saves the token to your local keychain under
 a service called "ecmwfr".
+}
+\details{
+If either `user` or `key` are `NULL`, `wf_set_key()` will open a browser
+to the URL where you can get an API key and will save them interactivelly.
 }
 \examples{
 

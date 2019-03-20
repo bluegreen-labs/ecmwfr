@@ -21,5 +21,24 @@
 #'}
 
 wf_set_key <- function(user, key, service = "webapi"){
-  keyring::key_set_with_value(make_key_service(service), user, password = key)
+  if(missing(user) | missing(key)) {
+    if (!interactive()) {
+      stop("wf_set_key needs to be run interactivelly if `user` or `key` are NULL")
+    }
+    browseURL(wf_key_page(service))
+    message("Login or register to get a key")
+    user <- readline("User/email: ")
+    key <- readline("API key: ")
+  }
+
+  login_ok <- wf_check_login(user = user, key = key, service = service)
+
+  if (!login_ok) {
+    stop("Could not validate login information.")
+  } else {
+    keyring::key_set_with_value(service = make_key_service(service),
+                                username = user,
+                                password = key)
+    message("User ", user, " for ", service, " service added successfully")
+  }
 }

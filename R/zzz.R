@@ -124,3 +124,34 @@ ecmwf_running <- function(url){
 make_key_service <- function(service) {
   paste("ecmwfr", service, sep = "_")
 }
+
+# gets url where to get API key
+wf_key_page <- function(service) {
+  switch(service,
+         webapi = "https://api.ecmwf.int/v1/key/",
+         cds = "https://cds.climate.copernicus.eu/user/login?destination=user")
+}
+
+# checks credentials
+wf_check_login <- function(user, key, service) {
+  if (service == "webapi") {
+    info <- httr::GET(
+      paste0(wf_server(),
+             "/who-am-i"),
+      httr::add_headers(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = user,
+        "X-ECMWF-KEY" = key),
+      encode = "json"
+    )
+
+    return(!httr::http_error(info) && (httr::content(info)$uid == user))
+  }
+
+  if (service == "cds") {
+    url <- wf_server(service = "cds")
+    ct <- httr::GET(url, httr::authenticate(user, key))
+    return(httr::status_code(ct) == 404)
+  }
+}

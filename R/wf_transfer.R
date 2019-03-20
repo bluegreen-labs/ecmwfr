@@ -25,15 +25,15 @@
 #' wf_set_key(user = "test@mail.com", key = "123")
 #'
 #' # request data and grab url and try a transfer
-#' r <- wf_request("test@email.com", transfer = FALSE)
+#' r <- wf_request(request, "test@email.com", transfer = FALSE)
 #'
 #' # check transfer, will download if available
-#' wf_transfer("test@email.com", url = r$href)
+#' wf_transfer(r$href, "test@email.com")
 #'}
 
 wf_transfer <- function(
-  user,
   url,
+  user,
   service = "webapi",
   path = tempdir(),
   filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),

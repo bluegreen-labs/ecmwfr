@@ -25,8 +25,8 @@
 #'}
 
 wf_delete <- function(
-  user,
   url,
+  user,
   service = "webapi",
   verbose = TRUE
 ){

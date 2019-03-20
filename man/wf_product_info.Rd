@@ -4,15 +4,15 @@
 \alias{wf_product_info}
 \title{CDS product list for a given dataset}
 \usage{
-wf_product_info(user, dataset, service = "webapi", simplify = TRUE,
+wf_product_info(dataset, user, service = "webapi", simplify = TRUE,
   verbose = FALSE)
 }
 \arguments{
-\item{user}{string, user ID used to sign up for the CDS data service,
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
-
 \item{dataset}{character, name of the data set for which the product
 information should be loaded.}
+
+\item{user}{string, user ID used to sign up for the CDS data service,
+used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
 \item{service}{which service to use, one of \code{webapi} or \code{cds}}
 

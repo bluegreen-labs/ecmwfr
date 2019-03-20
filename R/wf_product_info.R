@@ -31,8 +31,8 @@
 #' @author Reto Stauffer, Koen Hufkens
 
 wf_product_info <- function(
-  user,
   dataset,
+  user,
   service = "webapi",
   simplify = TRUE,
   verbose = FALSE

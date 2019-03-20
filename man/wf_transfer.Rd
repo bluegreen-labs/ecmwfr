@@ -4,15 +4,15 @@
 \alias{wf_transfer}
 \title{ECMWF data transfer function}
 \usage{
-wf_transfer(user, url, service = "webapi", path = tempdir(),
+wf_transfer(url, user, service = "webapi", path = tempdir(),
   filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
   verbose = TRUE)
 }
 \arguments{
+\item{url}{url to query}
+
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
-
-\item{url}{url to query}
 
 \item{service}{which service to use, one of \code{webapi} or \code{cds}}
 

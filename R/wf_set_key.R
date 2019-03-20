@@ -22,7 +22,3 @@
 wf_set_key <- function(user, key, service = "webapi"){
   keyring::key_set_with_value(make_key_service(service), user, password = key)
 }
-
-make_key_service <- function(service) {
-  paste("ecmwfr", service, sep = "_")
-}

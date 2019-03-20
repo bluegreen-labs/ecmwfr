@@ -25,6 +25,11 @@ wf_set_key(user = "test@mail.com", key = "123")
 
 # get key
 wf_get_key(user = "test@mail.com")
+
+# leave user and key empty to open a browser window to the service's website
+# and type the key interactively
+wf_get_key()
+
 }
 }
 \seealso{

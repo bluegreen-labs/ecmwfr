@@ -35,7 +35,7 @@ wf_services <- function(
   }
 
   # get key from user
-  key <- wf_get_key(user)
+  key <- wf_get_key(user = user, service = "webapi")
 
   # query the status url provided
   response <- httr::GET(

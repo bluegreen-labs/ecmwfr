@@ -19,6 +19,6 @@
 #' wf_get_key(user = "test@mail.com")
 #'}
 
-wf_get_key <- function(user){
-  keyring::key_get(service = "ecmwfr", username = user)
+wf_get_key <- function(user, service = "webapi"){
+  keyring::key_get(service = make_key_service(service), username = user)
 }

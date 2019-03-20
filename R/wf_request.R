@@ -60,9 +60,6 @@ wf_request <- function(
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
-  # get key
-  key <- wf_get_key(user)
-
   # checks user login, the request layout and
   # returns the service to use if successful
   wf_check <- wf_check_request(user, request)
@@ -70,6 +67,9 @@ wf_request <- function(
   # split out data
   service <- wf_check$service
   url <- wf_check$url
+
+  # get key
+  key <- wf_get_key(user = user, service = service)
 
   # getting api url: different handling if 'dataset = "mars"',
   # requests to 'dataset = "mars"' require a non-public user

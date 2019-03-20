@@ -119,3 +119,7 @@ ecmwf_running <- function(url){
   }
 }
 
+# builds keychain service name from service
+make_key_service <- function(service) {
+  paste("ecmwfr", service, sep = "_")
+}

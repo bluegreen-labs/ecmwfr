@@ -54,7 +54,7 @@ wf_transfer <- function(
   }
 
   # get key
-  key <- wf_get_key(user)
+  key <- wf_get_key(user = user, service = service)
 
   # create (temporary) output file
   tmp_file <- file.path(path, filename)

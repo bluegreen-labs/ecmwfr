@@ -40,7 +40,7 @@ wf_datasets <- function(
   }
 
   # get key
-  key <- wf_get_key(user)
+  key <- wf_get_key(user = user, service = service)
 
   # query the status url provided
   if (service == "webapi"){

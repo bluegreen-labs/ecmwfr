@@ -4,10 +4,12 @@
 \alias{wf_get_key}
 \title{Get secret ECMWF / CDS token}
 \usage{
-wf_get_key(user)
+wf_get_key(user, service = "webapi")
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service}
+
+\item{service}{service associated with credentials ("webapi" or "cds")}
 }
 \value{
 the key set using \code{\link[ecmwfr]{wf_set_key}} saved

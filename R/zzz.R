@@ -84,7 +84,8 @@ exit_message <- function(url, service, path, file){
 
   options <- paste(
     "- Retry downloading as soon as as completed:\n",
-    "  wf_transfer(<user>,\n url = '",url,
+    "  wf_transfer(url = '",url, "\n",
+    "<user>,\n ",
     "',\n path = '",path,
     "',\n filename = '",file,
     "',\n service = \'", service,"')\n\n",

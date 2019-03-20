@@ -8,6 +8,8 @@
 * automated checks of the request statements
   * ensures a consistent vocabulary with limited parameters
 * unit checks don't fail upon unavailable service
+* changed order of arguments in `wf_request()`
+
 
 # ecmwfr 1.0.1
 

@@ -43,17 +43,23 @@
 #'    target = "tmp.nc")
 #'
 #' # get the default test data
-#' wf_request(user = "test@mail.com", request = request)
+#' wf_request(request = request, user = "test@mail.com")
 #'}
 
 wf_request <- function(
-  user,
   request,
+  user,
   transfer = FALSE,
   path = tempdir(),
   time_out = 3600,
   verbose = TRUE
   ){
+
+  if(is.character(request)) {
+    stop("`request` must be a named list. \n",
+         "If you are passing the user as first argument, notice that argument ",
+         "order was changed in version 1.1.1.")
+  }
 
   # check the login credentials
   if(missing(user) || missing(request)){
@@ -177,9 +183,9 @@ wf_request <- function(
     # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
-    ct <- wf_transfer(user    = user,
-                      url     = ifelse(service == "cds",
+    ct <- wf_transfer(url     = ifelse(service == "cds",
                                         ct$request_id, ct$href),
+                      user    = user,
                       service  = service,
                       filename = tmp_file,
                       verbose  = verbose)

@@ -46,7 +46,7 @@ print(login_check)
 test_that("set, get secret key",{
   skip_if(login_check)
   skip_if(server_check)
-  expect_silent(wf_set_key(user = "johndoe@hotmail.com",
+  expect_error(wf_set_key(user = "johndoe@hotmail.com",
                            key = "XXX",
                            service = "webapi"))
   expect_output(str(wf_get_key(user = "johndoe@hotmail.com")))

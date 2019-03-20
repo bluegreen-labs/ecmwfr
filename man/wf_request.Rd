@@ -55,7 +55,7 @@ request <-  = list(stream = "oper",
    target = "tmp.nc")
 
 # get the default test data
-wf_request(user = "test@mail.com", request = request)
+wf_request(request = request, user = "test@mail.com")
 }
 }
 \seealso{

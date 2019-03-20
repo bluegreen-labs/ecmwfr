@@ -24,7 +24,7 @@
 #' wf_get_key()
 #'
 #'}
-
+#' @importFrom utils browseURL
 wf_set_key <- function(user, key, service = "webapi"){
   if(missing(user) | missing(key)) {
     if (!interactive()) {

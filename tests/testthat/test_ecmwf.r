@@ -24,7 +24,8 @@ my_request <- list(stream = "oper",
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
-             key = system("echo $KEY", intern = TRUE))
+             key = system("echo $KEY", intern = TRUE),
+             service = "webapi")
 }
 rm(key)
 
@@ -46,7 +47,8 @@ test_that("set, get secret key",{
   skip_if(login_check)
   skip_if(server_check)
   expect_silent(wf_set_key(user = "johndoe@hotmail.com",
-                           key = "XXX"))
+                           key = "XXX",
+                           service = "webapi"))
   expect_output(str(wf_get_key(user = "johndoe@hotmail.com")))
 })
 

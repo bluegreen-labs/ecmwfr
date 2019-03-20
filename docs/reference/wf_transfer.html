@@ -64,7 +64,7 @@ to disk or the current status of the requested transfer." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ to disk or the current status of the requested transfer.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_transfer</span>(<span class='no'>user</span>, <span class='no'>url</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+    <pre class="usage"><span class='fu'>wf_transfer</span>(<span class='no'>url</span>, <span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
   <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='st'>"ecmwfr_"</span>, <span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".nc"</span>, <span class='kw'>tmpdir</span> <span class='kw'>=</span> <span class='st'>""</span>),
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -138,13 +138,13 @@ to disk or the current status of the requested transfer.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>url</th>
+      <td><p>url to query</p></td>
+    </tr>
+    <tr>
       <th>user</th>
       <td><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>url</th>
-      <td><p>url to query</p></td>
     </tr>
     <tr>
       <th>service</th>
@@ -186,10 +186,10 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
 <span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)
 
 <span class='co'># request data and grab url and try a transfer</span>
-<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='wf_request.html'>wf_request</a></span>(<span class='st'>"test@email.com"</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>r</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='wf_request.html'>wf_request</a></span>(<span class='no'>request</span>, <span class='st'>"test@email.com"</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># check transfer, will download if available</span>
-<span class='fu'>wf_transfer</span>(<span class='st'>"test@email.com"</span>, <span class='kw'>url</span> <span class='kw'>=</span> <span class='no'>r</span>$<span class='no'>href</span>)
+<span class='fu'>wf_transfer</span>(<span class='no'>r</span>$<span class='no'>href</span>, <span class='st'>"test@email.com"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -86,11 +86,11 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-
-
-<div id="ecmwfr" class="section level1">
+<div id="ecmwfr-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#ecmwfr" class="anchor"></a>ecmwfr</h1></div>
+<a href="#ecmwfr-" class="anchor"></a>ecmwfr <a href="https://khufkens.github.io/ecmwfr/"><img src="https://github.com/khufkens/ecmwfr/raw/master/ecmwfr-logo.png" align="right" height="139"></a>
+</h1></div>
+
 <p>Programmatic interface to the European Centre for Medium-Range Weather Forecasts <a href="https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home">‘ECMWF’ web API services</a> and Copernicus <a href="https://cds.climate.copernicus.eu">Climate Data Store</a> or ‘CDS’.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -130,13 +130,19 @@
 <p>Before starting save the provided key to your local keychain. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># set a key to the keychain</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>,</a>
-<a class="sourceLine" id="cb5-3" title="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>)</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co"># you can retrieve the key using</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>)</a>
-<a class="sourceLine" id="cb5-7" title="7"></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co"># the output should be the key you provided</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" title="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,</a>
+<a class="sourceLine" id="cb5-4" title="4">           <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">email =</span> <span class="st">"john.smith@example.com"</span>)</a>
+<a class="sourceLine" id="cb5-8" title="8"></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a>
+<a class="sourceLine" id="cb5-11" title="11"></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co"># Alternatively you can input your login info with an interactive request</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
+<a class="sourceLine" id="cb5-14" title="14"></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="co"># you will get a command line request to provide the required details</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: <a href="https://apps.ecmwf.int/datasets/licences/general/">https://apps.ecmwf.int/datasets/licences/general/</a>.</p>
 </div>
 <div id="data-requests" class="section level3">
@@ -176,7 +182,7 @@
 <div id="use-copernicus-climate-data-store-cds" class="section level2">
 <h2 class="hasAnchor">
 <a href="#use-copernicus-climate-data-store-cds" class="anchor"></a>Use: Copernicus Climate Data Store (CDS)</h2>
-<p>Create a free CDS user account by <a href="https://cds.climate.copernicus.eu/user/register">self registering</a>. Once your user account has been verified you can get your personal <em>user ID</em> and <em>key</em> by visiting the <a href="https://cds.climate.copernicus.eu/user">user profile</a>. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Use the <code>ecmwf</code> <a href="references/wf_set_key.html"><code>wf_set_key</code></a> function to store your login information in the system keyring (see below).</p>
+<p>Create a free CDS user account by <a href="https://cds.climate.copernicus.eu/user/register">self registering</a>. Once your user account has been verified you can get your personal <em>user ID</em> and <em>key</em> by visiting the <a href="https://cds.climate.copernicus.eu/user">user profile</a>. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Use the <code>ecmwf</code> <a href="references/wf_set_key.html"><code>wf_set_key</code></a> function to store your login information in the system keyring (see below). Be aware, that unlike the API key for the ECMWF API your <code>user</code> does not correspond to the email address you use for the CDS login.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="er">UID:</span> <span class="er">1234</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="er">API</span> <span class="er">key:</span> <span class="er">abcd1234-foo-bar-98765431-XXXXXXXXXX</span></a></code></pre></div>
 <div id="setup-1" class="section level3">
@@ -185,13 +191,19 @@
 <p>If you preferr to use your local keychain (rather than using the <code>.cdsapirc</code> file) you have to save your login information first. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># set a key to the keychain</span></a>
 <a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>,</a>
-<a class="sourceLine" id="cb8-3" title="3">            <span class="dt">key =</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>)</a>
-<a class="sourceLine" id="cb8-4" title="4"></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co"># you can retrieve the key using</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>)</a>
-<a class="sourceLine" id="cb8-7" title="7"></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co"># the output should be the key you provided</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co"># "1234:abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-3" title="3">            <span class="dt">key =</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span>,</a>
+<a class="sourceLine" id="cb8-4" title="4">            <span class="dt">service =</span> <span class="st">"cds"</span>)</a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw"><a href="reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"1234"</span>)</a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co"># "abcd1234-foo-bar-98765431-XXXXXXXXXX"</span></a>
+<a class="sourceLine" id="cb8-11" title="11"></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co"># Alternatively you can input your login info with an interactive request</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="kw"><a href="reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">service =</span> <span class="st">"cds"</span>)</a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co"># you will get a command line request to provide the required details</span></a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: Before downloading and processing data from CDS please make sure you acceppt the terms and conditions which can be found here: <a href="https://cds.climate.copernicus.eu/disclaimer-privacy">Copernicus Climate Data Store Disclaimer/Privacy</a>.</p>
 </div>
 <div id="data-requests-1" class="section level3">
@@ -234,10 +246,9 @@
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>This project was in part supported by the Belgian Science Policy office COBECORE project (BELSPO; grant BR/175/A3/COBECORE) and a “Fonds voor Wetenschappelijk Onderzoek” travel grant (FWO; V438318N).</p>
+<p>This project was in part supported by the Belgian Science Policy office COBECORE project (BELSPO; grant BR/175/A3/COBECORE) and a “Fonds voor Wetenschappelijk Onderzoek” travel grant (FWO; V438318N). Logo design elements are taken from the FontAwesome library according to <a href="https://fontawesome.com/license">these terms</a>, where the globe element was inverted and intersected.</p>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

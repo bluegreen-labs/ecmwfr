@@ -34,8 +34,7 @@
 
 <meta property="og:description" content="Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
-queries later on using wf_transfer. The function only
-allows NetCDF downloads, and will override calls for grib data.
+queries later on using wf_transfer.
 Note that the function will do some basic checks on the request input
 to identify possible problems." />
 <meta name="twitter:card" content="summary" />
@@ -68,7 +67,7 @@ to identify possible problems." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -131,28 +130,27 @@ to identify possible problems." />
     
     <p>Stage a data request, and optionally download the data to disk. Alternatively
 you can only stage requests, logging the request URLs to submit download
-queries later on using <code><a href='wf_transfer.html'>wf_transfer</a></code>. The function only
-allows NetCDF downloads, and will override calls for grib data.
+queries later on using <code><a href='wf_transfer.html'>wf_transfer</a></code>.
 Note that the function will do some basic checks on the <code>request</code> input
 to identify possible problems.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>user</span>, <span class='no'>request</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
-  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3</span> * <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>request</span>, <span class='no'>user</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>user</th>
-      <td><p>user (email address) used to sign up for the ECMWF data service,
-used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
-    </tr>
-    <tr>
       <th>request</th>
       <td><p>nested list with query parameters following the layout
 as specified on the ECMWF API page</p></td>
+    </tr>
+    <tr>
+      <th>user</th>
+      <td><p>user (email address) used to sign up for the ECMWF data service,
+used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
     </tr>
     <tr>
       <th>transfer</th>
@@ -175,8 +173,8 @@ as specified on the ECMWF API page</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a download query staging url or (invisible) filename of the NetCDF
-file on your local disc</p>
+    <p>a download query staging url or (invisible) filename of the file on
+your local disc</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -205,7 +203,7 @@ request <-  = list(stream = "oper",
    target = "tmp.nc")
 
 # get the default test data
-wf_request(user = "test@mail.com", request = request)
+wf_request(request = request, user = "test@mail.com")
 # }
 </pre>
   </div>

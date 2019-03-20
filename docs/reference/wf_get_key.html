@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_get_key</span>(<span class='no'>user</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_get_key</span>(<span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,6 +136,10 @@
     <tr>
       <th>user</th>
       <td><p>user (email address) used to sign up for the ECMWF data service</p></td>
+    </tr>
+    <tr>
+      <th>service</th>
+      <td><p>service associated with credentials ("webapi" or "cds")</p></td>
     </tr>
     </table>
     

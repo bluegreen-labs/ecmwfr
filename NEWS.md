@@ -1,3 +1,9 @@
+# ecwmfr 1.1.1
+
+* inclusion of a new interactive way to set API keys
+* reshuffling the default order of `wf_request()` as to accomodate pipes
+* both above contributions by Elio Campitelli
+
 # ecmwfr 1.1.0
 
 * inclusion of Copernicus CDS services by Reto Tauffer

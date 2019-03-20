@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -130,21 +130,21 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_product_info</span>(<span class='no'>user</span>, <span class='no'>dataset</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>wf_product_info</span>(<span class='no'>dataset</span>, <span class='no'>user</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"webapi"</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>user</th>
-      <td><p>string, user ID used to sign up for the CDS data service,
-used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code>.</p></td>
-    </tr>
-    <tr>
       <th>dataset</th>
       <td><p>character, name of the data set for which the product
 information should be loaded.</p></td>
+    </tr>
+    <tr>
+      <th>user</th>
+      <td><p>string, user ID used to sign up for the CDS data service,
+used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code>.</p></td>
     </tr>
     <tr>
       <th>service</th>
@@ -172,11 +172,15 @@ will be returned as tidy data instead of a nested list.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>   <span class='co'># Opend description in browser</span>
-   <span class='fu'>wf_product_info</span>(<span class='kw'>NULL</span>, <span class='st'>"reanalysis-era5-single-levels"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Your request failed - check credentials</span></div><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+   <span class='co'># Opend description in browser</span>
+   <span class='fu'>wf_product_info</span>(<span class='kw'>NULL</span>, <span class='st'>"reanalysis-era5-single-levels"</span>)
+
    <span class='co'># Return information</span>
    <span class='no'>info</span> <span class='kw'>&lt;-</span> <span class='fu'>wf_product_info</span>(<span class='kw'>NULL</span>,
-    <span class='st'>"reanalysis-era5-single-levels"</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in wf_product_info(NULL, "reanalysis-era5-single-levels", show = FALSE): unused argument (show = FALSE)</span></div><div class='input'>   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>info</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'info' not found</span></div></pre>
+    <span class='st'>"reanalysis-era5-single-levels"</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>info</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

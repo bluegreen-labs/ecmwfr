@@ -4,12 +4,14 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(user, key)
+wf_set_key(user, key, service = "webapi")
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service}
 
 \item{key}{token provided by ECMWF}
+
+\item{service}{service associated with credentials ("webapi" or "cds")}
 }
 \description{
 Saves the token to your local keychain under

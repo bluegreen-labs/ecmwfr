@@ -5,6 +5,7 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
+#' @param service service associated with credentials ("webapi" or "cds")
 #' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
 #' @export

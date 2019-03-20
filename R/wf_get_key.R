@@ -3,6 +3,7 @@
 #' Returns you token set by \code{\link[ecmwfr]{wf_set_key}}
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service
+#' @param service service associated with credentials ("webapi" or "cds")
 #' @return the key set using \code{\link[ecmwfr]{wf_set_key}} saved
 #' in the keychain
 #' @keywords key management

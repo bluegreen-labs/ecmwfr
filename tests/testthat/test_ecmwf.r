@@ -44,10 +44,7 @@ server_check <- !ecmwf_running(wf_server(service = "webapi"))
 test_that("set, get secret key",{
   skip_if(login_check)
   skip_if(server_check)
-  expect_error(wf_set_key(user = "johndoe@hotmail.com",
-                           key = "XXX",
-                           service = "webapi"))
-  expect_output(str(wf_get_key(user = "johndoe@hotmail.com")))
+  expect_output(str(wf_get_key(user = "khrdev@outlook.com")))
 })
 
 test_that("test dataset function", {

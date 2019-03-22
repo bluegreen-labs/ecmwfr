@@ -40,8 +40,6 @@ login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
 login_check <- inherits(login_check, "try-error")
 server_check <- !ecmwf_running(wf_server(service = "webapi"))
 
-print(login_check)
-
 # check keychain management
 test_that("set, get secret key",{
   skip_if(login_check)

@@ -15,15 +15,19 @@ my_request <- list(stream = "oper",
                    format = "netcdf",
                    target = "tmp.nc")
 
-# check keychain management
+# modify request
 test_that("modify request",{
   expect_output(str(
     wf_modify_request(request = my_request,
                       date = "2014-07-01/to/2014-08-31",
                       area = "73.5/-27/33/46")
   ))
-})
 
+  expect_error(str(
+      wf_modify_request(date = "2014-07-01/to/2014-08-31",
+                        area = "73.5/-27/33/46")
+    ))
+})
 
 test_that("create archetype", {
 

@@ -31,7 +31,7 @@ will be guaranteed and tested for.
 \examples{
 \dontrun{
 # format an archetype function
-ERAI <- wf_archetype(
+ERA_interim <- wf_archetype(
  list(class = "ei",
     dataset = "interim",
     expver = "1",
@@ -48,7 +48,7 @@ res = 3  # sets default argument
 )
 
 # print output of the function with below parameters
-str(ERAI("20100101", 3, 200))
+str(ERA_interim("20100101", 3, 200))
 
 }
 }

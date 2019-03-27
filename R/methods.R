@@ -1,5 +1,5 @@
 # Methods to deal with visualizing / printing
-# request info
+# request info (NEEDS documentation)
 
 as.list.ecmwfr_archetype <- function(x, ...) {
   l <- as.list(body(x))[-1]

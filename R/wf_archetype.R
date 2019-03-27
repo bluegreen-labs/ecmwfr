@@ -60,7 +60,7 @@ wf_archetype <- function(request, ...) {
                    as.character(extra_args[!has_default])
   ))
 
-  args <- setNames(rep(list(rlang::expr()),
+  args <- stats::setNames(rep(list(rlang::expr()),
                        length(vars)),
                    vars)
   args[vars %in% c(names(extra_args))] <- extra_args[has_default]

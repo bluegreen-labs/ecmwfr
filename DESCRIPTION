@@ -45,4 +45,6 @@ Suggests:
     ncdf4,
     stars,
     knitr,
+    stats,
+    rlang
 VignetteBuilder: knitr

@@ -42,7 +42,16 @@
 #' }
 
 wf_archetype <- function(request, ...) {
+
+  # check the request statement
+  if(missing(request) || !is.list(request)){
+    stop("not a request")
+  }
+
+  # format as expression
   query_exp <- rlang::enexpr(request)
+
+  # expand dots
   extra_args <- match.call(expand.dots = FALSE)$`...`
   has_default <- names(extra_args) != ""
 

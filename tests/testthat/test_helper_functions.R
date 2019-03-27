@@ -16,7 +16,7 @@ my_request <- list(stream = "oper",
                    target = "tmp.nc")
 
 # modify request
-test_that("modify request",{
+test_that("modify request tests",{
   expect_output(str(
     wf_modify_request(request = my_request,
                       date = "2014-07-01/to/2014-08-31",
@@ -29,7 +29,7 @@ test_that("modify request",{
     ))
 })
 
-test_that("create archetype", {
+test_that("create tests archetype", {
 
   # create archetype
   ERA_interim <- wf_archetype(
@@ -59,4 +59,9 @@ test_that("create archetype", {
   # print function call als args and body parameters
   # in a list, no errors allowed
   expect_silent(as.list(ERA_interim))
+
+  # no request provided
+  expect_error(str(
+    wf_archetype(res = 3)
+  ))
 })

@@ -44,7 +44,7 @@
 wf_archetype <- function(request, ...) {
 
   # check the request statement
-  if(missing(request) || !is.list(request)){
+  if(missing(request)){
     stop("not a request")
   }
 
@@ -55,14 +55,16 @@ wf_archetype <- function(request, ...) {
   extra_args <- match.call(expand.dots = FALSE)$`...`
   has_default <- names(extra_args) != ""
 
-  vars <- unique(c(all.vars(query_exp),
-                   names(extra_args[has_default]),
-                   as.character(extra_args[!has_default])
+  vars <- unique(
+    c(all.vars(query_exp),
+      names(extra_args[has_default]),
+      as.character(extra_args[!has_default])
   ))
 
   args <- stats::setNames(rep(list(rlang::expr()),
                        length(vars)),
                    vars)
+
   args[vars %in% c(names(extra_args))] <- extra_args[has_default]
 
   f <- rlang::new_function(args, query_exp)

@@ -47,7 +47,7 @@ test_that("create tests archetype", {
       param = "155.128",
       target = "output"
       ),
-    res = 3  # sets default argument
+    res = 3
    )
 
   # dump things as a string

@@ -4,16 +4,16 @@
 \alias{wf_archetype}
 \title{Creates an archetype function}
 \usage{
-wf_archetype(request, ...)
+wf_archetype(request, dynamic_fields)
 }
 \arguments{
-\item{request}{a MARS or CDS request as an R list object, with certain
-parameters modified to take arguments.}
+\item{request}{a MARS or CDS request as an R list object.}
 
-\item{...}{list of arguments for which a default value can be set}
+\item{dynamic_fields}{character vector of fields that could be changed.}
 }
 \value{
-a MARS / CDS request
+a function that takes `dynamic_fields` as arguments and returns a
+request as an R list object.
 }
 \description{
 Creates a universal MARS / CDS formatting function, in ways
@@ -31,20 +31,21 @@ will be guaranteed and tested for.
 \examples{
 \dontrun{
 # format an archetype function
-ERA_interim <- wf_archetype(
- list(class = "ei",
-    dataset = "interim",
-    expver = "1",
-    levtype = "pl",
-    stream = "moda",
-    type = "an",
-    format = "netcdf",
-    date = date,
-    grid = paste0(res, "/", res),
-    levelist = levs,
-    param = "155.128",
-    target = "output"),
-res = 3  # sets default argument
+ERAI <- wf_archetype(
+  request = list(stream = "oper",
+                 levtype = "sfc",
+                 param = "165.128/166.128/167.128",
+                 dataset = "interim",
+                 step = "0",
+                 grid = "0.75/0.75",
+                 time = "00/06/12/18",
+                 date = "2014-07-01/to/2014-07-31",
+                 type = "an",
+                 class = "ei",
+                 area = "73.5/-27/33/45",
+                 format = "netcdf",
+                 target = "tmp.nc"),
+  dynamic_fields = c("date", "time")
 )
 
 # print output of the function with below parameters

@@ -155,3 +155,16 @@ wf_check_login <- function(user, key, service) {
     return(httr::status_code(ct) == 404)
   }
 }
+
+
+# build an archetype from arguments and body (either list or expression)
+new_archetype <- function(args, body) {
+  if (is.list(body)) {
+    body_exp <- rlang::expr(list())
+    body_exp[names(body)] <- body
+    body <- body_exp
+  }
+  f <- rlang::new_function(args, body)
+  class(f) <- c("ecmwfr_archetype", class(f))
+  f
+}

@@ -11,63 +11,59 @@
 #' resulting functions can be provided. Only the generation of a valid function
 #' will be guaranteed and tested for.
 #'
-#' @param request a MARS or CDS request as an R list object, with certain
-#' parameters modified to take arguments.
-#' @param ... list of arguments for which a default value can be set
-#' @return a MARS / CDS request
+#' @param request a MARS or CDS request as an R list object.
+#' @param dynamic_fields character vector of fields that could be changed.
+#'
+#' @return a function that takes `dynamic_fields` as arguments and returns a
+#' request as an R list object.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # format an archetype function
-#' ERA_interim <- wf_archetype(
-#'  list(class = "ei",
-#'     dataset = "interim",
-#'     expver = "1",
-#'     levtype = "pl",
-#'     stream = "moda",
-#'     type = "an",
-#'     format = "netcdf",
-#'     date = date,
-#'     grid = paste0(res, "/", res),
-#'     levelist = levs,
-#'     param = "155.128",
-#'     target = "output"),
-#' res = 3  # sets default argument
+#' ERAI <- wf_archetype(
+#'   request = list(stream = "oper",
+#'                  levtype = "sfc",
+#'                  param = "165.128/166.128/167.128",
+#'                  dataset = "interim",
+#'                  step = "0",
+#'                  grid = "0.75/0.75",
+#'                  time = "00/06/12/18",
+#'                  date = "2014-07-01/to/2014-07-31",
+#'                  type = "an",
+#'                  class = "ei",
+#'                  area = "73.5/-27/33/45",
+#'                  format = "netcdf",
+#'                  target = "tmp.nc"),
+#'   dynamic_fields = c("date", "time")
 #' )
 #'
 #' # print output of the function with below parameters
 #' str(ERA_interim("20100101", 3, 200))
 #'
 #' }
-
-wf_archetype <- function(request, ...) {
-
+wf_archetype <- function(request, dynamic_fields) {
   # check the request statement
   if(missing(request)){
     stop("not a request")
   }
 
-  # format as expression
-  query_exp <- rlang::enexpr(request)
+  if(missing(request)){
+    stop("missing dynamic_fields")
+  }
 
-  # expand dots
-  extra_args <- match.call(expand.dots = FALSE)$`...`
-  has_default <- names(extra_args) != ""
+  in_request <- dynamic_fields %in% names(request)
+  if (sum(!in_request) != 0) {
+    stop("dynamic field(s) not in original request: ",
+         paste0(dynamic_fields[!in_request], collapse = ", "))
+  }
 
-  vars <- unique(
-    c(all.vars(query_exp),
-      names(extra_args[has_default]),
-      as.character(extra_args[!has_default])
-  ))
+  args <- request[dynamic_fields]
+  request[dynamic_fields] <- lapply(dynamic_fields, as.symbol)
 
-  args <- stats::setNames(rep(list(rlang::expr()),
-                       length(vars)),
-                   vars)
-
-  args[vars %in% c(names(extra_args))] <- extra_args[has_default]
-
-  f <- rlang::new_function(args, query_exp)
-  class(f) <- c("ecmwfr_archetype", class(f))
-  f
+  new_archetype(args, request)
 }
+
+
+
+

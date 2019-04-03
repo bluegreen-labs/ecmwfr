@@ -24,9 +24,9 @@ test_that("modify request tests",{
   ))
 
   expect_error(str(
-      wf_modify_request(date = "2014-07-01/to/2014-08-31",
-                        area = "73.5/-27/33/46")
-    ))
+    wf_modify_request(date = "2014-07-01/to/2014-08-31",
+                      area = "73.5/-27/33/46")
+  ))
 })
 
 test_that("create tests archetype", {
@@ -41,27 +41,27 @@ test_that("create tests archetype", {
       stream = "moda",
       type = "an",
       format = "netcdf",
-      date = date,
-      grid = paste0(res, "/", res),
-      levelist = levs,
+      date = "20140101",
+      grid = "3/3",
+      levelist = "1000",
       param = "155.128",
       target = "output"
-      ),
-    res = 3
-   )
+    ),
+    dynamic_fields = c("date", "grid", "levelist")
+  )
 
   # dump things as a string
-  expect_output(str(ERA_interim("20100101", 3, 200)))
+  expect_output(str(ERA_interim("20100101", "3/3", "200")))
 
   # tests the method to print the archetype nicely
-  expect_output(print(ERA_interim("20100101", 3, 200)))
+  expect_output(print(ERA_interim("20100101", "3/3", "200")))
 
-  # print function call als args and body parameters
-  # in a list, no errors allowed
-  expect_silent(as.list(ERA_interim))
-
+  # missing fields
+  expect_error(str(wf_archetype(request = list(date = "20140101"),
+                                dynamic_fields = "res")
+  ))
   # no request provided
   expect_error(str(
-    wf_archetype(res = 3)
+    wf_archetype(dynamic_fields = "res")
   ))
 })

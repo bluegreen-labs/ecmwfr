@@ -34,9 +34,7 @@
 #'                                 area = "73.5/-27/33/46")
 #' print(str(new_request))
 #'}
-
-wf_modify_request <- function(request, ...){
-
+wf_modify_request <- function(request, ...) {
   # check the request statement
   if(missing(request) || !is.list(request)){
     stop("not a request")
@@ -45,19 +43,14 @@ wf_modify_request <- function(request, ...){
   # load dot arguments
   dot_args <- list(...)
 
-  # loop over everything
-  do.call("c",lapply(names(request), function(request_name){
+  # check that every name is in request
+  in_request <- names(dot_args) %in% names(request)
+  if (sum(!in_request) != 0) {
+    stop("replacements not in original request: ",
+         paste0(names(dot_args)[!in_request], collapse = ", "))
+  }
 
-    # get a replacement value if matching
-    # a name in the original request
-    replacement <- dot_args[request_name]
+  request[names(dot_args)] <- dot_args
 
-    # no clue why is.null doesn't work in this case
-    # print might just fill this with NULL
-    if(is.na(names(replacement))) {
-      return(request[request_name])
-    } else {
-      return(replacement)
-    }
-  }))
+  request
 }

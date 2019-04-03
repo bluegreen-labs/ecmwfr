@@ -164,10 +164,13 @@ test_that("test request (transfer) function", {
     )
 })
 
+# webapi product info
 test_that("check product info",{
-  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                    service = "cds",
-                                    user = NULL)))
+  expect_output(str(
+    wf_product_info(dataset = "interim",
+                    user = "khrdev@outlook.com",
+                    service = "webapi",
+                    simplify = FALSE)))
 })
 
 test_that("test delete function - no login", {
@@ -201,8 +204,6 @@ test_that("test request (transfer) function - larger download", {
 })
 
 test_that("check request - no dataset field", {
-
-  # large request
   my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",

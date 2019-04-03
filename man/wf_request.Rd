@@ -4,7 +4,7 @@
 \alias{wf_request}
 \title{ECMWF data request and download}
 \usage{
-wf_request(request, user, transfer = FALSE, path = tempdir(),
+wf_request(request, user, transfer = TRUE, path = tempdir(),
   time_out = 3600, verbose = TRUE)
 }
 \arguments{
@@ -14,7 +14,7 @@ as specified on the ECMWF API page}
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
-\item{transfer}{logical, download data TRUE or FALSE (default = FALSE)}
+\item{transfer}{logical, download data TRUE or FALSE (default = TRUE)}
 
 \item{path}{path were to store the downloaded data}
 
@@ -54,7 +54,7 @@ request <-  = list(stream = "oper",
    format = "netcdf",
    target = "tmp.nc")
 
-# get the default test data
+# demo query
 wf_request(request = request, user = "test@mail.com")
 }
 }

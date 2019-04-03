@@ -111,5 +111,16 @@ test_that("cds request", {
                                      simplify = FALSE)))
 })
 
+# check delete routine CDS (fails)
+test_that("delete request", {
+   expect_warning(wf_delete(user = "2088",
+                          service = "cds",
+                          url = "50340909as"))
+})
 
-
+# CDS product info
+test_that("check product info",{
+  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+                                    service = "cds",
+                                    user = NULL)))
+})

@@ -11,7 +11,7 @@
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
 #' \code{3*3600} seconds).
-#' @param transfer logical, download data TRUE or FALSE (default = FALSE)
+#' @param transfer logical, download data TRUE or FALSE (default = TRUE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @param verbose show feedback on processing
@@ -42,14 +42,14 @@
 #'    format = "netcdf",
 #'    target = "tmp.nc")
 #'
-#' # get the default test data
+#' # demo query
 #' wf_request(request = request, user = "test@mail.com")
 #'}
 
 wf_request <- function(
   request,
   user,
-  transfer = FALSE,
+  transfer = TRUE,
   path = tempdir(),
   time_out = 3600,
   verbose = TRUE

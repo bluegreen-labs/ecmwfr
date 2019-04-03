@@ -1,3 +1,5 @@
+# Returns server URL
+#
 # Returns the url of the data servers for downloading
 # public ECMWF data sets or data sets for the Copernicus CDS.
 #
@@ -155,7 +157,6 @@ wf_check_login <- function(user, key, service) {
     return(httr::status_code(ct) == 404)
   }
 }
-
 
 # build an archetype from arguments and body (either list or expression)
 new_archetype <- function(args, body) {

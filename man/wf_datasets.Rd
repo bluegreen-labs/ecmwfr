@@ -4,8 +4,7 @@
 \alias{wf_datasets}
 \title{ECMWF dataset list}
 \usage{
-wf_datasets(user, service = "webapi", simplify = TRUE,
-  verbose = FALSE)
+wf_datasets(user, service = "webapi", simplify = TRUE)
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service,
@@ -14,8 +13,6 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 \item{service}{service to use ecmwf webapi or cds (default = "webapi")}
 
 \item{simplify}{simplify the output, logical (default = \code{TRUE})}
-
-\item{verbose}{boolean, default \code{FALSE}}
 }
 \value{
 returns a nested list or data frame with the ECMWF datasets

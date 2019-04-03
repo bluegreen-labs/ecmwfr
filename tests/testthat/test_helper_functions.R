@@ -50,16 +50,20 @@ test_that("create tests archetype", {
     dynamic_fields = c("date", "grid", "levelist")
   )
 
+  # print archetype (test method)
+  expect_message(print(ERA_interim))
+
   # dump things as a string
   expect_output(str(ERA_interim("20100101", "3/3", "200")))
 
-  # tests the method to print the archetype nicely
-  expect_output(print(ERA_interim("20100101", "3/3", "200")))
-
-  # missing fields
+  # missing request element
   expect_error(str(wf_archetype(request = list(date = "20140101"),
                                 dynamic_fields = "res")
   ))
+
+  # missing dynamic field
+  expect_error(str(wf_archetype(request = list(date = "20140101"))))
+
   # no request provided
   expect_error(str(
     wf_archetype(dynamic_fields = "res")

@@ -1,7 +1,6 @@
 # Methods to deal with visualizing / printing
 # request info (NEEDS documentation)
 
-
 print.ecmwfr_archetype <- function(x, ...) {
   components <- x()
   is_dynamic <- names(components) %in% names(formals(x))
@@ -13,13 +12,13 @@ print.ecmwfr_archetype <- function(x, ...) {
     formatC(text, width = -width, flag = " ")
   }
 
-  cat("Request archetype with values: \n")
+  message("Request archetype with values:")
   for (comps in seq_along(components)) {
     star <- ifelse(is_dynamic[comps], " *", "")
-    cat(" ",
+    message(" ",
         rpad(names(components)[comps], max_char_name),
         "=",
-        rpad(texts[comps], max_char_text), star, "\n")
+        rpad(texts[comps], max_char_text), star)
   }
-  cat(" * : dynamic fields")
+  message(" * : dynamic fields")
 }

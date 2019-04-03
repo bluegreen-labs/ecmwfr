@@ -55,6 +55,7 @@ test_that("cds datasets returns data.frame or list", {
 test_that("cds request", {
   skip_if(login_check)
   skip_if(server_check)
+
   tmp <- wf_request(user = "2088",
                     request = cds_request,
                     transfer = TRUE)
@@ -73,6 +74,7 @@ test_that("cds request", {
 
    # CDS dataset (requires at least 'user')
    expect_error(wf_dataset())
+   expect_output(str(wf_datasets(user = "2088", service = "cds")))
 
    # CDS productinfo (requires at least 'user' and 'dataset')
    expect_error(wf_product_info())
@@ -91,8 +93,23 @@ test_that("cds request", {
    expect_error(wf_transfer(user = "2088",
                             service = "cds",
                             url = "http://google.com"))
+
    # CDS transfer with wrong type
    expect_error(wf_transfer(user = "2088",
                             url = "http://google.com",
                             service = "foo"))
+
+   # check product listing
+   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+                                     service = "cds",
+                                     user = NULL,
+                                     simplify = FALSE)))
+
+   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+                                     service = "cds",
+                                     user = NULL,
+                                     simplify = FALSE)))
 })
+
+
+

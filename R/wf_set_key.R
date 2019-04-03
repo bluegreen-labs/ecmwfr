@@ -25,10 +25,17 @@
 #'
 #'}
 #' @importFrom utils browseURL
-wf_set_key <- function(user, key, service = "webapi"){
+wf_set_key <- function(user, key, service){
+
+  if(missing(service)){
+    stop("Please provide a service for which
+         to set your API key ('webapi' or 'cds')")
+  }
+
   if(missing(user) | missing(key)) {
     if (!interactive()) {
-      stop("wf_set_key needs to be run interactivelly if `user` or `key` are NULL")
+      stop("wf_set_key needs to be run interactivelly if `user` or `key` are
+           not provided.")
     }
     browseURL(wf_key_page(service))
     message("Login or register to get a key")

@@ -55,7 +55,7 @@ wf_request <- function(
   verbose = TRUE
   ){
 
-  if(is.character(request)) {
+  if(is.list(request)) {
     stop("`request` must be a named list. \n",
          "If you are passing the user as first argument, notice that argument ",
          "order was changed in version 1.1.1.")

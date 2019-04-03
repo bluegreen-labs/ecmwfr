@@ -6,7 +6,6 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param service service to use ecmwf webapi or cds (default = "webapi")
 #' @param simplify simplify the output, logical (default = \code{TRUE})
-#' @param verbose boolean, default \code{FALSE}
 #' @return returns a nested list or data frame with the ECMWF datasets
 #' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -30,8 +29,7 @@
 wf_datasets <- function(
   user,
   service = "webapi",
-  simplify = TRUE,
-  verbose = FALSE
+  simplify = TRUE
   ){
 
   # check the login credentials

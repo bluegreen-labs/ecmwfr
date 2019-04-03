@@ -1,4 +1,4 @@
-#' CDS product list for a given dataset
+#' Renders product lists for a given dataset and data service
 #'
 #' Shows and returns detailed product information about a specific data set
 #' (see \code{\link[ecmwfr]{wf_datasets}}).
@@ -10,14 +10,13 @@
 #' @param service which service to use, one of \code{webapi} or \code{cds}
 #' @param simplify boolean, default \code{TRUE}. If \code{TRUE} the description
 #' will be returned as tidy data instead of a nested list.
-#' @param verbose boolean, default \code{FALSE}.
 #'
 #' @return Downloads a tidy data frame with product descriptions from CDS. If
 #' \code{simplify = FALSE} a list with product details will be returned.
 #'
 #' @examples
 #' \dontrun{
-#'    # Opend description in browser
+#'    # Open description in browser
 #'    wf_product_info(NULL, "reanalysis-era5-single-levels")
 #'
 #'    # Return information
@@ -34,8 +33,7 @@ wf_product_info <- function(
   dataset,
   user,
   service = "webapi",
-  simplify = TRUE,
-  verbose = FALSE
+  simplify = TRUE
   ){
 
   # check the login credentials
@@ -46,16 +44,17 @@ wf_product_info <- function(
   # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
 
-  # get key
-  key <- wf_get_key(user = user, service = service)
-
-  # Get list of data sets to which the user can choose from.
-  # Check if input 'dataset' is a valid choice.
-  ds <- wf_datasets(user = user, service = service)
-  dataset <- match.arg(dataset, ds$name)
-
   # query the status url provided
   if (service == "webapi"){
+
+    # get webapi key
+    key <- wf_get_key(user = user, service = service)
+
+    # Get list of data sets to which the user can choose from.
+    # Check if input 'dataset' is a valid choice.
+    ds <- wf_datasets(user = user, service = service)
+    dataset <- match.arg(dataset, ds$name)
+
     response <- httr::GET(
       paste0(wf_server(),"/datasets/",dataset),
       httr::add_headers(
@@ -64,6 +63,7 @@ wf_product_info <- function(
         "From" = user,
         "X-ECMWF-KEY" = key),
       encode = "json")
+
   } else {
     response <- httr::GET(sprintf("%s/resources/%s",
                                   wf_server(service = "cds"),

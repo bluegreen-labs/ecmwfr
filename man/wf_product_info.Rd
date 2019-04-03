@@ -2,10 +2,9 @@
 % Please edit documentation in R/wf_product_info.R
 \name{wf_product_info}
 \alias{wf_product_info}
-\title{CDS product list for a given dataset}
+\title{Renders product lists for a given dataset and data service}
 \usage{
-wf_product_info(dataset, user, service = "webapi", simplify = TRUE,
-  verbose = FALSE)
+wf_product_info(dataset, user, service = "webapi", simplify = TRUE)
 }
 \arguments{
 \item{dataset}{character, name of the data set for which the product
@@ -18,8 +17,6 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
 \item{simplify}{boolean, default \code{TRUE}. If \code{TRUE} the description
 will be returned as tidy data instead of a nested list.}
-
-\item{verbose}{boolean, default \code{FALSE}.}
 }
 \value{
 Downloads a tidy data frame with product descriptions from CDS. If
@@ -31,7 +28,7 @@ Shows and returns detailed product information about a specific data set
 }
 \examples{
 \dontrun{
-   # Opend description in browser
+   # Open description in browser
    wf_product_info(NULL, "reanalysis-era5-single-levels")
 
    # Return information

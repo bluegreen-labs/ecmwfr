@@ -42,12 +42,11 @@ test_that("create tests archetype", {
       type = "an",
       format = "netcdf",
       date = date,
-      grid = paste0(res, "/", res),
+      grid = res,
       levelist = levs,
       param = "155.128",
       target = "output"
-      ),
-    res = 3
+      )
    )
 
   # dump things as a string

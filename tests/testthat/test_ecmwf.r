@@ -48,11 +48,11 @@ test_that("set, get secret key",{
   expect_output(str(wf_get_key(user = "khrdev@outlook.com")))
 
   # failed set keys commands
-  wf_set_key(key = "XXXX",
-             service = "webapi")
-  wf_set_key(user = "khrdev@outlook.com",
-             service = "webapi")
-  wf_set_key(user = "khrdev@outlook.com")
+  expect_error(wf_set_key(key = "XXXX",
+             service = "webapi"))
+  expect_error(wf_set_key(user = "khrdev@outlook.com",
+             service = "webapi"))
+  expect_error(wf_set_key(user = "khrdev@outlook.com"))
 })
 
 test_that("test dataset function", {

@@ -28,7 +28,8 @@ library(ecmwfr)
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
-             key = system("echo $KEY", intern = TRUE))
+             key = system("echo $KEY", intern = TRUE),
+             service = "webapi")
 }
 rm(key)
 
@@ -60,7 +61,8 @@ Before starting save your provided ECMWF key to your local keychain. In this exa
 ```{r eval = FALSE}
 # set a key to the keychain
 wf_set_key(user = "khrdev@outlook.com",
-           key = "XXXXXXXXXXXXXXXXXXXXXX")
+           key = "XXXXXXXXXXXXXXXXXXXXXX",
+           service = "webapi")
 
 # you can retrieve the key using
 wf_get_key(user = "khrdev@outlook.com")

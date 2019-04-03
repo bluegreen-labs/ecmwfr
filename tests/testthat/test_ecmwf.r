@@ -129,8 +129,7 @@ test_that("test request (transfer) function - no transfer", {
   expect_output(str(ct))
   expect_message(wf_delete(user = "khrdev@outlook.com",
                            url = ct$href))
-
-  expect_message(wf_delete(user = "khrdev@outlook.com",
+  expect_silent(wf_delete(user = "khrdev@outlook.com",
                            url = ct2$href,
                            verbose = FALSE))
 })
@@ -167,12 +166,9 @@ test_that("test request (transfer) function", {
 
 test_that("check product info",{
   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                    service = "webapi",
-                                    user = "khrdev@outlook.com")))
+                                    service = "cds",
+                                    user = NULL)))
 })
-
-
-
 
 test_that("test delete function - no login", {
   expect_error(wf_delete())
@@ -207,7 +203,7 @@ test_that("test request (transfer) function - larger download", {
 test_that("check request - no dataset field", {
 
   # large request
-  large_request <- list(stream = "oper",
+  my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
                         step = "0",
@@ -226,9 +222,7 @@ test_that("check request - no dataset field", {
 })
 
 test_that("check mars request - no target", {
-
-  # large request
-  large_request <- list(stream = "oper",
+  my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
                         dataset = "mars",
@@ -248,14 +242,11 @@ test_that("check mars request - no target", {
 })
 
 test_that("check request - no netcdf grid specified", {
-
-  # large request
-  large_request <- list(stream = "oper",
+  my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
-                        dataset = "interim",
+                        dataset = "mars",
                         step = "0",
-                        grid = "0.75/0.75",
                         time = "00",
                         date = "2014-07-01/to/2015-07-02",
                         type = "an",
@@ -271,9 +262,7 @@ test_that("check request - no netcdf grid specified", {
 
 test_that("check request - bad credentials", {
   skip_if(server_check)
-
-  # large request
-  large_request <- list(stream = "oper",
+  my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
                         dataset = "interim",

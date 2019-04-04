@@ -43,6 +43,7 @@ wf_set_key <- function(user, key, service){
     key <- readline("API key: ")
   }
 
+  # check login
   login_ok <- wf_check_login(user = user, key = key, service = service)
 
   if (!login_ok) {

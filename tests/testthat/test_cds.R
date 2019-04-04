@@ -40,6 +40,15 @@ login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
 login_check <- inherits(login_check, "try-error")
 server_check <- !ecmwf_running(wf_server(service = "cds"))
 
+test_that("set key", {
+  skip_if(login_check)
+  skip_if(server_check)
+  expect_message(wf_set_key(user = "2088",
+                            service = "cds",
+                            key = system("echo $CDS",
+                                         intern = TRUE)))
+})
+
 test_that("cds datasets returns data.frame or list", {
   skip_if(login_check)
   skip_if(server_check)

@@ -102,6 +102,21 @@ test_that("test request (transfer) function", {
     time_out = 60))
 })
 
+test_that("test request (transfer) function", {
+  skip_if(login_check)
+  skip_if(server_check)
+
+  # create new output dir in tempdir()
+  path <- file.path(tempdir(),"/test/")
+  dir.create(path = path)
+
+  expect_message(wf_request(
+    user = "khrdev@outlook.com",
+    transfer = TRUE,
+    request = my_request,
+    path = path))
+})
+
 test_that("test request (transfer) function - time out", {
   skip_if(login_check)
   skip_if(server_check)

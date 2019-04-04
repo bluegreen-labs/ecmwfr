@@ -39,7 +39,7 @@ wf_set_key <- function(user, key, service){
     }
     browseURL(wf_key_page(service))
     message("Login or register to get a key")
-    user <- readline("User/email: ")
+    user <- readline("User ID / email: ")
     key <- readline("API key: ")
   }
 

@@ -222,6 +222,15 @@ test_that("check request - no dataset field", {
   )
 })
 
+test_that("check request - bad request type", {
+  my_request <- "xyz"
+  expect_error(
+    wf_check_request(
+      user = "khrdev@outlook.com",
+      request = my_request)
+  )
+})
+
 test_that("check mars request - no target", {
   my_request <- list(stream = "oper",
                         levtype = "sfc",

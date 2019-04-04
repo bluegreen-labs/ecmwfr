@@ -23,10 +23,16 @@ test_that("modify request tests",{
                       area = "73.5/-27/33/46")
   ))
 
-  expect_error(str(
+  expect_error(
+    wf_modify_request(request = my_request,
+                      bla = "2014-07-01/to/2014-08-31",
+                      area = "73.5/-27/33/46")
+  )
+
+  expect_error(
     wf_modify_request(date = "2014-07-01/to/2014-08-31",
                       area = "73.5/-27/33/46")
-  ))
+  )
 })
 
 test_that("create tests archetype", {
@@ -62,7 +68,7 @@ test_that("create tests archetype", {
   ))
 
   # missing dynamic field
-  expect_error(str(wf_archetype(request = list(date = "20140101"))))
+  expect_error(str(wf_archetype(request = my_request)))
 
   # no request provided
   expect_error(str(

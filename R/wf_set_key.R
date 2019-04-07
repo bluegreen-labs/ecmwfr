@@ -27,6 +27,11 @@
 #' @importFrom utils browseURL
 wf_set_key <- function(user, key, service){
 
+  if(keyring::keyring_is_locked()){
+    message("Your keyring is locked please unlock with your keyring password!")
+    keyring::keyring_unlock()
+  }
+
   if(missing(service)){
     stop("Please provide a service for which
          to set your API key ('webapi' or 'cds')")

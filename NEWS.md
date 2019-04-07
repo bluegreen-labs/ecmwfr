@@ -1,8 +1,12 @@
 # ecwmfr 1.1.1
 
-* inclusion of a new interactive way to set API keys
+* key management changes
+  * inclusion of a new interactive way to set API keys
+  * unlock checks
 * reshuffling the default order of `wf_request()` as to accomodate pipes
-* both above contributions by Elio Campitelli
+* new contributor Elio Campitelli lead dynamic query code `wf_archetype()`
+  * allows for archetype functions to be created from a normal MARS request
+  * helps with recurrent queries with an overal similar structure
 
 # ecmwfr 1.1.0
 

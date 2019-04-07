@@ -24,7 +24,7 @@ cds_request <- list(
 key <- system("echo $CDS", intern = TRUE)
 if(key != "" & key != "$CDS"){
   wf_set_key(user = "2088",
-             key = system("echo $CDS", intern = TRUE),
+             key = key,
              service = "cds")
 }
 rm(key)
@@ -43,10 +43,13 @@ server_check <- !ecmwf_running(wf_server(service = "cds"))
 test_that("set key", {
   skip_if(login_check)
   skip_if(server_check)
-  expect_message(wf_set_key(user = "2088",
-                            service = "cds",
-                            key = system("echo $CDS",
-                                         intern = TRUE)))
+  key <- system("echo $CDS", intern = TRUE)
+  if(key != "" & key != "$CDS"){
+    expect_message(wf_set_key(user = "2088",
+               key = key,
+               service = "cds"))
+  }
+  rm(key)
 })
 
 test_that("cds datasets returns data.frame or list", {

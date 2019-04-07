@@ -154,7 +154,7 @@ wf_check_login <- function(user, key, service) {
   if (service == "cds") {
     url <- wf_server(service = "cds")
     ct <- httr::GET(url, httr::authenticate(user, key))
-    return(httr::status_code(ct) == 404)
+    return(httr::status_code(ct) < 400)
   }
 }
 

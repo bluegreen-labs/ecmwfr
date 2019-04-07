@@ -1,0 +1,4 @@
+Name: MARS to list
+Description: Convert MARS request to list.
+Binding: MARS2list_Addin
+Interactive: false

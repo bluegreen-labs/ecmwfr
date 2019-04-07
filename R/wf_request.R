@@ -210,7 +210,7 @@ wf_request <- function(
     # fails for separate disks/partitions
     # then copy and remove
     if(!move){
-      file.copy(src, dst)
+      file.copy(src, dst, overwrite = TRUE)
       file.remove(src)
     }
 

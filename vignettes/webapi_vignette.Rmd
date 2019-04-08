@@ -28,7 +28,7 @@ library(ecmwfr)
 key <- system("echo $KEY", intern = TRUE)
 if(key != "" & key != "$KEY"){
   wf_set_key(user = "khrdev@outlook.com",
-             key = system("echo $KEY", intern = TRUE),
+             key = key,
              service = "webapi")
 }
 rm(key)

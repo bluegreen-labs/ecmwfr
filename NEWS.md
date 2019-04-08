@@ -1,4 +1,4 @@
-# ecwmfr 1.1.1
+# ecwmfr 1.2.0
 
 * key management changes
   * inclusion of a new interactive way to set API keys
@@ -7,6 +7,9 @@
 * new contributor Elio Campitelli lead dynamic query code `wf_archetype()`
   * allows for archetype functions to be created from a normal MARS request
   * helps with recurrent queries with an overal similar structure
+* RStudio Addins for MARS and python based requests to list items
+* logo on website
+* documentation updated
 
 # ecmwfr 1.1.0
 
@@ -19,7 +22,6 @@
   * ensures a consistent vocabulary with limited parameters
 * unit checks don't fail upon unavailable service
 * changed order of arguments in `wf_request()`
-
 
 # ecmwfr 1.0.1
 

@@ -90,6 +90,10 @@ request string syntax [as documented](https://confluence.ecmwf.int/display/WEBAP
 the arguments. Be sure to specify which service to use, in this case `webapi` 
 is the correct service to request data from.
 
+The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
+
+![](https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif)
+
 ```R
 # this is an example of a request
 my_request <- list(stream = "oper",

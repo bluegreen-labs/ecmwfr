@@ -86,7 +86,7 @@
       <h1>CDS</h1>
                         <h4 class="author">Reto Stauffer, Koen Hufkens</h4>
             
-            <h4 class="date">2019-03-20</h4>
+            <h4 class="date">2019-04-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/cds_vignette.Rmd"><code>vignettes/cds_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_vignette.Rmd</code></div>
@@ -116,6 +116,8 @@
 <a href="#the-request-syntax" class="anchor"></a>The Request Syntax</h2>
 <p>CDS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variable</code>s to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code> extent, and other details.</p>
 <p>The request syntax is available for a range of different CDS data sets. Check the <a href="https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset">CDS Dataset</a> website to see a list of available datasets and to check whether API requests are allowed or not (go to <em>Download Data</em>, select some data, show request by clicking <em>Show API Request</em> (red button, bottom of page).</p>
+<p>The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; python to list (or ‘Mars to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
+<p><img src="https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif"></p>
 <div id="an-era-5-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#an-era-5-example" class="anchor"></a>An ERA-5 example</h3>
@@ -157,10 +159,15 @@
 <a class="sourceLine" id="cb2-3" title="3">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user =</span> <span class="st">"2088"</span>,</a>
 <a class="sourceLine" id="cb2-4" title="4">                      <span class="dt">request =</span> request,   </a>
 <a class="sourceLine" id="cb2-5" title="5">                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  </a>
-<a class="sourceLine" id="cb2-6" title="6">                      <span class="dt">path =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
+<a class="sourceLine" id="cb2-6" title="6">                      <span class="dt">path =</span> <span class="st">"~"</span>,</a>
 <a class="sourceLine" id="cb2-7" title="7">                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
-<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>. Qucik check:</p>
+<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>.</p>
+<p>Quick check:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Open NetCDF file and plot</span></a>
+<a class="sourceLine" id="cb3-2" title="2">r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(ncfile)</a>
+<a class="sourceLine" id="cb3-3" title="3">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(r, <span class="dt">main =</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/maps/topics/map">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 </div>

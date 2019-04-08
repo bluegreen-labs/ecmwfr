@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • ecmwfr</title>
+<title>Dynamically modify MARS / CDS request parameters — wf_modify_request • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,12 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Dynamically modify MARS / CDS request parameters — wf_modify_request" />
+
+<meta property="og:description" content="Provides a way to quickly modify MARS / CDS request parameters. The function
+will only replace existing parameters, all other parameters specified will
+be ignored." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -112,108 +117,77 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Dynamically modify MARS / CDS request parameters</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_modify_request.R'><code>R/wf_modify_request.R</code></a></small>
+    <div class="hidden name"><code>wf_modify_request.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Provides a way to quickly modify MARS / CDS request parameters. The function
+will only replace existing parameters, all other parameters specified will
+be ignored.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="wf_archetype.html">wf_archetype()</a></code> </p>
-        </td>
-        <td><p>Creates an archetype function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_check_request.html">wf_check_request()</a></code> </p>
-        </td>
-        <td><p>check ECMWF / CDS data requests</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_datasets.html">wf_datasets()</a></code> </p>
-        </td>
-        <td><p>ECMWF dataset list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_delete.html">wf_delete()</a></code> </p>
-        </td>
-        <td><p>ECMWF delete request</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_get_key.html">wf_get_key()</a></code> </p>
-        </td>
-        <td><p>Get secret ECMWF / CDS token</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_modify_request.html">wf_modify_request()</a></code> </p>
-        </td>
-        <td><p>Dynamically modify MARS / CDS request parameters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_product_info.html">wf_product_info()</a></code> </p>
-        </td>
-        <td><p>Renders product lists for a given dataset and data service</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_request.html">wf_request()</a></code> </p>
-        </td>
-        <td><p>ECMWF data request and download</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_services.html">wf_services()</a></code> </p>
-        </td>
-        <td><p>ECMWF services list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_set_key.html">wf_set_key()</a></code> </p>
-        </td>
-        <td><p>Set secret ECMWF token</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_transfer.html">wf_transfer()</a></code> </p>
-        </td>
-        <td><p>ECMWF data transfer function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wf_user_info.html">wf_user_info()</a></code> </p>
-        </td>
-        <td><p>ECMWF WebAPI user info query</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>wf_modify_request</span>(<span class='no'>request</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>request</th>
+      <td><p>a MARS or CDS request formatted as an R list()</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>variables to replace in the provided rqquest</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a MARS / CDS request</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># a MARS request for webapi ECMWF data</span>
+<span class='no'>base_request</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='st'>"oper"</span>,
+<span class='kw'>levtype</span> <span class='kw'>=</span> <span class='st'>"sfc"</span>,
+<span class='kw'>param</span> <span class='kw'>=</span> <span class='st'>"165.128/166.128/167.128"</span>,
+<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"interim"</span>,
+<span class='kw'>step</span> <span class='kw'>=</span> <span class='st'>"0"</span>,
+<span class='kw'>grid</span> <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>,
+<span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00/06/12/18"</span>,
+<span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-31"</span>,
+<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"an"</span>,
+<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>,
+<span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"73.5/-27/33/45"</span>,
+<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
+<span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"tmp.nc"</span>)
+
+
+<span class='co'># add an additional month of data and grow the extent by a degree</span>
+<span class='co'># from 45 to 46 degrees North</span>
+<span class='no'>new_request</span> <span class='kw'>&lt;-</span> <span class='fu'>wf_modify_request</span>(<span class='kw'>request</span> <span class='kw'>=</span> <span class='no'>base_request</span>,
+                                <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-08-31"</span>,
+                                <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"73.5/-27/33/46"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>new_request</span>))
+<span class='co'># }</span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

@@ -10,7 +10,7 @@ my_request <- list(stream = "oper",
                    step = "0",
                    grid = "0.75/0.75",
                    time = "00",
-                   date = "2014-07-01/to/2014-07-31",
+                   date = "2014-07-01",
                    type = "an",
                    class = "ei",
                    area = "51/0/50/1",
@@ -204,10 +204,10 @@ test_that("test request (transfer) function - larger download", {
                  step = "0",
                  grid = "0.75/0.75",
                  time = "00",
-                 date = "2014-07-01/to/2015-07-02",
+                 date = "2014-07-01",
                  type = "an",
                  class = "ei",
-                 area = "50/10/61/21",
+                 area = "50/10/55/15",
                  format = "netcdf",
                  target = "tmp.nc")
 
@@ -225,10 +225,10 @@ test_that("check request - no dataset field", {
                         step = "0",
                         grid = "0.75/0.75",
                         time = "00",
-                        date = "2014-07-01/to/2015-07-02",
+                        date = "2014-07-01",
                         type = "an",
                         class = "ei",
-                        area = "50/10/61/21",
+                        area = "51/0/50/1",
                         format = "netcdf")
   expect_error(
     wf_check_request(
@@ -254,7 +254,7 @@ test_that("check mars request - no target", {
                         step = "0",
                         grid = "0.75/0.75",
                         time = "00",
-                        date = "2014-07-01/to/2015-07-02",
+                        date = "2014-07-01",
                         type = "an",
                         class = "ei",
                         area = "50/10/61/21",
@@ -273,10 +273,10 @@ test_that("check request - no netcdf grid specified", {
                         dataset = "mars",
                         step = "0",
                         time = "00",
-                        date = "2014-07-01/to/2015-07-02",
+                        date = "2014-07-01",
                         type = "an",
                         class = "ei",
-                        area = "50/10/61/21",
+                        area = "50/10/55/15",
                         format = "netcdf")
   expect_error(
     wf_check_request(
@@ -294,7 +294,7 @@ test_that("check request - bad credentials", {
                         step = "0",
                         grid = "0.75/0.75",
                         time = "00",
-                        date = "2014-07-01/to/2015-07-02",
+                        date = "2014-07-01",
                         type = "an",
                         class = "ei",
                         area = "50/10/61/21",

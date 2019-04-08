@@ -13,7 +13,7 @@ cds_request <- list(
               "month"          = "04",
               "day"            = "04",
               "time"           = "00:00",
-              "area"           = "50/0/40/10",
+              "area"           = "50/9/51/10",
               "format"         = "netcdf",
               "target"         = "era5-demo.nc")
 

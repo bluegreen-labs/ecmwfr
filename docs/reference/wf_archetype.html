@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ECMWF data request and download — wf_request • ecmwfr</title>
+<title>Creates an archetype function — wf_archetype • ecmwfr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,12 @@
 
 
 
-<meta property="og:title" content="ECMWF data request and download — wf_request" />
+<meta property="og:title" content="Creates an archetype function — wf_archetype" />
 
-<meta property="og:description" content="Stage a data request, and optionally download the data to disk. Alternatively
-you can only stage requests, logging the request URLs to submit download
-queries later on using wf_transfer.
-Note that the function will do some basic checks on the request input
-to identify possible problems." />
+<meta property="og:description" content="Creates a universal MARS / CDS formatting function, in ways
+similar to wf_modify_request() but the added advantage
+that you could code for the use of dynamic changes in the
+parameters provided to the resulting custom function." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,91 +120,73 @@ to identify possible problems." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ECMWF data request and download</h1>
-    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_request.R'><code>R/wf_request.R</code></a></small>
-    <div class="hidden name"><code>wf_request.Rd</code></div>
+    <h1>Creates an archetype function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/R/wf_archetype.R'><code>R/wf_archetype.R</code></a></small>
+    <div class="hidden name"><code>wf_archetype.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Stage a data request, and optionally download the data to disk. Alternatively
-you can only stage requests, logging the request URLs to submit download
-queries later on using <code><a href='wf_transfer.html'>wf_transfer</a></code>.
-Note that the function will do some basic checks on the <code>request</code> input
-to identify possible problems.</p>
+    <p>Creates a universal MARS / CDS formatting function, in ways
+similar to <code><a href='wf_modify_request.html'>wf_modify_request()</a></code> but the added advantage
+that you could code for the use of dynamic changes in the
+parameters provided to the resulting custom function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>request</span>, <span class='no'>user</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
-  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_archetype</span>(<span class='no'>request</span>, <span class='no'>dynamic_fields</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>request</th>
-      <td><p>nested list with query parameters following the layout
-as specified on the ECMWF API page</p></td>
+      <td><p>a MARS or CDS request as an R list object.</p></td>
     </tr>
     <tr>
-      <th>user</th>
-      <td><p>user (email address) used to sign up for the ECMWF data service,
-used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a></code></p></td>
-    </tr>
-    <tr>
-      <th>transfer</th>
-      <td><p>logical, download data TRUE or FALSE (default = TRUE)</p></td>
-    </tr>
-    <tr>
-      <th>path</th>
-      <td><p>path were to store the downloaded data</p></td>
-    </tr>
-    <tr>
-      <th>time_out</th>
-      <td><p>how long to wait on a download to start (default =
-<code>3*3600</code> seconds).</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>show feedback on processing</p></td>
+      <th>dynamic_fields</th>
+      <td><p>character vector of fields that could be changed.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a download query staging url or (invisible) filename of the file on
-your local disc</p>
+    <p>a function that takes `dynamic_fields` as arguments and returns a
+request as an R list object.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class='dont-index'><p><code><a href='wf_set_key.html'>wf_set_key</a></code>
-<code><a href='wf_transfer.html'>wf_transfer</a></code></p></div>
+    <p>Contrary to a simple replacement as in <code><a href='wf_modify_request.html'>wf_modify_request()</a></code> the
+generated functions are considered custom user written. Given the potential
+for complex formulations and formatting commands NO SUPPORT for the
+resulting functions can be provided. Only the generation of a valid function
+will be guaranteed and tested for.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-</div># NOT RUN {
-# set key
-wf_set_key(user = "test@mail.com", key = "123")
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># format an archetype function</span>
+<span class='no'>ERAI</span> <span class='kw'>&lt;-</span> <span class='fu'>wf_archetype</span>(
+  <span class='kw'>request</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='st'>"oper"</span>,
+                 <span class='kw'>levtype</span> <span class='kw'>=</span> <span class='st'>"sfc"</span>,
+                 <span class='kw'>param</span> <span class='kw'>=</span> <span class='st'>"165.128/166.128/167.128"</span>,
+                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"interim"</span>,
+                 <span class='kw'>step</span> <span class='kw'>=</span> <span class='st'>"0"</span>,
+                 <span class='kw'>grid</span> <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>,
+                 <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00/06/12/18"</span>,
+                 <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-31"</span>,
+                 <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"an"</span>,
+                 <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>,
+                 <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"73.5/-27/33/45"</span>,
+                 <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
+                 <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"tmp.nc"</span>),
+  <span class='kw'>dynamic_fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"time"</span>)
+)
 
-request <-  = list(stream = "oper",
-   levtype = "sfc",
-   param = "167.128",
-   dataset = "interim",
-   step = "0",
-   grid = "0.75/0.75",
-   time = "00",
-   date = "2014-07-01/to/2014-07-02",
-   type = "an",
-   class = "ei",
-   area = "50/10/51/11",
-   format = "netcdf",
-   target = "tmp.nc")
+<span class='co'># print output of the function with below parameters</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='fu'>ERA_interim</span>(<span class='st'>"20100101"</span>, <span class='fl'>3</span>, <span class='fl'>200</span>))
 
-# demo query
-wf_request(request = request, user = "test@mail.com")
-# }
-</pre>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -214,13 +195,11 @@ wf_request(request = request, user = "test@mail.com")
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Koen Kufkens</p>
   </div>
 </div>
 

@@ -23,12 +23,7 @@ library(maps)
 
 ## Downloading Data Sets from Copernicus's Climate Data Store
 
-[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting
-data sets for research, education, and applied earth sciences on their
-[Climate Data Store](https://cds.climate.copernicus.eu) (CDS).
-Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int)
-high-resolution reanalysis data set which replaces ERA Interim (which was
-ERA-4; version 4). The R package `ecmwfr` provides a convenient interface to download these data sets.
+[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting data sets for research, education, and applied earth sciences on their [Climate Data Store](https://cds.climate.copernicus.eu) (CDS). Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int) high-resolution reanalysis data set which replaces ERA Interim (which was ERA-4; version 4). The R package `ecmwfr` provides a convenient interface to download these data sets.
 
 ## Before Downloading Data
 
@@ -40,22 +35,17 @@ account.
 
 To retrieve data `ecmwfr` use `wf_set_key()`to add the login details to your local keyring (requires the _R_ package [`keyring`](https://CRAN.R-project.org/package=keyring)).
 
-Once you are in possession of your personal user (namely your user ID and a
-secret key) `ecmwfr` allows to send requests to CDS and/or download the data.
+Once you are in possession of your personal user (namely your user ID and a secret key) `ecmwfr` allows to send requests to CDS and/or download the data.
 
 ## The Request Syntax
 
-CDS data retrievals are based on a `list` object which specifies the data set to
-be downloaded.  These definitions are called `requests` (for those who are
-familiar with _mars_: these are basically _mars_ requests). A `request` defined
-the type of the `dataset`, the `variable`s to be downloaded, the time period,
-output `format`, `target` location, a custom `area` extent, and other details.
+CDS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests` (for those who are familiar with _mars_: these are basically _mars_ requests). A `request` defined the type of the `dataset`, the `variable`s to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
 
-The request syntax is available for a range of different CDS data sets.
-Check the [CDS Dataset](https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset)
-website to see a list of available datasets and to check whether API
-requests are allowed or not (go to _Download Data_, select some data,
-show request by clicking _Show API Request_ (red button, bottom of page).
+The request syntax is available for a range of different CDS data sets. Check the [CDS Dataset](https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset) website to see a list of available datasets and to check whether API requests are allowed or not (go to _Download Data_, select some data, show request by clicking _Show API Request_ (red button, bottom of page).
+
+The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> python to list (or 'Mars to list') you dynamically convert queries copied from either ECMWF or CDS based services.
+
+![](https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif)
 
 ### An ERA-5 example
 
@@ -94,24 +84,20 @@ The data set as specified above can be downloaded calling the
 ncfile <- wf_request(user = "2088",
                       request = request,   
                       transfer = TRUE,  
-                      path = tempdir(),
+                      path = "~",
                       verbose = FALSE)
 ```
 
-Depending on the request (the amount of data you are asking for) the
-request function may tike a while! Please note: if you try to download
-larger amounts of data it is suggested to split the data sets, e.g.,
-download year-by-year, or even month-by-month, if you are trying to download
-several varaiables/fields.
+Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.
 
-Once the retrieval has finished you should now be the owner of a NetCDF
-containing the requested information located in the current working directory, called `era5-demo.nc`. Qucik check:
+Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called `era5-demo.nc`. 
 
+Quick check:
 ```{r echo = FALSE}
 ncfile <- system.file(package = "ecmwfr","extdata/cds.nc")
 ```
 
-```{r spatial-plot, echo = FALSE, figure = TRUE, fig.width = 8, fig.height = 6}
+```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
 # Open NetCDF file and plot
 r <- raster::raster(ncfile)
 raster::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
@@ -121,7 +107,5 @@ maps::map("world", add = TRUE)
 ## Date period specification
 
 For those familiar to ECMWFs _mars_ syntax: CDS does not
-accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment.
-It is possible to specify one specific date via `date = "2000-01-01"` or
-multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` but
+accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` but
 not via `".../to/..."`.

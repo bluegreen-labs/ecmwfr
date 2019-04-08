@@ -2,3 +2,8 @@ Name: MARS to list
 Description: Convert MARS request to list.
 Binding: MARS2list_Addin
 Interactive: false
+
+Name: Python to list
+Description: Convert python retrieve request to list.
+Binding: python2list_Addin
+Interactive: false

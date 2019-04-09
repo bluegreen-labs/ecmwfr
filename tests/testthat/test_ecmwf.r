@@ -181,6 +181,8 @@ test_that("test request (transfer) function", {
 
 # webapi product info
 test_that("check product info",{
+  skip_if(login_check)
+  skip_if(server_check)
   expect_output(str(
     wf_product_info(dataset = "interim",
                     user = "khrdev@outlook.com",

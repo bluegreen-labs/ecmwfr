@@ -125,14 +125,20 @@ test_that("cds request", {
 
 # check delete routine CDS (fails)
 test_that("delete request", {
-   expect_warning(wf_delete(user = "2088",
-                          service = "cds",
-                          url = "50340909as"))
+  skip_if(login_check)
+  skip_if(server_check)
+   expect_warning(
+     wf_delete(user = "2088",
+               service = "cds",
+               url = "50340909as"))
 })
 
 # CDS product info
 test_that("check product info",{
-  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                    service = "cds",
-                                    user = NULL)))
+  skip_if(login_check)
+  skip_if(server_check)
+  expect_output(
+    str(wf_product_info("reanalysis-era5-single-levels",
+                        service = "cds",
+                        user = NULL)))
 })

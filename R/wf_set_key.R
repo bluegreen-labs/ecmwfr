@@ -6,6 +6,8 @@
 #' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
 #' @param service service associated with credentials ("webapi" or "cds")
+#'
+#' @return It invisibly returns the user.
 #' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
 #' @export
@@ -62,5 +64,7 @@ wf_set_key <- function(user, key, service){
                                 username = user,
                                 password = key)
     message("User ", user, " for ", service, " service added successfully")
+    return(invisible(user))
   }
+
 }

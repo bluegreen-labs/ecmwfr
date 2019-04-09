@@ -1,7 +1,7 @@
 language: R
 sudo: required
 cache: packages
-warnings_are_errors: true
+warnings_are_errors: false
 before_install:
   - sudo apt-get install -y udunits-bin libudunits2-dev
   - sudo add-apt-repository ppa:chris-lea/libsodium -y

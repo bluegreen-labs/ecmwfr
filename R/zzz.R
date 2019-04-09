@@ -147,12 +147,11 @@ wf_check_login <- function(user, key, service) {
         "X-ECMWF-KEY" = key),
       encode = "json"
     )
-
     return(!httr::http_error(info) && (httr::content(info)$uid == user))
   }
 
   if (service == "cds") {
-    url <- wf_server(service = "cds")
+    url <- paste0(wf_server(service = "cds"),"/tasks/")
     ct <- httr::GET(url, httr::authenticate(user, key))
     return(httr::status_code(ct) < 400)
   }

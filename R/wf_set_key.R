@@ -27,9 +27,11 @@
 #' @importFrom utils browseURL
 wf_set_key <- function(user, key, service){
 
-  if(keyring::default_backend()$name != "env" & keyring::keyring_is_locked()){
-    message("Your keyring is locked please unlock with your keyring password!")
-    keyring::keyring_unlock()
+  if(keyring::default_backend()$name != "env"){
+    if(keyring::keyring_is_locked()){
+      message("Your keyring is locked please unlock with your keyring password!")
+      keyring::keyring_unlock()
+    }
   }
 
   if(missing(service)){
@@ -49,7 +51,9 @@ wf_set_key <- function(user, key, service){
   }
 
   # check login
-  login_ok <- wf_check_login(user = user, key = key, service = service)
+  login_ok <- wf_check_login(user = user,
+                             key = key,
+                             service = service)
 
   if (!login_ok) {
     stop("Could not validate login information.")

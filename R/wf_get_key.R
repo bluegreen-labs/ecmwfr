@@ -22,7 +22,7 @@
 
 wf_get_key <- function(user, service = "webapi"){
 
-  if(keyring::keyring_is_locked()){
+  if(keyring::default_backend()$name != "env" & keyring::keyring_is_locked()){
     message("Your keyring is locked please unlock with your keyring password!")
     keyring::keyring_unlock()
   }

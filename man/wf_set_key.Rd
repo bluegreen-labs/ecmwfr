@@ -13,6 +13,9 @@ wf_set_key(user, key, service)
 
 \item{service}{service associated with credentials ("webapi" or "cds")}
 }
+\value{
+It invisibly returns the user.
+}
 \description{
 Saves the token to your local keychain under
 a service called "ecmwfr".

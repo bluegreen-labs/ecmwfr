@@ -9,7 +9,6 @@ before_install:
   - sudo apt-get install -y libsodium-dev
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
-  - R -e 'source("https://install-github.me/r-lib/remotes")'
 
 r:
   - release

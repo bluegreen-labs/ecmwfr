@@ -148,7 +148,7 @@ wf_request <- function(
 
   # Temporary file name, will be used in combination with tempdir() when
   # calling wf_transfer.
-  tmp_file <- basename(tempfile("ecmwfr_", fileext = ".nc"))
+  tmp_file <- basename(tempfile("ecmwfr_"))
 
   # keep waiting for the download order to come online
   # with status code 303. 202 = connection accepted, but job queued.

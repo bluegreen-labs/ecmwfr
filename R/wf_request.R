@@ -183,8 +183,8 @@ wf_request <- function(
     # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
-    ct <- wf_transfer(url     = ifelse(service == "cds",
-                                        ct$request_id, ct$href),
+    ct <- wf_transfer(url = ifelse(service == "cds",
+                      ct$request_id, ct$href),
                       user    = user,
                       service  = service,
                       filename = tmp_file,

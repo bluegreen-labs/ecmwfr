@@ -52,40 +52,65 @@ python2list_Addin <- function() {
 # a ecmwfr list statement
 python_to_list <- function(python_text) {
 
-  # remove annoying characters
-  python_text  <- gsub(" |\\'|\\\"|\\,|\\(|\\)|\\}|\\{", "", python_text)
+  python_text <- gsub('\'','"',python_text)
 
-  # split on new line
-  python_text <- strsplit(python_text,"\n")[[1]]
+  # grab anything between ()
+  brackets <- try(gsub("[\\(\\)]", "",
+                   regmatches(python_text,
+                              gregexpr("\\(.*?\\)", python_text))[[1]]))
 
-  # remove the retrieve statement of the
-  # python function
-  python_text <- python_text[grep("retrieve", python_text, invert = TRUE)]
+  # grab anything between {} within ()
+  c_brackets <- try(gsub("[\\{\\}]", "",
+                         regmatches(python_text,
+                                    gregexpr("\\{.*?\\}", python_text))[[1]]))
 
-  # remove fields with no characters
-  python_text <- python_text[lapply(python_text,nchar)>0]
+  # check if strings have content
+  if(length(brackets) == 0 || length(c_brackets) == 0){
+    stop("Incomplete query selection")
+  }
 
-  # convert first occurence : into =
-  python_text <- unlist(lapply(python_text, function(s){
-    sub(":","=",s)
-  }))
+  # trap the goddamn inconsistent MARS json formatting issue
+  c_brackets <- gsub("\n| ","", c_brackets)
+  if(substr(c_brackets, nchar(c_brackets),nchar(c_brackets)) == ","){
+    c_brackets <- substr(c_brackets, 1, nchar(c_brackets)-1)
+  }
 
-  # loop over all elements, compose nicely and
-  # trap those with one element (either the dataset or the target file)
-  python_text <- lapply(python_text, function(s){
-    parts <- strsplit(s, "=")[[1]]
-    if (length(parts) == 1){
-      if(grepl("download",parts[1])){
-        paste0("  ", "target", ' = "', parts[1], '"', sep = "")
-      } else {
-        paste0("  ", "dataset", ' = "', parts[1], '"', sep = "")
-      }
+  # read in data as list
+  c_list <- jsonlite::fromJSON(paste0("{",c_brackets,"}"))
+
+  # grab the trailing bit between } and ) i.e. the dataste name
+  leading <- try(gsub("[\\(\\{]", "",
+                       regmatches(python_text,
+                                  gregexpr("\\(.*?\\{", python_text))[[1]]))
+
+  # grab the leading bit between ( and } i.e. the target
+  trailing <- try(gsub("[\\}\\)]", "",
+                       regmatches(python_text,
+                                  gregexpr("\\}.*?\\)", python_text))[[1]]))
+
+  # clean up leading and trailing ends if any
+  if (nchar(leading) != 0){
+    c_list$dataset <- gsub('\\n|,\\n| |"','', leading)
+  }
+
+  if (nchar(trailing) != 0){
+    c_list$target <- gsub('\\n|,\\n| |"','', trailing)
+  }
+
+  # clean up list values
+  list_values <- lapply(c_list, function(l){
+    if(length(l) == 1){
+      paste0('"',l,'"')
     } else {
-      paste0("  ", parts[1], ' = "', parts[2], '"', sep = "")
+      l
     }
   })
 
-  return(paste0("list(\n",
-               paste0(unlist(python_text), collapse = ",\n"),
-               "\n)"))
+  # returned cleaned up list
+  return(
+    paste0("list(\n",
+           paste0(
+             paste0("  ", names(c_list), ' = ', list_values),
+             collapse = ",\n"),
+           "\n)"))
 }

@@ -36,7 +36,7 @@ wf_transfer <- function(
   user,
   service = "webapi",
   path = tempdir(),
-  filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
+  filename = tempfile("ecmwfr_"),
   verbose = TRUE
 ){
 

@@ -36,7 +36,8 @@ rm(key)
 # environmental variables (hence fail to retrieve the api key).
 # This also allows for very basic checks on r-hub.
 # No checks should be skiped on either Travis CI or OSX.
-login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
+login_check <- try(wf_get_key(user = "khrdev@outlook.com",
+                              service = "cds"), silent = TRUE)
 login_check <- inherits(login_check, "try-error")
 server_check <- !ecmwf_running(wf_server(service = "cds"))
 

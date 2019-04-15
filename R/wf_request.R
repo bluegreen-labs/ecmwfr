@@ -199,10 +199,6 @@ wf_request <- function(
     src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
 
-    if ( verbose ){
-      message(sprintf("- moved temporary file to -> %s", dst))
-    }
-
     # rename / move file
     move <- suppressWarnings(file.rename(src, dst))
 
@@ -212,6 +208,10 @@ wf_request <- function(
     if(!move){
       file.copy(src, dst, overwrite = TRUE)
       file.remove(src)
+    }
+
+    if ( verbose ){
+      message(sprintf("- moved temporary file to -> %s", dst))
     }
 
   } else {

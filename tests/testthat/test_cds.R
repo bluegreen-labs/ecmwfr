@@ -68,16 +68,22 @@ test_that("cds request", {
   skip_if(login_check)
   skip_if(server_check)
 
-  tmp <- wf_request(user = "2088",
+  expect_message(wf_request(user = "2088",
                     request = cds_request,
-                    transfer = TRUE)
+                    transfer = TRUE))
 
-  expect_true(inherits(tmp, "character"))
-  expect_true(file.exists(tmp))
+  expect_error(wf_request(user = "2088",
+                    request = "xyz",
+                    transfer = TRUE))
+
+  expect_error(wf_request(user = "2088",
+                          transfer = TRUE))
+
   expect_true(inherits(wf_request(user = "2088",
               request = cds_request,
               transfer = FALSE), "list"))
 })
+
 
 # # Expecting error if required arguments are not set:
  test_that("required arguments missing for cds_* functions", {

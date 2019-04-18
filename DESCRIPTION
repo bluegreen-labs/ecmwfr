@@ -5,7 +5,8 @@ Authors@R: c(person(
                family = "Hufkens",
                given = "Koen",
                email = "koen.hufkens@gmail.com",
-               role = c("aut", "cre")),
+               role = c("aut", "cre"),
+               comment = c(ORCID = "0000-0002-5070-8109")),
              person(
                family = "Stauffer",
                given = "Reto",
@@ -47,5 +48,6 @@ Suggests:
     knitr,
     stats,
     rlang,
-    rstudioapi
+    rstudioapi,
+    jsonlite
 VignetteBuilder: knitr

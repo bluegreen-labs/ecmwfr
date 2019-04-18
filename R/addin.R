@@ -32,7 +32,7 @@ MARS_to_list <- function(MARS_text) {
     paste0("  ", text[1], ' = "', text[2], '"', sep = "")
   })
 
-  return(paste0("list(\n",
+  return(paste0("request <- list(\n",
                 paste0(unlist(MARS_text), collapse = ",\n"),
                 "\n)"))
 }
@@ -108,7 +108,7 @@ python_to_list <- function(python_text) {
 
   # returned cleaned up list
   return(
-    paste0("list(\n",
+    paste0("request <- list(\n",
            paste0(
              paste0("  ", names(c_list), ' = ', list_values),
              collapse = ",\n"),

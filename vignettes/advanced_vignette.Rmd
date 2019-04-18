@@ -73,9 +73,9 @@ By selecting and using Addin -> Mars to list (or 'Python to list') you dynamical
 
 Using the `Addin` is the sure way to form a proper `ecmwfr` request and avoids typos. As such, we recommend the use of the `Addin`.
 
-### Piped requests
+## Piped requests
 
-Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function.
+Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function (using the %>% or pipe symbol).
 
 ```{r eval = FALSE}
 list(stream  = "oper",
@@ -94,7 +94,7 @@ list(stream  = "oper",
   wf_request(user = user)
 ````
 
-### Dynamic requests
+## Dynamic request functions / archetypes
 
 Once a valid request has been created it can be made into a dynamic function using `achetypes`. Archetype functions are build using a valid `ecmwfr` ECMWF or CDS request and the vector naming the field which are to be set as dynamic.
 

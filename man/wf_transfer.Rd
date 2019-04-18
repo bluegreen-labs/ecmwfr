@@ -5,8 +5,7 @@
 \title{ECMWF data transfer function}
 \usage{
 wf_transfer(url, user, service = "webapi", path = tempdir(),
-  filename = tempfile("ecmwfr_", fileext = ".nc", tmpdir = ""),
-  verbose = TRUE)
+  filename = tempfile("ecmwfr_"), verbose = TRUE)
 }
 \arguments{
 \item{url}{url to query}

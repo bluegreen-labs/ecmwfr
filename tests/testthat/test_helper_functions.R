@@ -75,3 +75,4 @@ test_that("create tests archetype", {
     wf_archetype(dynamic_fields = "res")
   ))
 })
+

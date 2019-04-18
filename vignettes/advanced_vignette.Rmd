@@ -1,0 +1,124 @@
+---
+title: "Advanced Use Cases"
+author: "Koen Hufkens"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ecmwfr functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+opts <- options(keyring_warn_for_env_fallback = FALSE)
+
+# load the library
+library(ncdf4)
+library(raster)
+library(maps)
+library(ecmwfr)
+
+# import the encrypted key if desired
+# (does not exist locally)
+key <- system("echo $KEY", intern = TRUE)
+if(key != "" & key != "$KEY"){
+  wf_set_key(user = "khrdev@outlook.com",
+             key = key,
+             service = "webapi")
+}
+rm(key)
+
+# check cran, same routine as skip_on_cran()
+# but not dependent on testthat which might
+# not be available on user systems (not required
+# only suggested)
+check_cran <- function() {
+  key <- try(wf_get_key("khrdev@outlook.com"))
+  if (!inherits(key, "try-error")){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+# do cran check
+cran <- check_cran()
+```
+
+# Advanced Use Cases
+
+This is a brief overview of some of the more advanced options in the `ecmwfr` package.
+
+## Setup
+
+A 'hidden' feature of the `wf_set_key()` function is that it returns the user name upon succes. This allows for easier integration in scripts shared with users (which have different credentials)
+
+```{r eval = FALSE}
+# set a key to the keychain interactively
+user <- wf_set_key(service = "webapi")
+```
+
+## Formatting requests 
+
+The conversion from a MARS or python based queries (formed on the ECMWF or Copernicus CDS websites) to the list format used by `ecmwfr` can be automated if you use the RStudio based Addin. 
+
+By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
+
+![](https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif)
+
+Using the `Addin` is the sure way to form a proper `ecmwfr` request and avoids typos. As such, we recommend the use of the `Addin`.
+
+### Piped requests
+
+Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function.
+
+```{r eval = FALSE}
+list(stream  = "oper",
+                   levtype = "sfc",
+                   param   = "167.128",
+                   dataset = "interim",
+                   step    = "0",
+                   grid    = "0.75/0.75",
+                   time    = "00",
+                   date    = "2014-07-01/to/2014-07-02",
+                   type    = "an",
+                   class   = "ei",
+                   area    = "73.5/-27/33/45",
+                   format  = "netcdf",
+                   target  = "tmp.nc") %>%
+  wf_request(user = user)
+````
+
+### Dynamic requests
+
+Once a valid request has been created it can be made into a dynamic function using `achetypes`. Archetype functions are build using a valid `ecmwfr` ECMWF or CDS request and the vector naming the field which are to be set as dynamic.
+
+The `wf_archetype()` function creates a new function with as parameters the dynamic fields previously assigned. The below example show how to use the function to generate the custom `dynamic_request()` function. We then use this new function to alter the `area` and `date` fields and pipe (%>%) into the `wf_request()` function to retrieve the data.
+
+```{r eval = FALSE}
+# this is an example of a request
+dynamic_request <- wf_archetype(request = list(
+  stream  = "oper",
+  levtype = "sfc",
+  param   = "167.128",
+  dataset = "interim",
+  step    = "0",
+  grid    = "0.75/0.75",
+  time    = "00",
+  date    = "2014-07-01/to/2014-07-02",
+  type    = "an",
+  class   = "ei",
+  area    = "73.5/-27/33/45",
+  format  = "netcdf",
+  target  = "tmp.nc",
+  dynamic_fields = c("area","date"))
+
+dynamic_request(area = "73.5/-27/33/45",
+                date = "2014-07-01") %>%
+  wf_request(user = user)
+```

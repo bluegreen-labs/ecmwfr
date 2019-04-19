@@ -69,7 +69,7 @@ The conversion from a MARS or python based queries (formed on the ECMWF or Coper
 
 By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
 
-![](https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif)
+![](https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif)
 
 Using the `Addin` is the sure way to form a proper `ecmwfr` request and avoids typos. As such, we recommend the use of the `Addin`.
 

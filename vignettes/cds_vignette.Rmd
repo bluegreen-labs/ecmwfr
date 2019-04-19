@@ -39,13 +39,13 @@ Once you are in possession of your personal user (namely your user ID and a secr
 
 ## The Request Syntax
 
-CDS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests` (for those who are familiar with _mars_: these are basically _mars_ requests). A `request` defined the type of the `dataset`, the `variable`s to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
+CDS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests` (for those who are familiar with _mars_: these are basically _mars_ requests). A `request` defined the type of the `dataset`, the `variables` to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
 
 The request syntax is available for a range of different CDS data sets. Check the [CDS Dataset](https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset) website to see a list of available datasets and to check whether API requests are allowed or not (go to _Download Data_, select some data, show request by clicking _Show API Request_ (red button, bottom of page).
 
 The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> python to list (or 'Mars to list') you dynamically convert queries copied from either ECMWF or CDS based services.
 
-![](https://user-images.githubusercontent.com/8617595/55687238-3943c600-5941-11e9-89c2-1b652066c728.gif)
+![](https://user-images.githubusercontent.com/1354258/56429618-def12080-62c3-11e9-90e4-0954e10d06f3.gif)
 
 ### An ERA-5 example
 

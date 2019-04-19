@@ -1,6 +1,6 @@
 # ecwmfr 1.2.0
 
-* key management changes
+* key management (breaking) changes
   * inclusion of a new interactive way to set API keys
   * unlock checks
 * reshuffling the default order of `wf_request()` as to accomodate pipes

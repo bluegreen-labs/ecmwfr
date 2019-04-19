@@ -21,10 +21,10 @@ Authors@R: c(person(
                comment = c(ORCID = "0000-0002-7742-9230"))
            )
 Description: Programmatic interface to the European Centre for Medium-Range
-    Weather Forecasts public and restricted dataset web services (ECMWF;
-    <https://www.ecmwf.int/>) as well as Copernicus's Climate Data Store (CDS;
+    Weather Forecasts dataset web services (ECMWF; <https://www.ecmwf.int/>)
+    and Copernicus's Climate Data Store (CDS; 
     <https://cds.climate.copernicus.eu>). Allows for easy downloads of weather 
-    forecasts and climate data directly to your R work space or your computer.
+    forecasts and climate reanalysis data in R.
 URL: https://github.com/khufkens/ecmwfr
 BugReports: https://github.com/khufkens/ecmwfr/issues
 Depends:

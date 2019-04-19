@@ -79,19 +79,19 @@ Another hidden feature of `ecmwfr` is the fact that the request is the first arg
 
 ```{r eval = FALSE}
 list(stream  = "oper",
-                   levtype = "sfc",
-                   param   = "167.128",
-                   dataset = "interim",
-                   step    = "0",
-                   grid    = "0.75/0.75",
-                   time    = "00",
-                   date    = "2014-07-01/to/2014-07-02",
-                   type    = "an",
-                   class   = "ei",
-                   area    = "73.5/-27/33/45",
-                   format  = "netcdf",
-                   target  = "tmp.nc") %>%
-  wf_request(user = user)
+     levtype = "sfc",
+     param   = "167.128",
+     dataset = "interim",
+     step    = "0",
+     grid    = "0.75/0.75",
+     time    = "00",
+     date    = "2014-07-01/to/2014-07-02",
+     type    = "an",
+     class   = "ei",
+     area    = "73.5/-27/33/45",
+     format  = "netcdf",
+     target  = "tmp.nc") %>%
+  wf_request(user = user, path = "~")
 ````
 
 ## Dynamic request functions / archetypes
@@ -100,7 +100,7 @@ Once a valid request has been created it can be made into a dynamic function usi
 
 The `wf_archetype()` function creates a new function with as parameters the dynamic fields previously assigned. The below example show how to use the function to generate the custom `dynamic_request()` function. We then use this new function to alter the `area` and `date` fields and pipe (%>%) into the `wf_request()` function to retrieve the data.
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 # this is an example of a request
 dynamic_request <- wf_archetype(request = list(
   stream  = "oper",
@@ -115,10 +115,9 @@ dynamic_request <- wf_archetype(request = list(
   class   = "ei",
   area    = "73.5/-27/33/45",
   format  = "netcdf",
-  target  = "tmp.nc",
+  target  = "tmp.nc"),
   dynamic_fields = c("area","date"))
 
-dynamic_request(area = "73.5/-27/33/45",
-                date = "2014-07-01") %>%
-  wf_request(user = user)
+# change only the date to a single day
+dynamic_request(date = "2014-07-01")
 ```

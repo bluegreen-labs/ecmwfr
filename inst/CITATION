@@ -1,0 +1,15 @@
+citHeader("To cite ecmwfr in publications use:")
+
+citEntry(entry = "Article",
+         title        = "The ecwmfr package: an interface to ECMWF API endpoints",
+         author       = personList(as.person("Koen Hufkens"),
+                                   as.person("Reto Stauffer"),
+                                   as.person("Elio Campitelli")),
+         doi        = "10.5281/zenodo.2647541",
+         url        = "https://khufkens.github.io/ecmwfr/",
+
+         textVersion  =
+           paste("Hufkens, Stauffer and Campitelli (2019).",
+                 "The ecwmfr package: an interface to ECMWF API endpoints"
+                 "https://doi.org/10.5281/zenodo.2647541")
+)

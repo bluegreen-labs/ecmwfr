@@ -15,26 +15,6 @@ my_request <- list(stream = "oper",
                    format = "netcdf",
                    target = "tmp.nc")
 
-# modify request
-test_that("modify request tests",{
-  expect_output(str(
-    wf_modify_request(request = my_request,
-                      date = "2014-07-01/to/2014-08-31",
-                      area = "73.5/-27/33/46")
-  ))
-
-  expect_error(
-    wf_modify_request(request = my_request,
-                      bla = "2014-07-01/to/2014-08-31",
-                      area = "73.5/-27/33/46")
-  )
-
-  expect_error(
-    wf_modify_request(date = "2014-07-01/to/2014-08-31",
-                      area = "73.5/-27/33/46")
-  )
-})
-
 test_that("create tests archetype", {
 
   # create archetype

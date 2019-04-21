@@ -40,6 +40,7 @@ if(!server_check){
 }
 
 test_that("set key", {
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
   key <- system("echo $CDS", intern = TRUE)
@@ -52,6 +53,7 @@ test_that("set key", {
 })
 
 test_that("cds datasets returns data.frame or list", {
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
   expect_true(inherits(wf_datasets(user = "2088",
@@ -64,6 +66,7 @@ test_that("cds datasets returns data.frame or list", {
 
 # Testing the cds request function
 test_that("cds request", {
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
 
@@ -86,6 +89,7 @@ test_that("cds request", {
 
 # # Expecting error if required arguments are not set:
  test_that("required arguments missing for cds_* functions", {
+   skip_on_cran()
    skip_if(login_check)
    skip_if(server_check)
 
@@ -130,6 +134,7 @@ test_that("cds request", {
 
 # check delete routine CDS (fails)
 test_that("delete request", {
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
    expect_warning(
@@ -140,6 +145,7 @@ test_that("delete request", {
 
 # CDS product info
 test_that("check product info",{
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
   expect_output(

@@ -123,7 +123,7 @@ ecmwf_running <- function(url){
   }
 
   # trap 400 errors
-  if(ct$status_code >= 400 ){
+  if(ct$status_code >= 404 ){
     return(FALSE)
   } else {
     return(TRUE)

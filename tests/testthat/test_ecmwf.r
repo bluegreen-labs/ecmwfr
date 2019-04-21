@@ -17,28 +17,27 @@ my_request <- list(stream = "oper",
                    format = "netcdf",
                    target = "tmp.nc")
 
-# set password using encrypted key
-# if provided, otherwise just continue
-# assuming a valid keychain value (see
-# additional check below)
-key <- system("echo $KEY", intern = TRUE)
-if(key != "" & key != "$KEY"){
-  wf_set_key(user = "khrdev@outlook.com",
-             key = system("echo $KEY", intern = TRUE),
-             service = "webapi")
-}
-rm(key)
-
-# Check if a password is not set. This traps the inconsistent
-# behavious between systems while accomodating for encrypted
-# keys on Travis CI. Mostly this deals with the sandboxed
-# checks on linux which can't access the global keychain or
-# environmental variables (hence fail to retrieve the api key).
-# This also allows for very basic checks on r-hub.
-# No checks should be skiped on either Travis CI or OSX.
-login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
-login_check <- inherits(login_check, "try-error")
+# is the server reachable
 server_check <- !ecmwf_running(wf_server(service = "webapi"))
+
+if(server_check){
+  # set password using encrypted key
+  # if provided, otherwise just continue
+  # assuming a valid keychain value (see
+  # additional check below)
+  key <- system("echo $KEY", intern = TRUE)
+  if(key != "" & key != "$KEY"){
+    wf_set_key(user = "khrdev@outlook.com",
+               key = system("echo $KEY", intern = TRUE),
+               service = "webapi")
+  }
+  rm(key)
+
+  login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
+  login_check <- inherits(login_check, "try-error")
+} else {
+  login_check <- TRUE
+}
 
 test_that("set, get secret key",{
   skip_if(login_check)

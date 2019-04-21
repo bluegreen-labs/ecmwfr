@@ -1,3 +1,8 @@
+# ecwmfr 1.2.1
+
+* fixes unit test issues when server times out
+  * addresses server timeout in httr does not issue proper statement messes with unit checks and isn't captured using `ecmwf_running()`
+
 # ecwmfr 1.2.0
 
 * key management (breaking) changes

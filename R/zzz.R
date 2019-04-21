@@ -115,10 +115,18 @@ exit_message <- function(url, service, path, file){
 # returns bolean TRUE if so
 ecmwf_running <- function(url){
   ct <- try(httr::GET(url))
-  if(ct$status_code > 403){
-    FALSE
+
+  # trap time-out, httr should exit clean but doesn't
+  # it seems
+  if (inherits(ct, "try-error")){
+    return(FALSE)
+  }
+
+  # trap 400 errors
+  if(ct$status_code >= 400 ){
+    return(FALSE)
   } else {
-    TRUE
+    return(TRUE)
   }
 }
 

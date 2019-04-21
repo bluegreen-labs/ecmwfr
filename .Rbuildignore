@@ -5,12 +5,6 @@
 ^docs$
 ^data-raw$
 
-# Exclude download tests, should not be
-# tested, only for local tests as some of the
-# requests require a member-state user account
-# and can take an hour and more.
-^tests\/download_.*\.R$
-
 # R-markdown files in the root folder.
 ^LICENSE$
 ^CONDUCT\.md$

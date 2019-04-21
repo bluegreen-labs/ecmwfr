@@ -62,6 +62,8 @@ test_that("test dataset function", {
 })
 
 test_that("test dataset function - no login", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_datasets())
 })
 
@@ -79,6 +81,8 @@ test_that("test services function", {
 })
 
 test_that("test services function - no login", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_services())
 })
 
@@ -89,6 +93,8 @@ test_that("test user info function", {
 })
 
 test_that("test user info function - no login", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_user_info())
 })
 
@@ -150,10 +156,14 @@ test_that("test request (transfer) function - no transfer", {
 })
 
 test_that("test request (transfer) function - no email", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_request())
 })
 
 test_that("test transfer function - no login", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_transfer())
 })
 
@@ -191,6 +201,8 @@ test_that("check product info",{
 })
 
 test_that("test delete function - no login", {
+  skip_if(login_check)
+  skip_if(server_check)
   expect_error(wf_delete())
 })
 
@@ -221,6 +233,9 @@ test_that("test request (transfer) function - larger download", {
 })
 
 test_that("check request - no dataset field", {
+  skip_if(login_check)
+  skip_if(server_check)
+
   my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
@@ -240,6 +255,9 @@ test_that("check request - no dataset field", {
 })
 
 test_that("check request - bad request type", {
+  skip_if(login_check)
+  skip_if(server_check)
+
   my_request <- "xyz"
   expect_error(
     wf_check_request(
@@ -249,6 +267,9 @@ test_that("check request - bad request type", {
 })
 
 test_that("check mars request - no target", {
+  skip_if(login_check)
+  skip_if(server_check)
+
   my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
@@ -269,6 +290,9 @@ test_that("check mars request - no target", {
 })
 
 test_that("check request - no netcdf grid specified", {
+  skip_if(login_check)
+  skip_if(server_check)
+
   my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",
@@ -288,7 +312,9 @@ test_that("check request - no netcdf grid specified", {
 })
 
 test_that("check request - bad credentials", {
+  skip_if(login_check)
   skip_if(server_check)
+
   my_request <- list(stream = "oper",
                         levtype = "sfc",
                         param = "167.128",

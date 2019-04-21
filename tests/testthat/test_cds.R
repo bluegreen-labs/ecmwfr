@@ -22,7 +22,7 @@ server_check <- !ecmwf_running(wf_server(service = "webapi"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(server_check){
+if(!server_check){
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     wf_set_key(user = "2088",

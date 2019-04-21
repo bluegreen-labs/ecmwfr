@@ -20,7 +20,7 @@ my_request <- list(stream = "oper",
 # is the server reachable
 server_check <- !ecmwf_running(wf_server(service = "webapi"))
 
-if(server_check){
+if(!server_check){
   # set password using encrypted key
   # if provided, otherwise just continue
   # assuming a valid keychain value (see

@@ -153,7 +153,7 @@
 <a href="#data-requests" class="anchor"></a>Data Requests</h3>
 <p>To download data use the wf_request() function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments. Be sure to specify which service to use, in this case <code>webapi</code> is the correct service to request data from.</p>
 <p>The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; Mars to list (or ‘Python to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
-<p><img src="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></p>
+<p><a href="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></a></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># this is an example of a request</span></a>
 <a class="sourceLine" id="cb6-2" title="2">my_request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream =</span> <span class="st">"oper"</span>,</a>
 <a class="sourceLine" id="cb6-3" title="3">                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,</a>

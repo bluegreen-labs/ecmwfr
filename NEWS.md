@@ -1,6 +1,6 @@
 # ecwmfr 1.2.1
 
-* disabled all networked unit tests on CRAN, too much of a pain to deal with, too slow - causing time outs and nasty emails (will do Travis CI and local build)
+* disabled all networked unit tests on CRAN
 
 # ecwmfr 1.2.0
 

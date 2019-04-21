@@ -22,6 +22,7 @@ library(ncdf4)
 library(raster)
 library(maps)
 library(ecmwfr)
+
 ```
 
 # ecmwfr
@@ -97,7 +98,7 @@ The download operation might take a while. A progress indicator will keep you in
 
 If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
 
-```{r fig.width = 7, fig.height = 7, eval = cran}
+```{r fig.width = 7, fig.height = 7, eval = TRUE}
 s <- raster::stack(ncfile)
 print(s)
 

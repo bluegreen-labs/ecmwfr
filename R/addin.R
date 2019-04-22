@@ -12,6 +12,11 @@ MARS2list_Addin <- function() {
 # conversion function to translate a MARS query into
 # a ecmwfr list statement
 MARS_to_list <- function(MARS_text) {
+
+  if(missing(MARS_text)){
+    stop("No input text provided")
+  }
+
   MARS_text <- strsplit(MARS_text, "\n")[[1]]
   MARS_text <- strsplit(MARS_text, "=")
   MARS_text <- MARS_text[lengths(MARS_text) == 2]
@@ -51,6 +56,10 @@ python2list_Addin <- function() {
 # conversion function to translate a python python query into
 # a ecmwfr list statement
 python_to_list <- function(python_text) {
+
+  if(missing(python_text)){
+    stop("No input text provided")
+  }
 
   python_text <- gsub('\'','"',python_text)
 

@@ -67,7 +67,7 @@ The conversion from a MARS or python based query to the list format can be autom
 
 ```{r eval = FALSE, message=FALSE, warning=FALSE}
 # this is an example of a request
-my_request <- list(stream  = "oper",
+request <- list(stream  = "oper",
                    levtype = "sfc",
                    param   = "167.128",
                    dataset = "interim",
@@ -84,7 +84,7 @@ my_request <- list(stream  = "oper",
 # an example download using fw_request()
 # using the above request list()
 ncfile <- wf_request(user    = "khrdev@outlook.com",
-           request  = my_request,
+           request  = request,
            transfer = TRUE,
            path     = tempdir(),
            verbose  = FALSE)
@@ -114,7 +114,7 @@ The `ecmwfr` syntax for _mars_ requests is identical to the ones to the public E
 
 ```{r mars example, eval = FALSE}
 # this is an example of a request
-my_request <- list("dataset" = "mars",
+request <- list("dataset" = "mars",
                    "class"   = "od",
                    "date"    = "2019-01-22",
                    "expver"  = "1",
@@ -133,7 +133,7 @@ my_request <- list("dataset" = "mars",
 wf_request(user    = "khrdev@outlook.com",
            transfer = TRUE,
            path     = "~",
-           request  = my_request,
+           request  = request,
            verbose  = FALSE)
 ```
 

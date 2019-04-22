@@ -93,7 +93,7 @@ is the correct service to request data from.
 
 The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
 
-[](https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif)
+![](https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif)
 
 ```R
 # this is an example of a request

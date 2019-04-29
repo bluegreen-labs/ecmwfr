@@ -64,12 +64,12 @@ sharing scripts on github or otherwise.
 
 ```R
 # set a key to the keychain
-wf_set_key(email = "john.smith@example.com",
+wf_set_key(user = "john.smith@example.com",
            key = "XXXXXXXXXXXXXXXXXXXXXX",
            service = "webapi")
 
 # you can retrieve the key using
-wf_get_key(email = "john.smith@example.com")
+wf_get_key(user = "john.smith@example.com")
 
 # the output should be the key you provided
 # "XXXXXXXXXXXXXXXXXXXXXX"
@@ -119,7 +119,7 @@ my_request <- list(stream = "oper",
 # set by the path argument
 
 wf_request(
-  email = "khrdev@outlook.com",
+  user = "khrdev@outlook.com",
   request = my_request,
   transfer = TRUE,
   path = "~")

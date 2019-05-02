@@ -32,7 +32,8 @@ Depends:
 Imports:
     httr,
     keyring,
-    memoise
+    memoise,
+    getPass
 License: AGPL-3
 LazyData: true
 ByteCompile: true

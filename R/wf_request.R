@@ -28,7 +28,7 @@
 #' # set key
 #' wf_set_key(user = "test@mail.com", key = "123")
 #'
-#' request <-  = list(stream = "oper",
+#' request <- list(stream = "oper",
 #'    levtype = "sfc",
 #'    param = "167.128",
 #'    dataset = "interim",
@@ -62,13 +62,33 @@ wf_request <- function(
   }
 
   # check the login credentials
-  if(missing(user) || missing(request)){
+  if(missing(request)){
     stop("Please provide ECMWF or CDS login credentials and data request!")
+  }
+
+  if (missing(user)) {
+    user <- keyring::key_list()
+    serv <- make_key_service()
+    user <- user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
   }
 
   # checks user login, the request layout and
   # returns the service to use if successful
-  wf_check <- wf_check_request(user, request)
+  wf_check <- lapply(user, function(u) try(wf_check_request(u, request), silent = TRUE))
+  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error",))
+  wf_check <- wf_check[[correct]]
+  user <- user[correct]
+
+  if (verbose) {
+    message("Requesting data to the ", wf_check$service, " service with username ", user)
+  }
+
+
+  if (length(wf_check) == 0) {
+    stop(sprintf("Data identifier %s is not found in Web API or CDS datasets.
+                 Or your login credentials do not match your request.",
+                 request$dataset), call. = FALSE)
+  }
 
   # split out data
   service <- wf_check$service

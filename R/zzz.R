@@ -179,10 +179,9 @@ new_archetype <- function(args, body) {
 
 
 # Creates a script to then run as a job
-make_script <- function(request, call, name) {
+make_script <- function(call, name) {
   script <- tempfile()
 
-  call$request <- dput(request)
   j <- which(names(call) == "job_name")
   call[j] <- list(NULL)
 

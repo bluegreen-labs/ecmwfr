@@ -75,6 +75,12 @@ wf_request <- function(
     if (!requireNamespace("rstudioapi", quietly = TRUE)) {
       stop("Jobs are only supported in RStudio.")
     }
+
+    if (!rstudioapi::isAvailable("1.2")) {
+      stop("Need at least version 1.2 of RStudio to use jobs. Currently running ",
+           rstudioapi::versionInfo()$version, ".")
+    }
+
     job <- rstudioapi::jobRunScript(path = script, name = job_name, exportEnv = "R_GlobalEnv")
     return(invisible(job))
   }

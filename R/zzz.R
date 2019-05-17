@@ -176,3 +176,16 @@ new_archetype <- function(args, body) {
   class(f) <- c("ecmwfr_archetype", class(f))
   f
 }
+
+
+# Creates a script to then run as a job
+make_script <- function(request, call, name) {
+  script <- tempfile()
+
+  call$request <- dput(request)
+  j <- which(names(call) == "job_name")
+  call[j] <- list(NULL)
+
+  lines <- writeLines(paste0("library(ecmwfr)\n", name, " <- ", paste0(deparse(call), collapse = "")), script)
+  return(script)
+}

@@ -5,7 +5,7 @@
 \title{ECMWF data request and download}
 \usage{
 wf_request(request, user, transfer = TRUE, path = tempdir(),
-  time_out = 3600, verbose = TRUE)
+  time_out = 3600, job_name = NULL, verbose = TRUE)
 }
 \arguments{
 \item{request}{nested list with query parameters following the layout
@@ -20,6 +20,9 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{time_out}{how long to wait on a download to start (default =
 \code{3*3600} seconds).}
+
+\item{job_name}{optional name to use as an RStudio job and as output variable
+name}
 
 \item{verbose}{show feedback on processing}
 }
@@ -40,7 +43,7 @@ to identify possible problems.
 # set key
 wf_set_key(user = "test@mail.com", key = "123")
 
-request <-  = list(stream = "oper",
+request <- list(stream = "oper",
    levtype = "sfc",
    param = "167.128",
    dataset = "interim",
@@ -56,6 +59,11 @@ request <-  = list(stream = "oper",
 
 # demo query
 wf_request(request = request, user = "test@mail.com")
+
+# Run as an RStudio Job. When finished, will create a
+# variable named "test" in your environment with the path to
+# the downloaded file.
+wf_request(request = request, user = "test@mail.com", job_name = "test")
 }
 }
 \seealso{

@@ -182,8 +182,7 @@ new_archetype <- function(args, body) {
 make_script <- function(call, name) {
   script <- tempfile()
 
-  j <- which(names(call) == "job_name")
-  call[j] <- list(NULL)
+  call$job_name <- NULL
 
   lines <- writeLines(paste0("library(ecmwfr)\n", name, " <- ", paste0(deparse(call), collapse = "")), script)
   return(script)

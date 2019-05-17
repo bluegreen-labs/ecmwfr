@@ -60,11 +60,11 @@ wf_request <- function(
   transfer = TRUE,
   path = tempdir(),
   time_out = 3600,
-  job_name = NULL,
+  job_name,
   verbose = TRUE
 ){
 
-  if (!is.null(job_name)) {
+  if (!missing(job_name)) {
     # Evaluates all arguments.
     call <- match.call()
     call$path <- path

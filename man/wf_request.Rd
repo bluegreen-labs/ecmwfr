@@ -5,7 +5,7 @@
 \title{ECMWF data request and download}
 \usage{
 wf_request(request, user, transfer = TRUE, path = tempdir(),
-  time_out = 3600, job_name = NULL, verbose = TRUE)
+  time_out = 3600, job_name, verbose = TRUE)
 }
 \arguments{
 \item{request}{nested list with query parameters following the layout

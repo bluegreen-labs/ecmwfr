@@ -149,7 +149,7 @@ API key: abcd1234-foo-bar-98765431-XXXXXXXXXX
 
 ### Setup
 
-If you preferr to use your local keychain (rather than using the `.cdsapirc`
+If you prefer to use your local keychain (rather than using the `.cdsapirc`
 file) you have to save your login information first.  The package does not
 allow you to use your key inline in scripts to limit security issues when
 sharing scripts on github or otherwise.
@@ -174,7 +174,7 @@ wf_set_key(service = "cds")
 
 Before you can download any data you have to make sure to accept the terms and
 conditions here: Before downloading and processing data from CDS please make
-sure you acceppt the terms and conditions which can be found here: [Copernicus
+sure you accept the terms and conditions which can be found here: [Copernicus
 Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
 
 ### Data Requests

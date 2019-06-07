@@ -1,5 +1,10 @@
 # ecwmfr 1.2.1
 
+* disabled all unit tests on CRAN
+* Adding in support for rstudio batch processing
+
+# ecwmfr 1.2.1
+
 * disabled all networked unit tests on CRAN
 
 # ecwmfr 1.2.0

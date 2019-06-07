@@ -29,7 +29,6 @@ if(!server_check){
                service = "webapi")
   }
   rm(key)
-
   login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
@@ -171,6 +170,7 @@ test_that("test request (transfer) function - no email", {
 })
 
 test_that("test transfer function - no login", {
+  skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
   expect_error(wf_transfer())

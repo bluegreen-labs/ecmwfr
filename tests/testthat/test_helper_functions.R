@@ -1,6 +1,7 @@
 # Test ancillary functions which help in (batch) downloading
 
 test_that("create tests archetype", {
+  skip_on_cran()
 
   # format request
   my_request <- list(stream = "oper",

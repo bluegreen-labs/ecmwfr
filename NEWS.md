@@ -1,3 +1,8 @@
+# ecmwfr 1.2.2
+
+* automatic user detection from keyring user list
+* obfuscate api key on command line
+
 # ecwmfr 1.2.1
 
 * disabled all unit tests on CRAN

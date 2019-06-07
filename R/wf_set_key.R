@@ -49,7 +49,8 @@ wf_set_key <- function(user, key, service){
     browseURL(wf_key_page(service))
     message("Login or register to get a key")
     user <- readline("User ID / email: ")
-    key <- readline("API key: ")
+    key <- getPass::getPass(msg = "API key: ")
+    if (is.null(key)) stop("No key supplied.")
   }
 
   # check login

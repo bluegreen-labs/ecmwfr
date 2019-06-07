@@ -131,7 +131,7 @@ ecmwf_running <- function(url){
 }
 
 # builds keychain service name from service
-make_key_service <- function(service) {
+make_key_service <- function(service = "") {
   paste("ecmwfr", service, sep = "_")
 }
 
@@ -175,4 +175,15 @@ new_archetype <- function(args, body) {
   f <- rlang::new_function(args, body)
   class(f) <- c("ecmwfr_archetype", class(f))
   f
+}
+
+
+# Creates a script to then run as a job
+make_script <- function(call, name) {
+  script <- tempfile()
+
+  call$job_name <- NULL
+
+  lines <- writeLines(paste0("library(ecmwfr)\n", name, " <- ", paste0(deparse(call), collapse = "")), script)
+  return(script)
 }

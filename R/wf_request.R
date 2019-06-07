@@ -14,7 +14,10 @@
 #' @param transfer logical, download data TRUE or FALSE (default = TRUE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
+#' @param job_name optional name to use as an RStudio job and as output variable
+#'  name
 #' @param verbose show feedback on processing
+
 #' @return a download query staging url or (invisible) filename of the file on
 #' your local disc
 #' @keywords data download, climate, re-analysis
@@ -28,7 +31,7 @@
 #' # set key
 #' wf_set_key(user = "test@mail.com", key = "123")
 #'
-#' request <-  = list(stream = "oper",
+#' request <- list(stream = "oper",
 #'    levtype = "sfc",
 #'    param = "167.128",
 #'    dataset = "interim",
@@ -44,6 +47,11 @@
 #'
 #' # demo query
 #' wf_request(request = request, user = "test@mail.com")
+#'
+#' # Run as an RStudio Job. When finished, will create a
+#' # variable named "test" in your environment with the path to
+#' # the downloaded file.
+#' wf_request(request = request, user = "test@mail.com", job_name = "test")
 #'}
 
 wf_request <- function(
@@ -52,8 +60,30 @@ wf_request <- function(
   transfer = TRUE,
   path = tempdir(),
   time_out = 3600,
+  job_name,
   verbose = TRUE
-  ){
+){
+
+  if (!missing(job_name)) {
+    # Evaluates all arguments.
+    call <- match.call()
+    call$path <- path
+    call_list <- lapply(call, eval)
+    call[names(call_list)[-1]] <- call_list[-1]
+
+    script <- make_script(call = call, name = job_name)
+    if (!requireNamespace("rstudioapi", quietly = TRUE)) {
+      stop("Jobs are only supported in RStudio.")
+    }
+
+    if (!rstudioapi::isAvailable("1.2")) {
+      stop("Need at least version 1.2 of RStudio to use jobs. Currently running ",
+           rstudioapi::versionInfo()$version, ".")
+    }
+
+    job <- rstudioapi::jobRunScript(path = script, name = job_name, exportEnv = "R_GlobalEnv")
+    return(invisible(job))
+  }
 
   if(!is.list(request) | is.character(request)) {
     stop("`request` must be a named list. \n",
@@ -62,13 +92,33 @@ wf_request <- function(
   }
 
   # check the login credentials
-  if(missing(user) || missing(request)){
+  if(missing(request)){
     stop("Please provide ECMWF or CDS login credentials and data request!")
+  }
+
+  if (missing(user)) {
+    user <- keyring::key_list()
+    serv <- make_key_service()
+    user <- user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
   }
 
   # checks user login, the request layout and
   # returns the service to use if successful
-  wf_check <- wf_check_request(user, request)
+  wf_check <- lapply(user, function(u) try(wf_check_request(u, request), silent = TRUE))
+  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error",))
+  wf_check <- wf_check[[correct]]
+  user <- user[correct]
+
+  if (verbose) {
+    message("Requesting data to the ", wf_check$service, " service with username ", user)
+  }
+
+
+  if (length(wf_check) == 0) {
+    stop(sprintf("Data identifier %s is not found in Web API or CDS datasets.
+                 Or your login credentials do not match your request.",
+                 request$dataset), call. = FALSE)
+  }
 
   # split out data
   service <- wf_check$service
@@ -93,7 +143,7 @@ wf_request <- function(
         "X-ECMWF-KEY" = key),
       body = request,
       encode = "json"
-      )
+    )
   } else {
     response <- httr::POST(
       sprintf("%s/resources/%s", wf_server(service = "cds"),
@@ -131,10 +181,10 @@ wf_request <- function(
   if(!transfer){
     message("  No download requests will be made, however...\n")
     exit_message(
-        url = ifelse(service == "cds",ct$request_id, ct$href),
-        path = path,
-        file = request$target,
-        service = service)
+      url = ifelse(service == "cds",ct$request_id, ct$href),
+      path = path,
+      file = request$target,
+      service = service)
     return(invisible(ct))
   }
 
@@ -184,7 +234,7 @@ wf_request <- function(
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
     ct <- wf_transfer(url = ifelse(service == "cds",
-                      ct$request_id, ct$href),
+                                   ct$request_id, ct$href),
                       user    = user,
                       service  = service,
                       filename = tmp_file,
@@ -225,7 +275,7 @@ wf_request <- function(
   if(!request$dataset == "mars") {
     wf_delete(user   = user,
               url    = ifelse(service == "cds",
-                               ct$request_id, ct$href),
+                              ct$request_id, ct$href),
               verbose = verbose,
               service = service)
   }

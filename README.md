@@ -5,7 +5,6 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 [![DOI](https://zenodo.org/badge/156325084.svg)](https://zenodo.org/badge/latestdoi/156325084)
-<a href="https://www.buymeacoffee.com/H2wlgqCLO" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" height="21px" ></a>
 
 Programmatic interface to the European Centre for Medium-Range Weather Forecasts
 ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
@@ -150,7 +149,7 @@ API key: abcd1234-foo-bar-98765431-XXXXXXXXXX
 
 ### Setup
 
-If you preferr to use your local keychain (rather than using the `.cdsapirc`
+If you prefer to use your local keychain (rather than using the `.cdsapirc`
 file) you have to save your login information first.  The package does not
 allow you to use your key inline in scripts to limit security issues when
 sharing scripts on github or otherwise.
@@ -175,7 +174,7 @@ wf_set_key(service = "cds")
 
 Before you can download any data you have to make sure to accept the terms and
 conditions here: Before downloading and processing data from CDS please make
-sure you acceppt the terms and conditions which can be found here: [Copernicus
+sure you accept the terms and conditions which can be found here: [Copernicus
 Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
 
 ### Data Requests

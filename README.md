@@ -8,7 +8,7 @@
 
 Programmatic interface to the European Centre for Medium-Range Weather Forecasts
 ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
-and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS'.
+and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS'. Please cite the package in literature as follows: Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). khufkens/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
 
 ## Installation
 
@@ -227,6 +227,10 @@ suggested to split the downloads, e.g., download the data in junks (e.g.,
 month-by-month, or year-by-year). A progress indicator will keep you informed
 on the status of your request. Keep in mind that all data downloaded will be
 buffered in memory limiting the downloads to ~6GB on low end systems.
+
+## References
+
+Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). khufkens/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
 
 ## Acknowledgements
 

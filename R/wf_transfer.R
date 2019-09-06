@@ -91,7 +91,7 @@ wf_transfer <- function(
       return(invisible(ct))
 
     } else if (status_code == "200") {  # Done!
-      message("Downloading file")
+      message("\nDownloading file")
       response <- httr::GET(
         url,
         httr::add_headers(

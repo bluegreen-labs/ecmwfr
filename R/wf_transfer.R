@@ -62,22 +62,53 @@ wf_transfer <- function(
   # download routine depends on service queried
   if(service == "cds") {
     response <- httr::GET(url,
-      httr::authenticate(user, key),
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json"),
-      encode = "json"
+                          httr::authenticate(user, key),
+                          httr::add_headers(
+                            "Accept" = "application/json",
+                            "Content-Type" = "application/json"),
+                          encode = "json"
     )
   } else {
-    response <- httr::GET(
-      url,
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json",
-        "From" = user,
-        "X-ECMWF-KEY" = key),
-      encode = "json"
+    # Webapi
+    response <- retrieve_header(url,
+                                list(
+                                  "Accept" = "application/json",
+                                  "Content-Type" = "application/json",
+                                  "From" = user,
+                                  "X-ECMWF-KEY" = key)
     )
+    status_code <- response[["status_code"]]
+
+    if (httr::http_error(status_code)) {
+      stop("Your requested download failed - check url", call. = FALSE)
+    }
+
+    if (status_code == "202") {  # still processing
+      # Simulated content with the things we need to use.
+      ct <- list(code = status_code,
+                 retry = as.numeric(response$headers$`retry-after`),
+                 href = url)
+      return(invisible(ct))
+
+    } else if (status_code == "200") {  # Done!
+      message("\nDownloading file")
+      response <- httr::GET(
+        url,
+        httr::add_headers(
+          "Accept" = "application/json",
+          "Content-Type" = "application/json",
+          "From" = user,
+          "X-ECMWF-KEY" = key),
+        encode = "json",
+        httr::write_disk(tmp_file, overwrite = TRUE),   # write on disk!
+        httr::progress()
+      )
+
+      return(invisible(list(code = 302,
+                            href = url)))
+    } else {
+      stop("Your requested download had a problem with code ", status_code, call. = FALSE)
+    }
   }
 
   # trap (http) errors on download, return a general error statement

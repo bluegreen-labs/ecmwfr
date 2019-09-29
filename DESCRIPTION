@@ -33,7 +33,8 @@ Imports:
     httr,
     keyring,
     memoise,
-    getPass
+    getPass,
+    curl
 License: AGPL-3
 LazyData: true
 ByteCompile: true

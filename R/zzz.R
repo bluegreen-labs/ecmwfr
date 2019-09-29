@@ -187,3 +187,18 @@ make_script <- function(call, name) {
   lines <- writeLines(paste0("library(ecmwfr)\n", name, " <- ", paste0(deparse(call), collapse = "")), script)
   return(script)
 }
+
+
+# Downlaods only the header information
+retrieve_header <- function(url, headers) {
+  h <- curl::new_handle()
+  curl::handle_setheaders(h, .list = headers)
+  con <- curl::curl(url, handle = h)
+
+  open(con, "rf")
+  head <- curl::handle_data(h)
+  close(con)
+
+  head$headers <- curl::parse_headers_list(head$headers)
+  return(head)
+}

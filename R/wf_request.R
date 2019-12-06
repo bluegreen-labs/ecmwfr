@@ -15,7 +15,7 @@
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @param job_name optional name to use as an RStudio job and as output variable
-#'  name
+#'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
 
 #' @return a download query staging url or (invisible) filename of the file on
@@ -65,6 +65,11 @@ wf_request <- function(
 ){
 
   if (!missing(job_name)) {
+
+    if (make.names(job_name) != job_name) {
+      stop("job_name '", job_name, "' is not a syntactically valid variable name.")
+    }
+
     # Evaluates all arguments.
     call <- match.call()
     call$path <- path

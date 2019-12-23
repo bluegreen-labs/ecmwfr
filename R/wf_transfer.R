@@ -156,7 +156,8 @@ wf_transfer <- function(
 
       # download file
       httr::GET(ct$location,
-                  httr::write_disk(tmp_file, overwrite = TRUE))
+                httr::write_disk(tmp_file, overwrite = TRUE),
+                httr::progress())
 
       # return exit statement
       ct$code <- 302

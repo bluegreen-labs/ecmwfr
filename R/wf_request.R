@@ -102,8 +102,8 @@ wf_request <- function(
   }
 
   if (missing(user)) {
-    user <- rbind(keyring::key_list(service = ecmwfr:::make_key_service(c("webapi"))),
-                  keyring::key_list(service = ecmwfr:::make_key_service(c("cds"))))
+    user <- rbind(keyring::key_list(service = make_key_service(c("webapi"))),
+                  keyring::key_list(service = make_key_service(c("cds"))))
     serv <- make_key_service()
     user <- user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
   }

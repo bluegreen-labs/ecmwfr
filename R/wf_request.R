@@ -111,7 +111,7 @@ wf_request <- function(
   # checks user login, the request layout and
   # returns the service to use if successful
   wf_check <- lapply(user, function(u) try(wf_check_request(u, request), silent = TRUE))
-  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error",))
+  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
   wf_check <- wf_check[[correct]]
   user <- user[correct]
 

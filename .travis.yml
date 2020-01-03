@@ -9,6 +9,7 @@ before_install:
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
 
 r:
+  - 3.4
   - release
   - devel
 

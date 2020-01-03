@@ -43,12 +43,16 @@
 #'
 #' }
 wf_archetype <- function(request, dynamic_fields) {
+  if (!requireNamespace("rlang", quietly = TRUE)) {
+    stop("wf_archetype needs the rlang package. Install it with install.packages(\"rlang\")")
+  }
+
   # check the request statement
   if(missing(request)){
     stop("not a request")
   }
 
-  if(missing(request)){
+  if(missing(dynamic_fields)){
     stop("missing dynamic_fields")
   }
 

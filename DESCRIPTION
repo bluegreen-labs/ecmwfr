@@ -46,9 +46,7 @@ Suggests:
     raster,
     maps,
     ncdf4,
-    stars,
     knitr,
-    stats,
     rlang,
     rstudioapi,
     jsonlite

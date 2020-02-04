@@ -2,6 +2,9 @@
 
 * automatic user detection from keyring user list
 * obfuscate api key on command line
+* add progress bar to all services
+* add service name to keychain
+* fix comma issue in CDS parser
 
 # ecwmfr 1.2.1
 

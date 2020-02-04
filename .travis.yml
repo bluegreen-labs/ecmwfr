@@ -4,13 +4,12 @@ cache: packages
 warnings_are_errors: false
 before_install:
   - sudo apt-get install -y udunits-bin libudunits2-dev
-  - sudo add-apt-repository ppa:chris-lea/libsodium -y
-  - sudo apt-get -qq update
   - sudo apt-get install -y libsodium-dev
   - sudo apt-get install -y libproj-dev libgeos-dev libgdal-dev libgdal1-dev
   - sudo apt-get install -y libnetcdf-dev netcdf-bin
 
 r:
+  - 3.4
   - release
   - devel
 
@@ -25,6 +24,6 @@ after_success:
 env:
   global:
   # webapi key
-  - secure: EGhmZm/vFU9Hh/3Rybbe/z22w6IEKp9OSL23OXpNQw0YBbbbJsBl6XhiZcCNypTCOBGwRFoRJcBq+L33TVxsOFMOXzXmXCpM3x9rWnad2QGlaF5qT9KKaU06Sn3s1c8s0o/cHf0q9qeN/ncfIH4qQ9wpK5/FaEpsJ8Sdol0cXgjH+/BfCt4joPq2ujiWVPXK0oQ2vz6mBCaa03OGoz3+tcThXA66IghkBw719/1Wmrdf4P5AczOTyUQr055fMc8RtllWozFcTSIFWLCHXrgPaTR5AONGTt9n/szDngxSO2DQWQbllhb/0wo38WPayiWJ8HAW11thq8Npg6wXHQjesZXGgWOjPq12t0a/QH+qLxC3oa6njrrTBdH+CelnkKrA2h5CzoREbxrG8NiFxc2LdVgf2WcPCYBqJFOPHTZS8DZApm+jJ9kSNsZ2UTZvcsHqpkflUqPTRjq+IUlVSYIj4/SsisZo00gVujJ9LZf7SHcImriKZ1ogsTz3uxwKu/8zFEWGDnAvwut4kQGwTXI6jdnXjX+FfakNANZjxwnqCMqyMSa5mZ+owYOUlSHLd/+8+KeRTapm8efRnx7OHbDGciFlgOV3vWQ9stdDBkqC7ZrAgY/NcpafI22NBphJTTem6pJJcGRgSKQedbYP6InCG/K/ZZlVmKLICdwIWMSQtJA=
+  - secure: bwf0It1qxEYvzztmfF4UHcgVU4DwqUHO4EEzAjxXv+yktXgFb/LKIlhufbV55SE5ojfefUPdcILy+UGt/zX90PBDabKvmjooM2Y78i7HmnI7TJbv8aPFGJvn0Nq375AIk1SNhxX/bWf83fc4WLlVvUaWSzNgyaquzFX0nzs6QRxlYowbbYu0SLbHtygY3KjUsm45DoYKr8pTw5PMezCUI5rmjNIs/uIOg+gYb/AZThk2CNeX/6zMmfm9Rcs4m/BqJpwQ8PY7e9ColaSj36waFWneQuhZlgO61uIhGIrVTYrnhN0Cf4sZpp8L2EQ9UmPHwALCQ7msgZm5R5W1bN8lwMIh0e6yCS88IqHklZ+tJjEday+Vn9sLt/+x961KUg2bSMMTKtbdnJM6G3Y1QUchQq3hbT2/AihLI/NegG2pBmVshH1KZHCaZSpc9rdS1XZ3hWTMKZooEmEMLvqF3bnq5WMyQwKwCED23jB4h4wYNR/QK4KQ/Ol+Tdx3BP6Y+6QZpiMeXfzaRV6wTUvlEXBXuKahu80TQaayp7r45E90KJjSP2BB1uvL1jlhBEyizdLLnyduuG0drLm/yPYNhjCy4yPCAOZXwJ3aaI0BXx3oCywihsqm50LZgNq5W33iqr5op5IBwK2tHX1A1luah2KJuD9wJUBuxDNtKYd7PqzyZJ0=
   # cds key
   - secure: mCIR7qsGTKaqTCHNEZkcEBzf0oqBI1o0szgKrOY8EyOb8l8ByPYjpn8KWa2nLnctYDVLarm2NBcIyWD56ehMeKO8CC3xmwmYZMOrfBNUS+s85E6zy9cnn521wAvq3LztiYwuLM76O0CD9MVBxfUKFOlececlfX7dkzsRWi7NWYT3tERyDr7axiVxhkAfawNUD3l/rSnCouL9er9cOMs3qTfq9PDMh7CxM5IKvWzJu16HNtC5JV2TqNWkGyeIiinULK3TfkNiMjBYAeP926le/oVIZmMcAvmX52+GT9ZUpnGREAUuhUdjOJw8JwpNOIlcmQwipujXFAp2ew0ok6UlkVaLURyq/vMH43fnjKa8mqQRfQ0Nd22qQY+NHyry+afVfG/c1F7I8jStPn3GDZqo8dyjoctg7bn17GnqwZsXDzNd74RObDtqqHfZIxsgNk0EV+A3RwDqBVG9J0YCJFeVgSDFMjRlUvqzlw1rXtUDcgdgkRhNkv6Zfnc44mxCwCb0RaFmMS33GIvl9UlCoAaoZutbdm2TcYt6pSugkl/a8M7lnNkJS8izWB3rtBIFoqYuWlp++XnC5YyRA22HFr6mG+WA7+HFKsag4ubs02LS3nzq79pBt1yGxQ/y+6lGq8WhfdUbW8kpTzsc2G5uYTMw/UlVT6+iPaLSsPJ/VGdortE=

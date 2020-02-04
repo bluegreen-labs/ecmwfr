@@ -84,6 +84,9 @@ python_to_list <- function(python_text) {
     c_brackets <- substr(c_brackets, 1, nchar(c_brackets)-1)
   }
 
+  # Remove trailing commas (",]")
+  c_brackets <- gsub(",]", "]", c_brackets)
+
   # read in data as list
   c_list <- jsonlite::fromJSON(paste0("{",c_brackets,"}"))
 

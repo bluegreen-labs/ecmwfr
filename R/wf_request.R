@@ -15,7 +15,7 @@
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @param job_name optional name to use as an RStudio job and as output variable
-#'  name
+#'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
 
 #' @return a download query staging url or (invisible) filename of the file on
@@ -65,6 +65,11 @@ wf_request <- function(
 ){
 
   if (!missing(job_name)) {
+
+    if (make.names(job_name) != job_name) {
+      stop("job_name '", job_name, "' is not a syntactically valid variable name.")
+    }
+
     # Evaluates all arguments.
     call <- match.call()
     call$path <- path
@@ -97,7 +102,8 @@ wf_request <- function(
   }
 
   if (missing(user)) {
-    user <- keyring::key_list()
+    user <- rbind(keyring::key_list(service = make_key_service(c("webapi"))),
+                  keyring::key_list(service = make_key_service(c("cds"))))
     serv <- make_key_service()
     user <- user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
   }
@@ -105,7 +111,7 @@ wf_request <- function(
   # checks user login, the request layout and
   # returns the service to use if successful
   wf_check <- lapply(user, function(u) try(wf_check_request(u, request), silent = TRUE))
-  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error",))
+  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
   wf_check <- wf_check[[correct]]
   user <- user[correct]
 

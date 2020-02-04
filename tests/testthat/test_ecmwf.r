@@ -45,9 +45,9 @@ test_that("set, get secret key",{
 
   # failed set keys commands
   expect_error(wf_set_key(key = "XXXX",
-             service = "webapi"))
+                          service = "webapi"))
   expect_error(wf_set_key(user = "khrdev@outlook.com",
-             service = "webapi"))
+                          service = "webapi"))
   expect_error(wf_set_key(user = "khrdev@outlook.com"))
 })
 
@@ -158,8 +158,8 @@ test_that("test request (transfer) function - no transfer", {
   expect_message(wf_delete(user = "khrdev@outlook.com",
                            url = ct$href))
   expect_silent(wf_delete(user = "khrdev@outlook.com",
-                           url = ct2$href,
-                           verbose = FALSE))
+                          url = ct2$href,
+                          verbose = FALSE))
 })
 
 test_that("test request (transfer) function - no email", {
@@ -193,11 +193,11 @@ test_that("test request (transfer) function", {
   skip_if(server_check)
   expect_message(
     wf_request(
-    user = "khrdev@outlook.com",
-    transfer = TRUE,
-    request = my_request,
-    time_out = 180)
-    )
+      user = "khrdev@outlook.com",
+      transfer = TRUE,
+      request = my_request,
+      time_out = 180)
+  )
 })
 
 # webapi product info
@@ -226,18 +226,18 @@ test_that("test request (transfer) function - larger download", {
 
   # large request
   large_request <- list(stream = "oper",
-                 levtype = "sfc",
-                 param = "167.128",
-                 dataset = "interim",
-                 step = "0",
-                 grid = "0.75/0.75",
-                 time = "00",
-                 date = "2014-07-01",
-                 type = "an",
-                 class = "ei",
-                 area = "50/10/55/15",
-                 format = "netcdf",
-                 target = "tmp.nc")
+                        levtype = "sfc",
+                        param = "167.128",
+                        dataset = "interim",
+                        step = "0",
+                        grid = "0.75/0.75",
+                        time = "00",
+                        date = "2014-07-01",
+                        type = "an",
+                        class = "ei",
+                        area = "50/10/55/15",
+                        format = "netcdf",
+                        target = "tmp.nc")
 
   expect_message(wf_request(
     user = "khrdev@outlook.com",
@@ -252,16 +252,16 @@ test_that("check request - no dataset field", {
   skip_if(server_check)
 
   my_request <- list(stream = "oper",
-                        levtype = "sfc",
-                        param = "167.128",
-                        step = "0",
-                        grid = "0.75/0.75",
-                        time = "00",
-                        date = "2014-07-01",
-                        type = "an",
-                        class = "ei",
-                        area = "51/0/50/1",
-                        format = "netcdf")
+                     levtype = "sfc",
+                     param = "167.128",
+                     step = "0",
+                     grid = "0.75/0.75",
+                     time = "00",
+                     date = "2014-07-01",
+                     type = "an",
+                     class = "ei",
+                     area = "51/0/50/1",
+                     format = "netcdf")
   expect_error(
     wf_check_request(
       user = "khrdev@outlook.com",
@@ -288,17 +288,17 @@ test_that("check mars request - no target", {
   skip_if(server_check)
 
   my_request <- list(stream = "oper",
-                        levtype = "sfc",
-                        param = "167.128",
-                        dataset = "mars",
-                        step = "0",
-                        grid = "0.75/0.75",
-                        time = "00",
-                        date = "2014-07-01",
-                        type = "an",
-                        class = "ei",
-                        area = "50/10/61/21",
-                        format = "netcdf")
+                     levtype = "sfc",
+                     param = "167.128",
+                     dataset = "mars",
+                     step = "0",
+                     grid = "0.75/0.75",
+                     time = "00",
+                     date = "2014-07-01",
+                     type = "an",
+                     class = "ei",
+                     area = "50/10/61/21",
+                     format = "netcdf")
   expect_error(
     wf_check_request(
       user = "khrdev@outlook.com",
@@ -312,16 +312,16 @@ test_that("check request - no netcdf grid specified", {
   skip_if(server_check)
 
   my_request <- list(stream = "oper",
-                        levtype = "sfc",
-                        param = "167.128",
-                        dataset = "mars",
-                        step = "0",
-                        time = "00",
-                        date = "2014-07-01",
-                        type = "an",
-                        class = "ei",
-                        area = "50/10/55/15",
-                        format = "netcdf")
+                     levtype = "sfc",
+                     param = "167.128",
+                     dataset = "mars",
+                     step = "0",
+                     time = "00",
+                     date = "2014-07-01",
+                     type = "an",
+                     class = "ei",
+                     area = "50/10/55/15",
+                     format = "netcdf")
   expect_error(
     wf_check_request(
       user = "khrdev@outlook.com",
@@ -335,21 +335,43 @@ test_that("check request - bad credentials", {
   skip_if(server_check)
 
   my_request <- list(stream = "oper",
-                        levtype = "sfc",
-                        param = "167.128",
-                        dataset = "interim",
-                        step = "0",
-                        grid = "0.75/0.75",
-                        time = "00",
-                        date = "2014-07-01",
-                        type = "an",
-                        class = "ei",
-                        area = "50/10/61/21",
-                        format = "netcdf",
-                        target = "tmp.nc")
+                     levtype = "sfc",
+                     param = "167.128",
+                     dataset = "interim",
+                     step = "0",
+                     grid = "0.75/0.75",
+                     time = "00",
+                     date = "2014-07-01",
+                     type = "an",
+                     class = "ei",
+                     area = "50/10/61/21",
+                     format = "netcdf",
+                     target = "tmp.nc")
   expect_error(
     wf_check_request(
       user = "zzz@zzz.zzz",
       request = my_request)
   )
+})
+
+test_that("job_name has to be valid", {
+  my_request <- list(stream = "oper",
+                     levtype = "sfc",
+                     param = "167.128",
+                     dataset = "interim",
+                     step = "0",
+                     grid = "0.75/0.75",
+                     time = "00",
+                     date = "2014-07-01",
+                     type = "an",
+                     class = "ei",
+                     area = "50/10/61/21",
+                     format = "netcdf",
+                     target = "tmp.nc")
+
+  expect_error(
+    wf_request(my_request,
+               user = "khrdev@outlook.com",
+               job_name = "1"),
+    "job_name '1' is not a syntactically valid variable name.")
 })

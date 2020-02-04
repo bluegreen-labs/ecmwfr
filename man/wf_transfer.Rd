@@ -20,8 +20,6 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 \item{filename}{filename to use for the downloaded data}
 
 \item{verbose}{show feedback on data transfers}
-
-\item{...}{forwarded to \code{\link[ecmwfr]{wf_transfer}}}
 }
 \value{
 a netCDF of data on disk as specified by a

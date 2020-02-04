@@ -22,7 +22,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 \code{3*3600} seconds).}
 
 \item{job_name}{optional name to use as an RStudio job and as output variable
-name}
+name. It has to be a syntactically valid name.}
 
 \item{verbose}{show feedback on processing}
 }

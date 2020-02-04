@@ -10,7 +10,6 @@
 #' @param path path were to store the downloaded data
 #' @param filename filename to use for the downloaded data
 #' @param verbose show feedback on data transfers
-#' @param ... forwarded to \code{\link[ecmwfr]{wf_transfer}}
 #' @return a netCDF of data on disk as specified by a
 #' \code{\link[ecmwfr]{wf_request}}
 #' @keywords data download, climate, re-analysis

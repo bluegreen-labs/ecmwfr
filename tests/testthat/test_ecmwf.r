@@ -355,6 +355,9 @@ test_that("check request - bad credentials", {
 })
 
 test_that("job_name has to be valid", {
+  skip_on_cran()
+  skip_if(login_check)
+  skip_if(server_check)
   my_request <- list(stream = "oper",
                      levtype = "sfc",
                      param = "167.128",

@@ -5,6 +5,7 @@
 * add progress bar to all services
 * add service name to keychain
 * fix comma issue in CDS parser
+* fixed stray documentation for non existing function argument
 
 # ecwmfr 1.2.1
 

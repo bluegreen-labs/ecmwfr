@@ -67,7 +67,7 @@ to identify possible problems." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@ to identify possible problems.</p>
     </div>
 
     <pre class="usage"><span class='fu'>wf_request</span>(<span class='no'>request</span>, <span class='no'>user</span>, <span class='kw'>transfer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
-  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3600</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>time_out</span> <span class='kw'>=</span> <span class='fl'>3600</span>, <span class='no'>job_name</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,6 +169,11 @@ used to retrieve the token set by <code><a href='wf_set_key.html'>wf_set_key</a>
 <code>3*3600</code> seconds).</p></td>
     </tr>
     <tr>
+      <th>job_name</th>
+      <td><p>optional name to use as an RStudio job and as output variable
+name. It has to be a syntactically valid name.</p></td>
+    </tr>
+    <tr>
       <th>verbose</th>
       <td><p>show feedback on processing</p></td>
     </tr>
@@ -187,28 +192,32 @@ your local disc</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-</div># NOT RUN {
-# set key
-wf_set_key(user = "test@mail.com", key = "123")
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># set key</span>
+<span class='fu'><a href='wf_set_key.html'>wf_set_key</a></span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>"123"</span>)
 
-request <-  = list(stream = "oper",
-   levtype = "sfc",
-   param = "167.128",
-   dataset = "interim",
-   step = "0",
-   grid = "0.75/0.75",
-   time = "00",
-   date = "2014-07-01/to/2014-07-02",
-   type = "an",
-   class = "ei",
-   area = "50/10/51/11",
-   format = "netcdf",
-   target = "tmp.nc")
+<span class='no'>request</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='st'>"oper"</span>,
+   <span class='kw'>levtype</span> <span class='kw'>=</span> <span class='st'>"sfc"</span>,
+   <span class='kw'>param</span> <span class='kw'>=</span> <span class='st'>"167.128"</span>,
+   <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"interim"</span>,
+   <span class='kw'>step</span> <span class='kw'>=</span> <span class='st'>"0"</span>,
+   <span class='kw'>grid</span> <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>,
+   <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00"</span>,
+   <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-02"</span>,
+   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"an"</span>,
+   <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>,
+   <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"50/10/51/11"</span>,
+   <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
+   <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"tmp.nc"</span>)
 
-# demo query
-wf_request(request = request, user = "test@mail.com")
-# }
-</pre>
+<span class='co'># demo query</span>
+<span class='fu'>wf_request</span>(<span class='kw'>request</span> <span class='kw'>=</span> <span class='no'>request</span>, <span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>)
+
+<span class='co'># Run as an RStudio Job. When finished, will create a</span>
+<span class='co'># variable named "test" in your environment with the path to</span>
+<span class='co'># the downloaded file.</span>
+<span class='fu'>wf_request</span>(<span class='kw'>request</span> <span class='kw'>=</span> <span class='no'>request</span>, <span class='kw'>user</span> <span class='kw'>=</span> <span class='st'>"test@mail.com"</span>, <span class='kw'>job_name</span> <span class='kw'>=</span> <span class='st'>"test"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

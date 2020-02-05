@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
       <h1>CDS</h1>
                         <h4 class="author">Reto Stauffer, Koen Hufkens</h4>
             
-            <h4 class="date">2019-04-29</h4>
+            <h4 class="date">2020-02-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/cds_vignette.Rmd"><code>vignettes/cds_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_vignette.Rmd</code></div>
@@ -120,24 +120,22 @@
 <p>CDS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variables</code> to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code> extent, and other details.</p>
 <p>The request syntax is available for a range of different CDS data sets. Check the <a href="https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset">CDS Dataset</a> website to see a list of available datasets and to check whether API requests are allowed or not (go to <em>Download Data</em>, select some data, show request by clicking <em>Show API Request</em> (red button, bottom of page).</p>
 <p>The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; python to list (or ‘Mars to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
-<div class="figure">
-<img src="https://user-images.githubusercontent.com/1354258/56429618-def12080-62c3-11e9-90e4-0954e10d06f3.gif">
-</div>
+<p><img src="https://user-images.githubusercontent.com/1354258/56429618-def12080-62c3-11e9-90e4-0954e10d06f3.gif"></p>
 <div id="an-era-5-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#an-era-5-example" class="anchor"></a>An ERA-5 example</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Specify the data set</span>
-request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,
-                <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,
-                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,
-                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,
-                <span class="st">"month"</span>          =<span class="st"> "04"</span>,
-                <span class="st">"day"</span>            =<span class="st"> "04"</span>,
-                <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,
-                <span class="st">"area"</span>           =<span class="st"> "70/-20/30/60"</span>,
-                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,
-                <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Specify the data set</span></a>
+<a class="sourceLine" id="cb1-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span>        =<span class="st"> "reanalysis-era5-pressure-levels"</span>,</a>
+<a class="sourceLine" id="cb1-3" title="3">                <span class="st">"product_type"</span>   =<span class="st"> "reanalysis"</span>,</a>
+<a class="sourceLine" id="cb1-4" title="4">                <span class="st">"variable"</span>       =<span class="st"> "temperature"</span>,</a>
+<a class="sourceLine" id="cb1-5" title="5">                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,</a>
+<a class="sourceLine" id="cb1-6" title="6">                <span class="st">"year"</span>           =<span class="st"> "2000"</span>,</a>
+<a class="sourceLine" id="cb1-7" title="7">                <span class="st">"month"</span>          =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb1-8" title="8">                <span class="st">"day"</span>            =<span class="st"> "04"</span>,</a>
+<a class="sourceLine" id="cb1-9" title="9">                <span class="st">"time"</span>           =<span class="st"> "00:00"</span>,</a>
+<a class="sourceLine" id="cb1-10" title="10">                <span class="st">"area"</span>           =<span class="st"> "70/-20/30/60"</span>,</a>
+<a class="sourceLine" id="cb1-11" title="11">                <span class="st">"format"</span>         =<span class="st"> "netcdf"</span>,</a>
+<a class="sourceLine" id="cb1-12" title="12">                <span class="st">"target"</span>         =<span class="st"> "era5-demo.nc"</span>)</a></code></pre></div>
 <p>This is the “demo” request and it specifies the following:</p>
 <ul>
 <li>
@@ -159,20 +157,20 @@ request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdoc
 </li>
 </ul>
 <p>The data set as specified above can be downloaded calling the <code>wf_request</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Start downloading the data, the path of the file</span>
-<span class="co"># will be returned as a variable (ncfile)</span>
-ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user =</span> <span class="st">"2088"</span>,
-                      <span class="dt">request =</span> request,   
-                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  
-                      <span class="dt">path =</span> <span class="st">"~"</span>,
-                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Start downloading the data, the path of the file</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># will be returned as a variable (ncfile)</span></a>
+<a class="sourceLine" id="cb2-3" title="3">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user =</span> <span class="st">"2088"</span>,</a>
+<a class="sourceLine" id="cb2-4" title="4">                      <span class="dt">request =</span> request,   </a>
+<a class="sourceLine" id="cb2-5" title="5">                      <span class="dt">transfer =</span> <span class="ot">TRUE</span>,  </a>
+<a class="sourceLine" id="cb2-6" title="6">                      <span class="dt">path =</span> <span class="st">"~"</span>,</a>
+<a class="sourceLine" id="cb2-7" title="7">                      <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
 <p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>.</p>
 <p>Quick check:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Open NetCDF file and plot</span>
-r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(ncfile)
-raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(r, <span class="dt">main =</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span>)
-maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/maps/topics/map">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Open NetCDF file and plot</span></a>
+<a class="sourceLine" id="cb3-2" title="2">r &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/raster">raster</a></span>(ncfile)</a>
+<a class="sourceLine" id="cb3-3" title="3">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(r, <span class="dt">main =</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4">maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/maps/topics/map">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 </div>

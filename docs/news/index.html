@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ecmwfr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -121,52 +121,88 @@
       <small>Source: <a href='https://github.com/khufkens/ecmwfr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ecwmfr-1-2-1" class="section level1">
+    <div id="ecmwfr-122" class="section level1">
 <h1 class="page-header">
-<a href="#ecwmfr-1-2-1" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
+<a href="#ecmwfr-122" class="anchor"></a>ecmwfr 1.2.2<small> Unreleased </small>
+</h1>
+<ul>
+<li>automatic user detection from keyring user list</li>
+<li>obfuscate api key on command line</li>
+<li>add progress bar to all services</li>
+<li>add service name to keychain</li>
+<li>fix comma issue in CDS parser</li>
+<li>fixed stray documentation for non existing function argument</li>
+</ul>
+</div>
+    <div id="ecwmfr-121" class="section level1">
+<h1 class="page-header">
+<a href="#ecwmfr-121" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
+</h1>
+<ul>
+<li>disabled all unit tests on CRAN</li>
+<li>Adding in support for rstudio batch processing</li>
+</ul>
+</div>
+    <div id="ecwmfr-121-1" class="section level1">
+<h1 class="page-header">
+<a href="#ecwmfr-121-1" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
 </h1>
 <ul>
 <li>disabled all networked unit tests on CRAN</li>
 </ul>
 </div>
-    <div id="ecwmfr-1-2-0" class="section level1">
+    <div id="ecwmfr-120" class="section level1">
 <h1 class="page-header">
-<a href="#ecwmfr-1-2-0" class="anchor"></a>ecwmfr 1.2.0<small> 2019-04-19 </small>
+<a href="#ecwmfr-120" class="anchor"></a>ecwmfr 1.2.0<small> 2019-04-19 </small>
 </h1>
 <ul>
-<li>key management (breaking) changes</li>
+<li>key management (breaking) changes
+<ul>
 <li>inclusion of a new interactive way to set API keys</li>
 <li>unlock checks</li>
+</ul>
+</li>
 <li>reshuffling the default order of <code><a href="../reference/wf_request.html">wf_request()</a></code> as to accomodate pipes</li>
 <li>new contributor Elio Campitelli lead dynamic query code <code><a href="../reference/wf_archetype.html">wf_archetype()</a></code>
-</li>
+<ul>
 <li>allows for archetype functions to be created from a normal MARS request</li>
 <li>helps with recurrent queries with an overal similar structure</li>
+</ul>
+</li>
 <li>RStudio Addins for MARS and python based requests to list items</li>
 <li>logo on website</li>
 <li>documentation updated</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-1-0" class="section level1">
+    <div id="ecmwfr-110" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-1-1-0" class="anchor"></a>ecmwfr 1.1.0<small> 2019-02-06 </small>
+<a href="#ecmwfr-110" class="anchor"></a>ecmwfr 1.1.0<small> 2019-02-06 </small>
 </h1>
 <ul>
-<li>inclusion of Copernicus CDS services by Reto Tauffer</li>
+<li>inclusion of Copernicus CDS services by Reto Tauffer
+<ul>
 <li>now covering most of the ECMWF climate data products</li>
-<li>consolidation of code by Reto Tauffer</li>
+</ul>
+</li>
+<li>consolidation of code by Reto Tauffer
+<ul>
 <li>integration in <code>wf_*()</code> vocabulary</li>
 <li>simplification of code and error messages</li>
-<li>automated checks of the request statements</li>
+</ul>
+</li>
+<li>automated checks of the request statements
+<ul>
 <li>ensures a consistent vocabulary with limited parameters</li>
+</ul>
+</li>
 <li>unit checks don’t fail upon unavailable service</li>
 <li>changed order of arguments in <code><a href="../reference/wf_request.html">wf_request()</a></code>
 </li>
 </ul>
 </div>
-    <div id="ecmwfr-1-0-1" class="section level1">
+    <div id="ecmwfr-101" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-1-0-1" class="anchor"></a>ecmwfr 1.0.1<small> 2019-01-19 </small>
+<a href="#ecmwfr-101" class="anchor"></a>ecmwfr 1.0.1<small> 2019-01-19 </small>
 </h1>
 <ul>
 <li>accidental CRAN violation fixed</li>
@@ -175,18 +211,18 @@
 <li>checks for binary downloads (larger files)</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-0-0" class="section level1">
+    <div id="ecmwfr-100" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-1-0-0" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
+<a href="#ecmwfr-100" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
 </h1>
 <ul>
 <li>major version</li>
 <li>CRAN release</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-3" class="section level1">
+    <div id="ecmwfr-003" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-0-0-3" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
+<a href="#ecmwfr-003" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>unit checks with encrypted key</li>
@@ -196,17 +232,17 @@
 <li>rOpenSci syntax and ok, gp() ok</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-2" class="section level1">
+    <div id="ecmwfr-002" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-0-0-2" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
+<a href="#ecmwfr-002" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>working verion, yeah!</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-1" class="section level1">
+    <div id="ecmwfr-001" class="section level1">
 <h1 class="page-header">
-<a href="#ecmwfr-0-0-1" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
+<a href="#ecmwfr-001" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>experimental release</li>
@@ -219,14 +255,16 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#ecwmfr-1-2-1">1.2.1</a></li>
-        <li><a href="#ecwmfr-1-2-0">1.2.0</a></li>
-        <li><a href="#ecmwfr-1-1-0">1.1.0</a></li>
-        <li><a href="#ecmwfr-1-0-1">1.0.1</a></li>
-        <li><a href="#ecmwfr-1-0-0">1.0.0</a></li>
-        <li><a href="#ecmwfr-0-0-3">0.0.3</a></li>
-        <li><a href="#ecmwfr-0-0-2">0.0.2</a></li>
-        <li><a href="#ecmwfr-0-0-1">0.0.1</a></li>
+        <li><a href="#ecmwfr-122">1.2.2</a></li>
+        <li><a href="#ecwmfr-121">1.2.1</a></li>
+        <li><a href="#ecwmfr-121-1">1.2.1</a></li>
+        <li><a href="#ecwmfr-120">1.2.0</a></li>
+        <li><a href="#ecmwfr-110">1.1.0</a></li>
+        <li><a href="#ecmwfr-101">1.0.1</a></li>
+        <li><a href="#ecmwfr-100">1.0.0</a></li>
+        <li><a href="#ecmwfr-003">0.0.3</a></li>
+        <li><a href="#ecmwfr-002">0.0.2</a></li>
+        <li><a href="#ecmwfr-001">0.0.1</a></li>
       </ul>
     </div>
   </div>

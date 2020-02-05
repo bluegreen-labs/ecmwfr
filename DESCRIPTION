@@ -38,7 +38,7 @@ Imports:
 License: AGPL-3
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests:
     rmarkdown,
     covr,

@@ -36,7 +36,3 @@ wf_services("test@mail.com")
 \code{\link[ecmwfr]{wf_transfer}}
 \code{\link[ecmwfr]{wf_request}}
 }
-\keyword{climate,}
-\keyword{data}
-\keyword{download,}
-\keyword{re-analysis}

@@ -8,7 +8,6 @@
 #' @param verbose show feedback on processing
 #' @param service character, one of \code{ecmwf} or \code{cds} depending
 #' on the data set to be deleted.
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}

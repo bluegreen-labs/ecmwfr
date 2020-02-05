@@ -8,7 +8,6 @@
 #' @param service service associated with credentials ("webapi" or "cds")
 #'
 #' @return It invisibly returns the user.
-#' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
 #' @export
 #' @author Koen Kufkens

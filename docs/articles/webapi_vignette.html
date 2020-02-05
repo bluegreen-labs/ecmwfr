@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WebAPI • ecmwfr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="WebAPI">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/khufkens/ecmwfr">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -83,6 +84,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -129,7 +131,7 @@
 <p>The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; Mars to list (or ‘Python to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
 <p><img src="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># this is an example of a request</span></a>
-<a class="sourceLine" id="cb3-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">stream  =</span> <span class="st">"oper"</span>,</a>
+<a class="sourceLine" id="cb3-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">stream  =</span> <span class="st">"oper"</span>,</a>
 <a class="sourceLine" id="cb3-3" title="3">                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,</a>
 <a class="sourceLine" id="cb3-4" title="4">                   <span class="dt">param   =</span> <span class="st">"167.128"</span>,</a>
 <a class="sourceLine" id="cb3-5" title="5">                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,</a>
@@ -148,23 +150,23 @@
 <a class="sourceLine" id="cb3-18" title="18">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
 <a class="sourceLine" id="cb3-19" title="19">           <span class="dt">request  =</span> request,</a>
 <a class="sourceLine" id="cb3-20" title="20">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-21" title="21">           <span class="dt">path     =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(),</a>
+<a class="sourceLine" id="cb3-21" title="21">           <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(),</a>
 <a class="sourceLine" id="cb3-22" title="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>The download operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on <a href="https://apps.ecmwf.int/webmars/joblist/">the ECMWF website</a>, and provided with a download url which can be used with the <code>wt_transfer()</code> funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!</p>
 <p>If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/stack">stack</a></span>(ncfile)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(s)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span>(ncfile)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(s)</a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; class      : RasterStack </span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; dimensions : 55, 97, 5335, 1  (nrow, ncol, ncell, nlayers)</span></a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; resolution : 0.75, 0.75  (x, y)</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; extent     : -27.375, 45.375, 32.625, 73.875  (xmin, xmax, ymin, ymax)</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 </span></a>
 <a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; names      :    layer </span></a>
 <a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; min values : 268.5063 </span></a>
 <a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; max values : 305.4419</span></a>
 <a class="sourceLine" id="cb4-11" title="11"></a>
-<a class="sourceLine" id="cb4-12" title="12">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(s[[<span class="dv">1</span>]], <span class="dt">main =</span> <span class="st">"2 meter temperature (Kelvin)"</span>)</a>
-<a class="sourceLine" id="cb4-13" title="13">maps<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/maps/topics/map">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-12" title="12">raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(s[[<span class="dv">1</span>]], <span class="dt">main =</span> <span class="st">"2 meter temperature (Kelvin)"</span>)</a>
+<a class="sourceLine" id="cb4-13" title="13">maps<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="webapi_vignette_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="ecmwf-mars-requests" class="section level2">
@@ -173,7 +175,7 @@
 <p>The <code>ecmwfr</code> package (<a href="../references/wf_request.html"><code><a href="../reference/wf_request.html">wf_request()</a></code></a>) also allows to submit <em>mars</em> requests. Note that this requires a member state login or a commercial user account!</p>
 <p>The <code>ecmwfr</code> syntax for <em>mars</em> requests is identical to the ones to the public ECMWF API except that one has to specify <code>dataset = "mars"</code>. The example below downloads the 2 meter temperature forecast (parameter <code>167</code>) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (<code>step</code>). A NetCDF file with a regular <code>0.125 x 0.125</code> degree horizontal resolution for a custom area in northern Europe will be downloaded (<code>area</code>). <strong>Note</strong> that the <code>grid</code> specification <em>is required</em> if <code>format = "netcdf"</code> as grib to netcdf conversion is only able for regular longitude-latitude grids.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># this is an example of a request</span></a>
-<a class="sourceLine" id="cb5-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "mars"</span>,</a>
+<a class="sourceLine" id="cb5-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "mars"</span>,</a>
 <a class="sourceLine" id="cb5-3" title="3">                   <span class="st">"class"</span>   =<span class="st"> "od"</span>,</a>
 <a class="sourceLine" id="cb5-4" title="4">                   <span class="st">"date"</span>    =<span class="st"> "2019-01-22"</span>,</a>
 <a class="sourceLine" id="cb5-5" title="5">                   <span class="st">"expver"</span>  =<span class="st"> "1"</span>,</a>
@@ -201,20 +203,21 @@
 <p>You can list ancillary data such as user information, datasets and services using the following calls.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># user info</span></a>
 <a class="sourceLine" id="cb6-2" title="2">user_info &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_user_info.html">wf_user_info</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(user_info)</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(user_info)</a>
 <a class="sourceLine" id="cb6-4" title="4"></a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="co"># services</span></a>
 <a class="sourceLine" id="cb6-6" title="6">services &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_services.html">wf_services</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(services)</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(services)</a>
 <a class="sourceLine" id="cb6-8" title="8"></a>
 <a class="sourceLine" id="cb6-9" title="9"><span class="co"># datasets</span></a>
 <a class="sourceLine" id="cb6-10" title="10">datasets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_datasets.html">wf_datasets</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(datasets)</a></code></pre></div>
+<a class="sourceLine" id="cb6-11" title="11"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(datasets)</a></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -234,17 +237,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Koen Hufkens.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

@@ -23,6 +23,7 @@ server_check <- !ecmwf_running(wf_server(service = "cds"))
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
+  skip_on_cran()
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     wf_set_key(user = "2088",

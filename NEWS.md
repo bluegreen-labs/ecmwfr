@@ -6,6 +6,7 @@
 * add service name to keychain
 * fix comma issue in CDS parser
 * fixed stray documentation for non existing function argument
+* keyword issue
 
 # ecwmfr 1.2.1
 

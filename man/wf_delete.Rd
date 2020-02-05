@@ -38,7 +38,3 @@ wf_get_key(email = "test@mail.com")
 \author{
 Koen Kufkens
 }
-\keyword{climate,}
-\keyword{data}
-\keyword{download,}
-\keyword{re-analysis}

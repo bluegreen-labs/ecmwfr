@@ -6,7 +6,6 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @return returns a nested list or data frame with the ECMWF services
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}

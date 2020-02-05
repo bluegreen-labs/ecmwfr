@@ -12,7 +12,6 @@
 #' @param verbose show feedback on data transfers
 #' @return a netCDF of data on disk as specified by a
 #' \code{\link[ecmwfr]{wf_request}}
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export

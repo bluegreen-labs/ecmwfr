@@ -22,6 +22,7 @@ server_check <- !ecmwf_running(wf_server(service = "webapi"))
 
 # if server is up, create login
 if(!server_check){
+  skip_on_cran()
   key <- system("echo $KEY", intern = TRUE)
   if(key != "" & key != "$KEY"){
     wf_set_key(user = "khrdev@outlook.com",

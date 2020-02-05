@@ -7,7 +7,6 @@
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @return a data frame with the determined service and url service endpoint
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}},\code{\link[ecmwfr]{wf_request}}
 #' @export

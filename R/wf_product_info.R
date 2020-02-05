@@ -24,7 +24,6 @@
 #'     "reanalysis-era5-single-levels", show = FALSE)
 #'    names(info)
 #' }
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_datasets}}.
 #' @export
 #' @author Reto Stauffer, Koen Hufkens

@@ -20,7 +20,6 @@
 
 #' @return a download query staging url or (invisible) filename of the file on
 #' your local disc
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' @export

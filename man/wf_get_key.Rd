@@ -34,5 +34,3 @@ wf_get_key(user = "test@mail.com")
 \author{
 Koen Kufkens
 }
-\keyword{key}
-\keyword{management}

@@ -6,7 +6,6 @@
 #' @param service service associated with credentials ("webapi" or "cds")
 #' @return the key set using \code{\link[ecmwfr]{wf_set_key}} saved
 #' in the keychain
-#' @keywords key management
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' @export
 #' @author Koen Kufkens

@@ -43,7 +43,3 @@ Shows and returns detailed product information about a specific data set
 \author{
 Reto Stauffer, Koen Hufkens
 }
-\keyword{climate,}
-\keyword{data}
-\keyword{download,}
-\keyword{re-analysis}

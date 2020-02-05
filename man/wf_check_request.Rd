@@ -26,7 +26,3 @@ Check the validaty of a data request, and login credentials.
 \author{
 Koen Kufkens
 }
-\keyword{climate,}
-\keyword{data}
-\keyword{download,}
-\keyword{re-analysis}

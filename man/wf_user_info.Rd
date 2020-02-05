@@ -31,7 +31,3 @@ wf_user_info("test@mail.com")
 \code{\link[ecmwfr]{wf_services}}
 \code{\link[ecmwfr]{wf_datasets}}
 }
-\keyword{climate,}
-\keyword{data}
-\keyword{download,}
-\keyword{re-analysis}

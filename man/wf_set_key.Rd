@@ -41,5 +41,3 @@ wf_get_key()
 \author{
 Koen Kufkens
 }
-\keyword{key}
-\keyword{management}

@@ -5,7 +5,6 @@
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @return returns a data frame with user info
-#' @keywords data download, climate, re-analysis
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_services}}
 #' \code{\link[ecmwfr]{wf_datasets}}

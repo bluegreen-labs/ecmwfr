@@ -120,7 +120,7 @@ wf_transfer <- function(
 
   # write raw data to file from memory
   # if not returned url + passing code
-  if (class(ct) == "raw" && service == "webapi"){
+  if (inherits(ct, "raw") && service == "webapi"){
 
     if(verbose){
       message("- polling server for a data transfer")

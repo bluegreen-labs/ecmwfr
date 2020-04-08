@@ -12,6 +12,7 @@
 ^README\.md$
 ^contact\.md$
 ^cran-comments\.md$
+^review-notes\.md$
 
 # Stuff
 ^.*\.Rproj$

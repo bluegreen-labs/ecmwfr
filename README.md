@@ -3,12 +3,12 @@
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
 [![codecov](https://codecov.io/gh/khufkens/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/ecmwfr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 [![DOI](https://zenodo.org/badge/156325084.svg)](https://zenodo.org/badge/latestdoi/156325084)
 
-Programmatic interface to the European Centre for Medium-Range Weather Forecasts
-['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
-and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS'. Please cite the package in literature as follows: Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). khufkens/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
+Programmatic interface to the two [European Centre for Medium-Range Weather Forecasts](https://www.ecmwf.int/) API services. The package provides easy access to the ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
+and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS' from within R, matching and expanding upon the ECMWF python tools.
 
 ## Installation
 

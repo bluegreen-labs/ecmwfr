@@ -20,3 +20,4 @@
 ^\.Rproj\.user$
 ^\.httr-oauth$
 ^.*-logo\..*$
+^codemeta\.json$

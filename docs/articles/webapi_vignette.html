@@ -91,7 +91,7 @@
       <h1>WebAPI</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2020-02-05</h4>
+            <h4 class="date">2020-04-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/khufkens/ecmwfr/blob/master/vignettes/webapi_vignette.Rmd"><code>vignettes/webapi_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>webapi_vignette.Rmd</code></div>
@@ -108,20 +108,20 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>Before starting save your provided ECMWF key to your local keychain. In this example I use my R development account with the key hidden using Xs. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># set a key to the keychain</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
-<a class="sourceLine" id="cb1-3" title="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,</a>
-<a class="sourceLine" id="cb1-4" title="4">           <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
-<a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co"># you can retrieve the key using</span></a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="kw"><a href="../reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb1-8" title="8"></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co"># the output should be the key you provided</span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co"># in this case represented by the fake X string.</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">           <span class="dt">key =</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">           <span class="dt">service =</span> <span class="st">"webapi"</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># you can retrieve the key using</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/wf_get_key.html">wf_get_key</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># the output should be the key you provided</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># in this case represented by the fake X string.</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></a></code></pre></div>
 <p>Alternatively, you can call the <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code> function with only the service argument. The function will then redirect you to the correct login page where you can find your login credentials, which can be copied and pasted into the command prompt.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># set a key to the keychain</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">service =</span> <span class="st">"webapi"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># set a key to the keychain</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="dt">service =</span> <span class="st">"webapi"</span>)</a></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: <a href="https://apps.ecmwf.int/datasets/licences/general/">https://apps.ecmwf.int/datasets/licences/general/</a>.</p>
 </div>
 <div id="ecmwf-data-requests-public-data-sets" class="section level2">
@@ -130,43 +130,43 @@
 <p>To download data use the <code><a href="../reference/wf_request.html">wf_request()</a></code> function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments.</p>
 <p>The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; Mars to list (or ‘Python to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
 <p><img src="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># this is an example of a request</span></a>
-<a class="sourceLine" id="cb3-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">stream  =</span> <span class="st">"oper"</span>,</a>
-<a class="sourceLine" id="cb3-3" title="3">                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,</a>
-<a class="sourceLine" id="cb3-4" title="4">                   <span class="dt">param   =</span> <span class="st">"167.128"</span>,</a>
-<a class="sourceLine" id="cb3-5" title="5">                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,</a>
-<a class="sourceLine" id="cb3-6" title="6">                   <span class="dt">step    =</span> <span class="st">"0"</span>,</a>
-<a class="sourceLine" id="cb3-7" title="7">                   <span class="dt">grid    =</span> <span class="st">"0.75/0.75"</span>,</a>
-<a class="sourceLine" id="cb3-8" title="8">                   <span class="dt">time    =</span> <span class="st">"00"</span>,</a>
-<a class="sourceLine" id="cb3-9" title="9">                   <span class="dt">date    =</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,</a>
-<a class="sourceLine" id="cb3-10" title="10">                   <span class="dt">type    =</span> <span class="st">"an"</span>,</a>
-<a class="sourceLine" id="cb3-11" title="11">                   <span class="dt">class   =</span> <span class="st">"ei"</span>,</a>
-<a class="sourceLine" id="cb3-12" title="12">                   <span class="dt">area    =</span> <span class="st">"73.5/-27/33/45"</span>,</a>
-<a class="sourceLine" id="cb3-13" title="13">                   <span class="dt">format  =</span> <span class="st">"netcdf"</span>,</a>
-<a class="sourceLine" id="cb3-14" title="14">                   <span class="dt">target  =</span> <span class="st">"tmp.nc"</span>)</a>
-<a class="sourceLine" id="cb3-15" title="15"></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co"># an example download using fw_request()</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co"># using the above request list()</span></a>
-<a class="sourceLine" id="cb3-18" title="18">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
-<a class="sourceLine" id="cb3-19" title="19">           <span class="dt">request  =</span> request,</a>
-<a class="sourceLine" id="cb3-20" title="20">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb3-21" title="21">           <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(),</a>
-<a class="sourceLine" id="cb3-22" title="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># this is an example of a request</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">stream  =</span> <span class="st">"oper"</span>,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                   <span class="dt">levtype =</span> <span class="st">"sfc"</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                   <span class="dt">param   =</span> <span class="st">"167.128"</span>,</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                   <span class="dt">dataset =</span> <span class="st">"interim"</span>,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">                   <span class="dt">step    =</span> <span class="st">"0"</span>,</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">                   <span class="dt">grid    =</span> <span class="st">"0.75/0.75"</span>,</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                   <span class="dt">time    =</span> <span class="st">"00"</span>,</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">                   <span class="dt">date    =</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">                   <span class="dt">type    =</span> <span class="st">"an"</span>,</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">                   <span class="dt">class   =</span> <span class="st">"ei"</span>,</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">                   <span class="dt">area    =</span> <span class="st">"73.5/-27/33/45"</span>,</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">                   <span class="dt">format  =</span> <span class="st">"netcdf"</span>,</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">                   <span class="dt">target  =</span> <span class="st">"tmp.nc"</span>)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># an example download using fw_request()</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co"># using the above request list()</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">ncfile &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">           <span class="dt">request  =</span> request,</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">           <span class="dt">path     =</span> <span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(),</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>The download operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on <a href="https://apps.ecmwf.int/webmars/joblist/">the ECMWF website</a>, and provided with a download url which can be used with the <code>wt_transfer()</code> funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!</p>
 <p>If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span>(ncfile)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(s)</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; class      : RasterStack </span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; dimensions : 55, 97, 5335, 1  (nrow, ncol, ncell, nlayers)</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; resolution : 0.75, 0.75  (x, y)</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; extent     : -27.375, 45.375, 32.625, 73.875  (xmin, xmax, ymin, ymax)</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 </span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; names      :    layer </span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; min values : 268.5063 </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co">#&gt; max values : 305.4419</span></a>
-<a class="sourceLine" id="cb4-11" title="11"></a>
-<a class="sourceLine" id="cb4-12" title="12">raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(s[[<span class="dv">1</span>]], <span class="dt">main =</span> <span class="st">"2 meter temperature (Kelvin)"</span>)</a>
-<a class="sourceLine" id="cb4-13" title="13">maps<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">s &lt;-<span class="st"> </span>raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span>(ncfile)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(s)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; class      : RasterStack </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; dimensions : 55, 97, 5335, 1  (nrow, ncol, ncell, nlayers)</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; resolution : 0.75, 0.75  (x, y)</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; extent     : -27.375, 45.375, 32.625, 73.875  (xmin, xmax, ymin, ymax)</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; names      :    layer </span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; min values : 268.5063 </span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; max values : 305.4419</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">raster<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(s[[<span class="dv">1</span>]], <span class="dt">main =</span> <span class="st">"2 meter temperature (Kelvin)"</span>)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">maps<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="webapi_vignette_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="ecmwf-mars-requests" class="section level2">
@@ -174,44 +174,44 @@
 <a href="#ecmwf-mars-requests" class="anchor"></a>ECMWF mars Requests</h2>
 <p>The <code>ecmwfr</code> package (<a href="../references/wf_request.html"><code><a href="../reference/wf_request.html">wf_request()</a></code></a>) also allows to submit <em>mars</em> requests. Note that this requires a member state login or a commercial user account!</p>
 <p>The <code>ecmwfr</code> syntax for <em>mars</em> requests is identical to the ones to the public ECMWF API except that one has to specify <code>dataset = "mars"</code>. The example below downloads the 2 meter temperature forecast (parameter <code>167</code>) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (<code>step</code>). A NetCDF file with a regular <code>0.125 x 0.125</code> degree horizontal resolution for a custom area in northern Europe will be downloaded (<code>area</code>). <strong>Note</strong> that the <code>grid</code> specification <em>is required</em> if <code>format = "netcdf"</code> as grib to netcdf conversion is only able for regular longitude-latitude grids.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># this is an example of a request</span></a>
-<a class="sourceLine" id="cb5-2" title="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "mars"</span>,</a>
-<a class="sourceLine" id="cb5-3" title="3">                   <span class="st">"class"</span>   =<span class="st"> "od"</span>,</a>
-<a class="sourceLine" id="cb5-4" title="4">                   <span class="st">"date"</span>    =<span class="st"> "2019-01-22"</span>,</a>
-<a class="sourceLine" id="cb5-5" title="5">                   <span class="st">"expver"</span>  =<span class="st"> "1"</span>,</a>
-<a class="sourceLine" id="cb5-6" title="6">                   <span class="st">"levtype"</span> =<span class="st"> "sfc"</span>,</a>
-<a class="sourceLine" id="cb5-7" title="7">                   <span class="st">"param"</span>   =<span class="st"> "167.128"</span>,</a>
-<a class="sourceLine" id="cb5-8" title="8">                   <span class="st">"step"</span>    =<span class="st"> "0"</span>,</a>
-<a class="sourceLine" id="cb5-9" title="9">                   <span class="st">"stream"</span>  =<span class="st"> "oper"</span>,</a>
-<a class="sourceLine" id="cb5-10" title="10">                   <span class="st">"time"</span>    =<span class="st"> "12"</span>,</a>
-<a class="sourceLine" id="cb5-11" title="11">                   <span class="st">"type"</span>    =<span class="st"> "fc"</span>,</a>
-<a class="sourceLine" id="cb5-12" title="12">                   <span class="st">"grid"</span>    =<span class="st"> "0.125/0.125"</span>,</a>
-<a class="sourceLine" id="cb5-13" title="13">                   <span class="st">"area"</span>    =<span class="st"> "50/0/30/15"</span>,</a>
-<a class="sourceLine" id="cb5-14" title="14">                   <span class="st">"format"</span>  =<span class="st"> "netcdf"</span>,</a>
-<a class="sourceLine" id="cb5-15" title="15">                   <span class="st">"target"</span>  =<span class="st"> "mars-data.nc"</span>)</a>
-<a class="sourceLine" id="cb5-16" title="16"></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="co"># Submit mars request and wait for netcdf file</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
-<a class="sourceLine" id="cb5-19" title="19">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb5-20" title="20">           <span class="dt">path     =</span> <span class="st">"~"</span>,</a>
-<a class="sourceLine" id="cb5-21" title="21">           <span class="dt">request  =</span> request,</a>
-<a class="sourceLine" id="cb5-22" title="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># this is an example of a request</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "mars"</span>,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                   <span class="st">"class"</span>   =<span class="st"> "od"</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                   <span class="st">"date"</span>    =<span class="st"> "2019-01-22"</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                   <span class="st">"expver"</span>  =<span class="st"> "1"</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">                   <span class="st">"levtype"</span> =<span class="st"> "sfc"</span>,</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">                   <span class="st">"param"</span>   =<span class="st"> "167.128"</span>,</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">                   <span class="st">"step"</span>    =<span class="st"> "0"</span>,</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">                   <span class="st">"stream"</span>  =<span class="st"> "oper"</span>,</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">                   <span class="st">"time"</span>    =<span class="st"> "12"</span>,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">                   <span class="st">"type"</span>    =<span class="st"> "fc"</span>,</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">                   <span class="st">"grid"</span>    =<span class="st"> "0.125/0.125"</span>,</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">                   <span class="st">"area"</span>    =<span class="st"> "50/0/30/15"</span>,</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">                   <span class="st">"format"</span>  =<span class="st"> "netcdf"</span>,</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">                   <span class="st">"target"</span>  =<span class="st"> "mars-data.nc"</span>)</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co"># Submit mars request and wait for netcdf file</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="kw"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="dt">user    =</span> <span class="st">"khrdev@outlook.com"</span>,</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19">           <span class="dt">transfer =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">           <span class="dt">path     =</span> <span class="st">"~"</span>,</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">           <span class="dt">request  =</span> request,</a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">           <span class="dt">verbose  =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 <div id="listing-ancillary-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#listing-ancillary-data" class="anchor"></a>Listing Ancillary data</h2>
 <p>You can list ancillary data such as user information, datasets and services using the following calls.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># user info</span></a>
-<a class="sourceLine" id="cb6-2" title="2">user_info &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_user_info.html">wf_user_info</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(user_info)</a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co"># services</span></a>
-<a class="sourceLine" id="cb6-6" title="6">services &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_services.html">wf_services</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(services)</a>
-<a class="sourceLine" id="cb6-8" title="8"></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="co"># datasets</span></a>
-<a class="sourceLine" id="cb6-10" title="10">datasets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_datasets.html">wf_datasets</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(datasets)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># user info</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">user_info &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_user_info.html">wf_user_info</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(user_info)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># services</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">services &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_services.html">wf_services</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(services)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co"># datasets</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">datasets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wf_datasets.html">wf_datasets</a></span>(<span class="dt">user =</span> <span class="st">"khrdev@outlook.com"</span>)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(datasets)</a></code></pre></div>
 </div>
 </div>
   </div>

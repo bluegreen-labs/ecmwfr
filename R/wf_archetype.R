@@ -44,22 +44,27 @@
 #' }
 wf_archetype <- function(request, dynamic_fields) {
   if (!requireNamespace("rlang", quietly = TRUE)) {
-    stop("wf_archetype needs the rlang package. Install it with install.packages(\"rlang\")")
+    stop(
+      "wf_archetype needs the rlang package.
+      Install it with install.packages(\"rlang\")"
+    )
   }
 
   # check the request statement
-  if(missing(request)){
+  if (missing(request)) {
     stop("not a request")
   }
 
-  if(missing(dynamic_fields)){
+  if (missing(dynamic_fields)) {
     stop("missing dynamic_fields")
   }
 
   in_request <- dynamic_fields %in% names(request)
   if (sum(!in_request) != 0) {
-    stop("dynamic field(s) not in original request: ",
-         paste0(dynamic_fields[!in_request], collapse = ", "))
+    stop(
+      "dynamic field(s) not in original request: ",
+      paste0(dynamic_fields[!in_request], collapse = ", ")
+    )
   }
 
   args <- request[dynamic_fields]
@@ -67,7 +72,3 @@ wf_archetype <- function(request, dynamic_fields) {
 
   new_archetype(args, request)
 }
-
-
-
-

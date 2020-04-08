@@ -15,7 +15,6 @@
 #
 # @author Koen Kufkens
 wf_server <- function(id, service = "webapi") {
-
   # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
 
@@ -24,14 +23,14 @@ wf_server <- function(id, service = "webapi") {
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
 
   # return url depending on service or id
-  if (service == "webapi"){
-    if(missing(id)){
+  if (service == "webapi") {
+    if (missing(id)) {
       return(webapi_url)
     } else {
       return(file.path(webapi_url, "services/mars/requests", id))
     }
   } else {
-    if(missing(id)){
+    if (missing(id)) {
       return(cds_url)
     } else {
       return(file.path(cds_url, "tasks", id))
@@ -49,19 +48,17 @@ wf_server <- function(id, service = "webapi") {
 # If \code{id} (character) is set, the request id will be shown in addition.
 #
 # @author Koen Kufkens, Reto Stauffer
-spinner <- function(seconds){
-
+spinner <- function(seconds) {
   # set start time, counter
   start_time <- Sys.time()
   spinner_count <- 1
 
-  while(Sys.time() <= start_time + seconds){
-
+  while (Sys.time() <= start_time + seconds) {
     # slow down while loop
     Sys.sleep(0.2)
 
     # update spinner message
-    message(paste0(c("-","\\","|","/")[spinner_count],
+    message(paste0(c("-", "\\", "|", "/")[spinner_count],
                    " polling server for a data transfer\r"),
             appendLF = FALSE)
 
@@ -72,58 +69,79 @@ spinner <- function(seconds){
 
 # Show message if user exits the function (interrupts execution)
 # or as soon as an error will be thrown.
-exit_message <- function(url, service, path, file){
-
-  job_list <- ifelse(service == "webapi",
+exit_message <- function(url, service, path, file) {
+  job_list <- ifelse(
+    service == "webapi",
     "  Visit https://apps.ecmwf.int/webmars/joblist/",
-    "  Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests")
+    "  Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests"
+  )
 
   intro <- paste(
     "Even after exiting your request is still beeing processed!",
     job_list,
     "  to manage (download, retry, delete) your requests",
-    "  or to get ID's from previous requests.\n\n", sep = "\n")
+    "  or to get ID's from previous requests.\n\n",
+    sep = "\n"
+  )
 
   options <- paste(
     "- Retry downloading as soon as as completed:\n",
-    "  wf_transfer(url = '",url, "\n",
+    "  wf_transfer(url = '",
+    url,
+    "\n",
     "<user>,\n ",
-    "',\n path = '",path,
-    "',\n filename = '",file,
-    "',\n service = \'", service,"')\n\n",
+    "',\n path = '",
+    path,
+    "',\n filename = '",
+    file,
+    "',\n service = \'",
+    service,
+    "')\n\n",
     "- Delete the job upon completion using:\n",
-    "  wf_delete(<user>,\n url ='",url,"')\n\n",
-    sep = "")
+    "  wf_delete(<user>,\n url ='",
+    url,
+    "')\n\n",
+    sep = ""
+  )
 
   # combine all messages
   exit_msg <- paste(intro, options, sep = "")
-  message(sprintf("- Your request has been submitted as a %s request.\n\n  %s",
-                  toupper(service),exit_msg))
+  message(sprintf(
+    "- Your request has been submitted as a %s request.\n\n  %s",
+    toupper(service),
+    exit_msg
+  ))
 }
 
 # Startup message when attaching the package.
-.onAttach <- function(libname = find.package("ecmwfr"), pkgname = "ecmwfr") {
-  vers <- as.character(utils::packageVersion("ecmwfr"))
-  txt <- paste("\n     This is 'ecmwfr' version ",
-               vers,". Please respect the terms of use:\n",
-               "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
-               "     - https://www.ecmwf.int/en/terms-use\n")
-  if(interactive()) packageStartupMessage(txt)
-}
+.onAttach <-
+  function(libname = find.package("ecmwfr"),
+           pkgname = "ecmwfr") {
+    vers <- as.character(utils::packageVersion("ecmwfr"))
+    txt <- paste(
+      "\n     This is 'ecmwfr' version ",
+      vers,
+      ". Please respect the terms of use:\n",
+      "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
+      "     - https://www.ecmwf.int/en/terms-use\n"
+    )
+    if (interactive())
+      packageStartupMessage(txt)
+  }
 
 # check if server is reachable
 # returns bolean TRUE if so
-ecmwf_running <- function(url){
+ecmwf_running <- function(url) {
   ct <- try(httr::GET(url))
 
   # trap time-out, httr should exit clean but doesn't
   # it seems
-  if (inherits(ct, "try-error")){
+  if (inherits(ct, "try-error")) {
     return(FALSE)
   }
 
   # trap 400 errors
-  if(ct$status_code >= 404 ){
+  if (ct$status_code >= 404) {
     return(FALSE)
   } else {
     return(TRUE)
@@ -152,14 +170,16 @@ wf_check_login <- function(user, key, service) {
         "Accept" = "application/json",
         "Content-Type" = "application/json",
         "From" = user,
-        "X-ECMWF-KEY" = key),
+        "X-ECMWF-KEY" = key
+      ),
       encode = "json"
     )
-    return(!httr::http_error(info) && (httr::content(info)$uid == user))
+    return(!httr::http_error(info) &&
+             (httr::content(info)$uid == user))
   }
 
   if (service == "cds") {
-    url <- paste0(wf_server(service = "cds"),"/tasks/")
+    url <- paste0(wf_server(service = "cds"), "/tasks/")
     ct <- httr::GET(url, httr::authenticate(user, key))
     return(httr::status_code(ct) < 400)
   }
@@ -184,7 +204,13 @@ make_script <- function(call, name) {
 
   call$job_name <- NULL
 
-  lines <- writeLines(paste0("library(ecmwfr)\n", name, " <- ", paste0(deparse(call), collapse = "")), script)
+  lines <-
+    writeLines(paste0(
+      "library(ecmwfr)\n",
+      name,
+      " <- ",
+      paste0(deparse(call), collapse = "")
+    ), script)
   return(script)
 }
 

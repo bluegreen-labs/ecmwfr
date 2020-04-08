@@ -53,20 +53,18 @@
 #' wf_request(request = request, user = "test@mail.com", job_name = "test")
 #'}
 
-wf_request <- function(
-  request,
-  user,
-  transfer = TRUE,
-  path = tempdir(),
-  time_out = 3600,
-  job_name,
-  verbose = TRUE
-){
-
+wf_request <- function(request,
+                       user,
+                       transfer = TRUE,
+                       path = tempdir(),
+                       time_out = 3600,
+                       job_name,
+                       verbose = TRUE) {
   if (!missing(job_name)) {
-
     if (make.names(job_name) != job_name) {
-      stop("job_name '", job_name, "' is not a syntactically valid variable name.")
+      stop("job_name '",
+           job_name,
+           "' is not a syntactically valid variable name.")
     }
 
     # Evaluates all arguments.
@@ -81,48 +79,71 @@ wf_request <- function(
     }
 
     if (!rstudioapi::isAvailable("1.2")) {
-      stop("Need at least version 1.2 of RStudio to use jobs. Currently running ",
-           rstudioapi::versionInfo()$version, ".")
+      stop(
+        "Need at least version 1.2 of RStudio to use jobs. Currently running ",
+        rstudioapi::versionInfo()$version,
+        "."
+      )
     }
 
-    job <- rstudioapi::jobRunScript(path = script, name = job_name, exportEnv = "R_GlobalEnv")
+    job <-
+      rstudioapi::jobRunScript(path = script,
+                               name = job_name,
+                               exportEnv = "R_GlobalEnv")
     return(invisible(job))
   }
 
-  if(!is.list(request) | is.character(request)) {
-    stop("`request` must be a named list. \n",
-         "If you are passing the user as first argument, notice that argument ",
-         "order was changed in version 1.1.1.")
+  if (!is.list(request) | is.character(request)) {
+    stop(
+      "`request` must be a named list. \n",
+      "If you are passing the user as first argument, notice that argument ",
+      "order was changed in version 1.1.1."
+    )
   }
 
   # check the login credentials
-  if(missing(request)){
+  if (missing(request)) {
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
   if (missing(user)) {
-    user <- rbind(keyring::key_list(service = make_key_service(c("webapi"))),
-                  keyring::key_list(service = make_key_service(c("cds"))))
+    user <-
+      rbind(
+        keyring::key_list(service = make_key_service(c("webapi"))),
+        keyring::key_list(service = make_key_service(c("cds")))
+      )
     serv <- make_key_service()
-    user <- user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
+    user <-
+      user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
   }
 
   # checks user login, the request layout and
   # returns the service to use if successful
-  wf_check <- lapply(user, function(u) try(wf_check_request(u, request), silent = TRUE))
+  wf_check <-
+    lapply(user, function(u)
+      try(wf_check_request(u, request), silent = TRUE))
   correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
   wf_check <- wf_check[[correct]]
   user <- user[correct]
 
-  if (verbose) {
-    message("Requesting data to the ", wf_check$service, " service with username ", user)
+  if (verbose)
+  {
+    message("Requesting data to the ",
+            wf_check$service,
+            " service with username ",
+            user)
   }
 
 
   if (length(wf_check) == 0) {
-    stop(sprintf("Data identifier %s is not found in Web API or CDS datasets.
+    stop(
+      sprintf(
+        "Data identifier %s is not found in Web API or CDS datasets.
                  Or your login credentials do not match your request.",
-                 request$dataset), call. = FALSE)
+        request$dataset
+      ),
+      call. = FALSE
+    )
   }
 
   # split out data
@@ -138,32 +159,35 @@ wf_request <- function(
 
   # depending on the service get the response
   # for the query provided
-  if (service == "webapi"){
+  if (service == "webapi") {
     response <- httr::POST(
       url,
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json",
         "From" = user,
-        "X-ECMWF-KEY" = key),
+        "X-ECMWF-KEY" = key
+      ),
       body = request,
       encode = "json"
     )
   } else {
     response <- httr::POST(
-      sprintf("%s/resources/%s", wf_server(service = "cds"),
-              request$dataset),
+      sprintf(
+        "%s/resources/%s",
+        wf_server(service = "cds"),
+        request$dataset
+      ),
       httr::authenticate(user, key),
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json"),
+      httr::add_headers("Accept" = "application/json",
+                        "Content-Type" = "application/json"),
       body = request,
       encode = "json"
     )
   }
 
   # trap general http error
-  if(httr::http_error(response)){
+  if (httr::http_error(response)) {
     stop(httr::content(response),
          call. = FALSE)
   }
@@ -172,30 +196,31 @@ wf_request <- function(
   ct <- httr::content(response)
 
   # first run is always 202
-  if(service == "cds"){
+  if (service == "cds") {
     ct$code <- 202
   }
 
   # some verbose feedback
-  if(verbose){
+  if (verbose) {
     message("- staging data transfer at url endpoint or request id:")
-    message("  ", ifelse(service == "cds",ct$request_id, ct$href), "\n")
+    message("  ", ifelse(service == "cds", ct$request_id, ct$href), "\n")
   }
 
   # only return the content of the query
-  if(!transfer){
+  if (!transfer) {
     message("  No download requests will be made, however...\n")
     exit_message(
-      url = ifelse(service == "cds",ct$request_id, ct$href),
+      url = ifelse(service == "cds", ct$request_id, ct$href),
       path = path,
       file = request$target,
-      service = service)
+      service = service
+    )
     return(invisible(ct))
   }
 
   # set time-out counter
-  if(verbose){
-    message(sprintf("- timeout set to %.1f hours", time_out/3600))
+  if (verbose) {
+    message(sprintf("- timeout set to %.1f hours", time_out / 3600))
   }
 
   # set time-out
@@ -209,17 +234,19 @@ wf_request <- function(
   # with status code 303. 202 = connection accepted, but job queued.
   # http error codes (>400) will be trapped by the wf_transfer()
   # function call
-  while(ct$code == 202){ # check formatting state variable CDS
+  while (ct$code == 202) {
+    # check formatting state variable CDS
 
     # exit routine when the time out
-    if(Sys.time() > time_out){
-      if(verbose){
+    if (Sys.time() > time_out) {
+      if (verbose) {
         message("  Your download timed out, however ...\n")
         exit_message(
-          url = ifelse(service == "cds",ct$request_id, ct$href),
+          url = ifelse(service == "cds", ct$request_id, ct$href),
           path = path,
           file = request$target,
-          service = service)
+          service = service
+        )
       }
       return(ct)
     }
@@ -227,7 +254,7 @@ wf_request <- function(
     # set retry rate, dynamic for WebAPI, static 10 seconds CDS
     retry <- as.numeric(ifelse(service == "cds", 5, ct$retry))
 
-    if(verbose){
+    if (verbose) {
       # let a spinner spin for "retry" seconds
       spinner(retry)
     } else {
@@ -238,19 +265,20 @@ wf_request <- function(
     # attempt a download. Use 'input_user', can also
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
-    ct <- wf_transfer(url = ifelse(service == "cds",
-                                   ct$request_id, ct$href),
-                      user    = user,
-                      service  = service,
-                      filename = tmp_file,
-                      verbose  = verbose)
+    ct <- wf_transfer(
+      url = ifelse(service == "cds",
+                   ct$request_id, ct$href),
+      user    = user,
+      service  = service,
+      filename = tmp_file,
+      verbose  = verbose
+    )
   }
 
   # Copy data from temporary file to final location
   # and delete original, with an exception for tempdir() location.
   # The latter to facilitate package integration.
   if (path != tempdir()) {
-
     src <- file.path(tempdir(), tmp_file)
     dst <- file.path(path, request$target)
 
@@ -260,12 +288,12 @@ wf_request <- function(
     # check if the move was succesful
     # fails for separate disks/partitions
     # then copy and remove
-    if(!move){
+    if (!move) {
       file.copy(src, dst, overwrite = TRUE)
       file.remove(src)
     }
 
-    if ( verbose ){
+    if (verbose) {
       message(sprintf("- moved temporary file to -> %s", dst))
     }
 
@@ -277,12 +305,14 @@ wf_request <- function(
   # delete the request upon succesful download
   # to free up other download slots. Not possible
   # for ECMWF mars requests (skip)
-  if(!request$dataset == "mars") {
-    wf_delete(user   = user,
-              url    = ifelse(service == "cds",
-                              ct$request_id, ct$href),
-              verbose = verbose,
-              service = service)
+  if (!request$dataset == "mars") {
+    wf_delete(
+      user   = user,
+      url    = ifelse(service == "cds",
+                      ct$request_id, ct$href),
+      verbose = verbose,
+      service = service
+    )
   }
 
   # return final file name/path (dst = destination).

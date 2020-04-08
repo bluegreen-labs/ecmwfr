@@ -29,26 +29,23 @@
 #' wf_transfer(r$href, "test@email.com")
 #'}
 
-wf_transfer <- function(
-  url,
-  user,
-  service = "webapi",
-  path = tempdir(),
-  filename = tempfile("ecmwfr_"),
-  verbose = TRUE
-){
-
+wf_transfer <- function(url,
+                        user,
+                        service = "webapi",
+                        path = tempdir(),
+                        filename = tempfile("ecmwfr_"),
+                        verbose = TRUE) {
   # match arguments, if not stop
   service <- match.arg(service, c("webapi", "cds"))
 
   # check the login credentials
-  if(missing(user) || missing(url)){
+  if (missing(user) || missing(url)) {
     stop("Please provide ECMWF login email / url!")
   }
 
   # If the URL is not an URL but an ID: generate URL
   if (service == "cds") {
-      url <- wf_server(id = url, service = service)
+    url <- wf_server(id = url, service = service)
   }
 
   # get key
@@ -58,22 +55,24 @@ wf_transfer <- function(
   tmp_file <- file.path(path, filename)
 
   # download routine depends on service queried
-  if(service == "cds") {
-    response <- httr::GET(url,
-                          httr::authenticate(user, key),
-                          httr::add_headers(
-                            "Accept" = "application/json",
-                            "Content-Type" = "application/json"),
-                          encode = "json"
+  if (service == "cds") {
+    response <- httr::GET(
+      url,
+      httr::authenticate(user, key),
+      httr::add_headers("Accept" = "application/json",
+                        "Content-Type" = "application/json"),
+      encode = "json"
     )
   } else {
     # Webapi
-    response <- retrieve_header(url,
-                                list(
-                                  "Accept" = "application/json",
-                                  "Content-Type" = "application/json",
-                                  "From" = user,
-                                  "X-ECMWF-KEY" = key)
+    response <- retrieve_header(
+      url,
+      list(
+        "Accept" = "application/json",
+        "Content-Type" = "application/json",
+        "From" = user,
+        "X-ECMWF-KEY" = key
+      )
     )
     status_code <- response[["status_code"]]
 
@@ -81,14 +80,18 @@ wf_transfer <- function(
       stop("Your requested download failed - check url", call. = FALSE)
     }
 
-    if (status_code == "202") {  # still processing
+    if (status_code == "202") {
+      # still processing
       # Simulated content with the things we need to use.
-      ct <- list(code = status_code,
-                 retry = as.numeric(response$headers$`retry-after`),
-                 href = url)
+      ct <- list(
+        code = status_code,
+        retry = as.numeric(response$headers$`retry-after`),
+        href = url
+      )
       return(invisible(ct))
 
-    } else if (status_code == "200") {  # Done!
+    } else if (status_code == "200") {
+      # Done!
       message("\nDownloading file")
       response <- httr::GET(
         url,
@@ -96,21 +99,25 @@ wf_transfer <- function(
           "Accept" = "application/json",
           "Content-Type" = "application/json",
           "From" = user,
-          "X-ECMWF-KEY" = key),
+          "X-ECMWF-KEY" = key
+        ),
         encode = "json",
-        httr::write_disk(tmp_file, overwrite = TRUE),   # write on disk!
+        httr::write_disk(tmp_file, overwrite = TRUE),
+        # write on disk!
         httr::progress()
       )
 
       return(invisible(list(code = 302,
                             href = url)))
     } else {
-      stop("Your requested download had a problem with code ", status_code, call. = FALSE)
+      stop("Your requested download had a problem with code ",
+           status_code,
+           call. = FALSE)
     }
   }
 
   # trap (http) errors on download, return a general error statement
-  if (httr::http_error(response)){
+  if (httr::http_error(response)) {
     stop("Your requested download failed - check url", call. = FALSE)
   }
 
@@ -120,9 +127,8 @@ wf_transfer <- function(
 
   # write raw data to file from memory
   # if not returned url + passing code
-  if (inherits(ct, "raw") && service == "webapi"){
-
-    if(verbose){
+  if (inherits(ct, "raw") && service == "webapi") {
+    if (verbose) {
       message("- polling server for a data transfer")
       message(sprintf("- writing data to disk (\"%s\")", tmp_file))
     }
@@ -137,21 +143,19 @@ wf_transfer <- function(
                           href = url)))
   }
 
-  if (service == "cds"){
-
+  if (service == "cds") {
     # if the transfer failed, return error and stop()
-    if(ct$state == "failed") {
+    if (ct$state == "failed") {
       message("Data transfer failed!")
       stop(ct$error)
     }
 
-    if(ct$state != "complete" || is.null(ct$state)){
+    if (ct$state != "complete" || is.null(ct$state)) {
       ct$code <- 202
     }
 
     # if completed / should not happen but still there
-    if("completed" == ct$state){
-
+    if ("completed" == ct$state) {
       # download file
       httr::GET(ct$location,
                 httr::write_disk(tmp_file, overwrite = TRUE),

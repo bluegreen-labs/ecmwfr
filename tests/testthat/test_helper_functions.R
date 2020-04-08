@@ -75,7 +75,7 @@ test_that("test addin",{
   mars <- 'retrieve,
 class=ep,
   dataset=cera20c,
-  date=19010101/19010201/19010301/19010401/19010501/19010601/19010701/19010801/19010901/19011001/19011101/19011201,
+  date=19010101/19010201,
   expver=1,
   levtype=sfc,
   number=0,

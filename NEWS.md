@@ -25,8 +25,8 @@
 * reshuffling the default order of `wf_request()` as to accomodate pipes
 * new contributor Elio Campitelli lead dynamic query code `wf_archetype()`
   * allows for archetype functions to be created from a normal MARS request
-  * helps with recurrent queries with an overal similar structure
-* RStudio Addins for MARS and python based requests to list items
+  * helps with recurrent queries with an overall similar structure
+* rstudio Addins for MARS and python based requests to list items
 * logo on website
 * documentation updated
 
@@ -62,7 +62,7 @@
 
 # ecmwfr 0.0.2
 
-* working verion, yeah!
+* working version, yeah!
 
 # ecmwfr 0.0.1
 

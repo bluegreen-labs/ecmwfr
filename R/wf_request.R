@@ -23,7 +23,7 @@
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

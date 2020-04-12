@@ -1,4 +1,4 @@
-#' ECMWF delete request
+#' delete ECMWF request
 #'
 #' Deletes a staged download from the queue
 #'
@@ -12,7 +12,7 @@
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

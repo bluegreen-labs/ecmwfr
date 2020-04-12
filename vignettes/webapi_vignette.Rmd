@@ -110,7 +110,7 @@ maps::map("world", add = TRUE)
 
 The `ecmwfr` package ([`wf_request()`](../references/wf_request.html)) also allows to submit _mars_ requests. Note that this requires a member state login or a commercial user account!
 
-The `ecmwfr` syntax for _mars_ requests is identical to the ones to the public ECMWF API except that one has to specify `dataset = "mars"`. The example below downloads the 2 meter temperature forecast (parameter `167`) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (`step`). A NetCDF file with a regular `0.125 x 0.125` degree horizontal resolution for a custom area in northern Europe will be downloaded (`area`). **Note** that the `grid` specification _is required_ if `format = "netcdf"` as grib to netcdf conversion is only able for regular longitude-latitude grids.
+The `ecmwfr` syntax for _mars_ requests is identical to the ones to the public ECMWF API except that one has to specify `dataset = "mars"`. The example below downloads the 2 meter temperature forecast (parameter `167`) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (`step`). A NetCDF file with a regular `0.125 x 0.125` degree horizontal resolution for a custom area in northern Europe will be downloaded (`area`). **Note** that the `grid` specification _is required_ if `format = "netcdf"` as grib to NetCDF conversion is only able for regular longitude-latitude grids.
 
 ```{r mars example, eval = FALSE}
 # this is an example of a request

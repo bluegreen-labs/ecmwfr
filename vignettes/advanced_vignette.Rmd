@@ -30,7 +30,7 @@ This is a brief overview of some of the more advanced options in the `ecmwfr` pa
 
 ## Setup
 
-A 'hidden' feature of the `wf_set_key()` function is that it returns the user name upon succes. This allows for easier integration in scripts shared with users (which have different credentials)
+A 'hidden' feature of the `wf_set_key()` function is that it returns the user name upon success. This allows for easier integration in scripts shared with users (which have different credentials)
 
 ```{r eval = FALSE}
 # set a key to the keychain interactively

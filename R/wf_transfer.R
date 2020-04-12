@@ -1,6 +1,6 @@
 #' ECMWF data transfer function
 #'
-#' Returns the contents of the requested url as a netCDF file downloaded
+#' Returns the contents of the requested url as a NetCDF file downloaded
 #' to disk or the current status of the requested transfer.
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
@@ -15,7 +15,7 @@
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

@@ -10,7 +10,7 @@
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

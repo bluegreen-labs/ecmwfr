@@ -1,4 +1,4 @@
-# ecmwfr <a href='https://khufkens.github.io/ecmwfr/'><img src='https://github.com/khufkens/ecmwfr/raw/master/ecmwfr-logo.png' align="right" height="139" /></a>
+# ecmwfr <img src='man/figures/logo.png' align="right" height="138.5" />
 
 [![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
 [![codecov](https://codecov.io/gh/khufkens/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/ecmwfr)

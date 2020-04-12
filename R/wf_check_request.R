@@ -10,7 +10,7 @@
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}},\code{\link[ecmwfr]{wf_request}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @importFrom memoise memoise
 
 wf_check_request <- memoise::memoise(function(

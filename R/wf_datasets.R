@@ -4,14 +4,14 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' @param service service to use ecmwf webapi or cds (default = "webapi")
+#' @param service service to use ECMWF webapi or cds (default = "webapi")
 #' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @return returns a nested list or data frame with the ECMWF datasets
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

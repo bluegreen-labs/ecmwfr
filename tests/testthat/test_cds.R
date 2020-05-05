@@ -4,7 +4,7 @@ on.exit(options(opts), add = TRUE)
 
 # format request (see below)
 cds_request <- list(
-              "dataset"        = "reanalysis-era5-pressure-levels",
+              "dataset_short_name" = "reanalysis-era5-pressure-levels",
               "product_type"   = "reanalysis",
               "format"         = "netcdf",
               "variable"       = "temperature",

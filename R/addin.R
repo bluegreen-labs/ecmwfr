@@ -102,7 +102,7 @@ python_to_list <- function(python_text) {
 
   # clean up leading and trailing ends if any
   if (nchar(leading) != 0){
-    c_list$dataset <- gsub('\\n|,\\n| |"','', leading)
+    c_list$dataset_short_name <- gsub('\\n|,\\n| |"','', leading)
   }
 
   if (nchar(trailing) != 0){

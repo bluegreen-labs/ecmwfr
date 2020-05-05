@@ -175,8 +175,8 @@ wf_request <- function(request,
     response <- httr::POST(
       sprintf(
         "%s/resources/%s",
-        wf_server(service = "cds"),
-        request$dataset
+        url,
+        request$dataset_short_name
       ),
       httr::authenticate(user, key),
       httr::add_headers("Accept" = "application/json",

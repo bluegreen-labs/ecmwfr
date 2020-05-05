@@ -18,11 +18,8 @@ wf_check_request <- memoise::memoise(function(
   request
 ){
 
-  # If no 'dataset' is set: stop
+  # Stop if not a list
   stopifnot(inherits(request, "list"))
-  if(!"dataset" %in% names(request)){
-    stop("Request specification has to contain a \"dataset\" identifier.")
-  }
 
   # check MARS requirements
   if(request$dataset == "mars"){
@@ -41,10 +38,36 @@ wf_check_request <- memoise::memoise(function(
                                      function(service){
     dataset <- try(wf_datasets(user, service = service),
                    silent = TRUE)
-    if(inherits(dataset,"try-error")){return(NULL)}
-    if(request$dataset %in% dataset$name ||
-       (request$dataset == "mars" && service == "webapi")){
-      return(service)
+
+    if(inherits(dataset,"try-error")){
+      return(NULL)
+    }
+
+    if (service == "webapi"){
+      # sadly had to split this up between services
+      # due to changes in dataset naming conventions
+      # i.e. no consistent dataset variable can be used
+      # see note below
+
+      if(!"dataset" %in% names(request)){
+        stop("Request specification has to contain a \"dataset\" identifier.")
+      }
+
+      if(request$dataset %in% dataset$name ||
+         (request$dataset == "mars" && service == "webapi")){
+        return(service)
+      }
+    } else {
+      # on CDS use the short name variable to avoid conflicts
+      # for certain data products (which reuse the dataset parameter)
+
+      if(!"dataset_short_name" %in% names(request)){
+        stop("Request specification has to contain a \"dataset_short_name\" identifier.")
+      }
+
+      if(request$dataset_short_name %in% dataset$name){
+        return(service)
+      }
     }
   }))
 

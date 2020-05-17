@@ -121,6 +121,9 @@
 <p>To install the current stable release use a CRAN repository:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"ecmwfr"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"ecmwfr"</span>)</a></code></pre></div>
+<blockquote>
+<p>As of version 1.2.3 there are breaking changes to the submitted requests to the Climate Data Store API. If you have code which relies on pre-formatted CDS request please updated the <code>dataset</code> field to <code>dataset_short_name</code>.</p>
+</blockquote>
 </div>
 <div id="development-release" class="section level3">
 <h3 class="hasAnchor">
@@ -242,7 +245,7 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co"># 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering </span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># northern Europe.</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># File will be stored as "era5-demo.nc" (netcdf format).</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset"</span> =<span class="st"> "reanalysis-era5-pressure-levels"</span>,</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">request &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset_short_name"</span> =<span class="st"> "reanalysis-era5-pressure-levels"</span>,</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">                <span class="st">"product_type"</span> =<span class="st"> "reanalysis"</span>,</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7">                <span class="st">"variable"</span> =<span class="st"> "temperature"</span>,</a>
 <a class="sourceLine" id="cb9-8" data-line-number="8">                <span class="st">"pressure_level"</span> =<span class="st"> "850"</span>,</a>

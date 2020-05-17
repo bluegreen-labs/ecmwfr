@@ -27,6 +27,8 @@ install.packages("ecmwfr")
 library("ecmwfr")
 ```
 
+> As of version 1.2.3 there are breaking changes to the submitted requests to the Climate Data Store API. If you have code which relies on pre-formatted CDS request please updated the `dataset` field to `dataset_short_name`.
+
 ### development release
 
 To install the development releases of the package run the following
@@ -203,7 +205,7 @@ for ERA-5 reanalysis:
 # 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
 # northern Europe.
 # File will be stored as "era5-demo.nc" (netcdf format).
-request <- list("dataset" = "reanalysis-era5-pressure-levels",
+request <- list("dataset_short_name" = "reanalysis-era5-pressure-levels",
                 "product_type" = "reanalysis",
                 "variable" = "temperature",
                 "pressure_level" = "850",

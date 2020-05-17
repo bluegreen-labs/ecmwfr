@@ -10,6 +10,12 @@
 Programmatic interface to the two [European Centre for Medium-Range Weather Forecasts](https://www.ecmwf.int/) API services. The package provides easy access to the ['ECMWF' web API services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
 and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS' from within R, matching and expanding upon the ECMWF python tools.
 
+## How to cite this package in your article
+
+You can cite this package like this "we obtained data from the European Centre for Medium-Range Weather Forecasts API using the ecmwf R package (Hufkens, Stauffer, and Campitelli 2019)". Here is the full bibliographic reference to include in your reference list (don't forget to update the 'last accessed' date):
+
+> Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr: Programmatic interface to the two European Centre for Medium-Range Weather Forecasts API services. (Version v1.2.0). Zenodo. http://doi.org/10.5281/zenodo.2647541. Last accessed 15 May 2020
+
 ## Installation
 
 ### stable release
@@ -228,7 +234,7 @@ month-by-month, or year-by-year). A progress indicator will keep you informed
 on the status of your request. Keep in mind that all data downloaded will be
 buffered in memory limiting the downloads to ~6GB on low end systems.
 
-## References
+## Citation
 
 Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). khufkens/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
 

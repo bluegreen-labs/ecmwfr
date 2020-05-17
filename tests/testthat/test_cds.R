@@ -112,7 +112,7 @@ test_that("cds request", {
                           transfer = TRUE))
 
   # missing user
-  expect_error(wf_request(request = cds_request,
+  expect_message(wf_request(request = cds_request,
                           transfer = TRUE))
 
   expect_true(inherits(wf_request(user = "2088",

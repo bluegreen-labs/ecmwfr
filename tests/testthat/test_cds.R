@@ -97,6 +97,13 @@ test_that("cds request", {
                time_out = 1,
                transfer = TRUE))
 
+  # job test (can't run headless)
+  expect_error(
+    wf_request(user = "2088",
+               request = cds_request,
+               transfer = TRUE,
+               job_name = "jobtest"))
+
   # faulty request
   expect_error(wf_request(
     user = "2088",

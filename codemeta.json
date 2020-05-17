@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/khufkens/ecmwfr",
   "issueTracker": "https://github.com/khufkens/ecmwfr/issues",
   "license": "https://spdx.org/licenses/AGPL-3.0",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -252,7 +252,7 @@
   ],
   "releaseNotes": "https://github.com/khufkens/ecmwfr/blob/master/NEWS.md",
   "readme": "https://github.com/khufkens/ecmwfr/blob/master/README.md",
-  "fileSize": "142.706KB",
+  "fileSize": "168.647KB",
   "contIntegration": [
     "https://travis-ci.org/khufkens/ecmwfr",
     "https://codecov.io/gh/khufkens/ecmwfr"
@@ -285,5 +285,6 @@
       "sameAs": "https://doi.org/10.5281/zenodo.2647541"
     }
   ],
-  "relatedLink": "https://CRAN.R-project.org/package=ecmwfr"
+  "relatedLink": "https://CRAN.R-project.org/package=ecmwfr",
+  "developmentStatus": "https://www.repostatus.org/#active"
 }

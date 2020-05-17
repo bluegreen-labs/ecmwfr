@@ -1,3 +1,8 @@
+# ecmwfr 1.2.3
+
+* fixed a bug on dataset naming convention double use
+* updated code coverage to reflect changes
+
 # ecmwfr 1.2.2
 
 * automatic user detection from keyring user list

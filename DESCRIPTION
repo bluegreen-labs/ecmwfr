@@ -1,6 +1,6 @@
 Package: ecmwfr
 Title: Interface to 'ECMWF' and 'CDS' Data Web Services
-Version: 1.2.2
+Version: 1.2.3
 Authors@R: c(person(
                family = "Hufkens",
                given = "Koen",

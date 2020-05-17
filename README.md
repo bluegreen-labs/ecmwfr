@@ -200,8 +200,8 @@ for ERA-5 reanalysis:
 
 ```R
 # This is an example of a request for # downloading 'ERA-5' reanalysis data for
-# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering #
-northern Europe.
+# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
+# northern Europe.
 # File will be stored as "era5-demo.nc" (netcdf format).
 request <- list("dataset" = "reanalysis-era5-pressure-levels",
                 "product_type" = "reanalysis",

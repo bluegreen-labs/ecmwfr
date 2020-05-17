@@ -140,7 +140,7 @@ wf_request <- function(request,
       sprintf(
         "Data identifier %s is not found in Web API or CDS datasets.
                  Or your login credentials do not match your request.",
-        request$dataset
+        request$dataset_short_name
       ),
       call. = FALSE
     )

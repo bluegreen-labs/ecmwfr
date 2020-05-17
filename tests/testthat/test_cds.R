@@ -4,18 +4,32 @@ on.exit(options(opts), add = TRUE)
 
 # format request (see below)
 cds_request <- list(
-              "dataset_short_name" = "reanalysis-era5-pressure-levels",
-              "product_type"   = "reanalysis",
-              "format"         = "netcdf",
-              "variable"       = "temperature",
-              "pressure_level" = "850",
-              "year"           = "2018",
-              "month"          = "04",
-              "day"            = "04",
-              "time"           = "00:00",
-              "area"           = "50/9/51/10",
-              "format"         = "netcdf",
-              "target"         = "era5-demo.nc")
+  "dataset_short_name" = "reanalysis-era5-pressure-levels",
+  "product_type"   = "reanalysis",
+  "format"         = "netcdf",
+  "variable"       = "temperature",
+  "pressure_level" = "850",
+  "year"           = "2018",
+  "month"          = "04",
+  "day"            = "04",
+  "time"           = "00:00",
+  "area"           = "50/9/51/10",
+  "format"         = "netcdf",
+  "target"         = "era5-demo.nc")
+
+cds_request_faulty <- list(
+  "dataset_short_name" = "reanalysis-era5-preure-levels",
+  "product_type"   = "reanalysis",
+  "format"         = "netcdf",
+  "variable"       = "temperature",
+  "pressure_level" = "850",
+  "year"           = "2018",
+  "month"          = "04",
+  "day"            = "04",
+  "time"           = "00:00",
+  "area"           = "50/9/51/10",
+  "format"         = "netcdf",
+  "target"         = "era5-demo.nc")
 
 # is the server reachable
 server_check <- !ecmwf_running(wf_server(service = "cds"))
@@ -71,15 +85,34 @@ test_that("cds request", {
   skip_if(login_check)
   skip_if(server_check)
 
+  # ok transfer
   expect_message(wf_request(user = "2088",
                     request = cds_request,
                     transfer = TRUE))
 
+  # timeout trigger
+  expect_message(
+    wf_request(user = "2088",
+               request = cds_request,
+               time_out = 1,
+               transfer = TRUE))
+
+  # faulty request
+  expect_error(wf_request(
+    user = "2088",
+    request = cds_request_faulty))
+
+  # wrong request
   expect_error(wf_request(user = "2088",
                     request = "xyz",
                     transfer = TRUE))
 
+  # missing request
   expect_error(wf_request(user = "2088",
+                          transfer = TRUE))
+
+  # missing user
+  expect_error(wf_request(request = cds_request,
                           transfer = TRUE))
 
   expect_true(inherits(wf_request(user = "2088",

@@ -91,7 +91,7 @@ test_that("cds request", {
                     transfer = TRUE))
 
   # timeout trigger
-  expect_error(
+  expect_message(
     wf_request(user = "2088",
                request = cds_request,
                time_out = -1,

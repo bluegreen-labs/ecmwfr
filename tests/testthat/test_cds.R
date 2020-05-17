@@ -91,10 +91,10 @@ test_that("cds request", {
                     transfer = TRUE))
 
   # timeout trigger
-  expect_message(
+  expect_error(
     wf_request(user = "2088",
                request = cds_request,
-               time_out = 1,
+               time_out = -1,
                transfer = TRUE))
 
   # job test (can't run headless)

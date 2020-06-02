@@ -25,8 +25,8 @@ Description: Programmatic interface to the European Centre for Medium-Range
     and Copernicus's Climate Data Store (CDS; 
     <https://cds.climate.copernicus.eu>). Allows for easy downloads of weather 
     forecasts and climate reanalysis data in R.
-URL: https://github.com/khufkens/ecmwfr
-BugReports: https://github.com/khufkens/ecmwfr/issues
+URL: https://github.com/bluegreen-labs/ecmwfr
+BugReports: https://github.com/bluegreen-labs/ecmwfr/issues
 Depends:
     R (>= 3.4)
 Imports:

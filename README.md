@@ -1,7 +1,7 @@
 # ecmwfr <img src='man/figures/logo.png' align="right" height="138.5" />
 
-[![Build Status](https://travis-ci.org/khufkens/ecmwfr.svg?branch=master)](https://travis-ci.org/khufkens/ecmwfr)
-[![codecov](https://codecov.io/gh/khufkens/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/khufkens/ecmwfr)
+[![Build Status](https://travis-ci.com/bluegreen-labs/ecmwfr.svg?branch=master)](https://travis-ci.com/bluegreen-labs/ecmwfr)
+[![codecov](https://codecov.io/gh/bluegreen-labs/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/bluegreen-labs/ecmwfr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
@@ -36,7 +36,7 @@ commands:
 
 ``` r
 if(!require(devtools)){install.packages("devtools")}
-devtools::install_github("khufkens/ecmwfr")
+devtools::install_github("bluegreen-labs/ecmwfr")
 library("ecmwfr")
 ```
 
@@ -45,7 +45,7 @@ documentation please use:
 
 ``` r
 if(!require(devtools)){install.packages("devtools")}
-devtools::install_github("khufkens/ecmwfr", build_vignettes = TRUE)
+devtools::install_github("bluegreen-labs/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
 
@@ -238,7 +238,7 @@ buffered in memory limiting the downloads to ~6GB on low end systems.
 
 ## Citation
 
-Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). khufkens/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
+Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). bluegreen-labs/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
 
 ## Acknowledgements
 

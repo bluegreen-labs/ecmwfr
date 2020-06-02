@@ -2,6 +2,8 @@
 
 * fixed a bug on dataset naming convention double use
 * updated code coverage to reflect changes
+* R >= 3.6
+* bluegreen-labs migration
 
 # ecmwfr 1.2.2
 

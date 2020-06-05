@@ -153,6 +153,7 @@ test_that("test request (transfer) function - no transfer", {
   expect_output(str(ct))
   expect_message(wf_delete(user = "khrdev@outlook.com",
                            url = ct$href))
+
   ct2 <- wf_request(
     user = "khrdev@outlook.com",
     transfer = FALSE,

@@ -43,11 +43,17 @@ wf_get_key <- function(user, service = "webapi") {
     }
   }
 
-  # grab keyring
-  keyring::key_get(
-    service = make_key_service(service),
-    username = user,
-    keyring = ifelse(keyring::default_backend()$name == "file",
-                     "ecmwfr",
-                     "NULL"))
+  # can't use ifelse as the keyring argument will
+  # throw warnings which gives issues for unit tests
+  if(keyring::default_backend()$name == "file"){
+    keyring::key_get(
+      service = make_key_service(service),
+      username = user,
+      keyring = "ecmwfr")
+  } else {
+    keyring::key_get(
+      service = make_key_service(service),
+      username = user)
+  }
+
 }

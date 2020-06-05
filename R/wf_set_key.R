@@ -93,15 +93,17 @@ wf_set_key <- function(user, key, service) {
         keyring = "ecmwfr"
       )
 
+      message("User ", user, " for ", service, " service added successfully in keychain file")
     } else {
       keyring::key_set_with_value(
         service = make_key_service(service),
         username = user,
         password = key
       )
+
+      message("User ", user, " for ", service, " service added successfully in keychain")
     }
 
-    message("User ", user, " for ", service, " service added successfully")
     return(invisible(user))
   }
 

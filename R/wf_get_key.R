@@ -31,6 +31,8 @@ wf_get_key <- function(user, service = "webapi") {
               unlock with your keyring password!")
           keyring::keyring_unlock(keyring = "ecmwfr")
         }
+      } else {
+        stop("Can't find your credentials in the ecmwfr keyring file")
       }
     } else {
       if (keyring::keyring_is_locked()) {
@@ -47,5 +49,5 @@ wf_get_key <- function(user, service = "webapi") {
     username = user,
     keyring = ifelse(keyring::default_backend()$name == "file",
                      "ecmwfr",
-                     NULL))
+                     "NULL"))
 }

@@ -68,9 +68,9 @@ test_that("set key", {
 })
 
 test_that("cds datasets returns data.frame or list", {
-  #skip_on_cran()
-  #skip_if(login_check)
-  #skip_if(server_check)
+  skip_on_cran()
+  skip_if(login_check)
+  skip_if(server_check)
   expect_true(inherits(wf_datasets(user = "2088",
                                    service = "cds",
                                    simplify = TRUE), "data.frame"))

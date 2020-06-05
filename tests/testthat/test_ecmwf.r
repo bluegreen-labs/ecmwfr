@@ -144,6 +144,7 @@ test_that("test request (transfer) function - no transfer", {
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
+
   ct <- wf_request(
     user = "khrdev@outlook.com",
     transfer = FALSE,

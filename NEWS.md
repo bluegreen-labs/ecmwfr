@@ -1,9 +1,13 @@
-# ecmwfr 1.2.3
+# ecmwfr 1.2.4
 
-* fixed a bug on dataset naming convention double use
 * updated code coverage to reflect changes
 * R >= 3.6
 * bluegreen-labs migration
+* keychain issue fix, keychain in file now functional
+
+# ecmwfr 1.2.3
+
+* fixed a bug on dataset naming convention double use
 
 # ecmwfr 1.2.2
 

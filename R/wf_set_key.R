@@ -3,6 +3,12 @@
 #' Saves the token to your local keychain under
 #' a service called "ecmwfr".
 #'
+#' In systems without keychain management set the option
+#' keyring_backend to `file` (i.e. options(keyring_backend = "file"))
+#' in order to write the keychain entry to an encrypted file.
+#' This mostly pertains to headless Linux systems. The keychain files
+#' can be found in ~/.config/r-keyring.
+#'
 #' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
 #' @param service service associated with credentials ("webapi" or "cds")

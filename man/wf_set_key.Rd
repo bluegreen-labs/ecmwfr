@@ -20,6 +20,13 @@ It invisibly returns the user.
 Saves the token to your local keychain under
 a service called "ecmwfr".
 }
+\details{
+In systems without keychain management set the option
+keyring_backend to `file` (i.e. options(keyring_backend = "file"))
+in order to write the keychain entry to an encrypted file.
+This mostly pertains to headless Linux systems. The keychain files
+can be found in ~/.config/r-keyring.
+}
 \examples{
 
 \dontrun{

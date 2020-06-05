@@ -78,5 +78,5 @@ wf_request(request = request, user = "test@mail.com", job_name = "test")
 \code{\link[ecmwfr]{wf_transfer}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

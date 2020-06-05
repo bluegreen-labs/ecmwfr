@@ -27,11 +27,22 @@
 #'}
 #' @importFrom utils browseURL
 wf_set_key <- function(user, key, service) {
+
   if (keyring::default_backend()$name != "env") {
-    if (keyring::keyring_is_locked()) {
-      message("Your keyring is locked please
+    if (keyring::default_backend()$name == "file") {
+      if ("ecmwfr" %in% keyring::keyring_list()$keyring) {
+        if(keyring::keyring_is_locked(keyring = "ecmwfr")){
+          message("Your keyring is locked please
               unlock with your keyring password!")
-      keyring::keyring_unlock()
+          keyring::keyring_unlock(keyring = "ecmwfr")
+        }
+      }
+    } else {
+      if (keyring::keyring_is_locked()) {
+        message("Your keyring is locked please
+              unlock with your keyring password!")
+        keyring::keyring_unlock()
+      }
     }
   }
 
@@ -61,11 +72,29 @@ wf_set_key <- function(user, key, service) {
   if (!login_ok) {
     stop("Could not validate login information.")
   } else {
-    keyring::key_set_with_value(
-      service = make_key_service(service),
-      username = user,
-      password = key
-    )
+
+    # if ecmwfr keyring is not created do so
+    if(keyring::default_backend()$name == "file"){
+      if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
+        keyring::keyring_create("ecmwfr")
+      }
+
+      # set keyring
+      keyring::key_set_with_value(
+        service = make_key_service(service),
+        username = user,
+        password = key,
+        keyring = "ecmwfr"
+      )
+
+    } else {
+      keyring::key_set_with_value(
+        service = make_key_service(service),
+        username = user,
+        password = key
+      )
+    }
+
     message("User ", user, " for ", service, " service added successfully")
     return(invisible(user))
   }

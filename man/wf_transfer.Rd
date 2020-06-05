@@ -32,7 +32,7 @@ a netCDF of data on disk as specified by a
 \code{\link[ecmwfr]{wf_request}}
 }
 \description{
-Returns the contents of the requested url as a netCDF file downloaded
+Returns the contents of the requested url as a NetCDF file downloaded
 to disk or the current status of the requested transfer.
 }
 \examples{
@@ -53,5 +53,5 @@ wf_transfer(r$href, "test@email.com")
 \code{\link[ecmwfr]{wf_request}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

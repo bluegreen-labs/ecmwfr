@@ -10,7 +10,7 @@ wf_datasets(user, service = "webapi", simplify = TRUE)
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
-\item{service}{service to use ecmwf webapi or cds (default = "webapi")}
+\item{service}{service to use ECMWF webapi or cds (default = "webapi")}
 
 \item{simplify}{simplify the output, logical (default = \code{TRUE})}
 }
@@ -39,5 +39,5 @@ wf_datasets("test@mail.com")
 \code{\link[ecmwfr]{wf_request}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

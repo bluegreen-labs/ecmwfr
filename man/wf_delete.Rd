@@ -2,7 +2,7 @@
 % Please edit documentation in R/wf_delete.R
 \name{wf_delete}
 \alias{wf_delete}
-\title{ECMWF delete request}
+\title{delete ECMWF request}
 \usage{
 wf_delete(url, user, service = "webapi", verbose = TRUE)
 }
@@ -36,5 +36,5 @@ wf_get_key(email = "test@mail.com")
 \code{\link[ecmwfr]{wf_request}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

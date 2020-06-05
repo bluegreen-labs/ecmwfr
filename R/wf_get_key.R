@@ -20,13 +20,32 @@
 #'}
 
 wf_get_key <- function(user, service = "webapi") {
+
+  # unlock the keyring when required, mostly so
+  # only the "env" option does not require this
   if (keyring::default_backend()$name != "env") {
-    if (keyring::keyring_is_locked()) {
-      message("Your keyring is locked please unlock with your
-              keyring password!")
-      keyring::keyring_unlock()
+    if (keyring::default_backend()$name == "file") {
+      if ("ecmwfr" %in% keyring::keyring_list()$keyring) {
+        if(keyring::keyring_is_locked(keyring = "ecmwfr")){
+          message("Your keyring is locked please
+              unlock with your keyring password!")
+          keyring::keyring_unlock(keyring = "ecmwfr")
+        }
+      }
+    } else {
+      if (keyring::keyring_is_locked()) {
+        message("Your keyring is locked please
+              unlock with your keyring password!")
+        keyring::keyring_unlock()
+      }
     }
   }
 
-  keyring::key_get(service = make_key_service(service), username = user)
+  # grab keyring
+  keyring::key_get(
+    service = make_key_service(service),
+    username = user,
+    keyring = ifelse(keyring::default_backend()$name == "file",
+                     "ecmwfr",
+                     NULL))
 }

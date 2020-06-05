@@ -24,5 +24,5 @@ Check the validaty of a data request, and login credentials.
 \code{\link[ecmwfr]{wf_transfer}},\code{\link[ecmwfr]{wf_request}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

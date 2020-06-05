@@ -242,5 +242,5 @@ Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). bluegreen-labs
 
 ## Acknowledgements
 
-This project was in part supported by the Belgian Science Policy office COBECORE project (BELSPO; grant BR/175/A3/COBECORE) and a "Fonds voor Wetenschappelijk Onderzoek" travel grant (FWO; V438318N). Logo design elements are taken from the FontAwesome library according to [these terms](https://fontawesome.com/license), where the globe element was inverted and intersected.
+This project was in part supported by the Belgian Science Policy office COBECORE project (BELSPO; grant BR/175/A3/COBECORE), a "Fonds voor Wetenschappelijk Onderzoek" travel grant (FWO; V438318N) and the Marie Skłodowska-Curie Action (H2020 grant 797668). Logo design elements are taken from the FontAwesome library according to [these terms](https://fontawesome.com/license), where the globe element was inverted and intersected.
 

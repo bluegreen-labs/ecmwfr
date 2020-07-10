@@ -185,6 +185,57 @@ conditions here: Before downloading and processing data from CDS please make
 sure you accept the terms and conditions which can be found here: [Copernicus
 Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
 
+### Data Requests
+
+To download data use the [`wf_request`](references/wf_request.html) function,
+together with your _user ID_ and a request string syntax
+[as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the
+arguments. Be sure to specify the service you want to use in your query in this case `cds`.
+
+**Note**: the simplest way to get the requests is to go to the CDS
+website which offers an interactive interface to create these requests.  E.g.,
+for ERA-5 reanalysis:
+
+* [pressure level data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
+* [surface data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
+* ...
+
+```R
+# This is an example of a request for # downloading 'ERA-5' reanalysis data for
+# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
+# northern Europe.
+# File will be stored as "era5-demo.nc" (netcdf format).
+request <- list("dataset_short_name" = "reanalysis-era5-pressure-levels",
+                "product_type" = "reanalysis",
+                "variable" = "temperature",
+                "pressure_level" = "850",
+                "year" = "2000",
+                "month" = "04",
+                "day" = "04",
+                "time" = "00:00",
+                "area" = "70/-20/00/60",
+                "format" = "netcdf",
+                "target" = "era5-demo.nc")
+
+
+# If you have stored your user login information
+# in the keyring by calling cds_set_key you can
+# call:
+file <- wf_request(user     = "1234",   # user ID (for authentification)
+                   request  = request,  # the request
+                   transfer = TRUE,     # download the file
+                   path     = ".")      # store data in current working directory
+
+```
+
+The CDS services are quite fast, however, if you request a lot of variables,
+multiple levels, and data over several years these requests might take quite a
+while!  **Note**: If you need to download larger amounts of data it is
+suggested to split the downloads, e.g., download the data in junks (e.g.,
+month-by-month, or year-by-year). A progress indicator will keep you informed
+on the status of your request. Keep in mind that all data downloaded will be
+buffered in memory limiting the downloads to ~6GB on low end systems.
+
 ## Use: Copernicus Atmosphere Data Store (ADS)
 
 Create a free ADS user account by [self

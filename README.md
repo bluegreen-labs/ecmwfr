@@ -98,7 +98,7 @@ request string syntax [as documented](https://confluence.ecmwf.int/display/WEBAP
 the arguments. Be sure to specify which service to use, in this case `webapi` 
 is the correct service to request data from.
 
-The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
+The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS/ADS based services.
 
 ![](https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif)
 
@@ -185,56 +185,90 @@ conditions here: Before downloading and processing data from CDS please make
 sure you accept the terms and conditions which can be found here: [Copernicus
 Climate Data Store Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
 
+## Use: Copernicus Atmosphere Data Store (ADS)
+
+Create a free ADS user account by [self
+registering](https://ads.atmosphere.copernicus.eu/user/register). Once your user
+account has been verified you can get your personal _user ID_ and _key_ by 
+visiting the [user profile](https://ads.atmosphere.copernicus.eu/user/). This 
+information is required to be able to retrieve data via the `ecmwfr` package. 
+Use the `ecmwf` [`wf_set_key`](references/wf_set_key.html) function to store
+your login information in the system keyring (see below). Be aware, that unlike
+the API key for the ECMWF API your `user` does not correspond to the email
+address you use for the ADS login.
+
+```json
+UID: 2345
+API key: asfed1234-foo-bar-98765431-XXXXXXXXXX
+```
+
+### Setup
+
+If you prefer to use your local keychain (rather than using the `.cdsapirc`
+file) you have to save your login information first.  The package does not
+allow you to use your key inline in scripts to limit security issues when
+sharing scripts on github or otherwise.
+
+```R
+# set a key to the keychain
+wf_set_key(user = "2345",
+            key = "asfed1234-foo-bar-98765431-XXXXXXXXXX",
+            service = "cds")
+
+# you can retrieve the key using
+wf_get_key(user = "2345")
+
+# the output should be the key you provided
+# "asfed1234-foo-bar-98765431-XXXXXXXXXX"
+
+# Alternatively you can input your login info with an interactive request
+wf_set_key(service = "ads")
+
+# you will get a command line request to provide the required details
+```
+
+Before you can download any data you have to make sure to accept the terms and
+conditions here: Before downloading and processing data from CDS please make
+sure you accept the terms and conditions which can be found here: [Copernicus
+Atmosphere Data Store Disclaimer/Privacy](https://ads.atmosphere.copernicus.eu/disclaimer-privacy).
+
 ### Data Requests
 
 To download data use the [`wf_request`](references/wf_request.html) function,
-together with your _user ID_ and a request string syntax
-[as documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax). Instead of `json` formatting the function uses a simple `R` list for all the
-arguments. Be sure to specify the service you want to use in your query in this case `cds`.
+together with your _user ID_ and a request string syntax. Instead of `json` formatting the function uses a simple `R` list for all the arguments. Be sure to specify the service you want to use in your query in this case `ads`. Note that the `cds` and `ads` services are identical in use except for their login credentials
 
-**Note**: the simplest way to get the requests is to go to the CDS
+**Note**: the simplest way to get the requests is to go to the ADS
 website which offers an interactive interface to create these requests.  E.g.,
-for ERA-5 reanalysis:
+for air quality data:
 
-* [pressure level data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
-* [surface data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
+* [European air quality data](https://ads.atmosphere.copernicus.eu/cdsapp#!/dataset/cams-europe-air-quality-forecasts?tab=form)
 * ...
 
 ```R
-# This is an example of a request for # downloading 'ERA-5' reanalysis data for
-# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
-# northern Europe.
-# File will be stored as "era5-demo.nc" (netcdf format).
-request <- list("dataset_short_name" = "reanalysis-era5-pressure-levels",
-                "product_type" = "reanalysis",
-                "variable" = "temperature",
-                "pressure_level" = "850",
-                "year" = "2000",
-                "month" = "04",
-                "day" = "04",
-                "time" = "00:00",
-                "area" = "70/-20/00/60",
-                "format" = "netcdf",
-                "target" = "era5-demo.nc")
-
+# This is an example of a request for global
+# particulate matter data, data will be stored
+# in your present working directory with filename
+# particulate_matter.nc
+request <- list(
+  date = "2003-01-01/2003-01-01",
+  format = "netcdf",
+  variable = "particulate_matter_2.5um",
+  time = "00:00",
+  dataset_short_name = "cams-global-reanalysis-eac4",
+  target = "particulate_matter.nc"
+)
 
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
 # call:
-file <- wf_request(user     = "1234",   # user ID (for authentification)
+file <- wf_request(user     = "2345",   # user ID (for authentification)
                    request  = request,  # the request
                    transfer = TRUE,     # download the file
                    path     = ".")      # store data in current working directory
 
 ```
 
-The CDS services are quite fast, however, if you request a lot of variables,
-multiple levels, and data over several years these requests might take quite a
-while!  **Note**: If you need to download larger amounts of data it is
-suggested to split the downloads, e.g., download the data in junks (e.g.,
-month-by-month, or year-by-year). A progress indicator will keep you informed
-on the status of your request. Keep in mind that all data downloaded will be
-buffered in memory limiting the downloads to ~6GB on low end systems.
+The same file restrictions and notes as for the CDS apply to the ADS.
 
 ## Citation
 

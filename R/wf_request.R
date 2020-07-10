@@ -13,7 +13,7 @@
 #' \code{3*3600} seconds).
 #' @param transfer logical, download data TRUE or FALSE (default = TRUE)
 #' @param request nested list with query parameters following the layout
-#' as specified on the ECMWF API page
+#' as specified on the ECMWF APIs page
 #' @param job_name optional name to use as an RStudio job and as output variable
 #'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
@@ -124,6 +124,18 @@ wf_request <- function(request,
     lapply(user, function(u)
       try(wf_check_request(u, request), silent = TRUE))
   correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
+
+  if (length(correct) == 0) {
+    stop(
+      sprintf(
+        "Data identifier %s is not found in Web API, CDS or ADS datasets.
+                 Or your login credentials do not match your request.",
+        request$dataset_short_name
+      ),
+      call. = FALSE
+    )
+  }
+
   wf_check <- wf_check[[correct]]
   user <- user[correct]
 
@@ -133,18 +145,6 @@ wf_request <- function(request,
             wf_check$service,
             " service with username ",
             user)
-  }
-
-
-  if (length(wf_check) == 0) {
-    stop(
-      sprintf(
-        "Data identifier %s is not found in Web API, CDS or ADS datasets.
-                 Or your login credentials do not match your request.",
-        request$dataset_short_name
-      ),
-      call. = FALSE
-    )
   }
 
   # split out data
@@ -172,7 +172,9 @@ wf_request <- function(request,
       body = request,
       encode = "json"
     )
-  } else {
+  }
+
+  if (service == "cds"){
     response <- httr::POST(
       sprintf(
         "%s/resources/%s",
@@ -183,6 +185,27 @@ wf_request <- function(request,
       httr::add_headers("Accept" = "application/json",
                         "Content-Type" = "application/json"),
       body = request,
+      encode = "json"
+    )
+  }
+
+  if (service == "ads"){
+
+    # fix strange difference in processing queries
+    # from CDS
+    body <- request
+    body$dataset_short_name <- NULL
+    body$target <- NULL
+    response <- httr::POST(
+      sprintf(
+        "%s/resources/%s",
+        url,
+        request$dataset_short_name
+      ),
+      httr::authenticate(user, key),
+      httr::add_headers("Accept" = "application/json",
+                        "Content-Type" = "application/json"),
+      body = body,
       encode = "json"
     )
   }

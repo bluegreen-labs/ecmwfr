@@ -13,7 +13,8 @@ information should be loaded.}
 \item{user}{string, user ID used to sign up for the CDS data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
-\item{service}{which service to use, one of \code{webapi} or \code{cds}}
+\item{service}{which service to use, one of \code{webapi}, \code{cds}
+or \code{ads} (default = webapi)}
 
 \item{simplify}{boolean, default \code{TRUE}. If \code{TRUE} the description
 will be returned as tidy data instead of a nested list.}

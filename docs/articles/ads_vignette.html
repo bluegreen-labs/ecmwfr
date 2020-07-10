@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CDS functionality • ecmwfr</title>
+<title>ADS functionality • ecmwfr</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="CDS functionality">
+<script src="../pkgdown.js"></script><meta property="og:title" content="ADS functionality">
 <meta property="og:description" content="ecmwfr">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -95,33 +95,33 @@
 
       
 
-      </header><script src="cds_vignette_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="ads_vignette_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>CDS functionality</h1>
-                        <h4 class="author">Reto Stauffer, Koen Hufkens</h4>
+      <h1 data-toc-skip>ADS functionality</h1>
+                        <h4 class="author">Koen Hufkens</h4>
             
             <h4 class="date">2020-07-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/cds_vignette.Rmd"><code>vignettes/cds_vignette.Rmd</code></a></small>
-      <div class="hidden name"><code>cds_vignette.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/ads_vignette.Rmd"><code>vignettes/ads_vignette.Rmd</code></a></small>
+      <div class="hidden name"><code>ads_vignette.Rmd</code></div>
 
     </div>
 
     
     
-<div id="downloading-data-sets-from-copernicuss-climate-data-store" class="section level2">
+<div id="downloading-data-sets-from-copernicuss-atmosphere-data-store" class="section level2">
 <h2 class="hasAnchor">
-<a href="#downloading-data-sets-from-copernicuss-climate-data-store" class="anchor"></a>Downloading Data Sets from Copernicus’s Climate Data Store</h2>
-<p><a href="https://www.copernicus.eu/en">Copernicus.eu</a> provides a set of interesting data sets for research, education, and applied earth sciences on their <a href="https://cds.climate.copernicus.eu">Climate Data Store</a> (CDS). Among the different data sets there is the latest <a href="https://www.ecmwf.int">ECMWF</a> high-resolution reanalysis data set which replaces ERA Interim (which was ERA-4; version 4). The R package <code>ecmwfr</code> provides a convenient interface to download these data sets.</p>
+<a href="#downloading-data-sets-from-copernicuss-atmosphere-data-store" class="anchor"></a>Downloading Data Sets from Copernicus’s Atmosphere Data Store</h2>
+<p><a href="https://www.copernicus.eu/en">Copernicus.eu</a> provides a set of interesting data sets for research, education, and applied earth sciences on their <a href="https://ads.atmosphere.copernicus.eu/">Atmospheric Data Store</a> (ADS) as part of the Copernicus Atmospheric Monitoring Service (CAMS). These data provide consistent information on the atmosphere anywhere in the world.</p>
 </div>
 <div id="before-downloading-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#before-downloading-data" class="anchor"></a>Before Downloading Data</h2>
 <p>Before you will be able to download any data you need to get a free personal account.</p>
 <ul>
-<li><a href="https://cds.climate.copernicus.eu/user/register">Register yourself for CDS services</a></li>
-<li><a href="https://cds.climate.copernicus.eu/disclaimer-privacy">Terms and conditions</a></li>
+<li><a href="https://ads.atmosphere.copernicus.eu/user/register">Register yourself for CDS services</a></li>
+<li><a href="https://ads.atmosphere.copernicus.eu/disclaimer-privacy">Terms and conditions</a></li>
 </ul>
 <p>To retrieve data <code>ecmwfr</code> use <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code>to add the login details to your local keyring (requires the <em>R</em> package <a href="https://CRAN.R-project.org/package=keyring"><code>keyring</code></a>).</p>
 <p>Once you are in possession of your personal user (namely your user ID and a secret key) <code>ecmwfr</code> allows to send requests to CDS and/or download the data.</p>
@@ -129,67 +129,42 @@
 <div id="the-request-syntax" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-request-syntax" class="anchor"></a>The Request Syntax</h2>
-<p>CDS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variables</code> to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code> extent, and other details.</p>
-<p>The request syntax is available for a range of different CDS data sets. Check the <a href="https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset">CDS Dataset</a> website to see a list of available datasets and to check whether API requests are allowed or not (go to <em>Download Data</em>, select some data, show request by clicking <em>Show API Request</em> (red button, bottom of page).</p>
+<p>ADS data retrievals are based on a <code>list</code> object which specifies the data set to be downloaded. These definitions are called <code>requests</code> (for those who are familiar with <em>mars</em>: these are basically <em>mars</em> requests). A <code>request</code> defined the type of the <code>dataset</code>, the <code>variables</code> to be downloaded, the time period, output <code>format</code>, <code>target</code> location, a custom <code>area</code> extent, and other details.</p>
+<p>The request syntax is available for a range of different CDS data sets. Check the <a href="https://ads.atmosphere.copernicus.eu/cdsapp#!/search?type=dataset">ADS Dataset</a> website to see a list of available datasets and to check whether API requests are allowed or not (go to <em>Download Data</em>, select some data, show request by clicking <em>Show API Request</em> (red button, bottom of page).</p>
 <p>The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; python to list (or ‘Mars to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
 <p><img src="https://user-images.githubusercontent.com/1354258/56429618-def12080-62c3-11e9-90e4-0954e10d06f3.gif"></p>
-<div id="an-era-5-example" class="section level3">
+<div id="a-cams-example" class="section level3">
 <h3 class="hasAnchor">
-<a href="#an-era-5-example" class="anchor"></a>An ERA-5 example</h3>
+<a href="#a-cams-example" class="anchor"></a>A CAMS example</h3>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Specify the data set</span>
-<span class="no">request</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset_short_name"</span> <span class="kw">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span>   <span class="kw">=</span> <span class="st">"reanalysis"</span>,
-                <span class="st">"variable"</span>       <span class="kw">=</span> <span class="st">"temperature"</span>,
-                <span class="st">"pressure_level"</span> <span class="kw">=</span> <span class="st">"850"</span>,
-                <span class="st">"year"</span>           <span class="kw">=</span> <span class="st">"2000"</span>,
-                <span class="st">"month"</span>          <span class="kw">=</span> <span class="st">"04"</span>,
-                <span class="st">"day"</span>            <span class="kw">=</span> <span class="st">"04"</span>,
-                <span class="st">"time"</span>           <span class="kw">=</span> <span class="st">"00:00"</span>,
-                <span class="st">"area"</span>           <span class="kw">=</span> <span class="st">"70/-20/30/60"</span>,
-                <span class="st">"format"</span>         <span class="kw">=</span> <span class="st">"netcdf"</span>,
-                <span class="st">"target"</span>         <span class="kw">=</span> <span class="st">"era5-demo.nc"</span>)</pre></body></html></div>
-<p>This is the “demo” request and it specifies the following:</p>
-<ul>
-<li>
-<code>dataset</code>: downloading ERA-5 reanalysis on pressure level(s)</li>
-<li>
-<code>product_type</code>: (deterministic) reanalysis data</li>
-<li>
-<code>variable</code>/<code>pressure_level</code>: requesting temperature on 850 hectopascal</li>
-<li>
-<code>year</code>/<code>month</code>/<code>day</code>: April 4, 2000 (one day in this example)</li>
-<li>
-<code>time</code>: valid at 00:00 UTC (date/time always in UTC),</li>
-<li>
-<code>area</code>: custom subset covering northern Europe</li>
-<li>
-<code>format</code>: output format NetCDF</li>
-<li>
-<code>target</code>: local output file <code>era5-demo.nc</code>
-</li>
-</ul>
+<span class="no">request</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+  <span class="kw">date</span> <span class="kw">=</span> <span class="st">"2003-01-01/2003-01-01"</span>,
+  <span class="kw">format</span> <span class="kw">=</span> <span class="st">"netcdf"</span>,
+  <span class="kw">variable</span> <span class="kw">=</span> <span class="st">"particulate_matter_2.5um"</span>,
+  <span class="kw">time</span> <span class="kw">=</span> <span class="st">"00:00"</span>,
+  <span class="kw">dataset_short_name</span> <span class="kw">=</span> <span class="st">"cams-global-reanalysis-eac4"</span>,
+  <span class="kw">target</span> <span class="kw">=</span> <span class="st">"particulate_matter.nc"</span>
+)</pre></body></html></div>
+<p>This request downloads global re-analysis data on particulate matter on January first 2003.</p>
 <p>The data set as specified above can be downloaded calling the <code>wf_request</code> function:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Start downloading the data, the path of the file</span>
 <span class="co"># will be returned as a variable (ncfile)</span>
-<span class="no">ncfile</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"2088"</span>,
-                      <span class="kw">request</span> <span class="kw">=</span> <span class="no">request</span>,
-                      <span class="kw">transfer</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-                      <span class="kw">path</span> <span class="kw">=</span> <span class="st">"~"</span>,
-                      <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
-<p>Depending on the request (the amount of data you are asking for) the request function may tike a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several varaiables/fields.</p>
-<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>era5-demo.nc</code>.</p>
+<span class="no">file</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="kw">user</span>     <span class="kw">=</span> <span class="st">"2345"</span>,   <span class="co"># user ID (for authentification)</span>
+                   <span class="kw">request</span>  <span class="kw">=</span> <span class="no">request</span>,  <span class="co"># the request</span>
+                   <span class="kw">transfer</span> <span class="kw">=</span> <span class="fl">TRUE</span>,     <span class="co"># download the file</span>
+                   <span class="kw">path</span>     <span class="kw">=</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></pre></body></html></div>
+<p>Depending on the request (the amount of data you are asking for) the request function may take a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several variables/fields.</p>
+<p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>particulate_matter.nc</code>.</p>
 <p>Quick check:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Open NetCDF file and plot</span>
+<span class="co"># the log transformed data</span>
 <span class="no">r</span> <span class="kw">&lt;-</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="no">ncfile</span>)
-<span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">r</span>, <span class="kw">main</span> <span class="kw">=</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span>)
+<span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="fu">rotate</span>(<span class="no">r</span>)),
+             <span class="kw">main</span> <span class="kw">=</span> <span class="st">"CAMS reanalysis data (particulate matter 2.5u)"</span>,
+             <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span>(<span class="fl">100</span>)))
 <span class="kw pkg">maps</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
+<p><img src="ads_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
-</div>
-<div id="date-period-specification" class="section level2">
-<h2 class="hasAnchor">
-<a href="#date-period-specification" class="anchor"></a>Date period specification</h2>
-<p>For those familiar to ECMWF <em>mars</em> syntax: CDS does not accept <code>date = "2000-01-01/to/2000-12-31"</code> specifications at the moment. It is possible to specify one specific date via <code>date = "2000-01-01"</code> or multiple days via <code>date = ["2000-01-01","2000-01-02","2000-10-20"]</code> but not via <code>".../to/..."</code>.</p>
 </div>
   </div>
 

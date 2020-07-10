@@ -11,7 +11,8 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
-#' @param service service associated with credentials ("webapi" or "cds")
+#' @param service which service to use, one of \code{webapi}, \code{cds}
+#' or \code{ads}
 #'
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
@@ -93,7 +94,8 @@ wf_set_key <- function(user, key, service) {
         keyring = "ecmwfr"
       )
 
-      message("User ", user, " for ", service, " service added successfully in keychain file")
+      message("User ", user, " for ", service,
+              " service added successfully in keychain file")
 
     } else {
       keyring::key_set_with_value(
@@ -102,7 +104,8 @@ wf_set_key <- function(user, key, service) {
         password = key
       )
 
-      message("User ", user, " for ", service, " service added successfully in keychain")
+      message("User ", user, " for ", service,
+              " service added successfully in keychain")
     }
 
     return(invisible(user))

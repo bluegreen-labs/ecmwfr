@@ -1,10 +1,10 @@
 ---
-title: "CDS"
+title: "CDS functionality"
 author: "Reto Stauffer, Koen Hufkens"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ecmwfr cds functionality}
+  %\VignetteIndexEntry{CDS functionality}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -4,7 +4,8 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
-#' @param service service to use ECMWF webapi or cds (default = "webapi")
+#' @param service which service to use, one of \code{webapi}, \code{cds}
+#' or \code{ads} (default = webapi)
 #' @param simplify simplify the output, logical (default = \code{TRUE})
 #' @return returns a nested list or data frame with the ECMWF datasets
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -40,19 +41,20 @@ wf_datasets <- function(
   key <- wf_get_key(user = user, service = service)
 
   # query the status url provided
-  if (service == "webapi"){
-  response <- httr::GET(
+  response <- switch(
+    service,
+    "webapi" = httr::GET(
     paste0(wf_server(),"/datasets"),
     httr::add_headers(
       "Accept" = "application/json",
       "Content-Type" = "application/json",
       "From" = user,
       "X-ECMWF-KEY" = key),
-    encode = "json")
-  } else {
-    response <- httr::GET(sprintf("%s/resources/",
-                                  wf_server(service = "cds")))
-  }
+    encode = "json"),
+    "cds" = httr::GET(sprintf("%s/resources/",
+                                  wf_server(service = "cds"))),
+    "ads" = httr::GET(sprintf("%s/resources/",
+                            wf_server(service = "ads"))))
 
   # trap errors
   if (httr::http_error(response)){

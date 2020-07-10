@@ -6,8 +6,8 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing
-#' @param service character, one of \code{ecmwf} or \code{cds} depending
-#' on the data set to be deleted.
+#' @param service which service to use, one of \code{webapi}, \code{cds}
+#' or \code{ads} (default = webapi)
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' \code{\link[ecmwfr]{wf_request}}

@@ -4,6 +4,7 @@
 * R >= 3.6
 * bluegreen-labs migration
 * keychain issue fix, keychain in file now functional
+* Atmospheric Data Store support
 
 # ecmwfr 1.2.3
 

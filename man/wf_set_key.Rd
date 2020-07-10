@@ -11,7 +11,8 @@ wf_set_key(user, key, service)
 
 \item{key}{token provided by ECMWF}
 
-\item{service}{service associated with credentials ("webapi" or "cds")}
+\item{service}{which service to use, one of \code{webapi}, \code{cds}
+or \code{ads}}
 }
 \value{
 It invisibly returns the user.

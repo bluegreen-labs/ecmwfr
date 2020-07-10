@@ -1,0 +1,95 @@
+---
+title: "ADS functionality"
+author: "Koen Hufkens"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ADS functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# load the library
+library(ncdf4)
+library(raster)
+library(maps)
+```
+
+## Downloading Data Sets from Copernicus's Atmosphere Data Store
+
+[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting data sets for research, education, and applied earth sciences on their [Atmospheric Data Store](https://ads.atmosphere.copernicus.eu/) (ADS) as part of the Copernicus Atmospheric Monitoring Service (CAMS). These data provide consistent information on the atmosphere anywhere in the world.
+
+## Before Downloading Data
+
+Before you will be able to download any data you need to get a free personal
+account.
+
+* [Register yourself for CDS services](https://ads.atmosphere.copernicus.eu/user/register)
+* [Terms and conditions](https://ads.atmosphere.copernicus.eu/disclaimer-privacy)
+
+To retrieve data `ecmwfr` use `wf_set_key()`to add the login details to your local keyring (requires the _R_ package [`keyring`](https://CRAN.R-project.org/package=keyring)).
+
+Once you are in possession of your personal user (namely your user ID and a secret key) `ecmwfr` allows to send requests to CDS and/or download the data.
+
+## The Request Syntax
+
+ADS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests` (for those who are familiar with _mars_: these are basically _mars_ requests). A `request` defined the type of the `dataset`, the `variables` to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
+
+The request syntax is available for a range of different CDS data sets. Check the [ADS Dataset](https://ads.atmosphere.copernicus.eu/cdsapp#!/search?type=dataset) website to see a list of available datasets and to check whether API requests are allowed or not (go to _Download Data_, select some data, show request by clicking _Show API Request_ (red button, bottom of page).
+
+The conversion from a python based string to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -> python to list (or 'Mars to list') you dynamically convert queries copied from either ECMWF or CDS based services.
+
+![](https://user-images.githubusercontent.com/1354258/56429618-def12080-62c3-11e9-90e4-0954e10d06f3.gif)
+
+### A CAMS example
+
+```{r demo request, echo = TRUE}
+# Specify the data set
+request <- list(
+  date = "2003-01-01/2003-01-01",
+  format = "netcdf",
+  variable = "particulate_matter_2.5um",
+  time = "00:00",
+  dataset_short_name = "cams-global-reanalysis-eac4",
+  target = "particulate_matter.nc"
+)
+```
+
+This request downloads global re-analysis data on particulate matter on January first 2003.
+
+The data set as specified above can be downloaded calling the
+`wf_request` function:
+
+```{r spatial-request, echo = TRUE, eval = FALSE}
+# Start downloading the data, the path of the file
+# will be returned as a variable (ncfile)
+file <- wf_request(user     = "2345",   # user ID (for authentification)
+                   request  = request,  # the request
+                   transfer = TRUE,     # download the file
+                   path     = ".")      # store data in current working directory
+```
+
+Depending on the request (the amount of data you are asking for) the request function may take a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several variables/fields.
+
+Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called `particulate_matter.nc`. 
+
+Quick check:
+```{r echo = FALSE}
+ncfile <- system.file(package = "ecmwfr","extdata/ads.nc")
+```
+
+```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
+# Open NetCDF file and plot
+# the log transformed data
+r <- raster::raster(ncfile)
+raster::plot(log(rotate(r)),
+             main = "CAMS reanalysis data (particulate matter 2.5u)",
+             col = rev(heat.colors(100)))
+maps::map("world", add = TRUE)
+```

@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -44,7 +48,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -99,13 +102,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/ads_vignette.html">ADS functionality</a>
+    </li>
+    <li>
       <a href="../articles/advanced_vignette.html">Advanced Use Cases</a>
     </li>
     <li>
-      <a href="../articles/cds_vignette.html">CDS</a>
+      <a href="../articles/cds_vignette.html">CDS functionality</a>
     </li>
     <li>
-      <a href="../articles/webapi_vignette.html">WebAPI</a>
+      <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
     </li>
   </ul>
 </li>
@@ -115,7 +121,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/bluegreen-labs/ecmwfr">
+  <a href="https://github.com/bluegreen-labs/ecmwfr/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -133,32 +139,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/bluegreen-labs/ecmwfr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="ecmwfr-1-2-4" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-2-4" class="anchor"></a>ecmwfr 1.2.4<small> Unreleased </small>
+    <div id="ecmwfr-124" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.4">
+<a href="#ecmwfr-124" class="anchor"></a>ecmwfr 1.2.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>updated code coverage to reflect changes</li>
 <li>R &gt;= 3.6</li>
 <li>bluegreen-labs migration</li>
 <li>keychain issue fix, keychain in file now functional</li>
+<li>Atmospheric Data Store support</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-2-3" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-2-3" class="anchor"></a>ecmwfr 1.2.3<small> 2020-05-17 </small>
+    <div id="ecmwfr-123" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.3">
+<a href="#ecmwfr-123" class="anchor"></a>ecmwfr 1.2.3<small> 2020-05-17 </small>
 </h1>
 <ul>
 <li>fixed a bug on dataset naming convention double use</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-2-2" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-2-2" class="anchor"></a>ecmwfr 1.2.2<small> 2020-02-13 </small>
+    <div id="ecmwfr-122" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.2">
+<a href="#ecmwfr-122" class="anchor"></a>ecmwfr 1.2.2<small> 2020-02-13 </small>
 </h1>
 <ul>
 <li>automatic user detection from keyring user list</li>
@@ -170,26 +177,26 @@
 <li>keyword issue</li>
 </ul>
 </div>
-    <div id="ecwmfr-1-2-1" class="section level1">
-<h1 class="page-header">
-<a href="#ecwmfr-1-2-1" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
+    <div id="ecwmfr-121" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.1">
+<a href="#ecwmfr-121" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
 </h1>
 <ul>
 <li>disabled all unit tests on CRAN</li>
 <li>Adding in support for rstudio batch processing</li>
 </ul>
 </div>
-    <div id="ecwmfr-1-2-1-1" class="section level1">
-<h1 class="page-header">
-<a href="#ecwmfr-1-2-1-1" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
+    <div id="ecwmfr-121-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.1">
+<a href="#ecwmfr-121-1" class="anchor"></a>ecwmfr 1.2.1<small> 2019-04-23 </small>
 </h1>
 <ul>
 <li>disabled all networked unit tests on CRAN</li>
 </ul>
 </div>
-    <div id="ecwmfr-1-2-0" class="section level1">
-<h1 class="page-header">
-<a href="#ecwmfr-1-2-0" class="anchor"></a>ecwmfr 1.2.0<small> 2019-04-19 </small>
+    <div id="ecwmfr-120" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0">
+<a href="#ecwmfr-120" class="anchor"></a>ecwmfr 1.2.0<small> 2019-04-19 </small>
 </h1>
 <ul>
 <li>key management (breaking) changes
@@ -210,9 +217,9 @@
 <li>documentation updated</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-1-0" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-1-0" class="anchor"></a>ecmwfr 1.1.0<small> 2019-02-06 </small>
+    <div id="ecmwfr-110" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#ecmwfr-110" class="anchor"></a>ecmwfr 1.1.0<small> 2019-02-06 </small>
 </h1>
 <ul>
 <li>inclusion of Copernicus CDS services by Reto Tauffer
@@ -236,9 +243,9 @@
 </li>
 </ul>
 </div>
-    <div id="ecmwfr-1-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-0-1" class="anchor"></a>ecmwfr 1.0.1<small> 2019-01-19 </small>
+    <div id="ecmwfr-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#ecmwfr-101" class="anchor"></a>ecmwfr 1.0.1<small> 2019-01-19 </small>
 </h1>
 <ul>
 <li>accidental CRAN violation fixed</li>
@@ -247,18 +254,18 @@
 <li>checks for binary downloads (larger files)</li>
 </ul>
 </div>
-    <div id="ecmwfr-1-0-0" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-1-0-0" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
+    <div id="ecmwfr-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#ecmwfr-100" class="anchor"></a>ecmwfr 1.0.0<small> 2019-01-17 </small>
 </h1>
 <ul>
 <li>major version</li>
 <li>CRAN release</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-3" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-0-0-3" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
+    <div id="ecmwfr-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#ecmwfr-003" class="anchor"></a>ecmwfr 0.0.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>unit checks with encrypted key</li>
@@ -268,17 +275,17 @@
 <li>rOpenSci syntax and ok, gp() ok</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-2" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-0-0-2" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
+    <div id="ecmwfr-002" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.2">
+<a href="#ecmwfr-002" class="anchor"></a>ecmwfr 0.0.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>working version, yeah!</li>
 </ul>
 </div>
-    <div id="ecmwfr-0-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#ecmwfr-0-0-1" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
+    <div id="ecmwfr-001" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.1">
+<a href="#ecmwfr-001" class="anchor"></a>ecmwfr 0.0.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>experimental release</li>
@@ -287,24 +294,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#ecmwfr-1-2-4">1.2.4</a></li>
-        <li><a href="#ecmwfr-1-2-3">1.2.3</a></li>
-        <li><a href="#ecmwfr-1-2-2">1.2.2</a></li>
-        <li><a href="#ecwmfr-1-2-1">1.2.1</a></li>
-        <li><a href="#ecwmfr-1-2-1-1">1.2.1</a></li>
-        <li><a href="#ecwmfr-1-2-0">1.2.0</a></li>
-        <li><a href="#ecmwfr-1-1-0">1.1.0</a></li>
-        <li><a href="#ecmwfr-1-0-1">1.0.1</a></li>
-        <li><a href="#ecmwfr-1-0-0">1.0.0</a></li>
-        <li><a href="#ecmwfr-0-0-3">0.0.3</a></li>
-        <li><a href="#ecmwfr-0-0-2">0.0.2</a></li>
-        <li><a href="#ecmwfr-0-0-1">0.0.1</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -316,7 +309,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

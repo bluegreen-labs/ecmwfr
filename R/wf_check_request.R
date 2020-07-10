@@ -36,7 +36,8 @@ wf_check_request <- memoise::memoise(function(
   service <- do.call("rbind",
                      lapply(c("webapi","cds","ads"),
                                      function(service){
-    dataset <- try(wf_datasets(user, service = service),
+    dataset <- try(wf_datasets(user,
+                               service = service),
                    silent = TRUE)
 
     if(inherits(dataset,"try-error")){
@@ -57,13 +58,15 @@ wf_check_request <- memoise::memoise(function(
          (request$dataset == "mars" && service == "webapi")){
         return(service)
       }
+
     } else {
 
       # on CDS / ADS use the short name variable to avoid conflicts
       # for certain data products (which reuse the dataset parameter)
 
       if(!"dataset_short_name" %in% names(request)){
-        stop("Request specification has to contain a \"dataset_short_name\" identifier.")
+        stop("Request specification has to contain a \"dataset_short_name\"
+             identifier.")
       }
 
       if(request$dataset_short_name %in% dataset$name){
@@ -73,8 +76,9 @@ wf_check_request <- memoise::memoise(function(
   }))
 
   if(is.null(service)){
-    stop(sprintf("Data identifier %s is not found in Web API or CDS datasets.
-                 Or your login credentials do not match your request.",
+    stop(
+    sprintf("Data identifier %s is not found in Web API, CDS or ADS datasets.
+             Or your login credentials do not match your request.",
                  request$dataset), call. = FALSE)
   }
 

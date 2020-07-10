@@ -36,7 +36,7 @@ wf_delete <- function(
   }
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds"))
+  service <- match.arg(service, c("webapi", "cds", "ads"))
 
   # get key
   key <- wf_get_key(user = user, service = service)
@@ -49,7 +49,7 @@ wf_delete <- function(
   # remove a queued download
   # Differs for ecmwf and cds requests.
   # For CDS: note that 'user' is simply a copy of 'user'
-  if(service == "cds") {
+  if(service == "cds" | service == "ads") {
     response <- httr::DELETE(
       url,
       httr::authenticate(user, key),

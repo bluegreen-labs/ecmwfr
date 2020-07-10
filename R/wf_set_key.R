@@ -94,6 +94,7 @@ wf_set_key <- function(user, key, service) {
       )
 
       message("User ", user, " for ", service, " service added successfully in keychain file")
+
     } else {
       keyring::key_set_with_value(
         service = make_key_service(service),

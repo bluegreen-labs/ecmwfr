@@ -30,7 +30,7 @@ wf_services <- function(
 
   # check the login credentials
   if(missing(user)){
-    stop("Please provide ECMWF login user / url!")
+    stop("Please provide ECMWF webapi login user / url!")
   }
 
   # get key from user

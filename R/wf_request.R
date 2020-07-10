@@ -110,7 +110,8 @@ wf_request <- function(request,
     user <-
       rbind(
         keyring::key_list(service = make_key_service(c("webapi"))),
-        keyring::key_list(service = make_key_service(c("cds")))
+        keyring::key_list(service = make_key_service(c("cds"))),
+        keyring::key_list(service = make_key_service(c("ads")))
       )
     serv <- make_key_service()
     user <-
@@ -138,7 +139,7 @@ wf_request <- function(request,
   if (length(wf_check) == 0) {
     stop(
       sprintf(
-        "Data identifier %s is not found in Web API or CDS datasets.
+        "Data identifier %s is not found in Web API, CDS or ADS datasets.
                  Or your login credentials do not match your request.",
         request$dataset_short_name
       ),
@@ -196,21 +197,27 @@ wf_request <- function(request,
   ct <- httr::content(response)
 
   # first run is always 202
-  if (service == "cds") {
+  if ((service == "cds" | service == "ads")) {
     ct$code <- 202
   }
 
   # some verbose feedback
   if (verbose) {
     message("- staging data transfer at url endpoint or request id:")
-    message("  ", ifelse(service == "cds", ct$request_id, ct$href), "\n")
+    message("  ", switch(service,
+                         "cds" = ct$request_id,
+                         "ads" = ct$request_id,
+                         "webapi" = ct$href), "\n")
   }
 
   # only return the content of the query
   if (!transfer) {
     message("  No download requests will be made, however...\n")
     exit_message(
-      url = ifelse(service == "cds", ct$request_id, ct$href),
+      url = switch(service,
+                   "cds" = ct$request_id,
+                   "ads" = ct$request_id,
+                   "webapi" = ct$href),
       path = path,
       file = request$target,
       service = service
@@ -242,7 +249,10 @@ wf_request <- function(request,
       if (verbose) {
         message("  Your download timed out, however ...\n")
         exit_message(
-          url = ifelse(service == "cds", ct$request_id, ct$href),
+          url = switch(service,
+                       "cds" = ct$request_id,
+                       "ads" = ct$request_id,
+                       "webapi" = ct$href),
           path = path,
           file = request$target,
           service = service
@@ -252,7 +262,8 @@ wf_request <- function(request,
     }
 
     # set retry rate, dynamic for WebAPI, static 10 seconds CDS
-    retry <- as.numeric(ifelse(service == "cds", 5, ct$retry))
+    retry <- as.numeric(ifelse((service == "cds" | service == "ads"),
+                               5, ct$retry))
 
     if (verbose) {
       # let a spinner spin for "retry" seconds
@@ -266,8 +277,10 @@ wf_request <- function(request,
     # be NULL (load user information from '.ecmwfapirc'
     # file inside wf_transfer).
     ct <- wf_transfer(
-      url = ifelse(service == "cds",
-                   ct$request_id, ct$href),
+      url = switch(service,
+                   "cds" = ct$request_id,
+                   "ads" = ct$request_id,
+                   "webapi" = ct$href),
       user    = user,
       service  = service,
       filename = tmp_file,
@@ -308,8 +321,10 @@ wf_request <- function(request,
   if (!request$dataset == "mars") {
     wf_delete(
       user   = user,
-      url    = ifelse(service == "cds",
-                      ct$request_id, ct$href),
+      url = switch(service,
+                   "cds" = ct$request_id,
+                   "ads" = ct$request_id,
+                   "webapi" = ct$href),
       verbose = verbose,
       service = service
     )

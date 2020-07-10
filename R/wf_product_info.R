@@ -41,7 +41,7 @@ wf_product_info <- function(
   }
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds"))
+  service <- match.arg(service, c("webapi", "cds", "ads"))
 
   # query the status url provided
   if (service == "webapi"){
@@ -65,7 +65,7 @@ wf_product_info <- function(
 
   } else {
     response <- httr::GET(sprintf("%s/resources/%s",
-                                  wf_server(service = "cds"),
+                                  wf_server(service = service),
                                   dataset))
   }
 

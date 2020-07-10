@@ -34,7 +34,7 @@ wf_check_request <- memoise::memoise(function(
   }
 
   service <- do.call("rbind",
-                     lapply(c("webapi","cds"),
+                     lapply(c("webapi","cds","ads"),
                                      function(service){
     dataset <- try(wf_datasets(user, service = service),
                    silent = TRUE)
@@ -58,7 +58,8 @@ wf_check_request <- memoise::memoise(function(
         return(service)
       }
     } else {
-      # on CDS use the short name variable to avoid conflicts
+
+      # on CDS / ADS use the short name variable to avoid conflicts
       # for certain data products (which reuse the dataset parameter)
 
       if(!"dataset_short_name" %in% names(request)){

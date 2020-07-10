@@ -35,8 +35,9 @@ wf_transfer <- function(url,
                         path = tempdir(),
                         filename = tempfile("ecmwfr_"),
                         verbose = TRUE) {
+
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds"))
+  service <- match.arg(service, c("webapi", "cds", "ads"))
 
   # check the login credentials
   if (missing(user) || missing(url)) {
@@ -44,7 +45,7 @@ wf_transfer <- function(url,
   }
 
   # If the URL is not an URL but an ID: generate URL
-  if (service == "cds") {
+  if (service == "cds" | service == "ads") {
     url <- wf_server(id = url, service = service)
   }
 
@@ -55,7 +56,7 @@ wf_transfer <- function(url,
   tmp_file <- file.path(path, filename)
 
   # download routine depends on service queried
-  if (service == "cds") {
+  if (service == "cds" | service == "ads") {
     response <- httr::GET(
       url,
       httr::authenticate(user, key),
@@ -143,7 +144,7 @@ wf_transfer <- function(url,
                           href = url)))
   }
 
-  if (service == "cds") {
+  if (service == "cds" | service == "ads") {
     # if the transfer failed, return error and stop()
     if (ct$state == "failed") {
       message("Data transfer failed!")

@@ -15,12 +15,14 @@
 #
 # @author Koen Kufkens
 wf_server <- function(id, service = "webapi") {
+
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds"))
+  service <- match.arg(service, c("webapi", "cds", "ads"))
 
   # set base urls
   webapi_url <- "https://api.ecmwf.int/v1"
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
+  ads_url <- "https://ads.atmosphere.copernicus.eu/api/v2"
 
   # return url depending on service or id
   if (service == "webapi") {
@@ -28,6 +30,12 @@ wf_server <- function(id, service = "webapi") {
       return(webapi_url)
     } else {
       return(file.path(webapi_url, "services/mars/requests", id))
+    }
+  } else if (service == "ads") {
+    if (missing(id)) {
+      return(ads_url)
+    } else {
+      return(file.path(ads_url, "tasks", id))
     }
   } else {
     if (missing(id)) {
@@ -70,10 +78,10 @@ spinner <- function(seconds) {
 # Show message if user exits the function (interrupts execution)
 # or as soon as an error will be thrown.
 exit_message <- function(url, service, path, file) {
-  job_list <- ifelse(
-    service == "webapi",
-    "  Visit https://apps.ecmwf.int/webmars/joblist/",
-    "  Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests"
+  job_list <- switch(service,
+    "webapi"= " Visit https://apps.ecmwf.int/webmars/joblist/",
+    "cds" = " Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
+    "ads" = " Visit https://ads.atmosphere.copernicus.eu/cdsapp#!/yourrequests"
   )
 
   intro <- paste(
@@ -162,6 +170,8 @@ wf_key_page <- function(service) {
 
 # checks credentials
 wf_check_login <- function(user, key, service) {
+
+  # WEBAPI (old)
   if (service == "webapi") {
     info <- httr::GET(
       paste0(wf_server(),
@@ -178,8 +188,16 @@ wf_check_login <- function(user, key, service) {
              (httr::content(info)$uid == user))
   }
 
+  # CDS service
   if (service == "cds") {
     url <- paste0(wf_server(service = "cds"), "/tasks/")
+    ct <- httr::GET(url, httr::authenticate(user, key))
+    return(httr::status_code(ct) < 400)
+  }
+
+  # ADS service
+  if (service == "ads") {
+    url <- paste0(wf_server(service = "ads"), "/tasks/")
     ct <- httr::GET(url, httr::authenticate(user, key))
     return(httr::status_code(ct) < 400)
   }

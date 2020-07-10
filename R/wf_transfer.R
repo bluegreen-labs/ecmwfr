@@ -145,13 +145,14 @@ wf_transfer <- function(url,
   }
 
   if (service == "cds" | service == "ads") {
+
     # if the transfer failed, return error and stop()
     if (ct$state == "failed") {
       message("Data transfer failed!")
       stop(ct$error)
     }
 
-    if (ct$state != "complete" || is.null(ct$state)) {
+    if (ct$state != "completed" || is.null(ct$state)) {
       ct$code <- 202
     }
 

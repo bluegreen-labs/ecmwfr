@@ -42,7 +42,7 @@ wf_delete <- function(
   key <- wf_get_key(user = user, service = service)
 
   # If the URL is not an URL but an ID: generate URL
-  if (service == "cds") {
+  if (service == "cds" | service == "ads") {
     url <- wf_server(id = url, service = service)
   }
 

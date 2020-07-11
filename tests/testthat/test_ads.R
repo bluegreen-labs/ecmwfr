@@ -52,6 +52,9 @@ if(!server_check){
   login_check <- TRUE
 }
 
+print(login_check)
+print(server_check)
+
 test_that("ads datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)

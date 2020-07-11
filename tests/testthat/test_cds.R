@@ -65,18 +65,6 @@ test_that("set key", {
                service = "cds"))
   }
   rm(key)
-
-  options(keyring_backend="file")
-  key <- system("echo $CDS", intern = TRUE)
-  if(key != "" & key != "$CDS"){
-    expect_message(wf_set_key(user = "2088",
-                              key = key,
-                              service = "cds"))
-    expect_message(wf_get_key(user = "2088",
-                              service = "cds"))
-  }
-  rm(key)
-  options(keyring_backend="file")
 })
 
 test_that("cds datasets returns data.frame or list", {

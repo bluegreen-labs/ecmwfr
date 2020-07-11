@@ -101,7 +101,7 @@ test_that("check ADS product info",{
   skip_if(login_check)
   skip_if(server_check)
   expect_output(
-    str(wf_product_info("reanalysis-era5-single-levels",
+    str(wf_product_info("cams-europe-air-quality-forecasts",
                         service = "ads",
                         user = "2161")))
 })

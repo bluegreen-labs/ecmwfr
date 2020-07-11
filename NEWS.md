@@ -1,4 +1,4 @@
-# ecmwfr 1.2.4
+# ecmwfr 1.3.0
 
 * updated code coverage to reflect changes
 * R >= 3.6

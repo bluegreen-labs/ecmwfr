@@ -37,7 +37,7 @@ server_check <- !ecmwf_running(wf_server(service = "ads"))
 if(!server_check){
   skip_on_cran()
   key <- system("echo $ADS", intern = TRUE)
-  if(key != "" & key != "$ADS"){
+  if(key != "" | key != "$ADS"){
     wf_set_key(user = "2161",
                key = key,
                service = "ads")
@@ -51,9 +51,6 @@ if(!server_check){
 } else {
   login_check <- TRUE
 }
-
-print(login_check)
-print(server_check)
 
 test_that("ads datasets returns data.frame or list", {
   skip_on_cran()

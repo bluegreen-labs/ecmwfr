@@ -39,7 +39,7 @@ server_check <- !ecmwf_running(wf_server(service = "cds"))
 if(!server_check){
   skip_on_cran()
   key <- system("echo $CDS", intern = TRUE)
-  if(key != "" | key != "$CDS"){
+  if(key != "" & key != "$CDS"){
     wf_set_key(user = "2088",
                key = key,
                service = "cds")
@@ -59,7 +59,7 @@ test_that("set key", {
   skip_if(login_check)
   skip_if(server_check)
   key <- system("echo $CDS", intern = TRUE)
-  if(key != "" | key != "$CDS"){
+  if(key != "" & key != "$CDS"){
     expect_message(wf_set_key(user = "2088",
                key = key,
                service = "cds"))

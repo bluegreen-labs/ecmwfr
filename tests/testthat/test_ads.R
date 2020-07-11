@@ -2,30 +2,12 @@
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
-# format request (see below)
 ads_request <- list(
-  model = "ensemble",
-  date = "2020-07-01/2020-07-02",
+  date = "2003-01-01/2003-01-01",
   format = "netcdf",
-  variable = "ammonia",
-  level = "0",
-  type = "analysis",
+  variable = "dust_aerosol_optical_depth_550nm",
   time = "00:00",
-  leadtime_hour = "0",
-  dataset_short_name = "cams-europe-air-quality-forecasts",
-  target = "download.nc"
-)
-
-ads_request_faulty <- list(
-  model = "ensemble",
-  date = "2020-07-01/2020-07-02",
-  format = "netcdf",
-  variable = "ammonia",
-  level = "0",
-  type = "analysis",
-  time = "00:00",
-  leadtime_hour = "0",
-  dataset_short_name = "cams-europe-air-quality-fore",
+  dataset_short_name = "cams-global-reanalysis-eac4",
   target = "download.nc"
 )
 
@@ -37,7 +19,7 @@ server_check <- !ecmwf_running(wf_server(service = "ads"))
 if(!server_check){
   skip_on_cran()
   key <- system("echo $ADS", intern = TRUE)
-  if(key != "" | key != "$ADS"){
+  if(key != "" & key != "$ADS"){
     wf_set_key(user = "2161",
                key = key,
                service = "ads")
@@ -89,10 +71,6 @@ test_that("ads request", {
                transfer = TRUE,
                job_name = "jobtest"))
 
-  # faulty request
-  expect_error(wf_request(
-    user = "2161",
-    request = ads_request_faulty))
 })
 
 # ads product info

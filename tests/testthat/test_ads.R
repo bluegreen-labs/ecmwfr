@@ -15,6 +15,8 @@ ads_request <- list(
 # is the server reachable
 server_check <- !ecmwf_running(wf_server(service = "ads"))
 
+print(server_check)
+
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
@@ -57,21 +59,6 @@ test_that("ads request", {
   expect_message(wf_request(user = "2161",
                     request = ads_request,
                     transfer = TRUE))
-
-  # timeout trigger
-  expect_message(
-    wf_request(user = "2161",
-               request = ads_request,
-               time_out = -1,
-               transfer = TRUE))
-
-  # job test (can't run headless)
-  expect_error(
-    wf_request(user = "2161",
-               request = ads_request,
-               transfer = TRUE,
-               job_name = "jobtest"))
-
 })
 
 # ads product info
@@ -80,7 +67,7 @@ test_that("check ADS product info",{
   skip_if(login_check)
   skip_if(server_check)
   expect_output(
-    str(wf_product_info("cams-europe-air-quality-forecasts",
+    str(wf_product_info("cams-global-reanalysis-eac4",
                         service = "ads",
                         user = "2161")))
 })

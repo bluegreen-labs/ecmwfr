@@ -12,7 +12,7 @@ ads_request <- list(
 )
 
 # is the server reachable
-server_check <- !ecmwf_running(wf_server(service = "ads"))
+# server_check <- !ecmwf_running(wf_server(service = "ads"))
 server_check <- FALSE
 
 # if the server is reachable, try to set login

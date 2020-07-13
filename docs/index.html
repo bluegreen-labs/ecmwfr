@@ -330,6 +330,13 @@
 <p>The same file restrictions and notes as for the CDS apply to the ADS.</p>
 </div>
 </div>
+<div id="file-based-keychains" class="section level2">
+<h2 class="hasAnchor">
+<a href="#file-based-keychains" class="anchor"></a>File based keychains</h2>
+<p>On linux you can opt to use a file based keyring, instead of a GUI based keyring manager. This is helpful for headless setups such as servers. For this option to work linux users must set an environmental option.</p>
+<div class="sourceCode" id="cb13"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">keyring_backend</span><span class="kw">=</span><span class="st">"file"</span>)</pre></div>
+<p>You will be asked to provide a password to encrypt the keyring with. Upon the start of each session you will be asked to provide this password, unlocking all <code>ecmwfr</code> credentials for this session. Should you ever forget the password just delete the file at: <code>~/.config/r-keyring/ecmwfr.keyring</code> and re-enter all your credentials.</p>
+</div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>

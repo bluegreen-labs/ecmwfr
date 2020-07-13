@@ -321,6 +321,17 @@ file <- wf_request(user     = "2345",   # user ID (for authentification)
 
 The same file restrictions and notes as for the CDS apply to the ADS.
 
+## File based keychains
+
+On linux you can opt to use a file based keyring, instead of a GUI based keyring manager. This is helpful for headless setups such as servers. For this option to work linux users must set an environmental option.
+
+```R
+options(keyring_backend="file")
+```
+
+You will be asked to provide a password to encrypt the keyring with. Upon the start of each session you will be asked to provide this password, unlocking all `ecmwfr` credentials for this session. Should you ever forget the password just delete the file at: 
+`~/.config/r-keyring/ecmwfr.keyring` and re-enter all your credentials.
+
 ## Citation
 
 Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). bluegreen-labs/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).

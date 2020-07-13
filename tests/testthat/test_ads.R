@@ -1,6 +1,5 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE,
-                keyring_backend="file")
+opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 ads_request <- list(
@@ -14,8 +13,7 @@ ads_request <- list(
 
 # is the server reachable
 server_check <- !ecmwf_running(wf_server(service = "ads"))
-
-print(server_check)
+server_check <- FALSE
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well

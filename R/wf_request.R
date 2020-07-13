@@ -116,6 +116,9 @@ wf_request <- function(request,
     serv <- make_key_service()
     user <-
       user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
+    #if(length(user)==0){
+    #  stop("No valid user found in the current keyring!")
+    #}
   }
 
   # checks user login, the request layout and

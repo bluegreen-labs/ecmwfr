@@ -1,6 +1,5 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE,
-                keyring_backend="env")
+opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 # format request (see below)

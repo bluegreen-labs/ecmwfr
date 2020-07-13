@@ -1,4 +1,4 @@
-pandoc: 2.7.3
+pandoc: '2.5'
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
@@ -6,5 +6,5 @@ articles:
   advanced_vignette: advanced_vignette.html
   cds_vignette: cds_vignette.html
   webapi_vignette: webapi_vignette.html
-last_built: 2020-07-11T14:36Z
+last_built: 2020-07-13T17:13Z
 

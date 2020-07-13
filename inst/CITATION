@@ -7,7 +7,7 @@ citEntry(entry = "Misc",
                                    as.person("Elio Campitelli")),
          year = "2019",
          doi = "10.5281/zenodo.2647541",
-         url = "https://khufkens.github.io/ecmwfr/",
+         url = "https://bluegreen-labs.github.io/ecmwfr/",
          textVersion  =
            paste("Hufkens, Stauffer and Campitelli (2019).",
                  "The ecwmfr package: an interface to ECMWF API endpoints",

@@ -11,9 +11,11 @@ ads_request <- list(
   target = "download.nc"
 )
 
+# ignore SSL (server has SSL issues)
+httr::set_config(httr::config(ssl_verifypeer = 0L))
+
 # is the server reachable
-# server_check <- !ecmwf_running(wf_server(service = "ads"))
-server_check <- FALSE
+server_check <- !ecmwf_running(wf_server(service = "ads"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well

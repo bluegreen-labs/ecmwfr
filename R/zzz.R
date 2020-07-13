@@ -165,7 +165,8 @@ make_key_service <- function(service = "") {
 wf_key_page <- function(service) {
   switch(service,
          webapi = "https://api.ecmwf.int/v1/key/",
-         cds = "https://cds.climate.copernicus.eu/user/login?destination=user")
+         cds = "https://cds.climate.copernicus.eu/user/login?destination=user",
+         ads = "https://ads.atmosphere.copernicus.eu/user/login?destination=user")
 }
 
 # checks credentials

@@ -19,8 +19,3 @@ r_packages:
 
 after_success:
   - Rscript -e 'covr::codecov()'
-
-env:
-  global:
-    - secure: JXh+52sqTYKd6EIaMKsZVVIq6EuSvOhOQUei8GMPX0K1DfjF1CXAcL1Shcieqmtb5LklHTIvyQlaI4hY8Rejfj3Q+KC+H8q9j3bn+cVrQIox7hAAUCjJfzwjTC90Bh/mEe1LKW1IMbftAHedHSjz4lpqG7YsZrZLy/HXsJH9iKyPctJNYnT7jwmMlwEJLm+1wvHVnvbEqICagbCu2WWf3qieTpqTx/4yU6FGBZ80opf8Xvp+RS7jPmn4K9hz+6YP8z7nS4hWMsHeYceDC/HqdofHkEBWa9pBXKg83rKMlVBqzTYGqULa+1mA+wd4XnSr3toEGQ7AibmlBxtY12iGJ/Vr9uW0rKp3yF5Po0mW5DyyYGQINf4qLo2KiDeDwCS3uzc7P7bVVeZUK++/bUvuailZplJKH8pllh6gyAl+yz3M410C53MiZ3hv2NquJSxiEVgusVt5Nl0ev9t2pzMORzkLIc+Iz+R7+xN0KFvxiK04xreuej1QaqjvSmAtciHzIudCVjCXnF8AxLnKZAjVjJvZ8DoR3ozqTEXDXsNNh+x0/NMPS92EtvcOmh1w9b4dfXsMGQnUbr8mcE027FzWR6GN69ezD0cqsmDZWGbFf7ExnhubfLCisHeSrcJ1DYHSB5YUw3pdJLgcQSKCJ2Pq/7tXyHQsZJ0lE40wQQwcPBg=
-

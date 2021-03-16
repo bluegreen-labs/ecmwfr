@@ -36,7 +36,8 @@ Imports:
     keyring,
     memoise,
     getPass,
-    curl
+    curl,
+    R6
 License: AGPL-3
 LazyData: true
 ByteCompile: true

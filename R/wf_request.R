@@ -59,7 +59,8 @@ wf_request <- function(request,
                        path = tempdir(),
                        time_out = 3600,
                        job_name,
-                       verbose = TRUE) {
+                       verbose = TRUE
+                       ) {
   if (!missing(job_name)) {
     if (make.names(job_name) != job_name) {
       stop("job_name '",
@@ -106,7 +107,7 @@ wf_request <- function(request,
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
-  if (missing(user)) {
+  if (missing(user) || is.null(user)) {
     user <-
       rbind(
         keyring::key_list(service = make_key_service(c("webapi"))),
@@ -151,23 +152,25 @@ wf_request <- function(request,
   service <- wf_check$service
   url <- wf_check$url
 
-
+  # Select the appropriate service
   service <- switch(service,
                     webapi = webapi_service,
                     cds = cds_service,
                     ads = ads_service)
 
-
+  # Create request and submit to service
   request <- service$new(request = request,
                      user = user,
                      url = url,
                      path = path)
+
+
   if (transfer) {
     request$transfer(time_out = time_out)
     if (request$is_success()) {
       return(request$get_file())
     }
-    warning("Transfer was not successfull, returning request object")
+    stop("Transfer was not successfull.")
   }
 
   return(request)

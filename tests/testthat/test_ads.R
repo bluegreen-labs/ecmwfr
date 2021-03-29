@@ -76,3 +76,20 @@ test_that("check ADS product info",{
                         service = "ads",
                         user = "2161")))
 })
+
+
+test_that("batch request works", {
+  years <- 2015:2017
+  requests <- lapply(years, function(y) {
+    list(
+      date = paste0(y, "-01-01"),
+      format = "netcdf",
+      variable = "dust_aerosol_optical_depth_550nm",
+      time = "00:00",
+      dataset_short_name = "cams-global-reanalysis-eac4",
+      target = "download.nc"
+    )
+  })
+
+  expect_output(wf_batch_request(requests, user = "2161"))
+})

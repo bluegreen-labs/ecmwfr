@@ -27,12 +27,12 @@ if(!server_check){
   skip_on_cran()
   key <- system("echo $KEY", intern = TRUE)
   if(key != "" & key != "$KEY"){
-    wf_set_key(user = "eliocampitelli@gmail.com",
+    wf_set_key(user = "khrdev@outlook.com",
                key = system("echo $KEY", intern = TRUE),
                service = "webapi")
   }
   rm(key)
-  login_check <- try(wf_get_key(user = "eliocampitelli@gmail.com"), silent = TRUE)
+  login_check <- try(wf_get_key(user = "khrdev@outlook.com"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
   login_check <- TRUE
@@ -44,21 +44,21 @@ test_that("set, get secret key",{
   skip_if(server_check)
 
   # check retrieval
-  expect_output(str(wf_get_key(user = "eliocampitelli@gmail.com")))
+  expect_output(str(wf_get_key(user = "khrdev@outlook.com")))
 
   # failed set keys commands
   expect_error(wf_set_key(key = "XXXX",
                           service = "webapi"))
-  expect_error(wf_set_key(user = "eliocampitelli@gmail.com",
+  expect_error(wf_set_key(user = "khrdev@outlook.com",
                           service = "webapi"))
-  expect_error(wf_set_key(user = "eliocampitelli@gmail.com"))
+  expect_error(wf_set_key(user = "khrdev@outlook.com"))
 })
 
 test_that("test dataset function", {
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_output(str(wf_datasets(user = "eliocampitelli@gmail.com")))
+  expect_output(str(wf_datasets(user = "khrdev@outlook.com")))
 })
 
 test_that("test dataset function - no login", {
@@ -72,7 +72,7 @@ test_that("list datasets webapi",{
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_output(str(wf_datasets(user = "eliocampitelli@gmail.com",
+  expect_output(str(wf_datasets(user = "khrdev@outlook.com",
                                 service = "webapi")))
 })
 
@@ -80,7 +80,7 @@ test_that("test services function", {
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_output(str(wf_services(user = "eliocampitelli@gmail.com")))
+  expect_output(str(wf_services(user = "khrdev@outlook.com")))
 })
 
 test_that("test services function - no login", {
@@ -94,7 +94,7 @@ test_that("test user info function", {
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_output(str(wf_user_info(user = "eliocampitelli@gmail.com")))
+  expect_output(str(wf_user_info(user = "khrdev@outlook.com")))
 })
 
 test_that("test user info function - no login", {
@@ -109,7 +109,7 @@ test_that("test request (transfer) function", {
   skip_if(login_check)
   skip_if(server_check)
   expect_message(wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
     time_out = 60))
@@ -125,7 +125,7 @@ test_that("test request (transfer) function", {
   dir.create(path = path)
 
   expect_message(wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
     path = path))
@@ -136,7 +136,7 @@ test_that("test request (transfer) function - time out", {
   skip_if(login_check)
   skip_if(server_check)
   expect_output(str(wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = TRUE,
     request = my_request,
     time_out = 1)))
@@ -148,20 +148,20 @@ test_that("test request (transfer) function - no transfer", {
   skip_if(server_check)
 
   ct <- wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = FALSE,
     request = my_request)
 
   expect_output(str(ct))
-  expect_message(wf_delete(user = "eliocampitelli@gmail.com",
+  expect_message(wf_delete(user = "khrdev@outlook.com",
                            url = ct$href))
 
   ct2 <- wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = FALSE,
     request = my_request)
 
-  expect_silent(wf_delete(user = "eliocampitelli@gmail.com",
+  expect_silent(wf_delete(user = "khrdev@outlook.com",
                           url = ct2$href,
                           verbose = FALSE))
 })
@@ -184,9 +184,9 @@ test_that("list datasets webapi",{
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_output(str(wf_datasets(user = "eliocampitelli@gmail.com",
+  expect_output(str(wf_datasets(user = "khrdev@outlook.com",
                                 service = "webapi")))
-  expect_output(str(wf_datasets(user = "eliocampitelli@gmail.com",
+  expect_output(str(wf_datasets(user = "khrdev@outlook.com",
                                 service = "webapi",
                                 simplify = FALSE)))
 })
@@ -197,7 +197,7 @@ test_that("test request (transfer) function", {
   skip_if(server_check)
   expect_message(
     wf_request(
-      user = "eliocampitelli@gmail.com",
+      user = "khrdev@outlook.com",
       transfer = TRUE,
       request = my_request,
       time_out = 180)
@@ -211,7 +211,7 @@ test_that("check product info",{
   skip_if(server_check)
   expect_output(str(
     wf_product_info(dataset = "interim",
-                    user = "eliocampitelli@gmail.com",
+                    user = "khrdev@outlook.com",
                     service = "webapi",
                     simplify = FALSE)))
 })
@@ -244,7 +244,7 @@ test_that("test request (transfer) function - larger download", {
                         target = "tmp.nc")
 
   expect_message(wf_request(
-    user = "eliocampitelli@gmail.com",
+    user = "khrdev@outlook.com",
     transfer = TRUE,
     request = large_request,
     time_out = 300))
@@ -268,7 +268,7 @@ test_that("check request - no dataset field", {
                      format = "netcdf")
   expect_error(
     wf_check_request(
-      user = "eliocampitelli@gmail.com",
+      user = "khrdev@outlook.com",
       request = my_request)
   )
 })
@@ -281,7 +281,7 @@ test_that("check request - bad request type", {
   my_request <- "xyz"
   expect_error(
     wf_check_request(
-      user = "eliocampitelli@gmail.com",
+      user = "khrdev@outlook.com",
       request = my_request)
   )
 })
@@ -305,7 +305,7 @@ test_that("check mars request - no target", {
                      format = "netcdf")
   expect_error(
     wf_check_request(
-      user = "eliocampitelli@gmail.com",
+      user = "khrdev@outlook.com",
       request = my_request)
   )
 })
@@ -328,7 +328,7 @@ test_that("check request - no netcdf grid specified", {
                      format = "netcdf")
   expect_error(
     wf_check_request(
-      user = "eliocampitelli@gmail.com",
+      user = "khrdev@outlook.com",
       request = my_request)
   )
 })
@@ -378,7 +378,7 @@ test_that("job_name has to be valid", {
 
   expect_error(
     wf_request(my_request,
-               user = "eliocampitelli@gmail.com",
+               user = "khrdev@outlook.com",
                job_name = "1"),
     "job_name '1' is not a syntactically valid variable name.")
 })
@@ -402,5 +402,5 @@ test_that("batch request works", {
          target = "tmp.nc")
   })
 
-  expect_output(wf_batch_request(requests, user = "eliocampitelli@gmail.com"))
+  expect_output(wf_batch_request(requests, user = "khrdev@outlook.com"))
 })

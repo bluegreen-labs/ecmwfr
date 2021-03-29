@@ -1,7 +1,7 @@
-wf_requests <- function(request_list,
-                        workers = 2,
-                        force_download = TRUE,
-                        total_timeout = 3600*length(request_list)/workers) {
+wf_batch_request <- function(request_list,
+                             workers = 2,
+                             force_download = TRUE,
+                             total_timeout = 3600*length(request_list)/workers) {
   slots <- as.list(rep(FALSE, workers))
   queue <- request_list
   done  <- list()

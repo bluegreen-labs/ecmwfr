@@ -52,7 +52,7 @@ if(!server_check){
   }
   rm(key)
 
-  login_check <- try(wf_get_key(user = "11343",
+  login_check <- try(wf_get_key(user = "2088",
                                 service = "cds"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
   server_check <- !ecmwf_running(wf_server(service = "cds"))
@@ -66,7 +66,7 @@ test_that("set key", {
   skip_if(server_check)
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
-    expect_message(wf_set_key(user = "11343",
+    expect_message(wf_set_key(user = "2088",
                key = key,
                service = "cds"))
   }
@@ -77,10 +77,10 @@ test_that("cds datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)
   skip_if(server_check)
-  expect_true(inherits(wf_datasets(user = "11343",
+  expect_true(inherits(wf_datasets(user = "2088",
                                    service = "cds",
                                    simplify = TRUE), "data.frame"))
-  expect_true(inherits(wf_datasets(user = "11343",
+  expect_true(inherits(wf_datasets(user = "2088",
                                    service = "cds",
                                    simplify = FALSE), "list"))
 })
@@ -92,43 +92,43 @@ test_that("cds request", {
   skip_if(server_check)
 
   # ok transfer
-  expect_message(wf_request(user = "11343",
+  expect_message(wf_request(user = "2088",
                     request = cds_request,
                     transfer = TRUE))
 
   # timeout trigger
   expect_message(
-    wf_request(user = "11343",
+    wf_request(user = "2088",
                request = cds_request,
                time_out = -1,
                transfer = TRUE))
 
   # job test (can't run headless)
   expect_error(
-    wf_request(user = "11343",
+    wf_request(user = "2088",
                request = cds_request,
                transfer = TRUE,
                job_name = "jobtest"))
 
   # faulty request
   expect_error(wf_request(
-    user = "11343",
+    user = "2088",
     request = cds_request_faulty))
 
   # wrong request
-  expect_error(wf_request(user = "11343",
+  expect_error(wf_request(user = "2088",
                     request = "xyz",
                     transfer = TRUE))
 
   # missing request
-  expect_error(wf_request(user = "11343",
+  expect_error(wf_request(user = "2088",
                           transfer = TRUE))
 
   # missing user
   expect_message(wf_request(request = cds_request,
                           transfer = TRUE))
 
-  expect_true(inherits(wf_request(user = "11343",
+  expect_true(inherits(wf_request(user = "2088",
               request = cds_request,
               transfer = FALSE), "list"))
 })
@@ -142,28 +142,28 @@ test_that("cds request", {
 
    # CDS dataset (requires at least 'user')
    expect_error(wf_dataset())
-   expect_output(str(wf_datasets(user = "11343", service = "cds")))
+   expect_output(str(wf_datasets(user = "2088", service = "cds")))
 
    # CDS productinfo (requires at least 'user' and 'dataset')
    expect_error(wf_product_info())
-   expect_error(wf_product_info(user = "11343",
+   expect_error(wf_product_info(user = "2088",
                                 service = "cds",
                                 dataset = "foo"))
 
    # CDS productinfo: product name which is not available
-   expect_output(str(wf_product_info(user = "11343",
+   expect_output(str(wf_product_info(user = "2088",
                                      service = "cds",
                                      dataset = "satellite-methane")))
 
    # CDS tranfer (forwarded to wf_transfer, requires at least
    # 'user' and 'url)
    expect_error(wf_transfer())
-   expect_error(wf_transfer(user = "11343",
+   expect_error(wf_transfer(user = "2088",
                             service = "cds",
                             url = "http://google.com"))
 
    # CDS transfer with wrong type
-   expect_error(wf_transfer(user = "11343",
+   expect_error(wf_transfer(user = "2088",
                             url = "http://google.com",
                             service = "foo"))
 
@@ -185,7 +185,7 @@ test_that("delete request", {
   skip_if(login_check)
   skip_if(server_check)
    expect_warning(
-     wf_delete(user = "11343",
+     wf_delete(user = "2088",
                service = "cds",
                url = "50340909as"))
 })
@@ -221,5 +221,5 @@ test_that("batch request works", {
       "target"         = "era5-demo.nc")
   })
 
-  expect_output(wf_batch_request(requests, user = "11343"))
+  expect_output(wf_batch_request(requests, user = "2088"))
 })

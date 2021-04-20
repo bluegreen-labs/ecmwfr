@@ -1,5 +1,5 @@
 # docs and unit tests
-^\.travis\.yml$
+^\.github$
 ^_pkgdown\.yml$
 ^pkgdown$
 ^docs$

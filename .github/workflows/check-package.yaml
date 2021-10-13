@@ -67,7 +67,15 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
           sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin
-          
+      
+      - name: Install system dependencies on MacOS (X11, gdal)
+        if: runner.os == 'macOS'
+        run: |
+          brew install --cask xquartz
+          brew install pkg-config
+          brew install proj@8
+          brew install gdal
+      
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)

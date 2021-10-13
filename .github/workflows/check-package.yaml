@@ -70,8 +70,6 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
-          install.packages("raster")
-          install.packages("ncdf4")
         shell: Rscript {0}
 
       - name: Check

@@ -91,7 +91,7 @@ parameters provided to the resulting custom function." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -126,7 +126,7 @@ parameters provided to the resulting custom function." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/bluegreen-labs/ecmwfr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -155,7 +155,7 @@ that you could code for the use of dynamic changes in the
 parameters provided to the resulting custom function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wf_archetype</span>(<span class='no'>request</span>, <span class='no'>dynamic_fields</span>)</pre>
+    <pre class="usage"><span class='fu'>wf_archetype</span><span class='op'>(</span><span class='va'>request</span>, <span class='va'>dynamic_fields</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,29 +183,30 @@ resulting functions can be provided. Only the generation of a valid function
 will be guaranteed and tested for.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># format an archetype function</span>
-<span class='no'>ERAI</span> <span class='kw'>&lt;-</span> <span class='fu'>wf_archetype</span>(
-  <span class='kw'>request</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>stream</span> <span class='kw'>=</span> <span class='st'>"oper"</span>,
-                 <span class='kw'>levtype</span> <span class='kw'>=</span> <span class='st'>"sfc"</span>,
-                 <span class='kw'>param</span> <span class='kw'>=</span> <span class='st'>"165.128/166.128/167.128"</span>,
-                 <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"interim"</span>,
-                 <span class='kw'>step</span> <span class='kw'>=</span> <span class='st'>"0"</span>,
-                 <span class='kw'>grid</span> <span class='kw'>=</span> <span class='st'>"0.75/0.75"</span>,
-                 <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"00/06/12/18"</span>,
-                 <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"2014-07-01/to/2014-07-31"</span>,
-                 <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"an"</span>,
-                 <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"ei"</span>,
-                 <span class='kw'>area</span> <span class='kw'>=</span> <span class='st'>"73.5/-27/33/45"</span>,
-                 <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"netcdf"</span>,
-                 <span class='kw'>target</span> <span class='kw'>=</span> <span class='st'>"tmp.nc"</span>),
-  <span class='kw'>dynamic_fields</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"date"</span>, <span class='st'>"time"</span>)
-)
+<span class='va'>ERAI</span> <span class='op'>&lt;-</span> <span class='fu'>wf_archetype</span><span class='op'>(</span>
+  request <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>stream <span class='op'>=</span> <span class='st'>"oper"</span>,
+                 levtype <span class='op'>=</span> <span class='st'>"sfc"</span>,
+                 param <span class='op'>=</span> <span class='st'>"165.128/166.128/167.128"</span>,
+                 dataset <span class='op'>=</span> <span class='st'>"interim"</span>,
+                 step <span class='op'>=</span> <span class='st'>"0"</span>,
+                 grid <span class='op'>=</span> <span class='st'>"0.75/0.75"</span>,
+                 time <span class='op'>=</span> <span class='st'>"00/06/12/18"</span>,
+                 date <span class='op'>=</span> <span class='st'>"2014-07-01/to/2014-07-31"</span>,
+                 type <span class='op'>=</span> <span class='st'>"an"</span>,
+                 class <span class='op'>=</span> <span class='st'>"ei"</span>,
+                 area <span class='op'>=</span> <span class='st'>"73.5/-27/33/45"</span>,
+                 format <span class='op'>=</span> <span class='st'>"netcdf"</span>,
+                 target <span class='op'>=</span> <span class='st'>"tmp.nc"</span><span class='op'>)</span>,
+  dynamic_fields <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"date"</span>, <span class='st'>"time"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># print output of the function with below parameters</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>ERA_interim</span>(<span class='st'>"20100101"</span>, <span class='fl'>3</span>, <span class='fl'>200</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'>ERA_interim</span><span class='op'>(</span><span class='st'>"20100101"</span>, <span class='fl'>3</span>, <span class='fl'>200</span><span class='op'>)</span><span class='op'>)</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -217,11 +218,11 @@ will be guaranteed and tested for.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Koen Hufkens.</p>
+  <p>Developed by Koen Hufkens, BlueGreen Labs.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

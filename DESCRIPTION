@@ -18,7 +18,9 @@ Authors@R: c(person(
                given = "Elio",
                email = "elio.campitelli@cima.fcen.uba.ar",
                role = c("ctb"),
-               comment = c(ORCID = "0000-0002-7742-9230"))
+               comment = c(ORCID = "0000-0002-7742-9230")),
+            person(given = "BlueGreen Labs",
+              role = c("cph", "fnd"))
            )
 Description: Programmatic interface to the European Centre for Medium-Range
     Weather Forecasts dataset web services (ECMWF; <https://www.ecmwf.int/>)

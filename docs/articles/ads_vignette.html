@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -81,7 +81,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/bluegreen-labs/ecmwfr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -95,13 +95,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="ads_vignette_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ADS functionality</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2020-07-13</h4>
+            <h4 class="date">2021-10-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/ads_vignette.Rmd"><code>vignettes/ads_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>ads_vignette.Rmd</code></div>
@@ -136,33 +136,36 @@
 <div id="a-cams-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-cams-example" class="anchor"></a>A CAMS example</h3>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Specify the data set</span>
-<span class="no">request</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-  <span class="kw">date</span> <span class="kw">=</span> <span class="st">"2003-01-01/2003-01-01"</span>,
-  <span class="kw">format</span> <span class="kw">=</span> <span class="st">"netcdf"</span>,
-  <span class="kw">variable</span> <span class="kw">=</span> <span class="st">"particulate_matter_2.5um"</span>,
-  <span class="kw">time</span> <span class="kw">=</span> <span class="st">"00:00"</span>,
-  <span class="kw">dataset_short_name</span> <span class="kw">=</span> <span class="st">"cams-global-reanalysis-eac4"</span>,
-  <span class="kw">target</span> <span class="kw">=</span> <span class="st">"particulate_matter.nc"</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Specify the data set</span>
+<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+  date <span class="op">=</span> <span class="st">"2003-01-01/2003-01-01"</span>,
+  format <span class="op">=</span> <span class="st">"netcdf"</span>,
+  variable <span class="op">=</span> <span class="st">"particulate_matter_2.5um"</span>,
+  time <span class="op">=</span> <span class="st">"00:00"</span>,
+  dataset_short_name <span class="op">=</span> <span class="st">"cams-global-reanalysis-eac4"</span>,
+  target <span class="op">=</span> <span class="st">"particulate_matter.nc"</span>
+<span class="op">)</span></code></pre></div>
 <p>This request downloads global re-analysis data on particulate matter on January first 2003.</p>
 <p>The data set as specified above can be downloaded calling the <code>wf_request</code> function:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Start downloading the data, the path of the file</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Start downloading the data, the path of the file</span>
 <span class="co"># will be returned as a variable (ncfile)</span>
-<span class="no">file</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="kw">user</span>     <span class="kw">=</span> <span class="st">"2345"</span>,   <span class="co"># user ID (for authentification)</span>
-                   <span class="kw">request</span>  <span class="kw">=</span> <span class="no">request</span>,  <span class="co"># the request</span>
-                   <span class="kw">transfer</span> <span class="kw">=</span> <span class="fl">TRUE</span>,     <span class="co"># download the file</span>
-                   <span class="kw">path</span>     <span class="kw">=</span> <span class="st">"."</span>)      <span class="co"># store data in current working directory</span></pre></body></html></div>
+<span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user     <span class="op">=</span> <span class="st">"2345"</span>,   <span class="co"># user ID (for authentification)</span>
+                   request  <span class="op">=</span> <span class="va">request</span>,  <span class="co"># the request</span>
+                   transfer <span class="op">=</span> <span class="cn">TRUE</span>,     <span class="co"># download the file</span>
+                   path     <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>      <span class="co"># store data in current working directory</span></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the request function may take a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several variables/fields.</p>
 <p>Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called <code>particulate_matter.nc</code>.</p>
 <p>Quick check:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Open NetCDF file and plot</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Open NetCDF file and plot</span>
 <span class="co"># the log transformed data</span>
-<span class="no">r</span> <span class="kw">&lt;-</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span>(<span class="no">ncfile</span>)
-<span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="fu">rotate</span>(<span class="no">r</span>)),
-             <span class="kw">main</span> <span class="kw">=</span> <span class="st">"CAMS reanalysis data (particulate matter 2.5u)"</span>,
-             <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span>(<span class="fl">100</span>)))
-<span class="kw pkg">maps</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html">raster</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span>
+<span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu">rotate</span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>,
+             main <span class="op">=</span> <span class="st">"CAMS reanalysis data (particulate matter 2.5u)"</span>,
+             col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="ads_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 </div>
@@ -179,11 +182,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Koen Hufkens.</p>
+  <p>Developed by Koen Hufkens, BlueGreen Labs.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

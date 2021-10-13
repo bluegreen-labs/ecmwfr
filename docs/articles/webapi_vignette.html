@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -81,7 +81,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/bluegreen-labs/ecmwfr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -95,13 +95,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="webapi_vignette_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>WebAPI functionality</h1>
                         <h4 class="author">Koen Hufkens</h4>
             
-            <h4 class="date">2020-07-13</h4>
+            <h4 class="date">2021-10-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/webapi_vignette.Rmd"><code>vignettes/webapi_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>webapi_vignette.Rmd</code></div>
@@ -118,20 +118,22 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>Before starting save your provided ECMWF key to your local keychain. In this example I use my R development account with the key hidden using Xs. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># set a key to the keychain</span>
-<span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>,
-           <span class="kw">key</span> <span class="kw">=</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,
-           <span class="kw">service</span> <span class="kw">=</span> <span class="st">"webapi"</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># set a key to the keychain</span>
+<span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span>,
+           key <span class="op">=</span> <span class="st">"XXXXXXXXXXXXXXXXXXXXXX"</span>,
+           service <span class="op">=</span> <span class="st">"webapi"</span><span class="op">)</span>
 
 <span class="co"># you can retrieve the key using</span>
-<span class="fu"><a href="../reference/wf_get_key.html">wf_get_key</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>)
+<span class="fu"><a href="../reference/wf_get_key.html">wf_get_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span><span class="op">)</span>
 
 <span class="co"># the output should be the key you provided</span>
 <span class="co"># in this case represented by the fake X string.</span>
-<span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></pre></body></html></div>
+<span class="co"># "XXXXXXXXXXXXXXXXXXXXXX"</span></code></pre></div>
 <p>Alternatively, you can call the <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code> function with only the service argument. The function will then redirect you to the correct login page where you can find your login credentials, which can be copied and pasted into the command prompt.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># set a key to the keychain</span>
-<span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span>(<span class="kw">service</span> <span class="kw">=</span> <span class="st">"webapi"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># set a key to the keychain</span>
+<span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"webapi"</span><span class="op">)</span></code></pre></div>
 <p>Before you can download any data you have to make sure to accept the terms and conditions here: <a href="https://apps.ecmwf.int/datasets/licences/general/">https://apps.ecmwf.int/datasets/licences/general/</a>.</p>
 </div>
 <div id="ecmwf-data-requests-public-data-sets" class="section level2">
@@ -140,32 +142,34 @@
 <p>To download data use the <code><a href="../reference/wf_request.html">wf_request()</a></code> function, together with your email and a request string syntax <a href="https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax">as documented</a>. Instead of <code>json</code> formatting the function uses a simple <code>R</code> list for all the arguments.</p>
 <p>The conversion from a MARS or python based query to the list format can be automated if you use the RStudio based Addin. By selecting and using Addin -&gt; Mars to list (or ‘Python to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
 <p><img src="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># this is an example of a request</span>
-<span class="no">request</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">stream</span>  <span class="kw">=</span> <span class="st">"oper"</span>,
-                   <span class="kw">levtype</span> <span class="kw">=</span> <span class="st">"sfc"</span>,
-                   <span class="kw">param</span>   <span class="kw">=</span> <span class="st">"167.128"</span>,
-                   <span class="kw">dataset</span> <span class="kw">=</span> <span class="st">"interim"</span>,
-                   <span class="kw">step</span>    <span class="kw">=</span> <span class="st">"0"</span>,
-                   <span class="kw">grid</span>    <span class="kw">=</span> <span class="st">"0.75/0.75"</span>,
-                   <span class="kw">time</span>    <span class="kw">=</span> <span class="st">"00"</span>,
-                   <span class="kw">date</span>    <span class="kw">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,
-                   <span class="kw">type</span>    <span class="kw">=</span> <span class="st">"an"</span>,
-                   <span class="kw">class</span>   <span class="kw">=</span> <span class="st">"ei"</span>,
-                   <span class="kw">area</span>    <span class="kw">=</span> <span class="st">"73.5/-27/33/45"</span>,
-                   <span class="kw">format</span>  <span class="kw">=</span> <span class="st">"netcdf"</span>,
-                   <span class="kw">target</span>  <span class="kw">=</span> <span class="st">"tmp.nc"</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># this is an example of a request</span>
+<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>stream  <span class="op">=</span> <span class="st">"oper"</span>,
+                   levtype <span class="op">=</span> <span class="st">"sfc"</span>,
+                   param   <span class="op">=</span> <span class="st">"167.128"</span>,
+                   dataset <span class="op">=</span> <span class="st">"interim"</span>,
+                   step    <span class="op">=</span> <span class="st">"0"</span>,
+                   grid    <span class="op">=</span> <span class="st">"0.75/0.75"</span>,
+                   time    <span class="op">=</span> <span class="st">"00"</span>,
+                   date    <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,
+                   type    <span class="op">=</span> <span class="st">"an"</span>,
+                   class   <span class="op">=</span> <span class="st">"ei"</span>,
+                   area    <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,
+                   format  <span class="op">=</span> <span class="st">"netcdf"</span>,
+                   target  <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span>
 
 <span class="co"># an example download using fw_request()</span>
 <span class="co"># using the above request list()</span>
-<span class="no">ncfile</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="kw">user</span>    <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>,
-           <span class="kw">request</span>  <span class="kw">=</span> <span class="no">request</span>,
-           <span class="kw">transfer</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-           <span class="kw">path</span>     <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(),
-           <span class="kw">verbose</span>  <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<span class="va">ncfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user    <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span>,
+           request  <span class="op">=</span> <span class="va">request</span>,
+           transfer <span class="op">=</span> <span class="cn">TRUE</span>,
+           path     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
+           verbose  <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>The download operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on <a href="https://apps.ecmwf.int/webmars/joblist/">the ECMWF website</a>, and provided with a download url which can be used with the <code>wt_transfer()</code> funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued!</p>
 <p>If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">s</span> <span class="kw">&lt;-</span> <span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span>(<span class="no">ncfile</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">s</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html">stack</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span>
 <span class="co">#&gt; class      : RasterStack </span>
 <span class="co">#&gt; dimensions : 55, 97, 5335, 1  (nrow, ncol, ncell, nlayers)</span>
 <span class="co">#&gt; resolution : 0.75, 0.75  (x, y)</span>
@@ -175,53 +179,55 @@
 <span class="co">#&gt; min values : 268.5063 </span>
 <span class="co">#&gt; max values : 305.4419</span>
 
-<span class="kw pkg">raster</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span>(<span class="no">s</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">main</span> <span class="kw">=</span> <span class="st">"2 meter temperature (Kelvin)"</span>)
-<span class="kw pkg">maps</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span>(<span class="st">"world"</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html">plot</a></span><span class="op">(</span><span class="va">s</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, main <span class="op">=</span> <span class="st">"2 meter temperature (Kelvin)"</span><span class="op">)</span>
+<span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="webapi_vignette_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="ecmwf-mars-requests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ecmwf-mars-requests" class="anchor"></a>ECMWF mars Requests</h2>
-<p>The <code>ecmwfr</code> package (<a href="../references/wf_request.html"><code><a href="../reference/wf_request.html">wf_request()</a></code></a>) also allows to submit <em>mars</em> requests. Note that this requires a member state login or a commercial user account!</p>
+<p>The <code>ecmwfr</code> package (<a href="../references/wf_request.html"><code>wf_request()</code></a>) also allows to submit <em>mars</em> requests. Note that this requires a member state login or a commercial user account!</p>
 <p>The <code>ecmwfr</code> syntax for <em>mars</em> requests is identical to the ones to the public ECMWF API except that one has to specify <code>dataset = "mars"</code>. The example below downloads the 2 meter temperature forecast (parameter <code>167</code>) from the 00 UTC ECMWF HRES run January 22, 2019, only 12 ahead forecast (<code>step</code>). A NetCDF file with a regular <code>0.125 x 0.125</code> degree horizontal resolution for a custom area in northern Europe will be downloaded (<code>area</code>). <strong>Note</strong> that the <code>grid</code> specification <em>is required</em> if <code>format = "netcdf"</code> as grib to NetCDF conversion is only able for regular longitude-latitude grids.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># this is an example of a request</span>
-<span class="no">request</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"dataset"</span> <span class="kw">=</span> <span class="st">"mars"</span>,
-                   <span class="st">"class"</span>   <span class="kw">=</span> <span class="st">"od"</span>,
-                   <span class="st">"date"</span>    <span class="kw">=</span> <span class="st">"2019-01-22"</span>,
-                   <span class="st">"expver"</span>  <span class="kw">=</span> <span class="st">"1"</span>,
-                   <span class="st">"levtype"</span> <span class="kw">=</span> <span class="st">"sfc"</span>,
-                   <span class="st">"param"</span>   <span class="kw">=</span> <span class="st">"167.128"</span>,
-                   <span class="st">"step"</span>    <span class="kw">=</span> <span class="st">"0"</span>,
-                   <span class="st">"stream"</span>  <span class="kw">=</span> <span class="st">"oper"</span>,
-                   <span class="st">"time"</span>    <span class="kw">=</span> <span class="st">"12"</span>,
-                   <span class="st">"type"</span>    <span class="kw">=</span> <span class="st">"fc"</span>,
-                   <span class="st">"grid"</span>    <span class="kw">=</span> <span class="st">"0.125/0.125"</span>,
-                   <span class="st">"area"</span>    <span class="kw">=</span> <span class="st">"50/0/30/15"</span>,
-                   <span class="st">"format"</span>  <span class="kw">=</span> <span class="st">"netcdf"</span>,
-                   <span class="st">"target"</span>  <span class="kw">=</span> <span class="st">"mars-data.nc"</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># this is an example of a request</span>
+<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"dataset"</span> <span class="op">=</span> <span class="st">"mars"</span>,
+                   <span class="st">"class"</span>   <span class="op">=</span> <span class="st">"od"</span>,
+                   <span class="st">"date"</span>    <span class="op">=</span> <span class="st">"2019-01-22"</span>,
+                   <span class="st">"expver"</span>  <span class="op">=</span> <span class="st">"1"</span>,
+                   <span class="st">"levtype"</span> <span class="op">=</span> <span class="st">"sfc"</span>,
+                   <span class="st">"param"</span>   <span class="op">=</span> <span class="st">"167.128"</span>,
+                   <span class="st">"step"</span>    <span class="op">=</span> <span class="st">"0"</span>,
+                   <span class="st">"stream"</span>  <span class="op">=</span> <span class="st">"oper"</span>,
+                   <span class="st">"time"</span>    <span class="op">=</span> <span class="st">"12"</span>,
+                   <span class="st">"type"</span>    <span class="op">=</span> <span class="st">"fc"</span>,
+                   <span class="st">"grid"</span>    <span class="op">=</span> <span class="st">"0.125/0.125"</span>,
+                   <span class="st">"area"</span>    <span class="op">=</span> <span class="st">"50/0/30/15"</span>,
+                   <span class="st">"format"</span>  <span class="op">=</span> <span class="st">"netcdf"</span>,
+                   <span class="st">"target"</span>  <span class="op">=</span> <span class="st">"mars-data.nc"</span><span class="op">)</span>
 
 <span class="co"># Submit mars request and wait for netcdf file</span>
-<span class="fu"><a href="../reference/wf_request.html">wf_request</a></span>(<span class="kw">user</span>    <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>,
-           <span class="kw">transfer</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-           <span class="kw">path</span>     <span class="kw">=</span> <span class="st">"~"</span>,
-           <span class="kw">request</span>  <span class="kw">=</span> <span class="no">request</span>,
-           <span class="kw">verbose</span>  <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user    <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span>,
+           transfer <span class="op">=</span> <span class="cn">TRUE</span>,
+           path     <span class="op">=</span> <span class="st">"~"</span>,
+           request  <span class="op">=</span> <span class="va">request</span>,
+           verbose  <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="listing-ancillary-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#listing-ancillary-data" class="anchor"></a>Listing Ancillary data</h2>
 <p>You can list ancillary data such as user information, datasets and services using the following calls.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># user info</span>
-<span class="no">user_info</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_user_info.html">wf_user_info</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">user_info</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># user info</span>
+<span class="va">user_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_user_info.html">wf_user_info</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">user_info</span><span class="op">)</span>
 
 <span class="co"># services</span>
-<span class="no">services</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_services.html">wf_services</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">services</span>)
+<span class="va">services</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_services.html">wf_services</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">services</span><span class="op">)</span>
 
 <span class="co"># datasets</span>
-<span class="no">datasets</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wf_datasets.html">wf_datasets</a></span>(<span class="kw">user</span> <span class="kw">=</span> <span class="st">"khrdev@outlook.com"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">datasets</span>)</pre></body></html></div>
+<span class="va">datasets</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_datasets.html">wf_datasets</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"khrdev@outlook.com"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">datasets</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -237,11 +243,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Koen Hufkens.</p>
+  <p>Developed by Koen Hufkens, BlueGreen Labs.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

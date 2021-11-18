@@ -7,8 +7,8 @@
   "identifier": "ecmwfr",
   "description": "Programmatic interface to the European Centre for Medium-Range\n    Weather Forecasts dataset web services (ECMWF; <https://www.ecmwf.int/>)\n    and Copernicus's Climate Data Store (CDS; \n    <https://cds.climate.copernicus.eu>). Allows for easy downloads of weather \n    forecasts and climate reanalysis data in R.",
   "name": "ecmwfr: Interface to 'ECMWF' and 'CDS' Data Web Services",
-  "codeRepository": "https://github.com/khufkens/ecmwfr",
-  "issueTracker": "https://github.com/khufkens/ecmwfr/issues",
+  "codeRepository": "https://github.com/bluegreen-labs/ecmwfr",
+  "issueTracker": "https://github.com/bluegreen-labs/issues",
   "license": "https://spdx.org/licenses/AGPL-3.0",
   "version": "1.2.3",
   "programmingLanguage": {

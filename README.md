@@ -27,8 +27,6 @@ install.packages("ecmwfr")
 library("ecmwfr")
 ```
 
-> As of version 1.2.3 there are breaking changes to the submitted requests to the Climate Data Store API. If you have code which relies on pre-formatted CDS request please updated the `dataset` field to `dataset_short_name`.
-
 ### development release
 
 To install the development releases of the package run the following

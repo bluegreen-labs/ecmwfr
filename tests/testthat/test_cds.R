@@ -38,6 +38,9 @@ server_check <- !ecmwf_running(wf_server(service = "cds"))
 # if not set login check to TRUE as well
 if(!server_check){
   skip_on_cran()
+  
+  options(keyring_backend="file")
+  
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     wf_set_key(user = "2088",

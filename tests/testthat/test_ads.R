@@ -21,6 +21,9 @@ server_check <- !ecmwf_running(wf_server(service = "ads"))
 # if not set login check to TRUE as well
 if(!server_check){
   skip_on_cran()
+  
+  options(keyring_backend="file")
+  
   key <- system("echo $ADS", intern = TRUE)
   if(key != "" & key != "$ADS"){
     wf_set_key(user = "2161",

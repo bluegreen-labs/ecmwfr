@@ -26,9 +26,11 @@ if(!server_check){
   
   key <- system("echo $ADS", intern = TRUE)
   if(key != "" & key != "$ADS"){
-    wf_set_key(user = "2161",
+    try(
+      wf_set_key(user = "2161",
                key = key,
                service = "ads")
+      )
   }
   rm(key)
 

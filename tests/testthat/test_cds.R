@@ -43,9 +43,11 @@ if(!server_check){
   
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
-    wf_set_key(user = "2088",
+    try(
+      wf_set_key(user = "2088",
                key = key,
                service = "cds")
+      )
   }
   rm(key)
 

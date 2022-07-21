@@ -1,4 +1,11 @@
-wf_batch_request <- function(request_list,
+#' @param request_list a list of requests that will be processed in parallel.
+#' @param workers maximum number of simultaneous request that will be submitted
+#' to the service.
+#' @param total_timeout overall timeout limit for all the requests in seconds.
+#'
+#' @rdname wf_request
+#' @export
+wf_request_batch <- function(request_list,
                              workers = 2,
                              user,
                              path = tempdir(),
@@ -29,7 +36,7 @@ wf_batch_request <- function(request_list,
     for (w in seq_along(slots)) {
 
       # If a slot is free and there's a queue,
-      # asign to it the next pending request,
+      # assign to it the next pending request,
       # remove that request from the queue
       if (isFALSE(slots[[w]]) & length(queue) > 0) {
         slots[[w]] <- wf_request(queue[[1]], user = user[1],

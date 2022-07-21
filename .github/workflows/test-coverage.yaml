@@ -41,7 +41,7 @@ jobs:
         run: |
           brew install --cask xquartz
           brew install pkg-config
-          brew install proj@7
+          brew install proj
           brew install gdal
 
       - name: Install dependencies

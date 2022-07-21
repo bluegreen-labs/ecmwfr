@@ -10,7 +10,7 @@ wf_product_info(dataset, user, service = "webapi", simplify = TRUE)
 \item{dataset}{character, name of the data set for which the product
 information should be loaded.}
 
-\item{user}{string, user ID used to sign up for the CDS data service,
+\item{user}{string, user ID used to sign up for the CDS / ADS data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
 
 \item{service}{which service to use, one of \code{webapi}, \code{cds}

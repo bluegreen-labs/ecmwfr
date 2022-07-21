@@ -3,7 +3,7 @@ wf_batch_request <- function(request_list,
                              user,
                              path = tempdir(),
                              time_out = 3600,
-                             total_timeout = NULL
+                             total_timeout = length(request_list)*time_out/workers
                              ) {
   list_in_list <- vapply(request_list, is.list, logical(1))
 
@@ -22,10 +22,6 @@ wf_batch_request <- function(request_list,
 
   user <- repeat_if_one(user, N)
   path <- repeat_if_one(path, N)
-
-  if (is.null(total_timeout)) {
-    total_timeout <- sum(time_out)/workers
-  }
 
   timeout_time <- Sys.time() + total_timeout
 

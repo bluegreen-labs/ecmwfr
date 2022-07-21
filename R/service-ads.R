@@ -15,7 +15,7 @@ ads_service <- R6::R6Class("ecmwfr_ads", inherit = cds_service,
       response <- httr::POST(
         sprintf(
           "%s/resources/%s",
-          url,
+          private$url,
           request$dataset_short_name
         ),
         httr::authenticate(user, key),

@@ -221,5 +221,5 @@ test_that("batch request works", {
       "target"         = "era5-demo.nc")
   })
 
-  expect_output(wf_batch_request(requests, user = "2088"))
+  expect_output(wf_request_batch(requests, user = "2088"))
 })

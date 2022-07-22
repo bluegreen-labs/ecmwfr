@@ -91,5 +91,5 @@ test_that("batch request works", {
     )
   })
 
-  expect_output(wf_batch_request(requests, user = "2161"))
+  expect_output(wf_request_batch(requests, user = "2161"))
 })

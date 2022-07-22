@@ -18,7 +18,7 @@ my_request <- list(stream = "oper",
                    target = "tmp.nc")
 
 # is the server reachable
-server_check <- !ecmwf_running(wf_server(service = "webapi"))
+server_check <- !ecmwfr::ecmwf_running(ecmwfr::wf_server(service = "webapi"))
 
 # if server is up, create login
 if(!server_check){

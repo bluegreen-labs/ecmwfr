@@ -32,15 +32,15 @@ cds_request_faulty <- list(
   "target"         = "era5-demo.nc")
 
 # is the server reachable
-server_check <- !ecmwf_running(wf_server(service = "cds"))
+server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
   skip_on_cran()
-  
+
   options(keyring_backend="file")
-  
+
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     try(

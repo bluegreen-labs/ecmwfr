@@ -15,15 +15,16 @@ ads_request <- list(
 httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # is the server reachable
-server_check <- !ecmwf_running(wf_server(service = "ads"))
+server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
+
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
   skip_on_cran()
-  
+
   options(keyring_backend="file")
-  
+
   key <- system("echo $ADS", intern = TRUE)
   if(key != "" & key != "$ADS"){
     try(

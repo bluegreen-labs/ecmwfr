@@ -33,7 +33,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}
       CDS: ${{secrets.CDS}}
-      KEY: ${{secrets.WEBAPI}}
+      WEBAPI: ${{secrets.WEBAPI}}
 
     steps:
       - uses: actions/checkout@v2
@@ -67,7 +67,7 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
           sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin
-      
+
       - name: Install system dependencies on MacOS (X11, gdal)
         if: runner.os == 'macOS'
         run: |
@@ -75,7 +75,7 @@ jobs:
           brew install pkg-config
           brew install proj
           brew install gdal
-      
+
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)

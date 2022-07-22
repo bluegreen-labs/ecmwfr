@@ -17,7 +17,7 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}
       CDS: ${{secrets.CDS}}
-      KEY: ${{secrets.WEBAPI}}
+      WEBAPI: ${{secrets.WEBAPI}}
 
     steps:
       - uses: actions/checkout@v2

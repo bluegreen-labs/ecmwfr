@@ -1,6 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
+options(keyring_backend="file")
 
 # format request (see below)
 cds_request <- list(
@@ -34,12 +35,12 @@ cds_request_faulty <- list(
 # is the server reachable
 server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
+print(server_check)
+
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
   skip_on_cran()
-
-  options(keyring_backend="file")
 
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
@@ -52,9 +53,9 @@ if(!server_check){
   rm(key)
 
   login_check <- try(wf_get_key(user = "2088",
-                                service = "cds"), silent = TRUE)
+                                service = "cds"),
+                     silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-  server_check <- !ecmwf_running(wf_server(service = "cds"))
 } else {
   login_check <- TRUE
 }
@@ -62,7 +63,6 @@ if(!server_check){
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     expect_message(wf_set_key(user = "2088",
@@ -75,7 +75,6 @@ test_that("set key", {
 test_that("cds datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
   expect_true(inherits(wf_datasets(user = "2088",
                                    service = "cds",
                                    simplify = TRUE), "data.frame"))
@@ -88,7 +87,6 @@ test_that("cds datasets returns data.frame or list", {
 test_that("cds request", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
 
   # ok transfer
   expect_message(wf_request(user = "2088",
@@ -137,7 +135,6 @@ test_that("cds request", {
  test_that("required arguments missing for cds_* functions", {
    skip_on_cran()
    skip_if(login_check)
-   skip_if(server_check)
 
    # CDS dataset (requires at least 'user')
    expect_error(wf_dataset())
@@ -182,7 +179,6 @@ test_that("cds request", {
 test_that("delete request", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
    expect_warning(
      wf_delete(user = "2088",
                service = "cds",
@@ -193,7 +189,6 @@ test_that("delete request", {
 test_that("check product info",{
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
   expect_output(
     str(wf_product_info("reanalysis-era5-single-levels",
                         service = "cds",

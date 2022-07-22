@@ -170,7 +170,7 @@ wf_request <- function(request,
     if (request$is_success()) {
       return(request$get_file())
     }
-    stop("Transfer was not successfull.")
+    message("Transfer was not successfull.")
   }
 
   return(request)

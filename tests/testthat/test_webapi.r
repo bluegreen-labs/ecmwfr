@@ -18,18 +18,20 @@ my_request <- list(stream = "oper",
                    target = "tmp.nc")
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
+server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 
 # if server is up, create login
 if(!server_check){
   key <- system("echo $WEBAPI", intern = TRUE)
   if(key != "" & key != "$WEBAPI"){
     wf_set_key(user = "info@bluegreenlabs.org",
-               key = system("echo $WEBAPI", intern = TRUE),
+               key = key,
                service = "webapi")
   }
   rm(key)
-  login_check <- try(wf_get_key(user = "info@bluegreenlabs.org"), silent = TRUE)
+
+  login_check <- try(wf_get_key(user = "info@bluegreenlabs.org"),
+                     silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
   login_check <- TRUE

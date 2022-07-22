@@ -1,7 +1,6 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
-options(keyring_backend="file")
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",

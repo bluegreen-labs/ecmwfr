@@ -1,7 +1,6 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
-options(keyring_backend="file")
 
 # format request (see below)
 cds_request <- list(
@@ -35,12 +34,10 @@ cds_request_faulty <- list(
 # is the server reachable
 server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
-print(server_check)
-
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
-  skip_on_cran()
+  try(testthat::skip_on_cran())
 
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){

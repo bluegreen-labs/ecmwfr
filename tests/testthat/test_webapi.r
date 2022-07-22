@@ -3,19 +3,21 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 # format request (see below)
-my_request <- list(stream = "oper",
-                   levtype = "sfc",
-                   param = "165.128",
-                   dataset = "interim",
-                   step = "0",
-                   grid = "0.75/0.75",
-                   time = "00",
-                   date = "2014-07-01",
-                   type = "an",
-                   class = "ei",
-                   area = "51/0/50/1",
-                   format = "netcdf",
-                   target = "tmp.nc")
+my_request <- list(
+  stream = "oper",
+  levtype = "sfc",
+  param = "165.128",
+  dataset = "interim",
+  step = "0",
+  grid = "0.75/0.75",
+  time = "00",
+  date = "2014-07-01",
+  type = "an",
+  class = "ei",
+  area = "51/0/50/1",
+  format = "netcdf",
+  target = "tmp.nc"
+  )
 
 # is the server reachable
 server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
@@ -24,14 +26,18 @@ server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 if(!server_check){
   key <- system("echo $WEBAPI", intern = TRUE)
   if(key != "" & key != "$WEBAPI"){
-    wf_set_key(user = "info@bluegreenlabs.org",
-               key = key,
-               service = "webapi")
+    try(wf_set_key(
+      user = "info@bluegreenlabs.org",
+      key = key,
+      service = "webapi"
+      ))
   }
   rm(key)
 
-  login_check <- try(wf_get_key(user = "info@bluegreenlabs.org"),
-                     silent = TRUE)
+  login_check <- try(
+    wf_get_key(
+      user = "info@bluegreenlabs.org"),
+      silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
   login_check <- TRUE

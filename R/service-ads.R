@@ -9,16 +9,16 @@ ads_service <- R6::R6Class("ecmwfr_ads", inherit = cds_service,
 
       # fix strange difference in processing queries
       # from CDS
-      body <- request
+      body <- private$request
       body$dataset_short_name <- NULL
       body$target <- NULL
       response <- httr::POST(
         sprintf(
           "%s/resources/%s",
           private$url,
-          request$dataset_short_name
+          private$request$dataset_short_name
         ),
-        httr::authenticate(user, key),
+        httr::authenticate(private$user, key),
         httr::add_headers("Accept" = "application/json",
                           "Content-Type" = "application/json"),
         body = body,

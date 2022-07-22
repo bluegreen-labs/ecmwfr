@@ -12,13 +12,13 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: windows-latest
+    runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}
       CDS: ${{secrets.CDS}}
       KEY: ${{secrets.WEBAPI}}
-      
+
     steps:
       - uses: actions/checkout@v2
 

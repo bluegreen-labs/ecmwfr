@@ -38,7 +38,6 @@ Imports:
     getPass,
     curl
 License: AGPL-3
-LazyData: true
 ByteCompile: true
 RoxygenNote: 7.1.1
 Suggests:

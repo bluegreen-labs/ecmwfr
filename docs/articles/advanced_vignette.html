@@ -24,6 +24,8 @@
 <meta name="twitter:card" content="summary">
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,9 +40,9 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="hidden-sm hidden-xs" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-sm hidden-xs" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo_text_small.png" id="hexlogo" alt="bluegreen labs"></a>
-        <a class="hidden-md hidden-lg" href="https://bluegreenlabs.org">
+        <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
            <i>ecmwfr <small>v1.3.0</small></i>
@@ -51,16 +53,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -83,14 +79,8 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="https://twitter.com/bluegreen_labs">
-    <span class="fab fa-twitter fa-lg"></span>
-     
-  </a>
-</li>
         <li>
-  <a href="https://github.com/bluegreen-labs/ecmwfr/">
+  <a href="https://github.com/bluegreen-labs/ecmwfr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -105,47 +95,62 @@
 
       
 
-      </header><script src="advanced_vignette_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Advanced Use Cases</h1>
-                        <h4 class="author">Koen Hufkens</h4>
+                        <h4 data-toc-skip class="author">Koen
+Hufkens</h4>
             
-            <h4 class="date">2021-11-20</h4>
+            <h4 data-toc-skip class="date">2022-07-22</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/advanced_vignette.Rmd"><code>vignettes/advanced_vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/vignettes/advanced_vignette.Rmd" class="external-link"><code>vignettes/advanced_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_vignette.Rmd</code></div>
 
     </div>
 
     
     
-<div id="advanced-use-cases" class="section level1">
-<h1 class="hasAnchor">
-<a href="#advanced-use-cases" class="anchor"></a>Advanced Use Cases</h1>
-<p>This is a brief overview of some of the more advanced options in the <code>ecmwfr</code> package.</p>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
-<p>A ‘hidden’ feature of the <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code> function is that it returns the user name upon success. This allows for easier integration in scripts shared with users (which have different credentials)</p>
+<div class="section level2">
+<h2 id="advanced-use-cases">Advanced Use Cases<a class="anchor" aria-label="anchor" href="#advanced-use-cases"></a>
+</h2>
+<p>This is a brief overview of some of the more advanced options in the
+<code>ecmwfr</code> package.</p>
+<div class="section level3">
+<h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h3>
+<p>A ‘hidden’ feature of the <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code> function is that
+it returns the user name upon success. This allows for easier
+integration in scripts shared with users (which have different
+credentials)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set a key to the keychain interactively</span>
 <span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"webapi"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="formatting-requests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#formatting-requests" class="anchor"></a>Formatting requests</h2>
-<p>The conversion from a MARS or python based queries (formed on the ECMWF or Copernicus CDS websites) to the list format used by <code>ecmwfr</code> can be automated if you use the RStudio based Addin.</p>
-<p>By selecting and using Addin -&gt; Mars to list (or ‘Python to list’) you dynamically convert queries copied from either ECMWF or CDS based services.</p>
+<div class="section level3">
+<h3 id="formatting-requests">Formatting requests<a class="anchor" aria-label="anchor" href="#formatting-requests"></a>
+</h3>
+<p>The conversion from a MARS or python based queries (formed on the
+ECMWF or Copernicus CDS websites) to the list format used by
+<code>ecmwfr</code> can be automated if you use the RStudio based
+Addin.</p>
+<p>By selecting and using Addin -&gt; Mars to list (or ‘Python to list’)
+you dynamically convert queries copied from either ECMWF or CDS based
+services.</p>
 <p><img src="https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif"></p>
-<p>Using the <code>Addin</code> is the sure way to form a proper <code>ecmwfr</code> request and avoids typos. As such, we recommend the use of the <code>Addin</code>.</p>
+<p>Using the <code>Addin</code> is the sure way to form a proper
+<code>ecmwfr</code> request and avoids typos. As such, we recommend the
+use of the <code>Addin</code>.</p>
 </div>
-<div id="piped-requests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#piped-requests" class="anchor"></a>Piped requests</h2>
-<p>Another hidden feature of <code>ecmwfr</code> is the fact that the request is the first argument in the <code><a href="../reference/wf_request.html">wf_request()</a></code> function. This means that any valid list can be piped into this function (using the %&gt;% or pipe symbol).</p>
+<div class="section level3">
+<h3 id="piped-requests">Piped requests<a class="anchor" aria-label="anchor" href="#piped-requests"></a>
+</h3>
+<p>Another hidden feature of <code>ecmwfr</code> is the fact that the
+request is the first argument in the <code><a href="../reference/wf_request.html">wf_request()</a></code> function.
+This means that any valid list can be piped into this function (using
+the %&gt;% or pipe symbol).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>stream  <span class="op">=</span> <span class="st">"oper"</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream  <span class="op">=</span> <span class="st">"oper"</span>,
      levtype <span class="op">=</span> <span class="st">"sfc"</span>,
      param   <span class="op">=</span> <span class="st">"167.128"</span>,
      dataset <span class="op">=</span> <span class="st">"interim"</span>,
@@ -160,14 +165,23 @@
      target  <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user <span class="op">=</span> <span class="va">user</span>, path <span class="op">=</span> <span class="st">"~"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="dynamic-request-functions-archetypes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dynamic-request-functions-archetypes" class="anchor"></a>Dynamic request functions / archetypes</h2>
-<p>Once a valid request has been created it can be made into a dynamic function using <code>achetypes</code>. Archetype functions are build using a valid <code>ecmwfr</code> ECMWF or CDS request and the vector naming the field which are to be set as dynamic.</p>
-<p>The <code><a href="../reference/wf_archetype.html">wf_archetype()</a></code> function creates a new function with as parameters the dynamic fields previously assigned. The below example show how to use the function to generate the custom <code>dynamic_request()</code> function. We then use this new function to alter the <code>area</code> and <code>date</code> fields and pipe (%&gt;%) into the <code><a href="../reference/wf_request.html">wf_request()</a></code> function to retrieve the data.</p>
+<div class="section level3">
+<h3 id="dynamic-request-functions-archetypes">Dynamic request functions / archetypes<a class="anchor" aria-label="anchor" href="#dynamic-request-functions-archetypes"></a>
+</h3>
+<p>Once a valid request has been created it can be made into a dynamic
+function using <code>achetypes</code>. Archetype functions are build
+using a valid <code>ecmwfr</code> ECMWF or CDS request and the vector
+naming the field which are to be set as dynamic.</p>
+<p>The <code><a href="../reference/wf_archetype.html">wf_archetype()</a></code> function creates a new function with
+as parameters the dynamic fields previously assigned. The below example
+show how to use the function to generate the custom
+<code>dynamic_request()</code> function. We then use this new function
+to alter the <code>area</code> and <code>date</code> fields and pipe
+(%&gt;%) into the <code><a href="../reference/wf_request.html">wf_request()</a></code> function to retrieve the
+data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># this is an example of a request</span>
-<span class="va">dynamic_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_archetype.html">wf_archetype</a></span><span class="op">(</span>request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+<span class="va">dynamic_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_archetype.html">wf_archetype</a></span><span class="op">(</span>request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   stream  <span class="op">=</span> <span class="st">"oper"</span>,
   levtype <span class="op">=</span> <span class="st">"sfc"</span>,
   param   <span class="op">=</span> <span class="st">"167.128"</span>,
@@ -181,10 +195,23 @@
   area    <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,
   format  <span class="op">=</span> <span class="st">"netcdf"</span>,
   target  <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span>,
-  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"area"</span>,<span class="st">"date"</span><span class="op">)</span><span class="op">)</span>
+  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area"</span>,<span class="st">"date"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># change only the date to a single day</span>
 <span class="fu">dynamic_request</span><span class="op">(</span>date <span class="op">=</span> <span class="st">"2014-07-01"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="date-specification">Date specification<a class="anchor" aria-label="anchor" href="#date-specification"></a>
+</h3>
+<p>For those familiar to ECMWF <em>mars</em> syntax: CDS/ADS does not
+accept <code>date = "2000-01-01/to/2000-12-31"</code> specifications at
+the moment. It is possible to specify one specific date via
+<code>date = "2000-01-01"</code> or multiple days via
+<code>date = ["2000-01-01","2000-01-02","2000-10-20"]</code> or
+<code>date = "YYYY-MM-DD/YYYY-MM-DD"</code> but not via
+<code>".../to/..."</code>. Specifying the date as a range allows you to
+sidestep the <a href="https://confluence.ecmwf.int/pages/viewpage.action?pageId=277352608&amp;focusedCommentId=278530169" class="external-link">ERA5T
+restricted access issue</a>.</p>
 </div>
 </div>
   </div>
@@ -205,11 +232,11 @@
             <div class="col-xs-10">
                 <div class="row">
                     <div class="col-md-4 col-xs-6">
-                        <a href="http://github.com/bluegreen-labs" target="_blank">
+                        <a href="http://github.com/bluegreen-labs" target="_blank" class="external-link">
                           <div class="icon fab fa-github"></div></a>
-                        <a href="https://bluegreenlabs.org/labs/" target="_blank">
+                        <a href="https://bluegreenlabs.org/labs/" target="_blank" class="external-link">
                           <div class="icon fa fa-flask"></div></a>
-                        <a href="http://twitter.com/bluegreen_labs" target="_blank">
+                        <a href="http://twitter.com/bluegreen_labs" target="_blank" class="external-link">
                           <div class="icon fab fa-twitter"></div></a>
                     </div>
                 </div>
@@ -217,17 +244,17 @@
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">About</h5>
-                            <li><a href="https://bluegreenlabs.org/#intro">BlueGreen Labs</a></li>
-                            <li><a href="https://bluegreenlabs.org/#people">Our Team</a></li>
-                            <li><a href="https://bluegreenlabs.org/#contact">Contact Us</a></li>
+                            <li><a href="https://bluegreenlabs.org/#intro" class="external-link">BlueGreen Labs</a></li>
+                            <li><a href="https://bluegreenlabs.org/#people" class="external-link">Our Team</a></li>
+                            <li><a href="https://bluegreenlabs.org/#contact" class="external-link">Contact Us</a></li>
                         </ul>
 </div>
                     <div class="col-md-2 col-sm-4">
                         <ul>
 <h5 class="bottom-2">Resources</h5>
-                            <li><a href="https://github.com/bluegreen-labs">Packages</a></li>
-                            <li><a href="https://bluegreenlabs.org/publication/">Publications</a></li>
-                            <li><a href="https://bluegreenlabs.org/post/">Blog</a></li>
+                            <li><a href="https://github.com/bluegreen-labs" class="external-link">Packages</a></li>
+                            <li><a href="https://bluegreenlabs.org/publication/" class="external-link">Publications</a></li>
+                            <li><a href="https://bluegreenlabs.org/post/" class="external-link">Blog</a></li>
                         </ul>
 </div>
 
@@ -243,6 +270,8 @@
 
   
 
+
+  
 
   </body>
 </html>

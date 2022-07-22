@@ -19,7 +19,11 @@ p {
     font-family: 'Titillium Web', sans-serif;
 }
 
-.h1, .h2, .h3, h1, h2, h3{
+li {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   color: #2b2b2b;
   font-family: 'Titillium Web', sans-serif;
 }
@@ -200,6 +204,7 @@ footer .icon {
 
 footer h5 {
   text-transform: uppercase;
+  color: #fff;
   font-weight: 600;
   font-size: 13.5px;
   margin-bottom: 10px;
@@ -224,7 +229,7 @@ footer ul li a {
 
 footer a:hover {
   text-decoration: none;
-  color: white;
+  color: #fff;
 }
 
 footer a {

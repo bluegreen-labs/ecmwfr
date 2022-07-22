@@ -15,15 +15,11 @@ ads_request <- list(
 httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # is the server reachable
-server_check <- !ecmwf_running(wf_server(service = "ads"))
+server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(!server_check){
-  skip_on_cran()
-  
-  options(keyring_backend="file")
-  
   key <- system("echo $ADS", intern = TRUE)
   if(key != "" & key != "$ADS"){
     try(
@@ -37,7 +33,6 @@ if(!server_check){
   login_check <- try(wf_get_key(user = "2161",
                                 service = "ads"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-  server_check <- !ecmwf_running(wf_server(service = "ads"))
 } else {
   login_check <- TRUE
 }
@@ -45,7 +40,6 @@ if(!server_check){
 test_that("ads datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
   expect_true(inherits(wf_datasets(user = "2161",
                                    service = "ads",
                                    simplify = TRUE), "data.frame"))
@@ -58,7 +52,6 @@ test_that("ads datasets returns data.frame or list", {
 test_that("ads request", {
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
 
   # ok transfer
   expect_message(wf_request(user = "2161",
@@ -70,7 +63,6 @@ test_that("ads request", {
 test_that("check ADS product info",{
   skip_on_cran()
   skip_if(login_check)
-  skip_if(server_check)
   expect_output(
     str(wf_product_info("cams-global-reanalysis-eac4",
                         service = "ads",

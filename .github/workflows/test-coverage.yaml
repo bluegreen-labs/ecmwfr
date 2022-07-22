@@ -12,9 +12,13 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    runs-on: windows-latest
+    runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ADS: ${{secrets.ADS}}
+      CDS: ${{secrets.CDS}}
+      WEBAPI: ${{secrets.WEBAPI}}
+
     steps:
       - uses: actions/checkout@v2
 
@@ -41,7 +45,7 @@ jobs:
         run: |
           brew install --cask xquartz
           brew install pkg-config
-          brew install proj@7
+          brew install proj
           brew install gdal
 
       - name: Install dependencies

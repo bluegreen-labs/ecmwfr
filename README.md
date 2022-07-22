@@ -229,7 +229,7 @@ file <- wf_request(user     = "1234",   # user ID (for authentification)
 The CDS services are quite fast, however, if you request a lot of variables,
 multiple levels, and data over several years these requests might take quite a
 while!  **Note**: If you need to download larger amounts of data it is
-suggested to split the downloads, e.g., download the data in junks (e.g.,
+suggested to split the downloads, e.g., download the data in chunks (e.g.,
 month-by-month, or year-by-year). A progress indicator will keep you informed
 on the status of your request. Keep in mind that all data downloaded will be
 buffered in memory limiting the downloads to ~6GB on low end systems.
@@ -329,6 +329,11 @@ options(keyring_backend="file")
 
 You will be asked to provide a password to encrypt the keyring with. Upon the start of each session you will be asked to provide this password, unlocking all `ecmwfr` credentials for this session. Should you ever forget the password just delete the file at: 
 `~/.config/r-keyring/ecmwfr.keyring` and re-enter all your credentials.
+
+## Date specification
+
+For those familiar to ECMWF _mars_ syntax: CDS/ADS does not
+accept `date = "2000-01-01/to/2000-12-31"` specifications. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` or `date = "YYYY-MM-DD/YYYY-MM-DD"`. Specifying the date as a range allows you to sidestep the [ERA5T restricted access issue](https://confluence.ecmwf.int/pages/viewpage.action?pageId=277352608&focusedCommentId=278530169).
 
 ## Citation
 

@@ -2,6 +2,7 @@
 #' @param workers maximum number of simultaneous request that will be submitted
 #' to the service.
 #' @param total_timeout overall timeout limit for all the requests in seconds.
+#' @importFrom R6 R6Class
 #'
 #' @rdname wf_request
 #' @export

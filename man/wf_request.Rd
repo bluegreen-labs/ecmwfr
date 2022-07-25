@@ -48,7 +48,7 @@ name. It has to be a syntactically valid name.}
 \item{workers}{maximum number of simultaneous request that will be submitted
 to the service.}
 
-\item{total_timeout}{overall timeout limit for all the requests.}
+\item{total_timeout}{overall timeout limit for all the requests in seconds.}
 }
 \value{
 a download query staging url or (invisible) filename of the file on

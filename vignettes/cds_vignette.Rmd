@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 # load the library
 library(ncdf4)
 library(raster)
+library(terra)
 library(maps)
 ```
 

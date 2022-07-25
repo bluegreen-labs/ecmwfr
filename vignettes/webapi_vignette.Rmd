@@ -20,6 +20,7 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 # load the library
 library(ncdf4)
 library(raster)
+library(terra)
 library(maps)
 library(ecmwfr)
 

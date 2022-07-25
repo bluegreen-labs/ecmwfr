@@ -1,4 +1,3 @@
-# 2088
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
@@ -42,9 +41,9 @@ if(!server_check){
   if(key != "" & key != "$CDS"){
     try(
       wf_set_key(user = "2088",
-               key = key,
-               service = "cds")
-      )
+                 key = key,
+                 service = "cds")
+    )
   }
   rm(key)
 
@@ -62,8 +61,8 @@ test_that("set key", {
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     expect_message(wf_set_key(user = "2088",
-               key = key,
-               service = "cds"))
+                              key = key,
+                              service = "cds"))
   }
   rm(key)
 })
@@ -86,8 +85,8 @@ test_that("cds request", {
 
   # ok transfer
   expect_message(wf_request(user = "2088",
-                    request = cds_request,
-                    transfer = TRUE))
+                            request = cds_request,
+                            transfer = TRUE))
 
   # timeout trigger
   expect_message(
@@ -110,8 +109,8 @@ test_that("cds request", {
 
   # wrong request
   expect_error(wf_request(user = "2088",
-                    request = "xyz",
-                    transfer = TRUE))
+                          request = "xyz",
+                          transfer = TRUE))
 
   # missing request
   expect_error(wf_request(user = "2088",
@@ -119,66 +118,66 @@ test_that("cds request", {
 
   # missing user
   expect_message(wf_request(request = cds_request,
-                          transfer = TRUE))
+                            transfer = TRUE))
 
   expect_true(inherits(wf_request(user = "2088",
-              request = cds_request,
-              transfer = FALSE), "list"))
+                                  request = cds_request,
+                                  transfer = FALSE), "list"))
 })
 
 
 # # Expecting error if required arguments are not set:
- test_that("required arguments missing for cds_* functions", {
-   skip_on_cran()
-   skip_if(login_check)
+test_that("required arguments missing for cds_* functions", {
+  skip_on_cran()
+  skip_if(login_check)
 
-   # CDS dataset (requires at least 'user')
-   expect_error(wf_dataset())
-   expect_output(str(wf_datasets(user = "2088", service = "cds")))
+  # CDS dataset (requires at least 'user')
+  expect_error(wf_dataset())
+  expect_output(str(wf_datasets(user = "2088", service = "cds")))
 
-   # CDS productinfo (requires at least 'user' and 'dataset')
-   expect_error(wf_product_info())
-   expect_error(wf_product_info(user = "2088",
-                                service = "cds",
-                                dataset = "foo"))
+  # CDS productinfo (requires at least 'user' and 'dataset')
+  expect_error(wf_product_info())
+  expect_error(wf_product_info(user = "2088",
+                               service = "cds",
+                               dataset = "foo"))
 
-   # CDS productinfo: product name which is not available
-   expect_output(str(wf_product_info(user = "2088",
-                                     service = "cds",
-                                     dataset = "satellite-methane")))
+  # CDS productinfo: product name which is not available
+  expect_output(str(wf_product_info(user = "2088",
+                                    service = "cds",
+                                    dataset = "satellite-methane")))
 
-   # CDS tranfer (forwarded to wf_transfer, requires at least
-   # 'user' and 'url)
-   expect_error(wf_transfer())
-   expect_error(wf_transfer(user = "2088",
-                            service = "cds",
-                            url = "http://google.com"))
+  # CDS tranfer (forwarded to wf_transfer, requires at least
+  # 'user' and 'url)
+  expect_error(wf_transfer())
+  expect_error(wf_transfer(user = "2088",
+                           service = "cds",
+                           url = "http://google.com"))
 
-   # CDS transfer with wrong type
-   expect_error(wf_transfer(user = "2088",
-                            url = "http://google.com",
-                            service = "foo"))
+  # CDS transfer with wrong type
+  expect_error(wf_transfer(user = "2088",
+                           url = "http://google.com",
+                           service = "foo"))
 
-   # check product listing
-   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                     service = "cds",
-                                     user = NULL,
-                                     simplify = FALSE)))
+  # check product listing
+  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+                                    service = "cds",
+                                    user = NULL,
+                                    simplify = FALSE)))
 
-   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                     service = "cds",
-                                     user = NULL,
-                                     simplify = FALSE)))
+  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+                                    service = "cds",
+                                    user = NULL,
+                                    simplify = FALSE)))
 })
 
 # check delete routine CDS (fails)
 test_that("delete request", {
   skip_on_cran()
   skip_if(login_check)
-   expect_warning(
-     wf_delete(user = "2088",
-               service = "cds",
-               url = "50340909as"))
+  expect_warning(
+    wf_delete(user = "2088",
+              service = "cds",
+              url = "50340909as"))
 })
 
 # CDS product info
@@ -191,9 +190,10 @@ test_that("check product info",{
                         user = NULL)))
 })
 
-
-
 test_that("batch request works", {
+  skip_on_cran()
+  skip_if(login_check)
+
   years <- 2015:2017
   requests <- lapply(years, function(y) {
     list(
@@ -211,5 +211,8 @@ test_that("batch request works", {
       "target"         = "era5-demo.nc")
   })
 
-  expect_output(wf_request_batch(requests, user = "2088"))
+  expect_output(wf_request_batch(
+    requests,
+    user = "2088")
+    )
 })

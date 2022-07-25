@@ -24,9 +24,9 @@ if(!server_check){
   if(key != "" & key != "$ADS"){
     try(
       wf_set_key(user = "2161",
-               key = key,
-               service = "ads")
-      )
+                 key = key,
+                 service = "ads")
+    )
   }
   rm(key)
 
@@ -55,8 +55,8 @@ test_that("ads request", {
 
   # ok transfer
   expect_message(wf_request(user = "2161",
-                    request = ads_request,
-                    transfer = TRUE))
+                            request = ads_request,
+                            transfer = TRUE))
 })
 
 # ads product info
@@ -69,8 +69,9 @@ test_that("check ADS product info",{
                         user = "2161")))
 })
 
-
 test_that("batch request works", {
+  skip_on_cran()
+  skip_if(login_check)
   years <- 2015:2017
   requests <- lapply(years, function(y) {
     list(

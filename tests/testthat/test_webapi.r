@@ -17,7 +17,7 @@ my_request <- list(
   area = "51/0/50/1",
   format = "netcdf",
   target = "tmp.nc"
-  )
+)
 
 # is the server reachable
 server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
@@ -30,14 +30,14 @@ if(!server_check){
       user = "info@bluegreenlabs.org",
       key = key,
       service = "webapi"
-      ))
+    ))
   }
   rm(key)
 
   login_check <- try(
     wf_get_key(
       user = "info@bluegreenlabs.org"),
-      silent = TRUE)
+    silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
   login_check <- TRUE
@@ -374,9 +374,10 @@ test_that("job_name has to be valid", {
     "job_name '1' is not a syntactically valid variable name.")
 })
 
-
-
 test_that("batch request works", {
+  skip_on_cran()
+  skip_if(login_check)
+
   years <- 2015:2017
   requests <- lapply(years, function(y) {
     my_request <- list(stream = "oper",

@@ -6,13 +6,15 @@
 #'
 #' @rdname wf_request
 #' @export
-wf_request_batch <- function(request_list,
-                             workers = 2,
-                             user,
-                             path = tempdir(),
-                             time_out = 3600,
-                             total_timeout = length(request_list)*time_out/workers
-                             ) {
+wf_request_batch <- function(
+    request_list,
+    workers = 2,
+    user,
+    path = tempdir(),
+    time_out = 3600,
+    total_timeout = length(request_list)*time_out/workers
+) {
+
   list_in_list <- vapply(request_list, is.list, logical(1))
 
   if (any(!list_in_list)) {
@@ -23,7 +25,6 @@ wf_request_batch <- function(request_list,
   slots <- as.list(rep(FALSE, workers))
   queue <- request_list
   done  <- list()
-
 
   force(total_timeout)  # Need to evaluate the expression before changing time_out
   time_out <- repeat_if_one(time_out, N)
@@ -41,9 +42,12 @@ wf_request_batch <- function(request_list,
       # assign to it the next pending request,
       # remove that request from the queue
       if (isFALSE(slots[[w]]) & length(queue) > 0) {
-        slots[[w]] <- wf_request(queue[[1]], user = user[1],
-                                 time_out = time_out[1],
-                                 path = path[1], transfer = FALSE)
+        slots[[w]] <- wf_request(
+          queue[[1]],
+          user = user[1],
+          time_out = time_out[1],
+          path = path[1], transfer = FALSE
+          )
         queue <- queue[-1]
         user <- user[-1]
         time_out <- time_out[-1]

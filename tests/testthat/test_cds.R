@@ -1,3 +1,4 @@
+# 2088
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
@@ -188,4 +189,27 @@ test_that("check product info",{
     str(wf_product_info("reanalysis-era5-single-levels",
                         service = "cds",
                         user = NULL)))
+})
+
+
+
+test_that("batch request works", {
+  years <- 2015:2017
+  requests <- lapply(years, function(y) {
+    list(
+      "dataset_short_name" = "reanalysis-era5-pressure-levels",
+      "product_type"   = "reanalysis",
+      "format"         = "netcdf",
+      "variable"       = "temperature",
+      "pressure_level" = "850",
+      "year"           = y,
+      "month"          = "05",
+      "day"            = "04",
+      "time"           = "00:00",
+      "area"           = "50/9/51/10",
+      "format"         = "netcdf",
+      "target"         = "era5-demo.nc")
+  })
+
+  expect_output(wf_request_batch(requests, user = "2088"))
 })

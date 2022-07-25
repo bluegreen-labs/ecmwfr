@@ -373,3 +373,27 @@ test_that("job_name has to be valid", {
                job_name = "1"),
     "job_name '1' is not a syntactically valid variable name.")
 })
+
+
+
+test_that("batch request works", {
+  years <- 2015:2017
+  requests <- lapply(years, function(y) {
+    my_request <- list(stream = "oper",
+                       levtype = "sfc",
+                       param = "165.128",
+                       dataset = "interim",
+                       step = "0",
+                       grid = "0.75/0.75",
+                       time = "00",
+                       date = paste0(y, "-07-01"),
+                       type = "an",
+                       class = "ei",
+                       area = "51/0/50/1",
+                       format = "netcdf",
+                       target = "tmp.nc")
+
+  })
+
+  expect_output(wf_request_batch(requests, user = "2088"))
+})

@@ -1,3 +1,7 @@
+# ecmwfr 1.4.0
+
+* added `wf_request_batch()` to support parallel requests. 
+
 # ecmwfr 1.3.0
 
 * updated code coverage to reflect changes

@@ -120,9 +120,13 @@ test_that("cds request", {
   expect_message(wf_request(request = cds_request,
                             transfer = TRUE))
 
-  expect_true(inherits(wf_request(user = "2088",
-                                  request = cds_request,
-                                  transfer = FALSE), "list"))
+  expect_true(is.list(
+    wf_request(
+      user = "2088",
+      request = cds_request,
+      transfer = FALSE)
+    )
+  )
 })
 
 

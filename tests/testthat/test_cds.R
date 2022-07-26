@@ -84,9 +84,11 @@ test_that("cds request", {
   skip_if(login_check)
 
   # ok transfer
-  expect_message(wf_request(user = "2088",
-                            request = cds_request,
-                            transfer = TRUE))
+  expect_message(
+    wf_request(user = "2088",
+               request = cds_request,
+               transfer = TRUE)
+    )
 
   # timeout trigger
   expect_message(
@@ -120,12 +122,13 @@ test_that("cds request", {
   expect_message(wf_request(request = cds_request,
                             transfer = TRUE))
 
-  expect_true(is.list(
+  # is R6 class
+  expect_true(inherits(
     wf_request(
       user = "2088",
       request = cds_request,
       transfer = FALSE)
-    )
+    , "R6")
   )
 })
 

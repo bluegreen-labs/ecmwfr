@@ -1,6 +1,7 @@
 #' @param request_list a list of requests that will be processed in parallel.
 #' @param workers maximum number of simultaneous request that will be submitted
-#' to the service.
+#' to the service. Most ECMWF services are limited to 20 concurrent requests
+#' (default = 2).
 #' @param total_timeout overall timeout limit for all the requests in seconds.
 #' @importFrom R6 R6Class
 #'
@@ -72,8 +73,6 @@ wf_request_batch <- function(
 
   unlist(lapply(done, function(x) x$get_file()))
 }
-
-
 
 repeat_if_one <- function(x, N) {
   if (is.null(x)) {

@@ -99,17 +99,19 @@ test_that("test user info function - no login", {
 test_that("test request (transfer) function", {
   skip_on_cran()
   skip_if(login_check)
-  expect_message(wf_request(
-    user = "info@bluegreenlabs.org",
-    transfer = TRUE,
-    request = my_request,
-    time_out = 60))
+  expect_type(
+    wf_request(
+      user = "info@bluegreenlabs.org",
+      transfer = TRUE,
+      request = my_request,
+      time_out = 120),
+    "character"
+  )
 })
 
 test_that("test request (transfer) function", {
   skip_on_cran()
   skip_if(login_check)
-
 
   # create new output dir in tempdir()
   path <- file.path(tempdir(),"/test/")
@@ -119,7 +121,8 @@ test_that("test request (transfer) function", {
     user = "info@bluegreenlabs.org",
     transfer = TRUE,
     request = my_request,
-    path = path))
+    path = path)
+  )
 })
 
 test_that("test request (transfer) function - time out", {
@@ -133,30 +136,30 @@ test_that("test request (transfer) function - time out", {
     time_out = 1)))
 })
 
-test_that("test request (transfer) function - no transfer", {
-  skip_on_cran()
-  skip_if(login_check)
-
-  ct <- wf_request(
-    user = "info@bluegreenlabs.org",
-    transfer = FALSE,
-    request = my_request)
-
-  expect_output(str(ct))
-  expect_message(wf_delete(
-    user = "info@bluegreenlabs.org",
-    url = ct$href)
-    )
-
-  ct2 <- wf_request(
-    user = "info@bluegreenlabs.org",
-    transfer = FALSE,
-    request = my_request)
-
-  expect_silent(wf_delete(user = "info@bluegreenlabs.org",
-                          url = ct2$href,
-                          verbose = FALSE))
-})
+# test_that("test request (transfer) function - no transfer", {
+#   skip_on_cran()
+#   skip_if(login_check)
+#
+#   ct <- wf_request(
+#     user = "info@bluegreenlabs.org",
+#     transfer = FALSE,
+#     request = my_request)
+#
+#   expect_output(str(ct))
+#   expect_message(wf_delete(
+#     user = "info@bluegreenlabs.org",
+#     url = ct$href)
+#     )
+#
+#   ct2 <- wf_request(
+#     user = "info@bluegreenlabs.org",
+#     transfer = FALSE,
+#     request = my_request)
+#
+#   expect_silent(wf_delete(user = "info@bluegreenlabs.org",
+#                           url = ct2$href,
+#                           verbose = FALSE))
+# })
 
 test_that("test request (transfer) function - no email", {
   skip_on_cran()

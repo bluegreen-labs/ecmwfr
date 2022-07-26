@@ -153,17 +153,18 @@ wf_request <- function(request,
   url <- wf_check$url
 
   # Select the appropriate service
-  service <- switch(service,
-                    webapi = webapi_service,
-                    cds = cds_service,
-                    ads = ads_service)
+  service <- switch(
+    service,
+    webapi = webapi_service,
+    cds = cds_service,
+    ads = ads_service
+    )
 
   # Create request and submit to service
   request <- service$new(request = request,
                      user = user,
                      url = url,
                      path = path)
-
 
   if (transfer) {
     request$transfer(time_out = time_out)

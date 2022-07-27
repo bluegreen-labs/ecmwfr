@@ -136,30 +136,35 @@ test_that("test request (transfer) function - time out", {
     time_out = 1)))
 })
 
-# test_that("test request (transfer) function - no transfer", {
-#   skip_on_cran()
-#   skip_if(login_check)
-#
-#   ct <- wf_request(
-#     user = "info@bluegreenlabs.org",
-#     transfer = FALSE,
-#     request = my_request)
-#
-#   expect_output(str(ct))
-#   expect_message(wf_delete(
-#     user = "info@bluegreenlabs.org",
-#     url = ct$href)
-#     )
-#
-#   ct2 <- wf_request(
-#     user = "info@bluegreenlabs.org",
-#     transfer = FALSE,
-#     request = my_request)
-#
-#   expect_silent(wf_delete(user = "info@bluegreenlabs.org",
-#                           url = ct2$href,
-#                           verbose = FALSE))
-# })
+test_that("test request (transfer) function - no transfer", {
+  skip_on_cran()
+  skip_if(login_check)
+
+  ct <- wf_request(
+    user = "info@bluegreenlabs.org",
+    transfer = FALSE,
+    request = my_request)
+  ct <- ct$get_url()
+
+  expect_output(str(ct))
+  expect_message(
+    wf_delete(
+    user = "info@bluegreenlabs.org",
+    url = ct)
+    )
+
+  ct <- wf_request(
+    user = "info@bluegreenlabs.org",
+    transfer = FALSE,
+    request = my_request)
+  ct <- ct$get_url()
+
+  expect_silent(
+    wf_delete(user = "info@bluegreenlabs.org",
+                          url = ct,
+                          verbose = FALSE)
+    )
+})
 
 test_that("test request (transfer) function - no email", {
   skip_on_cran()
@@ -218,37 +223,9 @@ test_that("test delete function - no login", {
   expect_error(wf_delete())
 })
 
-test_that("test request (transfer) function - larger download", {
-  skip_on_cran()
-  skip_if(login_check)
-
-
-  # large request
-  large_request <- list(stream = "oper",
-                        levtype = "sfc",
-                        param = "167.128",
-                        dataset = "interim",
-                        step = "0",
-                        grid = "0.75/0.75",
-                        time = "00",
-                        date = "2014-07-01",
-                        type = "an",
-                        class = "ei",
-                        area = "50/10/55/15",
-                        format = "netcdf",
-                        target = "tmp.nc")
-
-  expect_message(wf_request(
-    user = "info@bluegreenlabs.org",
-    transfer = TRUE,
-    request = large_request,
-    time_out = 300))
-})
-
 test_that("check request - no dataset field", {
   skip_on_cran()
   skip_if(login_check)
-
 
   my_request <- list(stream = "oper",
                      levtype = "sfc",
@@ -309,7 +286,6 @@ test_that("check request - no netcdf grid specified", {
   skip_on_cran()
   skip_if(login_check)
 
-
   my_request <- list(stream = "oper",
                      levtype = "sfc",
                      param = "167.128",
@@ -331,7 +307,6 @@ test_that("check request - no netcdf grid specified", {
 test_that("check request - bad credentials", {
   skip_on_cran()
   skip_if(login_check)
-
 
   my_request <- list(stream = "oper",
                      levtype = "sfc",
@@ -400,8 +375,10 @@ test_that("batch request works", {
 
   })
 
-  expect_output(wf_request_batch(
-    requests,
-    user = "info@bluegreenlabs.org"
-    ))
+  expect_output(
+    wf_request_batch(
+      requests,
+      user = "info@bluegreenlabs.org"
+    )
+  )
 })

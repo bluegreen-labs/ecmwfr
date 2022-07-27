@@ -357,7 +357,7 @@ test_that("batch request works", {
   skip_on_cran()
   skip_if(login_check)
 
-  years <- 2015:2017
+  years <- rep(2017,2)
   requests <- lapply(years, function(y) {
     my_request <- list(stream = "oper",
                        levtype = "sfc",

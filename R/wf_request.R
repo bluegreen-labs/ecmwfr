@@ -176,7 +176,7 @@ wf_request <- function(request,
       return(request$get_file())
     }
     message("Transfer was not successfull - please check your request later at:")
-    message(request$url)
+    message(request$get_url())
   }
 
   return(request)

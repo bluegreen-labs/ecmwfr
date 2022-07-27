@@ -90,6 +90,10 @@ service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
       private$request
     },
 
+    get_url = function() {
+      private$url
+    },
+
     is_failed = function() {
       private$failed
     },

@@ -31,6 +31,10 @@ webapi_service <- R6::R6Class("ecmwfr_webapi", inherit = service,
 
       # some verbose feedback
       if (private$verbose) {
+        # Rapid requests seems to trip the server
+        # adding a delay might resolve some of the inconsistent
+        # query behaviour
+        Sys.sleep(3)
         message("- staging data transfer at url endpoint or request id:")
         message("  ", ct$href, "\n")
       }

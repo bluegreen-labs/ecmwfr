@@ -103,8 +103,8 @@ test_that("test request (transfer) function", {
     wf_request(
       user = "info@bluegreenlabs.org",
       transfer = TRUE,
-      request = my_request,
-      time_out = 120),
+      request = my_request
+      ),
     "character"
   )
 })

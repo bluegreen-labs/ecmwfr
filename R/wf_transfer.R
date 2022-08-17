@@ -5,8 +5,7 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.
-#' @param url url to query (can be extracted from a
-#' \code{\link[ecmwfr]{wf_request}}) query using request$get_url().
+#' @param url R6 \code{\link[ecmwfr]{wf_request}}) query output
 #' @param service which service to use, one of \code{webapi}, \code{cds}
 #' or \code{ads} (default = webapi)
 #' @param path path were to store the downloaded data

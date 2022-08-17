@@ -14,8 +14,7 @@ wf_transfer(
 )
 }
 \arguments{
-\item{url}{url to query (can be extracted from a
-\code{\link[ecmwfr]{wf_request}}) query using request$get_url().}
+\item{url}{R6 \code{\link[ecmwfr]{wf_request}}) query output}
 
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}

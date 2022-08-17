@@ -9,7 +9,7 @@ wf_transfer(
   user,
   service = "webapi",
   path = tempdir(),
-  filename = tempfile("ecmwfr_"),
+  filename = tempfile("ecmwfr_", tmpdir = ""),
   verbose = TRUE
 )
 }

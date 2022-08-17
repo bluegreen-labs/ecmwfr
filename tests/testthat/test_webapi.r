@@ -379,3 +379,39 @@ test_that("batch request", {
     )
   )
 })
+
+test_that("wf_transfer() check", {
+  skip_on_cran()
+  skip_if(login_check)
+
+  request <- list(
+    stream = "oper",
+    levtype = "sfc",
+    param = "165.128",
+    dataset = "interim",
+    step = "0",
+    grid = "0.75/0.75",
+    time = "00",
+    date = paste0(y, "-07-01"),
+    type = "an",
+    class = "ei",
+    area = "51/0/50/1",
+    format = "netcdf",
+    target = "tmp.nc"
+    )
+
+  r <- wf_request(
+      request,
+      user = "info@bluegreenlabs.org"
+    )
+
+  # check transfer routine
+  expect_output(
+    wf_transfer(
+      user = "info@bluegreenlabs.org",
+      service = "webapi",
+      url = basename(r$get_url())
+    )
+  )
+
+})

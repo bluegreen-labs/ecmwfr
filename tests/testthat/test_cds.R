@@ -169,6 +169,15 @@ test_that("required arguments missing for cds_* functions", {
       )
     )
 
+  # check transfer routine
+  expect_output(
+    wf_transfer(
+      user = "2088",
+      service = "cds",
+      url = r$get_url()
+    )
+  )
+
   # CDS tranfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)
   expect_error(wf_transfer())

@@ -402,7 +402,7 @@ test_that("wf_transfer() check", {
     step = "0",
     grid = "0.75/0.75",
     time = "00",
-    date = paste0(y, "-07-01"),
+    date = "2017-07-01",
     type = "an",
     class = "ei",
     area = "51/0/50/1",

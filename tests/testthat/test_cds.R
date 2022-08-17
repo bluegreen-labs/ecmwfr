@@ -46,7 +46,6 @@ if(!server_check){
     )
   }
   rm(key)
-
   login_check <- try(wf_get_key(user = "2088",
                                 service = "cds"),
                      silent = TRUE)
@@ -138,6 +137,13 @@ test_that("required arguments missing for cds_* functions", {
   skip_on_cran()
   skip_if(login_check)
 
+  # submit request
+  r <- wf_request(
+    user = "2088",
+    request = cds_request,
+    transfer = FALSE
+  )
+
   # CDS dataset (requires at least 'user')
   expect_error(wf_dataset())
   expect_output(str(wf_datasets(user = "2088", service = "cds")))
@@ -152,6 +158,15 @@ test_that("required arguments missing for cds_* functions", {
   expect_output(str(wf_product_info(user = "2088",
                                     service = "cds",
                                     dataset = "satellite-methane")))
+
+  # check transfer routine
+  expect_error(
+    wf_transfer(
+      user = "2088",
+      service = "cds",
+      url = r$get_url()
+      )
+    )
 
   # CDS tranfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)
@@ -197,7 +212,7 @@ test_that("check product info",{
                         user = NULL)))
 })
 
-test_that("batch request works", {
+test_that("batch request tests", {
   skip_on_cran()
   skip_if(login_check)
 

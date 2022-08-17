@@ -53,14 +53,15 @@
 #' wf_request(request = request, user = "test@mail.com", job_name = "test")
 #'}
 
-wf_request <- function(request,
-                       user,
-                       transfer = TRUE,
-                       path = tempdir(),
-                       time_out = 3600,
-                       job_name,
-                       verbose = TRUE
-                       ) {
+wf_request <- function(
+    request,
+    user,
+    transfer = TRUE,
+    path = tempdir(),
+    time_out = 3600,
+    job_name,
+    verbose = TRUE
+) {
   if (!missing(job_name)) {
     if (make.names(job_name) != job_name) {
       stop("job_name '",

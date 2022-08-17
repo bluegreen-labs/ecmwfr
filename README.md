@@ -14,7 +14,7 @@ and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu) or 'CDS' 
 
 You can cite this package like this "we obtained data from the European Centre for Medium-Range Weather Forecasts API using the ecmwf R package (Hufkens, Stauffer, and Campitelli 2019)". Here is the full bibliographic reference to include in your reference list (don't forget to update the 'last accessed' date):
 
-> Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr: Programmatic interface to the two European Centre for Medium-Range Weather Forecasts API services. (Version v1.2.0). Zenodo. http://doi.org/10.5281/zenodo.2647541. Last accessed 15 May 2020
+> Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr: Programmatic interface to the two European Centre for Medium-Range Weather Forecasts API services. Zenodo. http://doi.org/10.5281/zenodo.2647531.
 
 ## Installation
 

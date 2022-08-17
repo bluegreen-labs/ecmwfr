@@ -249,7 +249,6 @@ test_that("check request - bad request type", {
   skip_on_cran()
   skip_if(login_check)
 
-
   my_request <- "xyz"
   expect_error(
     wf_check_request(
@@ -261,7 +260,6 @@ test_that("check request - bad request type", {
 test_that("check mars request - no target", {
   skip_on_cran()
   skip_if(login_check)
-
 
   my_request <- list(stream = "oper",
                      levtype = "sfc",
@@ -353,7 +351,7 @@ test_that("job_name has to be valid", {
     "job_name '1' is not a syntactically valid variable name.")
 })
 
-test_that("batch request works", {
+test_that("batch request", {
   skip_on_cran()
   skip_if(login_check)
 
@@ -372,7 +370,6 @@ test_that("batch request works", {
                        area = "51/0/50/1",
                        format = "netcdf",
                        target = "tmp.nc")
-
   })
 
   expect_output(

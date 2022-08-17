@@ -129,14 +129,15 @@ name. It has to be a syntactically valid name.</p></dd>
 <dd><p>a list of requests that will be processed in parallel.</p></dd>
 <dt>workers</dt>
 <dd><p>maximum number of simultaneous request that will be submitted
-to the service.</p></dd>
+to the service. Most ECMWF services are limited to 20 concurrent requests
+(default = 2).</p></dd>
 <dt>total_timeout</dt>
 <dd><p>overall timeout limit for all the requests in seconds.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a download query staging url or (invisible) filename of the file on
-your local disc</p>
+    <p>the path of the downloaded (requested file) or the an R6 object
+with download/transfer information</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

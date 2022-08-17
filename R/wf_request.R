@@ -18,8 +18,8 @@
 #'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
 
-#' @return a download query staging url or (invisible) filename of the file on
-#' your local disc
+#' @return the path of the downloaded (requested file) or the an R6 object
+#' with download/transfer information
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
 #' @export

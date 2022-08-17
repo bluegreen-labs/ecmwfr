@@ -168,17 +168,19 @@ queries copied from either ECMWF or CDS based services.</p>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify the data set</span>
-<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,
-                <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,
-                <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,
-                <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,
-                <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,
-                <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,
-                <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,
-                <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,
-                <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,
-                <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,
-                <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span><span class="op">)</span></code></pre></div>
+<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+  <span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,
+  <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,
+  <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,
+  <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,
+  <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,
+  <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,
+  <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,
+  <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,
+  <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,
+  <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,
+  <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span>
+  <span class="op">)</span></code></pre></div>
 <p>This is the “demo” request and it specifies the following:</p>
 <ul>
 <li>
@@ -209,11 +211,13 @@ UTC),</li>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Start downloading the data, the path of the file</span>
 <span class="co"># will be returned as a variable (ncfile)</span>
-<span class="va">ncfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"2088"</span>,
-                      request <span class="op">=</span> <span class="va">request</span>,   
-                      transfer <span class="op">=</span> <span class="cn">TRUE</span>,  
-                      path <span class="op">=</span> <span class="st">"~"</span>,
-                      verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="va">ncfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>
+  user <span class="op">=</span> <span class="st">"2088"</span>,
+  request <span class="op">=</span> <span class="va">request</span>,   
+  transfer <span class="op">=</span> <span class="cn">TRUE</span>,  
+  path <span class="op">=</span> <span class="st">"~"</span>,
+  verbose <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the
 request function may tike a while! Please note: if you try to download
 larger amounts of data it is suggested to split the data sets, e.g.,

@@ -5,7 +5,8 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.
-#' @param url url to query
+#' @param url url to query (can be extracted from a
+#' \code{\link[ecmwfr]{wf_request}}) query using request$get_url().
 #' @param service which service to use, one of \code{webapi}, \code{cds}
 #' or \code{ads} (default = webapi)
 #' @param path path were to store the downloaded data
@@ -27,7 +28,7 @@
 #' r <- wf_request(request, "test@email.com", transfer = FALSE)
 #'
 #' # check transfer, will download if available
-#' wf_transfer(r$href, "test@email.com")
+#' wf_transfer(r$get_url(), "test@email.com")
 #'}
 
 wf_transfer <- function(url,

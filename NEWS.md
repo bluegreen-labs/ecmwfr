@@ -1,6 +1,7 @@
 # ecmwfr 1.4.0
 
-* added `wf_request_batch()` to support parallel requests. 
+* added `wf_request_batch()` to support parallel requests using R6 logic
+* updated citation (pointing to global doi)
 
 # ecmwfr 1.3.0
 

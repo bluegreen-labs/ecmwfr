@@ -14,7 +14,8 @@ wf_transfer(
 )
 }
 \arguments{
-\item{url}{url to query}
+\item{url}{url to query (can be extracted from a
+\code{\link[ecmwfr]{wf_request}}) query using request$get_url().}
 
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
@@ -46,7 +47,7 @@ wf_set_key(user = "test@mail.com", key = "123")
 r <- wf_request(request, "test@email.com", transfer = FALSE)
 
 # check transfer, will download if available
-wf_transfer(r$href, "test@email.com")
+wf_transfer(r$get_url(), "test@email.com")
 }
 }
 \seealso{

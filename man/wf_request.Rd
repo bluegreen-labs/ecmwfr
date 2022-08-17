@@ -46,13 +46,14 @@ name. It has to be a syntactically valid name.}
 \item{request_list}{a list of requests that will be processed in parallel.}
 
 \item{workers}{maximum number of simultaneous request that will be submitted
-to the service.}
+to the service. Most ECMWF services are limited to 20 concurrent requests
+(default = 2).}
 
 \item{total_timeout}{overall timeout limit for all the requests in seconds.}
 }
 \value{
-a download query staging url or (invisible) filename of the file on
-your local disc
+the path of the downloaded (requested file) or the an R6 object
+with download/transfer information
 }
 \description{
 Stage a data request, and optionally download the data to disk. Alternatively

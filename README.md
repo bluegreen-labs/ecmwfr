@@ -102,19 +102,21 @@ The conversion from a MARS or python based query to the list format can be autom
 
 ```R
 # this is an example of a request
-my_request <- list(stream = "oper",
-                   levtype = "sfc",
-                   param = "165.128/166.128/167.128",
-                   dataset = "interim",
-                   step = "0",
-                   grid = "0.75/0.75",
-                   time = "00/06/12/18",
-                   date = "2014-07-01/to/2014-07-31",
-                   type = "an",
-                   class = "ei",
-                   area = "73.5/-27/33/45",
-                   format = "netcdf",
-                   target = "tmp.nc")
+my_request <- list(
+ stream = "oper",
+ levtype = "sfc",
+ param = "165.128/166.128/167.128",
+ dataset = "interim",
+ step = "0",
+ grid = "0.75/0.75",
+ time = "00/06/12/18",
+ date = "2014-07-01/to/2014-07-31",
+ type = "an",
+ class = "ei",
+ area = "73.5/-27/33/45",
+ format = "netcdf",
+ target = "tmp.nc"
+ )
 
 # an example download using fw_request()
 # using the above request list()
@@ -203,27 +205,29 @@ for ERA-5 reanalysis:
 # 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
 # northern Europe.
 # File will be stored as "era5-demo.nc" (netcdf format).
-request <- list("dataset_short_name" = "reanalysis-era5-pressure-levels",
-                "product_type" = "reanalysis",
-                "variable" = "temperature",
-                "pressure_level" = "850",
-                "year" = "2000",
-                "month" = "04",
-                "day" = "04",
-                "time" = "00:00",
-                "area" = "70/-20/00/60",
-                "format" = "netcdf",
-                "target" = "era5-demo.nc")
-
+request <- list(
+ "dataset_short_name" = "reanalysis-era5-pressure-levels",
+ "product_type" = "reanalysis",
+ "variable" = "temperature",
+ "pressure_level" = "850",
+ "year" = "2000",
+ "month" = "04",
+ "day" = "04",
+ "time" = "00:00",
+ "area" = "70/-20/00/60",
+ "format" = "netcdf",
+ "target" = "era5-demo.nc"
+ )
 
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
 # call:
-file <- wf_request(user     = "1234",   # user ID (for authentification)
-                   request  = request,  # the request
-                   transfer = TRUE,     # download the file
-                   path     = ".")      # store data in current working directory
-
+file <- wf_request(
+ user     = "1234",   # user ID (for authentification)
+ request  = request,  # the request
+ transfer = TRUE,     # download the file
+ path     = "."       # store data in current working directory
+ )
 ```
 
 The CDS services are quite fast, however, if you request a lot of variables,
@@ -310,11 +314,12 @@ request <- list(
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
 # call:
-file <- wf_request(user     = "2345",   # user ID (for authentification)
-                   request  = request,  # the request
-                   transfer = TRUE,     # download the file
-                   path     = ".")      # store data in current working directory
-
+file <- wf_request(
+ user     = "2345",   # user ID (for authentification)
+ request  = request,  # the request
+ transfer = TRUE,     # download the file
+ path     = "."       # store data in current working directory
+ )
 ```
 
 The same file restrictions and notes as for the CDS apply to the ADS.

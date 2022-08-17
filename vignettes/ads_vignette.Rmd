@@ -31,7 +31,7 @@ library(maps)
 Before you will be able to download any data you need to get a free personal
 account.
 
-* [Register yourself for CDS services](https://ads.atmosphere.copernicus.eu/user/register)
+* [Register yourself for ADS services](https://ads.atmosphere.copernicus.eu/user/register)
 * [Terms and conditions](https://ads.atmosphere.copernicus.eu/disclaimer-privacy)
 
 To retrieve data `ecmwfr` use `wf_set_key()`to add the login details to your local keyring (requires the _R_ package [`keyring`](https://CRAN.R-project.org/package=keyring)).
@@ -70,10 +70,12 @@ The data set as specified above can be downloaded calling the
 ```{r spatial-request, echo = TRUE, eval = FALSE}
 # Start downloading the data, the path of the file
 # will be returned as a variable (ncfile)
-file <- wf_request(user     = "2345",   # user ID (for authentification)
-                   request  = request,  # the request
-                   transfer = TRUE,     # download the file
-                   path     = ".")      # store data in current working directory
+file <- wf_request(
+  user     = "2345",   # user ID (for authentification)
+  request  = request,  # the request
+  transfer = TRUE,     # download the file
+  path     = "."       # store data in current working directory
+  )
 ```
 
 Depending on the request (the amount of data you are asking for) the request function may take a while! Please note: if you try to download larger amounts of data it is suggested to split the data sets, e.g., download year-by-year, or even month-by-month, if you are trying to download several variables/fields.

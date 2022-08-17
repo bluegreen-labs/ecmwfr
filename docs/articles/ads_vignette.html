@@ -128,7 +128,7 @@ the world.</p>
 personal account.</p>
 <ul>
 <li><a href="https://ads.atmosphere.copernicus.eu/user/register" class="external-link">Register
-yourself for CDS services</a></li>
+yourself for ADS services</a></li>
 <li><a href="https://ads.atmosphere.copernicus.eu/disclaimer-privacy" class="external-link">Terms and
 conditions</a></li>
 </ul>
@@ -181,10 +181,12 @@ on January first 2003.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Start downloading the data, the path of the file</span>
 <span class="co"># will be returned as a variable (ncfile)</span>
-<span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user     <span class="op">=</span> <span class="st">"2345"</span>,   <span class="co"># user ID (for authentification)</span>
-                   request  <span class="op">=</span> <span class="va">request</span>,  <span class="co"># the request</span>
-                   transfer <span class="op">=</span> <span class="cn">TRUE</span>,     <span class="co"># download the file</span>
-                   path     <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>      <span class="co"># store data in current working directory</span></code></pre></div>
+<span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>
+  user     <span class="op">=</span> <span class="st">"2345"</span>,   <span class="co"># user ID (for authentification)</span>
+  request  <span class="op">=</span> <span class="va">request</span>,  <span class="co"># the request</span>
+  transfer <span class="op">=</span> <span class="cn">TRUE</span>,     <span class="co"># download the file</span>
+  path     <span class="op">=</span> <span class="st">"."</span>       <span class="co"># store data in current working directory</span>
+  <span class="op">)</span></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the
 request function may take a while! Please note: if you try to download
 larger amounts of data it is suggested to split the data sets, e.g.,

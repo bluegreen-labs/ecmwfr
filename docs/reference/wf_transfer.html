@@ -92,7 +92,8 @@ to disk or the current status of the requested transfer.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>url</dt>
-<dd><p>url to query</p></dd>
+<dd><p>url to query (can be extracted from a
+<code><a href="wf_request.html">wf_request</a></code>) query using request$get_url().</p></dd>
 <dt>user</dt>
 <dd><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code>.</p></dd>
@@ -132,7 +133,7 @@ or <code>ads</code> (default = webapi)</p></dd>
 <span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="wf_request.html">wf_request</a></span><span class="op">(</span><span class="va">request</span>, <span class="st">"test@email.com"</span>, transfer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># check transfer, will download if available</span></span>
-<span class="r-in"><span class="fu">wf_transfer</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">href</span>, <span class="st">"test@email.com"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">wf_transfer</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="op">)</span>, <span class="st">"test@email.com"</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>

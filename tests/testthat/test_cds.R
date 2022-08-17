@@ -106,7 +106,8 @@ test_that("cds request", {
   # faulty request
   expect_error(wf_request(
     user = "2088",
-    request = cds_request_faulty))
+    request = cds_request_faulty)
+    )
 
   # wrong request
   expect_error(wf_request(user = "2088",
@@ -160,11 +161,11 @@ test_that("required arguments missing for cds_* functions", {
                                     dataset = "satellite-methane")))
 
   # check transfer routine
-  expect_error(
+  expect_output(
     wf_transfer(
       user = "2088",
       service = "cds",
-      url = r$get_url()
+      url = r
       )
     )
 

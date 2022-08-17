@@ -337,7 +337,7 @@ accept `date = "2000-01-01/to/2000-12-31"` specifications. It is possible to spe
 
 ## Citation
 
-Koen Hufkens, Reto Stauffer, & Elio Campitelli. (2019, April 19). bluegreen-labs/ecmwfr: ecmwfr (Version v1.2.0). Zenodo. [http://doi.org/10.5281/zenodo.2647541](http://doi.org/10.5281/zenodo.2647541).
+Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr: Programmatic interface to the two European Centre for Medium-Range Weather Forecasts API services. Zenodo. http://doi.org/10.5281/zenodo.2647531.
 
 ## Acknowledgements
 

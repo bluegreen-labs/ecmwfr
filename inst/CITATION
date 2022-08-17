@@ -6,7 +6,7 @@ citEntry(entry = "Misc",
                                    as.person("Reto Stauffer"),
                                    as.person("Elio Campitelli")),
          year = "2019",
-         doi = "10.5281/zenodo.2647541",
+         doi = "10.5281/zenodo.2647531",
          url = "https://bluegreen-labs.github.io/ecmwfr/",
          textVersion  =
            paste("Hufkens, Stauffer and Campitelli (2019).",

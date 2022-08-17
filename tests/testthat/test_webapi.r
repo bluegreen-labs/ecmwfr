@@ -412,7 +412,8 @@ test_that("wf_transfer() check", {
 
   r <- wf_request(
       request,
-      user = "info@bluegreenlabs.org"
+      user = "info@bluegreenlabs.org",
+      transfer = FALSE
     )
 
   # check transfer routine
@@ -420,7 +421,7 @@ test_that("wf_transfer() check", {
     wf_transfer(
       user = "info@bluegreenlabs.org",
       service = "webapi",
-      url = basename(r$get_url())
+      url = r$get_url()
     )
   )
 

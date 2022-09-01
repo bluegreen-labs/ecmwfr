@@ -11,7 +11,7 @@ service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
       private$file <- file.path(path, request$target)
       private$verbose <- verbose
       private$url <- url
-      public$request_id <- basename(url) # Compatibility with old code
+      self$request_id <- basename(url) # Compatibility with old code
       private$status <- "unsubmitted"
       private$next_retry <- Sys.time()
 

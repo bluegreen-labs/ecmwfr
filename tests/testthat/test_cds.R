@@ -240,11 +240,23 @@ test_that("batch request tests", {
       "time"           = "00:00",
       "area"           = "50/9/51/10",
       "format"         = "netcdf",
-      "target"         = "era5-demo.nc")
+      "target"         = paste0(y, "-era5-demo.nc"))
   })
 
   expect_output(wf_request_batch(
     requests,
     user = "2088")
     )
+
+  requests_dup <- lapply(requests, function(r) {
+    r$target <- "era5.nc"
+    r
+  })
+
+  expect_error(wf_request_batch(
+    requests,
+    user = "2088")
+  )
+
+
 })

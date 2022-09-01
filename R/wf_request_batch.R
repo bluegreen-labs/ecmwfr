@@ -22,6 +22,12 @@ wf_request_batch <- function(
     stop("request_list must be a list of requests")
   }
 
+  filenames <- vapply(request_list, function(x) x$target, character(1))
+
+  if (any(duplicated(filenames))) {
+    stop("Duplicated targets found in `request_list`.")
+  }
+
   N <- length(request_list)
   slots <- as.list(rep(FALSE, workers))
   queue <- request_list

@@ -1,3 +1,7 @@
+# ecmwfr 1.4.90000
+
+* `wf_request_batch()` now checks for duplicated filenames and stops early.
+
 # ecmwfr 1.4.0
 
 * added `wf_request_batch()` to support parallel requests using R6 logic

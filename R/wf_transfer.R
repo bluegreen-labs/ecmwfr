@@ -52,7 +52,7 @@ wf_transfer <- function(url,
 
   # If the URL is not an URL but an ID: generate URL
   if (service == "cds" | service == "ads") {
-    url <- wf_server(id = url, service = service)
+    url <- wf_server(id = basename(url), service = service)
   }
 
   # get key

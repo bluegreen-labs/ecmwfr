@@ -174,7 +174,7 @@ test_that("required arguments missing for cds_* functions", {
     wf_transfer(
       user = "2088",
       service = "cds",
-      url = basename(r$get_url())
+      url = r$get_url()
     )
   )
 

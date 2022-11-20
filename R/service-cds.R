@@ -21,7 +21,6 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
         encode = "json"
       )
 
-
       # trap general http error
       if (httr::http_error(response)) {
         stop(httr::content(response),
@@ -48,8 +47,9 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       return(self)
     },
 
-    update_status = function(fail_is_error = TRUE,
-                             verbose = NULL) {
+    update_status <- function(
+     fail_is_error = TRUE,
+     verbose = NULL) {
       if (private$status == "unsubmitted") {
         self$submit()
         return(self)
@@ -90,7 +90,6 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       ct <- httr::content(response)
       private$status <- ct$state
 
-
       if (private$status != "completed" || is.null(private$status)) {
         private$code <- 202
         private$file_url <- NA   # just ot be on the safe side
@@ -111,7 +110,7 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       return(self)
     },
 
-    download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
+    download <- function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
       # Check if download is actually needed
       if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
         if (private$verbose) message("File already downloaded")

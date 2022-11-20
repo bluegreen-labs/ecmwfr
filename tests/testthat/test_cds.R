@@ -15,7 +15,8 @@ cds_request <- list(
   "time"           = "00:00",
   "area"           = "50/9/51/10",
   "format"         = "netcdf",
-  "target"         = "era5-demo.nc")
+  "target"         = "era5-demo.nc"
+  )
 
 cds_request_faulty <- list(
   "dataset_short_name" = "reanalysis-era5-preure-levels",
@@ -29,7 +30,8 @@ cds_request_faulty <- list(
   "time"           = "00:00",
   "area"           = "50/9/51/10",
   "format"         = "netcdf",
-  "target"         = "era5-demo.nc")
+  "target"         = "era5-demo.nc"
+  )
 
 # is the server reachable
 server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
@@ -84,24 +86,32 @@ test_that("cds request", {
 
   # ok transfer
   expect_message(
-    wf_request(user = "2088",
-               request = cds_request,
-               transfer = TRUE)
+    wf_request(
+      user = "2088",
+      request = cds_request,
+      transfer = TRUE
+      )
     )
 
   # timeout trigger
   expect_message(
-    wf_request(user = "2088",
-               request = cds_request,
-               time_out = -1,
-               transfer = TRUE))
+    wf_request(
+      user = "2088",
+      request = cds_request,
+      time_out = -1,
+      transfer = TRUE
+      )
+    )
 
   # job test (can't run headless)
   expect_error(
-    wf_request(user = "2088",
-               request = cds_request,
-               transfer = TRUE,
-               job_name = "jobtest"))
+    wf_request(
+      user = "2088",
+      request = cds_request,
+      transfer = TRUE,
+      job_name = "jobtest"
+      )
+    )
 
   # faulty request
   expect_error(wf_request(
@@ -110,9 +120,13 @@ test_that("cds request", {
     )
 
   # wrong request
-  expect_error(wf_request(user = "2088",
-                          request = "xyz",
-                          transfer = TRUE))
+  expect_error(
+    wf_request(
+      user = "2088",
+      request = "xyz",
+      transfer = TRUE
+      )
+    )
 
   # missing request
   expect_error(wf_request(user = "2088",

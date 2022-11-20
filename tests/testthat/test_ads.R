@@ -72,7 +72,9 @@ test_that("check ADS product info",{
 test_that("batch request works", {
   skip_on_cran()
   skip_if(login_check)
+
   years <- rep(2017,2)
+
   requests <- lapply(years, function(y) {
     list(
       date = paste0(y, "-01-01"),

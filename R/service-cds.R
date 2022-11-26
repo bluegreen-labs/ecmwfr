@@ -4,6 +4,7 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       if (private$status != "unsubmitted") {
         return(self)
       }
+
       # get key
       key <- wf_get_key(user = private$user, service = private$service)
 
@@ -47,7 +48,7 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       return(self)
     },
 
-    update_status <- function(
+    update_status = function(
      fail_is_error = TRUE,
      verbose = NULL) {
       if (private$status == "unsubmitted") {
@@ -110,7 +111,8 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       return(self)
     },
 
-    download <- function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
+    download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
+
       # Check if download is actually needed
       if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
         if (private$verbose) message("File already downloaded")

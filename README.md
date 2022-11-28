@@ -49,7 +49,7 @@ library("ecmwfr")
 
 ## Use: ECMWF services
 
-Create a ECMWF account by [self registering](https://apps.ecmwf.int/registration/) 
+Create a ECMWF account by [self registering](https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/registrations?client_id=apps&response_type=code&scope=openid%20email&redirect_uri=https://www.ecmwf.int) 
 and retrieving your key at https://api.ecmwf.int/v1/key/ after you log in. The
 key is a long series of numbers and characters (X in the example below).
 

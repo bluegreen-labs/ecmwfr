@@ -82,7 +82,7 @@ test_that("batch request works", {
       variable = "dust_aerosol_optical_depth_550nm",
       time = "00:00",
       dataset_short_name = "cams-global-reanalysis-eac4",
-      target = "download.nc"
+      target = sprintf("download%s.nc",y)
     )
   })
 

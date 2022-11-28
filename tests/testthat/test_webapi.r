@@ -379,7 +379,8 @@ test_that("batch request", {
       class = "ei",
       area = "51/0/50/1",
       format = "netcdf",
-      target = "tmp.nc")
+      target = sprintf("download%s.nc",y)
+      )
   })
 
   expect_output(

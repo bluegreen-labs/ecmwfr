@@ -73,7 +73,7 @@ test_that("batch request works", {
   skip_on_cran()
   skip_if(login_check)
 
-  years <- rep(2017,2)
+  years <- c(2017,2018)
 
   requests <- lapply(years, function(y) {
     list(

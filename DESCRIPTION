@@ -45,7 +45,6 @@ Suggests:
     rmarkdown,
     covr,
     testthat,
-    raster,
     terra,
     maps,
     ncdf4,

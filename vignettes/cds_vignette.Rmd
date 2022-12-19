@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 
 # load the library
 library(ncdf4)
-library(raster)
 library(terra)
 library(maps)
 ```
@@ -104,7 +103,7 @@ ncfile <- system.file(package = "ecmwfr","extdata/cds.nc")
 
 ```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
 # Open NetCDF file and plot
-r <- raster::raster(ncfile)
-raster::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
+r <- terra::rast(ncfile)
+terra::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
 maps::map("world", add = TRUE)
 ```

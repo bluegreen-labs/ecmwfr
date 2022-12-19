@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 
 # load the library
 library(ncdf4)
-library(raster)
 library(terra)
 library(maps)
 ```
@@ -90,8 +89,8 @@ ncfile <- system.file(package = "ecmwfr","extdata/ads.nc")
 ```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
 # Open NetCDF file and plot
 # the log transformed data
-r <- raster::raster(ncfile)
-raster::plot(log(rotate(r)),
+r <- terra::rast(ncfile)
+terra::plot(log(rotate(r)),
              main = "CAMS reanalysis data (particulate matter 2.5u)",
              col = rev(heat.colors(100)))
 maps::map("world", add = TRUE)

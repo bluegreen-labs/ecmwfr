@@ -19,7 +19,6 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 
 # load the library
 library(ncdf4)
-library(raster)
 library(terra)
 library(maps)
 library(ecmwfr)
@@ -100,10 +99,10 @@ The download operation might take a while. A progress indicator will keep you in
 If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
 
 ```{r fig.width = 7, fig.height = 7, eval = TRUE}
-s <- raster::stack(ncfile)
+s <- terra::rast(ncfile)
 print(s)
 
-raster::plot(s[[1]], main = "2 meter temperature (Kelvin)")
+terra::plot(s[[1]], main = "2 meter temperature (Kelvin)")
 maps::map("world", add = TRUE)
 ```
 

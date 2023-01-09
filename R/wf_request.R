@@ -136,8 +136,8 @@ wf_request <- function(
 
   # Create request and submit to service
   request <- service$new(request = request,
-                     user = user,
-                     url = url,
+                     user = service_info$user,
+                     url = service_info$url,
                      path = path)
 
   # Submit the request

@@ -94,7 +94,7 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
 
       if (private$status == "completed") {
         private$code <- 302
-        private$file_url <- ct$location
+        private$file_url <- private$get_location(ct)
       } else if (private$status == "failed") {
         private$code <- 404
         permanent <- if (ct$error$permanent) "permanent "
@@ -176,9 +176,10 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
         private$url,
         private$request$dataset_short_name
       )
+    },
+    get_location = function(content) {
+      content$location
     }
-
-
   )
 )
 

@@ -108,63 +108,36 @@ wf_request <- function(
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
-  if (missing(user) || is.null(user)) {
-    user <-
-      rbind(
-        keyring::key_list(service = make_key_service(c("webapi"))),
-        keyring::key_list(service = make_key_service(c("cds"))),
-        keyring::key_list(service = make_key_service(c("ads")))
-      )
-    serv <- make_key_service()
-    user <-
-      user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
-  }
+  # Guessing credentials/service
 
-  # checks user login, the request layout and
-  # returns the service to use if successful
-  wf_check <-
-    lapply(user, function(u)
-      try(wf_check_request(u, request), silent = TRUE))
-  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
+  service_info <- guess_service(request, user)
 
-  if (length(correct) == 0) {
-    stop(
-      sprintf(
-        "Data identifier %s is not found in Web API, CDS or ADS datasets.
-                 Or your login credentials do not match your request.",
-        request$dataset_short_name
-      ),
-      call. = FALSE
-    )
-  }
-
-  wf_check <- wf_check[[correct]]
-  user <- user[correct]
 
   if (verbose)
   {
     message("Requesting data to the ",
-            wf_check$service,
+            service_info$service,
             " service with username ",
-            user)
+            service_info$user)
   }
 
   # split out data
-  service <- wf_check$service
-  url <- wf_check$url
+  service <- service_info$service
+  url <- service_info$url
 
   # Select the appropriate service
   service <- switch(
     service,
     webapi = webapi_service,
     cds = cds_service,
+    cds_workflow = cds_workflow,
     ads = ads_service
     )
 
   # Create request and submit to service
   request <- service$new(request = request,
-                     user = user,
-                     url = url,
+                     user = service_info$user,
+                     url = service_info$url,
                      path = path)
 
   # Submit the request

@@ -3,6 +3,7 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^docs$
+^analysis$
 ^data-raw$
 ^manuscript$
 

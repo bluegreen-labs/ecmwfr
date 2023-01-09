@@ -9,17 +9,13 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       key <- wf_get_key(user = private$user, service = private$service)
 
       #  get the response for the query provided
-      response <- httr::POST(
-        sprintf(
-          "%s/resources/%s",
-        private$url,
-          private$request$dataset_short_name
-        ),
-        httr::authenticate(private$user, key),
-        httr::add_headers("Accept" = "application/json",
-                          "Content-Type" = "application/json"),
-        body = private$request,
-        encode = "json"
+      response <- httr::VERB(private$http_verb,
+                             private$request_url(),
+                             httr::authenticate(private$user, key),
+                             httr::add_headers("Accept" = "application/json",
+                                               "Content-Type" = "application/json"),
+                             body = private$request,
+                             encode = "json"
       )
 
       # trap general http error
@@ -49,8 +45,8 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
     },
 
     update_status = function(
-     fail_is_error = TRUE,
-     verbose = NULL) {
+    fail_is_error = TRUE,
+    verbose = NULL) {
       if (private$status == "unsubmitted") {
         self$submit()
         return(self)
@@ -172,7 +168,17 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
     }
   ),
   private = list(
-    service = "cds"
+    service = "cds",
+    http_verb = "POST",
+    request_url = function() {
+      sprintf(
+        "%s/resources/%s",
+        private$url,
+        private$request$dataset_short_name
+      )
+    }
+
+
   )
 )
 

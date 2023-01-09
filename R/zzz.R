@@ -259,3 +259,59 @@ warn_or_error <- function(..., error = FALSE) {
     warning(...)
   }
 }
+
+# Guesses the username and service from request
+guess_service <- function(request, user = NULL) {
+  is_workflow <- !is.null(request[["workflow_name"]])
+
+  # Workflow only works in CDS (maybe?)
+  if (is_workflow) {
+    if (missing(user) || is.null(user)) {
+      user <- keyring::key_list(service = make_key_service("cds"))[["username"]][1]
+    }
+
+    service <- "cds_workflow"
+    url <- wf_server(service = "cds")
+
+    return(list(user = user,
+                service = service,
+                url = url))
+  }
+
+  if (missing(user) || is.null(user)) {
+    user <-
+      rbind(
+        keyring::key_list(service = make_key_service(c("webapi"))),
+        keyring::key_list(service = make_key_service(c("cds"))),
+        keyring::key_list(service = make_key_service(c("ads")))
+      )
+    serv <- make_key_service()
+    user <-
+      user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
+  }
+
+  # checks user login, the request layout and
+  # returns the service to use if successful
+  wf_check <-
+    lapply(user, function(u)
+      try(wf_check_request(u, request), silent = TRUE))
+  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
+
+  if (length(correct) == 0) {
+    stop(
+      sprintf(
+        "Data identifier %s is not found in Web API, CDS or ADS datasets.
+                 Or your login credentials do not match your request.",
+        request$dataset_short_name
+      ),
+      call. = FALSE
+    )
+  }
+
+  wf_check <- wf_check[[correct]]
+  user <- user[correct]
+
+  return(list(user = user,
+              service = wf_check$service,
+              url = wf_check$url))
+}

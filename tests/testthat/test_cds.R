@@ -1,6 +1,6 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-on.exit(options(opts), add = TRUE)
+#opts <- options(keyring_warn_for_env_fallback = FALSE)
+#on.exit(options(opts), add = TRUE)
 login_check <- TRUE
 
 # ignore SSL (server has SSL issues)

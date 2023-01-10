@@ -22,14 +22,14 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 # if not set login check to TRUE as well
 if(server_check){
   key <- system("echo $ADS", intern = TRUE)
-  login_check <-
+  user <-
     try(
       wf_set_key(user = "2161",
                  key = key,
                  service = "ads")
     )
-  rm(key)
-  login_check <- inherits(login_check, "try-error")
+  print(user)
+  login_check <- inherits(user, "try-error")
 }
 
 #----- initial checks should fail locally when not as cran ----
@@ -41,7 +41,7 @@ test_that("server up", {
 
 test_that("login ok", {
   skip_on_cran()
-  expect_equal(login_check, "2161")
+  expect_equal(user, "2161")
 })
 
 #----- formal checks ----

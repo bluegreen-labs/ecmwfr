@@ -29,14 +29,14 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 # if server is up, create login
 if(server_check){
   key <- system("echo $WEBAPI", intern = TRUE)
-  login_check <- try(
+  user <- try(
     wf_set_key(
       user = "info@bluegreenlabs.org",
       key = key,
       service = "webapi"
     ))
-  rm(key)
-  login_check <- inherits(login_check, "try-error")
+  print(user)
+  login_check <- inherits(user, "try-error")
 }
 
 #----- initial checks should fail locally when not as cran ----
@@ -46,9 +46,9 @@ test_that("server up", {
   expect_equal(server_check, TRUE)
 })
 
-test_that("login ok", {
+test_that("user ok", {
   skip_on_cran()
-  expect_equal(login_check, "info@bluegreenlabs.org")
+  expect_equal(user, "info@bluegreenlabs.org")
 })
 
 #----- formal checks ----

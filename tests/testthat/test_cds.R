@@ -45,25 +45,17 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 # if not set login check to TRUE as well
 if(server_check){
   key <- system("echo $CDS", intern = TRUE)
-  login_check <- try(
+  user <- try(
       ecmwfr::wf_set_key(
         user = "2088",
         key = key,
         service = "cds")
       )
-  rm(key)
-  login_check <- inherits(login_check, "try-error")
+  print(user)
+  login_check <- inherits(user, "try-error")
 }
 
 #----- initial checks should fail locally when not as cran ----
-
-test_that("encrypted token test", {
-  skip_on_cran()
-  key <- system("echo $TEST", intern = TRUE)
-  print(key)
-  print("something")
-  expect_equal(key, "blablabl")
-})
 
 test_that("server up", {
   skip_on_cran()
@@ -72,7 +64,7 @@ test_that("server up", {
 
 test_that("login ok", {
   skip_on_cran()
-  expect_equal(login_check, FALSE)
+  expect_equal(user, FALSE)
 })
 
 #----- formal checks ----

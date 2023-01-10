@@ -1,4 +1,5 @@
-cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
+cds_service <- R6::R6Class("ecmwfr_cds",
+  inherit = service,
   public = list(
     submit = function() {
       if (private$status != "unsubmitted") {
@@ -10,18 +11,21 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
 
       #  get the response for the query provided
       response <- httr::VERB(private$http_verb,
-                             private$request_url(),
-                             httr::authenticate(private$user, key),
-                             httr::add_headers("Accept" = "application/json",
-                                               "Content-Type" = "application/json"),
-                             body = private$request,
-                             encode = "json"
+        private$request_url(),
+        httr::authenticate(private$user, key),
+        httr::add_headers(
+          "Accept" = "application/json",
+          "Content-Type" = "application/json"
+        ),
+        body = private$request,
+        encode = "json"
       )
 
       # trap general http error
       if (httr::http_error(response)) {
         stop(httr::content(response),
-             call. = FALSE)
+          call. = FALSE
+        )
       }
 
       # grab content, to look at the status
@@ -43,10 +47,8 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       private$url <- wf_server(id = ct$request_id, service = "cds")
       return(self)
     },
-
-    update_status = function(
-    fail_is_error = TRUE,
-    verbose = NULL) {
+    update_status = function(fail_is_error = TRUE,
+                             verbose = NULL) {
       if (private$status == "unsubmitted") {
         self$submit()
         return(self)
@@ -79,8 +81,10 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       response <- httr::GET(
         private$url,
         httr::authenticate(private$user, key),
-        httr::add_headers("Accept" = "application/json",
-                          "Content-Type" = "application/json"),
+        httr::add_headers(
+          "Accept" = "application/json",
+          "Content-Type" = "application/json"
+        ),
         encode = "json"
       )
 
@@ -89,7 +93,7 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
 
       if (private$status != "completed" || is.null(private$status)) {
         private$code <- 202
-        private$file_url <- NA   # just ot be on the safe side
+        private$file_url <- NA # just ot be on the safe side
       }
 
       if (private$status == "completed") {
@@ -98,17 +102,17 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       } else if (private$status == "failed") {
         private$code <- 404
         permanent <- if (ct$error$permanent) "permanent "
-        error_msg <- paste0("Data transfer failed with ", permanent, ct$error$who, " error: ",
-                            ct$error$message, ".\nReason given: ", ct$error$reason, ".\n",
-                            "More information at ", ct$error$url)
+        error_msg <- paste0(
+          "Data transfer failed with ", permanent, ct$error$who, " error: ",
+          ct$error$message, ".\nReason given: ", ct$error$reason, ".\n",
+          "More information at ", ct$error$url
+        )
         warn_or_error(error_msg, error = fail_is_error)
       }
       private$next_retry <- Sys.time()
       return(self)
     },
-
     download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
-
       # Check if download is actually needed
       if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
         if (private$verbose) message("File already downloaded")
@@ -128,16 +132,18 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
       temp_file <- tempfile(pattern = "ecmwfr_", tmpdir = private$path)
       key <- wf_get_key(user = private$user, service = private$service)
 
-      response <- httr::GET(private$file_url,
-                            httr::write_disk(temp_file, overwrite = TRUE),
-                            httr::progress())
+      response <- httr::GET(
+        private$file_url,
+        httr::write_disk(temp_file, overwrite = TRUE),
+        httr::progress()
+      )
 
       # trap (http) errors on download, return a general error statement
       if (httr::http_error(response)) {
         if (fail_is_error) {
-          stop("Downlaod failed with error ", response$status_code)
+          stop("Download failed with error ", response$status_code)
         } else {
-          warning("Downlaod failed with error ", response$status_code)
+          warning("Download failed with error ", response$status_code)
           return(self)
         }
       }
@@ -160,7 +166,6 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
 
       return(self)
     },
-
     browse_request = function() {
       url <- "https://cds.climate.copernicus.eu/user/login?destination=%2Fcdsapp%23!%2Fyourrequests"
       utils::browseURL(url)
@@ -182,4 +187,3 @@ cds_service <- R6::R6Class("ecmwfr_cds", inherit = service,
     }
   )
 )
-

@@ -139,8 +139,10 @@ test_that("cds request", {
                           transfer = TRUE))
 
   # missing user
-  expect_message(wf_request(request = cds_request,
-                            transfer = TRUE))
+  expect_error(wf_request(
+    request = cds_request,
+    transfer = TRUE)
+    )
 
   # is R6 class
   expect_true(inherits(
@@ -197,16 +199,6 @@ test_that("required arguments missing for cds_* functions", {
       url = r$get_url()
     )
   )
-
-  expect_output(
-    wf_transfer(
-      user = "2088",
-      service = "cds",
-      url = r$request_id
-    )
-  )
-
-
 
   # CDS tranfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)

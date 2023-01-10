@@ -61,6 +61,7 @@ test_that("encrypted token test", {
   skip_on_cran()
   key <- system("echo $TEST", intern = TRUE)
   print(key)
+  print("something")
   expect_equal(key, "blablabla")
 })
 

@@ -62,7 +62,7 @@ test_that("encrypted token test", {
   key <- system("echo $TEST", intern = TRUE)
   print(key)
   print("something")
-  expect_equal(key, "blablabla")
+  expect_equal(key, "blablabl")
 })
 
 test_that("server up", {

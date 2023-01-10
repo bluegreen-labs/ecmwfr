@@ -76,6 +76,7 @@ jobs:
           brew install pkg-config
           brew install proj
           brew install gdal
+          brew install netcdf
 
       - name: Install dependencies
         run: |

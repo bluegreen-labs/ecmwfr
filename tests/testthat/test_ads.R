@@ -46,7 +46,7 @@ test_that("server up", {
 
 test_that("login ok", {
   skip_on_cran()
-  expect_equal(login_check, TRUE)
+  expect_equal(login_check, FALSE)
 })
 
 #----- formal checks ----

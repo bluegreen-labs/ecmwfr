@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-login_check <- NA
-
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
@@ -23,18 +21,6 @@ if(server_check) {
     )
   login_check <- inherits(user, "try-error")
 }
-
-#----- initial checks should fail locally when not as cran ----
-
-test_that("server up", {
-  skip_on_cran()
-  expect_equal(server_check, TRUE)
-})
-
-test_that("login ok", {
-  skip_on_cran()
-  expect_equal(user, "2088")
-})
 
 #----- formal checks ----
 

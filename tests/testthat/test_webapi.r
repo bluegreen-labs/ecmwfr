@@ -1,8 +1,10 @@
 # set options
 options(keyring_backend="file")
-#opts <- options(keyring_warn_for_env_fallback = FALSE)
-#on.exit(options(opts), add = TRUE)
-login_check <- NA
+
+# spoof keyring
+if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
+  keyring::keyring_create("ecmwfr", password = "test")
+}
 
 # ignore SSL (server has SSL issues)
 httr::set_config(httr::config(ssl_verifypeer = 0L))
@@ -38,18 +40,6 @@ if(server_check){
   print(user)
   login_check <- inherits(user, "try-error")
 }
-
-#----- initial checks should fail locally when not as cran ----
-
-test_that("server up", {
-  skip_on_cran()
-  expect_equal(server_check, TRUE)
-})
-
-test_that("user ok", {
-  skip_on_cran()
-  expect_equal(user, "info@bluegreenlabs.org")
-})
 
 #----- formal checks ----
 

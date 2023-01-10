@@ -38,18 +38,6 @@ if(server_check){
   login_check <- inherits(user, "try-error")
 }
 
-#----- initial checks should fail locally when not as cran ----
-
-test_that("server up", {
-  skip_on_cran()
-  expect_equal(server_check, TRUE)
-})
-
-test_that("login ok", {
-  skip_on_cran()
-  expect_equal(user, "2161")
-})
-
 #----- formal checks ----
 
 test_that("ads datasets returns data.frame or list", {

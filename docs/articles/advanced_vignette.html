@@ -45,7 +45,7 @@
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -70,6 +70,9 @@
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -102,7 +105,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2022-08-17</h4>
+            <h4 data-toc-skip class="date">2023-01-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/vignettes/advanced_vignette.Rmd" class="external-link"><code>vignettes/advanced_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_vignette.Rmd</code></div>
@@ -124,8 +127,8 @@ it returns the user name upon success. This allows for easier
 integration in scripts shared with users (which have different
 credentials)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># set a key to the keychain interactively</span>
-<span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"webapi"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># set a key to the keychain interactively</span></span>
+<span><span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>service <span class="op">=</span> <span class="st">"webapi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="formatting-requests">Formatting requests<a class="anchor" aria-label="anchor" href="#formatting-requests"></a>
@@ -150,20 +153,20 @@ request is the first argument in the <code><a href="../reference/wf_request.html
 This means that any valid list can be piped into this function (using
 the %&gt;% or pipe symbol).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream  <span class="op">=</span> <span class="st">"oper"</span>,
-     levtype <span class="op">=</span> <span class="st">"sfc"</span>,
-     param   <span class="op">=</span> <span class="st">"167.128"</span>,
-     dataset <span class="op">=</span> <span class="st">"interim"</span>,
-     step    <span class="op">=</span> <span class="st">"0"</span>,
-     grid    <span class="op">=</span> <span class="st">"0.75/0.75"</span>,
-     time    <span class="op">=</span> <span class="st">"00"</span>,
-     date    <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,
-     type    <span class="op">=</span> <span class="st">"an"</span>,
-     class   <span class="op">=</span> <span class="st">"ei"</span>,
-     area    <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,
-     format  <span class="op">=</span> <span class="st">"netcdf"</span>,
-     target  <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user <span class="op">=</span> <span class="va">user</span>, path <span class="op">=</span> <span class="st">"~"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream  <span class="op">=</span> <span class="st">"oper"</span>,</span>
+<span>     levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span>
+<span>     param   <span class="op">=</span> <span class="st">"167.128"</span>,</span>
+<span>     dataset <span class="op">=</span> <span class="st">"interim"</span>,</span>
+<span>     step    <span class="op">=</span> <span class="st">"0"</span>,</span>
+<span>     grid    <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span>
+<span>     time    <span class="op">=</span> <span class="st">"00"</span>,</span>
+<span>     date    <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,</span>
+<span>     type    <span class="op">=</span> <span class="st">"an"</span>,</span>
+<span>     class   <span class="op">=</span> <span class="st">"ei"</span>,</span>
+<span>     area    <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,</span>
+<span>     format  <span class="op">=</span> <span class="st">"netcdf"</span>,</span>
+<span>     target  <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>user <span class="op">=</span> <span class="va">user</span>, path <span class="op">=</span> <span class="st">"~"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="dynamic-request-functions-archetypes">Dynamic request functions / archetypes<a class="anchor" aria-label="anchor" href="#dynamic-request-functions-archetypes"></a>
@@ -180,25 +183,25 @@ to alter the <code>area</code> and <code>day</code> fields and pipe
 (%&gt;%) into the <code><a href="../reference/wf_request.html">wf_request()</a></code> function to retrieve the
 data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># this is an example of a request</span>
-<span class="va">dynamic_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_archetype.html">wf_archetype</a></span><span class="op">(</span>
-  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  <span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,
-  <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,
-  <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,
-  <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,
-  <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,
-  <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,
-  <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,
-  <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,
-  <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,
-  <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,
-  <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span>
-  <span class="op">)</span>,
-  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area"</span>,<span class="st">"day"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># change the day of the month</span>
-<span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># this is an example of a request</span></span>
+<span><span class="va">dynamic_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_archetype.html">wf_archetype</a></span><span class="op">(</span></span>
+<span>  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,</span>
+<span>  <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,</span>
+<span>  <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,</span>
+<span>  <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,</span>
+<span>  <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,</span>
+<span>  <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,</span>
+<span>  <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,</span>
+<span>  <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,</span>
+<span>  <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,</span>
+<span>  <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,</span>
+<span>  <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area"</span>,<span class="st">"day"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># change the day of the month</span></span>
+<span><span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="batch-parallel-requests">Batch (parallel) requests<a class="anchor" aria-label="anchor" href="#batch-parallel-requests"></a>
@@ -213,21 +216,21 @@ function <code><a href="../reference/wf_request.html">wf_request_batch()</a></co
 requests, using lists of requests (potentially generated by an archetype
 as per above).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># creating a list of requests using wf_archetype()</span>
-<span class="co"># setting the day value</span>
-<span class="va">batch_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  <span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span><span class="op">)</span>,
-  <span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"02"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># submit a batch job using 2 workers</span>
-<span class="co"># one for each in the list (the number of workers</span>
-<span class="co"># can't exceed 20)</span>
-<span class="fu"><a href="../reference/wf_request.html">wf_request_batch</a></span><span class="op">(</span>
-  <span class="va">batch_request</span>,
-  workers <span class="op">=</span> <span class="fl">2</span>,
-  user <span class="op">=</span> <span class="va">user</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># creating a list of requests using wf_archetype()</span></span>
+<span><span class="co"># setting the day value</span></span>
+<span><span class="va">batch_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"02"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># submit a batch job using 2 workers</span></span>
+<span><span class="co"># one for each in the list (the number of workers</span></span>
+<span><span class="co"># can't exceed 20)</span></span>
+<span><span class="fu"><a href="../reference/wf_request.html">wf_request_batch</a></span><span class="op">(</span></span>
+<span>  <span class="va">batch_request</span>,</span>
+<span>  workers <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  user <span class="op">=</span> <span class="va">user</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="date-specification">Date specification<a class="anchor" aria-label="anchor" href="#date-specification"></a>

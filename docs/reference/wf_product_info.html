@@ -22,7 +22,7 @@
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -45,6 +45,9 @@
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -79,7 +82,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_product_info</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">user</span>, service <span class="op">=</span> <span class="st">"webapi"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_product_info</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">user</span>, service <span class="op">=</span> <span class="st">"webapi"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,19 +90,28 @@
     <dl><dt>dataset</dt>
 <dd><p>character, name of the data set for which the product
 information should be loaded.</p></dd>
+
+
 <dt>user</dt>
 <dd><p>string, user ID used to sign up for the CDS / ADS data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code>.</p></dd>
+
+
 <dt>service</dt>
 <dd><p>which service to use, one of <code>webapi</code>, <code>cds</code>
 or <code>ads</code> (default = webapi)</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>boolean, default <code>TRUE</code>. If <code>TRUE</code> the description
 will be returned as tidy data instead of a nested list.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Downloads a tidy data frame with product descriptions from CDS. If
+    
+
+<p>Downloads a tidy data frame with product descriptions from CDS. If
 <code>simplify = FALSE</code> a list with product details will be returned.</p>
     </div>
     <div id="see-also">
@@ -113,15 +125,15 @@ will be returned as tidy data instead of a nested list.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">   <span class="co"># Open description in browser</span></span>
-<span class="r-in">   <span class="fu">wf_product_info</span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"reanalysis-era5-single-levels"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">   <span class="co"># Return information</span></span>
-<span class="r-in">   <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu">wf_product_info</span><span class="op">(</span><span class="cn">NULL</span>,</span>
-<span class="r-in">    <span class="st">"reanalysis-era5-single-levels"</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="co"># Open description in browser</span></span></span>
+<span class="r-in"><span>   <span class="fu">wf_product_info</span><span class="op">(</span><span class="cn">NULL</span>, <span class="st">"reanalysis-era5-single-levels"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>   <span class="co"># Return information</span></span></span>
+<span class="r-in"><span>   <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu">wf_product_info</span><span class="op">(</span><span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"reanalysis-era5-single-levels"</span>, show <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

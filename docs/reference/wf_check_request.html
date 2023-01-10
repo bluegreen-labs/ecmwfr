@@ -21,7 +21,7 @@
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -44,6 +44,9 @@
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -77,7 +80,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_check_request</span><span class="op">(</span><span class="va">user</span>, <span class="va">request</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_check_request</span><span class="op">(</span><span class="va">user</span>, <span class="va">request</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,13 +88,18 @@
     <dl><dt>user</dt>
 <dd><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code></p></dd>
+
+
 <dt>request</dt>
 <dd><p>nested list with query parameters following the layout
 as specified on the ECMWF API page</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a data frame with the determined service and url service endpoint</p>
+    
+
+<p>a data frame with the determined service and url service endpoint</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

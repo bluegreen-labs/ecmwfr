@@ -1,5 +1,6 @@
-# ecmwfr 1.4.90000
+# ecmwfr 1.5.0
 
+* `wf_request()` now accepts CDS Toolbox API workflow calls
 * `wf_request_batch()` now checks for duplicated filenames and stops early.
 
 # ecmwfr 1.4.0

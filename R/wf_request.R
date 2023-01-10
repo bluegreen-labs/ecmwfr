@@ -6,7 +6,23 @@
 #' Note that the function will do some basic checks on the \code{request} input
 #' to identify possible problems.
 #'
-#' @param user user (email address) used to sign up for the ECMWF data service,
+#' Two sorts of requests are accepted, a simple data request based upon the
+#' available data in the (raw) CDS repository, and a workflow request which
+#' forwards an anonymous python function to the CDS servers and returns its
+#' results.
+#'
+#' The latter advanced use case is non-trivial, as both python and R code is
+#' required. However, it allows you to offload costly data operations /
+#' aggregation to the ECMWF servers, therefore limiting the amount of data
+#' that needs to be transferred.
+#'
+#' A detailed summary of the use of the python API underpinning the CDS Toolbox
+#' (Editor) these operations is beyond the scope of this package. We refer to
+#' the [CDS Toolbox manual](https://cds.climate.copernicus.eu/toolbox/doc/api.html),
+#' and the small example included in the
+#' [vignettes](https://bluegreen-labs.github.io/ecmwfr/articles/cds_workflow_vignette.html).
+#'
+#' @param user user (email address or ID) provided by the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
@@ -108,10 +124,13 @@ wf_request <- function(
     stop("Please provide ECMWF or CDS login credentials and data request!")
   }
 
+  # check for user
+  if (missing(user)){
+    stop("Missing user credentials, please provide a valid user/ID!")
+  }
+
   # Guessing credentials/service
-
   service_info <- guess_service(request, user)
-
 
   if (verbose)
   {
@@ -135,10 +154,12 @@ wf_request <- function(
     )
 
   # Create request and submit to service
-  request <- service$new(request = request,
-                     user = service_info$user,
-                     url = service_info$url,
-                     path = path)
+  request <- service$new(
+    request = request,
+    user = service_info$user,
+    url = service_info$url,
+    path = path
+    )
 
   # Submit the request
   request$submit()

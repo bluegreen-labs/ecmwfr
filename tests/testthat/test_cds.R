@@ -1,6 +1,17 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-on.exit(options(opts), add = TRUE)
+options(keyring_backend="file")
+
+# spoof keyring
+if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
+  keyring::keyring_create("ecmwfr", password = "test")
+}
+
+#opts <- options(keyring_warn_for_env_fallback = FALSE)
+#on.exit(options(opts), add = TRUE)
+login_check <- NA
+
+# ignore SSL (server has SSL issues)
+httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # format request (see below)
 cds_request <- list(
@@ -34,27 +45,22 @@ cds_request_faulty <- list(
   )
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
+server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(!server_check){
-  key <- system("echo $CDS", intern = TRUE)
-  if(key != "" & key != "$CDS"){
-    try(
-      wf_set_key(user = "2088",
-                 key = key,
-                 service = "cds")
-    )
-  }
-  rm(key)
-  login_check <- try(wf_get_key(user = "2088",
-                                service = "cds"),
-                     silent = TRUE)
-  login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- TRUE
+if(server_check){
+  user <- try(
+      ecmwfr::wf_set_key(
+        user = "2088",
+        key = Sys.getenv("CDS"),
+        service = "cds")
+      )
+  print(user)
+  login_check <- inherits(user, "try-error")
 }
+
+#----- formal checks ----
 
 test_that("set key", {
   skip_on_cran()
@@ -133,8 +139,10 @@ test_that("cds request", {
                           transfer = TRUE))
 
   # missing user
-  expect_message(wf_request(request = cds_request,
-                            transfer = TRUE))
+  expect_error(wf_request(
+    request = cds_request,
+    transfer = TRUE)
+    )
 
   # is R6 class
   expect_true(inherits(
@@ -191,16 +199,6 @@ test_that("required arguments missing for cds_* functions", {
       url = r$get_url()
     )
   )
-
-  expect_output(
-    wf_transfer(
-      user = "2088",
-      service = "cds",
-      url = r$request_id
-    )
-  )
-
-
 
   # CDS tranfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)
@@ -278,9 +276,8 @@ test_that("batch request tests", {
   })
 
   expect_error(wf_request_batch(
-    requests,
+    requests_dup,
     user = "2088")
   )
-
 
 })

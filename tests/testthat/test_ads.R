@@ -1,6 +1,14 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-on.exit(options(opts), add = TRUE)
+options(keyring_backend="file")
+
+# spoof keyring
+if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
+  keyring::keyring_create("ecmwfr", password = "test")
+}
+
+#opts <- options(keyring_warn_for_env_fallback = FALSE)
+#on.exit(options(opts), add = TRUE)
+login_check <- NA
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",
@@ -15,27 +23,22 @@ ads_request <- list(
 httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
+server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(!server_check){
-  key <- system("echo $ADS", intern = TRUE)
-  if(key != "" & key != "$ADS"){
+if(server_check){
+  user <-
     try(
       wf_set_key(user = "2161",
-                 key = key,
+                 key = system("echo $ADS", intern = TRUE),
                  service = "ads")
     )
-  }
-  rm(key)
-
-  login_check <- try(wf_get_key(user = "2161",
-                                service = "ads"), silent = TRUE)
-  login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- TRUE
+  print(user)
+  login_check <- inherits(user, "try-error")
 }
+
+#----- formal checks ----
 
 test_that("ads datasets returns data.frame or list", {
   skip_on_cran()

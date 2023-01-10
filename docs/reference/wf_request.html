@@ -25,7 +25,7 @@ to identify possible problems."><meta property="og:image" content="/logo.png"><m
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -48,6 +48,9 @@ to identify possible problems."><meta property="og:image" content="/logo.png"><m
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -85,24 +88,24 @@ to identify possible problems.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_request</span><span class="op">(</span>
-  <span class="va">request</span>,
-  <span class="va">user</span>,
-  transfer <span class="op">=</span> <span class="cn">TRUE</span>,
-  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  time_out <span class="op">=</span> <span class="fl">3600</span>,
-  <span class="va">job_name</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">wf_request_batch</span><span class="op">(</span>
-  <span class="va">request_list</span>,
-  workers <span class="op">=</span> <span class="fl">2</span>,
-  <span class="va">user</span>,
-  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  time_out <span class="op">=</span> <span class="fl">3600</span>,
-  total_timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">request_list</span><span class="op">)</span> <span class="op">*</span> <span class="va">time_out</span><span class="op">/</span><span class="va">workers</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_request</span><span class="op">(</span></span>
+<span>  <span class="va">request</span>,</span>
+<span>  <span class="va">user</span>,</span>
+<span>  transfer <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  time_out <span class="op">=</span> <span class="fl">3600</span>,</span>
+<span>  <span class="va">job_name</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">wf_request_batch</span><span class="op">(</span></span>
+<span>  <span class="va">request_list</span>,</span>
+<span>  workers <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  <span class="va">user</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  time_out <span class="op">=</span> <span class="fl">3600</span>,</span>
+<span>  total_timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">request_list</span><span class="op">)</span> <span class="op">*</span> <span class="va">time_out</span><span class="op">/</span><span class="va">workers</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -110,34 +113,71 @@ to identify possible problems.</p>
     <dl><dt>request</dt>
 <dd><p>nested list with query parameters following the layout
 as specified on the ECMWF APIs page</p></dd>
+
+
 <dt>user</dt>
 <dd><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code></p></dd>
+
+
 <dt>transfer</dt>
 <dd><p>logical, download data TRUE or FALSE (default = TRUE)</p></dd>
+
+
 <dt>path</dt>
 <dd><p>path were to store the downloaded data</p></dd>
+
+
 <dt>time_out</dt>
 <dd><p>how long to wait on a download to start (default =
 <code>3*3600</code> seconds).</p></dd>
+
+
 <dt>job_name</dt>
 <dd><p>optional name to use as an RStudio job and as output variable
 name. It has to be a syntactically valid name.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>show feedback on processing</p></dd>
+
+
 <dt>request_list</dt>
 <dd><p>a list of requests that will be processed in parallel.</p></dd>
+
+
 <dt>workers</dt>
 <dd><p>maximum number of simultaneous request that will be submitted
 to the service. Most ECMWF services are limited to 20 concurrent requests
 (default = 2).</p></dd>
+
+
 <dt>total_timeout</dt>
 <dd><p>overall timeout limit for all the requests in seconds.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>the path of the downloaded (requested file) or the an R6 object
+    
+
+<p>the path of the downloaded (requested file) or the an R6 object
 with download/transfer information</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>Two sorts of requests are accepted, a simple data request based upon the
+available data in the (raw) CDS repository, and a workflow request which
+forwards an anonymous python function to the CDS servers and returns its
+results.</p>
+<p>The latter advanced use case is non-trivial, as both python and R code is
+required. However, it allows you to offload costly data operations /
+aggregation to the ECMWF servers, therefore limiting the amount of data
+that needs to be transferred.</p>
+<p>A detailed summary of the use of the python API underpinning the CDS Toolbox
+(Editor) these operations is beyond the scope of this package. We refer to
+the [CDS Toolbox manual](https://cds.climate.copernicus.eu/toolbox/doc/api.html),
+and the small example included in the
+[vignettes](https://bluegreen-labs.github.io/ecmwfr/articles/cds_workflow_vignette.html).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -151,33 +191,33 @@ with download/transfer information</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># set key</span></span>
-<span class="r-in"><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span>
-<span class="r-in">   levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span>
-<span class="r-in">   param <span class="op">=</span> <span class="st">"167.128"</span>,</span>
-<span class="r-in">   dataset <span class="op">=</span> <span class="st">"interim"</span>,</span>
-<span class="r-in">   step <span class="op">=</span> <span class="st">"0"</span>,</span>
-<span class="r-in">   grid <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span>
-<span class="r-in">   time <span class="op">=</span> <span class="st">"00"</span>,</span>
-<span class="r-in">   date <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,</span>
-<span class="r-in">   type <span class="op">=</span> <span class="st">"an"</span>,</span>
-<span class="r-in">   class <span class="op">=</span> <span class="st">"ei"</span>,</span>
-<span class="r-in">   area <span class="op">=</span> <span class="st">"50/10/51/11"</span>,</span>
-<span class="r-in">   format <span class="op">=</span> <span class="st">"netcdf"</span>,</span>
-<span class="r-in">   target <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># demo query</span></span>
-<span class="r-in"><span class="fu">wf_request</span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span>, user <span class="op">=</span> <span class="st">"test@mail.com"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run as an RStudio Job. When finished, will create a</span></span>
-<span class="r-in"><span class="co"># variable named "test" in your environment with the path to</span></span>
-<span class="r-in"><span class="co"># the downloaded file.</span></span>
-<span class="r-in"><span class="fu">wf_request</span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span>, user <span class="op">=</span> <span class="st">"test@mail.com"</span>, job_name <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># set key</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span></span>
+<span class="r-in"><span>   levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span></span>
+<span class="r-in"><span>   param <span class="op">=</span> <span class="st">"167.128"</span>,</span></span>
+<span class="r-in"><span>   dataset <span class="op">=</span> <span class="st">"interim"</span>,</span></span>
+<span class="r-in"><span>   step <span class="op">=</span> <span class="st">"0"</span>,</span></span>
+<span class="r-in"><span>   grid <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span></span>
+<span class="r-in"><span>   time <span class="op">=</span> <span class="st">"00"</span>,</span></span>
+<span class="r-in"><span>   date <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-02"</span>,</span></span>
+<span class="r-in"><span>   type <span class="op">=</span> <span class="st">"an"</span>,</span></span>
+<span class="r-in"><span>   class <span class="op">=</span> <span class="st">"ei"</span>,</span></span>
+<span class="r-in"><span>   area <span class="op">=</span> <span class="st">"50/10/51/11"</span>,</span></span>
+<span class="r-in"><span>   format <span class="op">=</span> <span class="st">"netcdf"</span>,</span></span>
+<span class="r-in"><span>   target <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># demo query</span></span></span>
+<span class="r-in"><span><span class="fu">wf_request</span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span>, user <span class="op">=</span> <span class="st">"test@mail.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run as an RStudio Job. When finished, will create a</span></span></span>
+<span class="r-in"><span><span class="co"># variable named "test" in your environment with the path to</span></span></span>
+<span class="r-in"><span><span class="co"># the downloaded file.</span></span></span>
+<span class="r-in"><span><span class="fu">wf_request</span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span>, user <span class="op">=</span> <span class="st">"test@mail.com"</span>, job_name <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

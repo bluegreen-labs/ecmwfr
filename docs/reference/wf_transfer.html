@@ -22,7 +22,7 @@ to disk or the current status of the requested transfer."><meta property="og:ima
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -45,6 +45,9 @@ to disk or the current status of the requested transfer."><meta property="og:ima
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -79,37 +82,52 @@ to disk or the current status of the requested transfer.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_transfer</span><span class="op">(</span>
-  <span class="va">url</span>,
-  <span class="va">user</span>,
-  service <span class="op">=</span> <span class="st">"webapi"</span>,
-  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,
-  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"ecmwfr_"</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_transfer</span><span class="op">(</span></span>
+<span>  <span class="va">url</span>,</span>
+<span>  <span class="va">user</span>,</span>
+<span>  service <span class="op">=</span> <span class="st">"webapi"</span>,</span>
+<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"ecmwfr_"</span>, tmpdir <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>url</dt>
 <dd><p>R6 <code><a href="wf_request.html">wf_request</a></code>) query output</p></dd>
+
+
 <dt>user</dt>
 <dd><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code>.</p></dd>
+
+
 <dt>service</dt>
 <dd><p>which service to use, one of <code>webapi</code>, <code>cds</code>
 or <code>ads</code> (default = webapi)</p></dd>
+
+
 <dt>path</dt>
 <dd><p>path were to store the downloaded data</p></dd>
+
+
 <dt>filename</dt>
 <dd><p>filename to use for the downloaded data</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>show feedback on data transfers</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a netCDF of data on disk as specified by a
+    
+
+<p>a netCDF of data on disk as specified by a
 <code><a href="wf_request.html">wf_request</a></code></p>
+
+
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -123,17 +141,17 @@ or <code>ads</code> (default = webapi)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># set key</span></span>
-<span class="r-in"><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># request data and grab url and try a transfer</span></span>
-<span class="r-in"><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="wf_request.html">wf_request</a></span><span class="op">(</span><span class="va">request</span>, <span class="st">"test@email.com"</span>, transfer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># check transfer, will download if available</span></span>
-<span class="r-in"><span class="fu">wf_transfer</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="op">)</span>, <span class="st">"test@email.com"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># set key</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># request data and grab url and try a transfer</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="wf_request.html">wf_request</a></span><span class="op">(</span><span class="va">request</span>, <span class="st">"test@email.com"</span>, transfer <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># check transfer, will download if available</span></span></span>
+<span class="r-in"><span><span class="fu">wf_transfer</span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="op">)</span>, <span class="st">"test@email.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

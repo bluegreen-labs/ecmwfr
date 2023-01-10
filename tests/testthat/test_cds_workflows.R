@@ -25,6 +25,20 @@ if(server_check){
   login_check <- FALSE
 }
 
+#----- initial checks should fail locally when not as cran ----
+
+test_that("server up", {
+  skip_on_cran()
+  expect_equal(server_check, TRUE)
+})
+
+test_that("login ok", {
+  skip_on_cran()
+  expect_equal(login_check, TRUE)
+})
+
+#----- formal checks ----
+
 # Test a basic workflow
 test_that("set key", {
   skip_on_cran()

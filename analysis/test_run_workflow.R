@@ -1,31 +1,29 @@
+library(ecmwfr)
 
-code <- readLines("analysis/era5.py") |>
+code <- readLines("analysis/test.py") |>
   paste0(collapse = "\n")
 
-# This query works
-# single month of mean daily temperature
+# A query for 2m surface temperature
 request = list(
   code = code,
   kwargs = list(
-    "dataset" = "reanalysis-era5-single-levels",
-    "product_type" = "reanalysis",
-    "variable" = "2m_temperature",
-    "statistic" = "daily_mean",
-    "year" = "2020",
-    "month" = "01",
-    "time_zone" = "UTC+00:0",
-    "frequency" = "1-hourly",
-    "grid" = "0.25/0.25",
-    "area" = list(
-      lat = list(40, 45),
-      lon = list(-0,20)
-    )
+    var = "Near-Surface Air Temperature",
+    lat = 50,
+    lon = 20
   ),
-  workflow_name = "application",
+  workflow_name = "plot_time_series",
   target = "test.nc"
 )
 
-file <- wf_request(request)
+# download the data
+file <- wf_request(
+  user = "2088",
+  request,
+  path = "analysis/"
+  )
 
-r <- terra::rast(file)
-terra::plot(r)
+f <- ncdf4::nc_open("analysis/test.nc")
+print(f)
+
+t <- ncdf4::ncvar_get(nc = f, "t2m")
+ncdf4::nc_close(f)

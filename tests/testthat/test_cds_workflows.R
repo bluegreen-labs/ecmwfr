@@ -13,11 +13,11 @@ if(server_check) {
   user <-try(
       wf_set_key(
         user = "2088",
-        key = system("echo $CDS", intern = TRUE),
+        key = Sys.getenv("CDS"),
         service = "cds"
         )
     )
-  login_check <- inherits(login_check, "try-error")
+  login_check <- inherits(user, "try-error")
 }
 
 #----- initial checks should fail locally when not as cran ----
@@ -29,7 +29,7 @@ test_that("server up", {
 
 test_that("login ok", {
   skip_on_cran()
-  expect_equal(login_check, "2088")
+  expect_equal(user, "2088")
 })
 
 #----- formal checks ----

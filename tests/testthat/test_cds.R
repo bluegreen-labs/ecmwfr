@@ -47,7 +47,7 @@ if(server_check){
   user <- try(
       ecmwfr::wf_set_key(
         user = "2088",
-        key = system("echo $CDS", intern = TRUE),
+        key = Sys.getenv("CDS"),
         service = "cds")
       )
   print(user)

@@ -22,7 +22,7 @@ if(!server_check){
                      silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 } else {
-  login_check <- TRUE
+  login_check <- FALSE
 }
 
 # Test a basic workflow

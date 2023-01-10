@@ -13,7 +13,7 @@ name: test-coverage
 jobs:
   test-coverage:
     timeout-minutes: 30
-    runs-on: ubuntu-20.04
+    runs-on: Windows-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}
@@ -38,23 +38,6 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install system dependencies on MacOS (X11, gdal)
-        if: runner.os == 'macOS'
-        run: |
-          brew install --cask xquartz
-          brew install pkg-config
-          brew install proj
-          brew install gdal
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-          sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin
 
       - name: Install dependencies
         run: |

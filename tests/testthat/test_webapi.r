@@ -1,6 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
+login_check <- TRUE
 
 # ignore SSL (server has SSL issues)
 httr::set_config(httr::config(ssl_verifypeer = 0L))
@@ -42,19 +43,21 @@ if(server_check){
       user = "info@bluegreenlabs.org"),
     silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- FALSE
 }
 
 #----- initial checks should fail locally when not as cran ----
 
 test_that("server up", {
   skip_on_cran()
+
+  message("server is up")
   expect_equal(server_check, TRUE)
 })
 
 test_that("login ok", {
   skip_on_cran()
+
+  message("login is ok")
   expect_equal(login_check, FALSE)
 })
 

@@ -1,6 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
+login_check <- TRUE
 
 # ignore SSL (server has SSL issues)
 httr::set_config(httr::config(ssl_verifypeer = 0L))
@@ -55,8 +56,6 @@ if(server_check){
                                 service = "cds"),
                      silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- FALSE
 }
 
 #----- initial checks should fail locally when not as cran ----

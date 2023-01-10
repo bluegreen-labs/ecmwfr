@@ -1,6 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
+login_check <- TRUE
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",
@@ -33,8 +34,6 @@ if(server_check){
   login_check <- try(wf_get_key(user = "2161",
                                 service = "ads"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- FALSE
 }
 
 #----- initial checks should fail locally when not as cran ----

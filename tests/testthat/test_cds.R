@@ -1,5 +1,5 @@
 # set options
-options(keyring_backend="file")
+#options(keyring_backend="file")
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
 login_check <- NA
@@ -45,17 +45,13 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 # if not set login check to TRUE as well
 if(server_check){
   key <- system("echo $CDS", intern = TRUE)
-  if(key != "" & key != "$CDS"){
-    try(
-      wf_set_key(user = "2088",
-                 key = key,
-                 service = "cds")
-    )
-  }
+  login_check <- try(
+      ecmwfr::wf_set_key(
+        user = "2088",
+        key = key,
+        service = "cds")
+      )
   rm(key)
-  login_check <- try(wf_get_key(user = "2088",
-                                service = "cds"),
-                     silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 }
 

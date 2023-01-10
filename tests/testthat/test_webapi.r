@@ -1,6 +1,6 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-on.exit(options(opts), add = TRUE)
+#opts <- options(keyring_warn_for_env_fallback = FALSE)
+#on.exit(options(opts), add = TRUE)
 login_check <- NA
 
 # ignore SSL (server has SSL issues)
@@ -29,19 +29,13 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 # if server is up, create login
 if(server_check){
   key <- system("echo $WEBAPI", intern = TRUE)
-  if(key != "" & key != "$WEBAPI"){
-    try(wf_set_key(
+  login_check <- try(
+    wf_set_key(
       user = "info@bluegreenlabs.org",
       key = key,
       service = "webapi"
     ))
-  }
   rm(key)
-
-  login_check <- try(
-    wf_get_key(
-      user = "info@bluegreenlabs.org"),
-    silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 }
 
@@ -58,7 +52,7 @@ test_that("login ok", {
   skip_on_cran()
 
   message("login is ok")
-  expect_equal(login_check, FALSE)
+  expect_equal(login_check, "info@bluegreenlabs.org")
 })
 
 #----- formal checks ----

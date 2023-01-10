@@ -1,6 +1,6 @@
 # set options
-opts <- options(keyring_warn_for_env_fallback = FALSE)
-on.exit(options(opts), add = TRUE)
+#opts <- options(keyring_warn_for_env_fallback = FALSE)
+#on.exit(options(opts), add = TRUE)
 login_check <- NA
 
 ads_request <- list(
@@ -21,18 +21,13 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(server_check){
-  key <- system("echo $ADS", intern = TRUE)
-  if(key != "" & key != "$ADS"){
+  login_check <-
     try(
       wf_set_key(user = "2161",
                  key = key,
                  service = "ads")
     )
-  }
   rm(key)
-
-  login_check <- try(wf_get_key(user = "2161",
-                                service = "ads"), silent = TRUE)
   login_check <- inherits(login_check, "try-error")
 }
 
@@ -45,7 +40,7 @@ test_that("server up", {
 
 test_that("login ok", {
   skip_on_cran()
-  expect_equal(login_check, FALSE)
+  expect_equal(login_check, "2161")
 })
 
 #----- formal checks ----

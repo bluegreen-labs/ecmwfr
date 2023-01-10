@@ -45,7 +45,7 @@
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -70,6 +70,9 @@
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -102,7 +105,7 @@
                         <h4 data-toc-skip class="author">Reto Stauffer,
 Koen Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2022-08-17</h4>
+            <h4 data-toc-skip class="date">2023-01-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/vignettes/cds_vignette.Rmd" class="external-link"><code>vignettes/cds_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_vignette.Rmd</code></div>
@@ -167,20 +170,20 @@ queries copied from either ECMWF or CDS based services.</p>
 <h3 id="an-era-5-example">An ERA-5 example<a class="anchor" aria-label="anchor" href="#an-era-5-example"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Specify the data set</span>
-<span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
-  <span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,
-  <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,
-  <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,
-  <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,
-  <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,
-  <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,
-  <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,
-  <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,
-  <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,
-  <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,
-  <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Specify the data set</span></span>
+<span><span class="va">request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"dataset_short_name"</span> <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,</span>
+<span>  <span class="st">"product_type"</span>   <span class="op">=</span> <span class="st">"reanalysis"</span>,</span>
+<span>  <span class="st">"variable"</span>       <span class="op">=</span> <span class="st">"temperature"</span>,</span>
+<span>  <span class="st">"pressure_level"</span> <span class="op">=</span> <span class="st">"850"</span>,</span>
+<span>  <span class="st">"year"</span>           <span class="op">=</span> <span class="st">"2000"</span>,</span>
+<span>  <span class="st">"month"</span>          <span class="op">=</span> <span class="st">"04"</span>,</span>
+<span>  <span class="st">"day"</span>            <span class="op">=</span> <span class="st">"04"</span>,</span>
+<span>  <span class="st">"time"</span>           <span class="op">=</span> <span class="st">"00:00"</span>,</span>
+<span>  <span class="st">"area"</span>           <span class="op">=</span> <span class="st">"70/-20/30/60"</span>,</span>
+<span>  <span class="st">"format"</span>         <span class="op">=</span> <span class="st">"netcdf"</span>,</span>
+<span>  <span class="st">"target"</span>         <span class="op">=</span> <span class="st">"era5-demo.nc"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>This is the “demo” request and it specifies the following:</p>
 <ul>
 <li>
@@ -209,15 +212,15 @@ UTC),</li>
 <p>The data set as specified above can be downloaded calling the
 <code>wf_request</code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Start downloading the data, the path of the file</span>
-<span class="co"># will be returned as a variable (ncfile)</span>
-<span class="va">ncfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span>
-  user <span class="op">=</span> <span class="st">"2088"</span>,
-  request <span class="op">=</span> <span class="va">request</span>,   
-  transfer <span class="op">=</span> <span class="cn">TRUE</span>,  
-  path <span class="op">=</span> <span class="st">"~"</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Start downloading the data, the path of the file</span></span>
+<span><span class="co"># will be returned as a variable (ncfile)</span></span>
+<span><span class="va">ncfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span></span>
+<span>  user <span class="op">=</span> <span class="st">"2088"</span>,</span>
+<span>  request <span class="op">=</span> <span class="va">request</span>,   </span>
+<span>  transfer <span class="op">=</span> <span class="cn">TRUE</span>,  </span>
+<span>  path <span class="op">=</span> <span class="st">"~"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>Depending on the request (the amount of data you are asking for) the
 request function may tike a while! Please note: if you try to download
 larger amounts of data it is suggested to split the data sets, e.g.,
@@ -228,10 +231,10 @@ NetCDF containing the requested information located in the current
 working directory, called <code>era5-demo.nc</code>.</p>
 <p>Quick check:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Open NetCDF file and plot</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span>
-<span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span>, main <span class="op">=</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span><span class="op">)</span>
-<span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Open NetCDF file and plot</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span></span>
+<span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span>, main <span class="op">=</span> <span class="st">"ERA-5 Reanalysis Demo (2m Temperature 850 hPa)"</span><span class="op">)</span></span>
+<span><span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="cds_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 </div>

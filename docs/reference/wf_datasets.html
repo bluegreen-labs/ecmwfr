@@ -21,7 +21,7 @@
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -44,6 +44,9 @@
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -77,7 +80,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_datasets</span><span class="op">(</span><span class="va">user</span>, service <span class="op">=</span> <span class="st">"webapi"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_datasets</span><span class="op">(</span><span class="va">user</span>, service <span class="op">=</span> <span class="st">"webapi"</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -85,15 +88,22 @@
     <dl><dt>user</dt>
 <dd><p>user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code></p></dd>
+
+
 <dt>service</dt>
 <dd><p>which service to use, one of <code>webapi</code>, <code>cds</code>
 or <code>ads</code> (default = webapi)</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>simplify the output, logical (default = <code>TRUE</code>)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>returns a nested list or data frame with the ECMWF datasets</p>
+    
+
+<p>returns a nested list or data frame with the ECMWF datasets</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -108,17 +118,17 @@ or <code>ads</code> (default = webapi)</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># set key</span></span>
-<span class="r-in"><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get a list of services</span></span>
-<span class="r-in"><span class="fu"><a href="wf_services.html">wf_services</a></span><span class="op">(</span><span class="st">"test@mail.com"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get a list of datasets</span></span>
-<span class="r-in"><span class="fu">wf_datasets</span><span class="op">(</span><span class="st">"test@mail.com"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># set key</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>email <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get a list of services</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="wf_services.html">wf_services</a></span><span class="op">(</span><span class="st">"test@mail.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get a list of datasets</span></span></span>
+<span class="r-in"><span><span class="fu">wf_datasets</span><span class="op">(</span><span class="st">"test@mail.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

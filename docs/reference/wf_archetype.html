@@ -24,7 +24,7 @@ parameters provided to the resulting custom function."><meta property="og:image"
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.4.0</small></i>
+           <i>ecmwfr <small>v1.5.0</small></i>
         </a>
       </div>
     </div>
@@ -47,6 +47,9 @@ parameters provided to the resulting custom function."><meta property="og:image"
     </li>
     <li>
       <a href="../articles/cds_vignette.html">CDS functionality</a>
+    </li>
+    <li>
+      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
     </li>
     <li>
       <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
@@ -83,19 +86,24 @@ parameters provided to the resulting custom function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">wf_archetype</span><span class="op">(</span><span class="va">request</span>, <span class="va">dynamic_fields</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_archetype</span><span class="op">(</span><span class="va">request</span>, <span class="va">dynamic_fields</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>request</dt>
 <dd><p>a MARS or CDS request as an R list object.</p></dd>
+
+
 <dt>dynamic_fields</dt>
 <dd><p>character vector of fields that could be changed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a function that takes `dynamic_fields` as arguments and returns a
+    
+
+<p>a function that takes `dynamic_fields` as arguments and returns a
 request as an R list object.</p>
     </div>
     <div id="details">
@@ -109,29 +117,29 @@ will be guaranteed and tested for.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># format an archetype function</span></span>
-<span class="r-in"><span class="va">ERAI</span> <span class="op">&lt;-</span> <span class="fu">wf_archetype</span><span class="op">(</span></span>
-<span class="r-in">  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span>
-<span class="r-in">                 levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span>
-<span class="r-in">                 param <span class="op">=</span> <span class="st">"165.128/166.128/167.128"</span>,</span>
-<span class="r-in">                 dataset <span class="op">=</span> <span class="st">"interim"</span>,</span>
-<span class="r-in">                 step <span class="op">=</span> <span class="st">"0"</span>,</span>
-<span class="r-in">                 grid <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span>
-<span class="r-in">                 time <span class="op">=</span> <span class="st">"00/06/12/18"</span>,</span>
-<span class="r-in">                 date <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,</span>
-<span class="r-in">                 type <span class="op">=</span> <span class="st">"an"</span>,</span>
-<span class="r-in">                 class <span class="op">=</span> <span class="st">"ei"</span>,</span>
-<span class="r-in">                 area <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,</span>
-<span class="r-in">                 format <span class="op">=</span> <span class="st">"netcdf"</span>,</span>
-<span class="r-in">                 target <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span>,</span>
-<span class="r-in">  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"time"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># print output of the function with below parameters</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">ERA_interim</span><span class="op">(</span><span class="st">"20100101"</span>, <span class="fl">3</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># format an archetype function</span></span></span>
+<span class="r-in"><span><span class="va">ERAI</span> <span class="op">&lt;-</span> <span class="fu">wf_archetype</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span></span>
+<span class="r-in"><span>                 levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span></span>
+<span class="r-in"><span>                 param <span class="op">=</span> <span class="st">"165.128/166.128/167.128"</span>,</span></span>
+<span class="r-in"><span>                 dataset <span class="op">=</span> <span class="st">"interim"</span>,</span></span>
+<span class="r-in"><span>                 step <span class="op">=</span> <span class="st">"0"</span>,</span></span>
+<span class="r-in"><span>                 grid <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span></span>
+<span class="r-in"><span>                 time <span class="op">=</span> <span class="st">"00/06/12/18"</span>,</span></span>
+<span class="r-in"><span>                 date <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,</span></span>
+<span class="r-in"><span>                 type <span class="op">=</span> <span class="st">"an"</span>,</span></span>
+<span class="r-in"><span>                 class <span class="op">=</span> <span class="st">"ei"</span>,</span></span>
+<span class="r-in"><span>                 area <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,</span></span>
+<span class="r-in"><span>                 format <span class="op">=</span> <span class="st">"netcdf"</span>,</span></span>
+<span class="r-in"><span>                 target <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"time"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># print output of the function with below parameters</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">ERA_interim</span><span class="op">(</span><span class="st">"20100101"</span>, <span class="fl">3</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>

@@ -10,14 +10,13 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(server_check) {
-  key <-
-  login_check <-
-    try(
-      wf_set_key(user = "2088",
-                 key = key,
-                 service = "cds")
+  user <-try(
+      wf_set_key(
+        user = "2088",
+        key = system("echo $CDS", intern = TRUE),
+        service = "cds"
+        )
     )
-  rm(key)
   login_check <- inherits(login_check, "try-error")
 }
 

@@ -1,4 +1,5 @@
 # set options
+options(keyring_backend="file")
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
 login_check <- NA
@@ -28,11 +29,10 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 
 # if server is up, create login
 if(server_check){
-  key <- system("echo $WEBAPI", intern = TRUE)
   user <- try(
     wf_set_key(
       user = "info@bluegreenlabs.org",
-      key = key,
+      key = system("echo $WEBAPI", intern = TRUE),
       service = "webapi"
     ))
   print(user)

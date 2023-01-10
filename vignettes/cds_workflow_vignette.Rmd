@@ -25,7 +25,7 @@ library(ncdf4)
 
 Many people however don't require hourly or 6-hourly data for their research purposes. Using the standard API therefore results in queries of large amount of data which then need to be temporally down-sampled to get, for example, daily mean temperature values.
 
-Many of these issues can be side stepped by using the [CDS Toolbox workflows](<https://cds.climate.copernicus.eu/toolbox/doc/api.html>). These allow you to execute `python` code on CDS servers, as provided through an R script.
+Many of these issues can be side stepped by using the [CDS Toolbox workflows](https://cds.climate.copernicus.eu/toolbox/doc/api.html). These allow you to execute `python` code on CDS servers, as provided through an R script.
 
 ## The Workflow syntax
 
@@ -35,7 +35,7 @@ On the CDS website the example script `03 Extract time series and plot graph` in
 
 The code below lists all available variables to consider in combination with an API call defining the data ranges available (both spatial and temporal). This example is limited to the years 2008 - 2017 and 6-hourly time steps (although more data is available).
 
-We will make one minor change to the original script which is critical for the success of our workflow. Instead of returning a figure, we will want to return the data on which the figure is based. We therefore changed the last line of the original file to `return data_daily`. We can save this script as a normal python script in any editor. For this example the data was saved into a file called `era5.py`
+We will make one minor change to the original script which is critical for the success of our workflow. Instead of returning a figure, we will want to return the data on which the figure is based. We therefore changed the last line of the original file to `return data_daily`. We also set the output format from a live figure to a download. We can then save this script as a normal python script in any editor. For this example the data was saved into a file called `era5.py`
 
 ``` python
 import cdstoolbox as ct
@@ -57,7 +57,8 @@ variables = {
 @ct.input.dropdown('var', label='Variable', values=variables.keys(), description='Sample variables')
 @ct.input.text('lon', label='Longitude', type=float, default=75., description='Decimal degrees')
 @ct.input.text('lat', label='Latitude', type=float, default=43., description='Decimal degrees')
-@ct.output.livefigure()
+# @ct.output.livefigure() # Disable live figure!
+@ct.output.download() # Enable a plain download
 def plot_time_series(var, lon, lat):
     """
     Application main steps:

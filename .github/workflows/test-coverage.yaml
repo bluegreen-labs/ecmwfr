@@ -13,7 +13,7 @@ name: test-coverage
 jobs:
   test-coverage:
     timeout-minutes: 30
-    runs-on: macOS-latest
+    runs-on: Ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}

@@ -30,13 +30,30 @@ test_that("set key", {
   skip_if(login_check)
 
   # basic request for data via python
-  code <- "import cdstoolbox as ct\n\n@ct.application()\n@ct.output.download()\n
-  def plot_time_series(var, lon, lat):\n    data = ct.catalogue.retrieve(\n
-  'reanalysis-era5-single-levels',\n      {\n        'variable': '2m_temperature',\n
-  'grid': ['3', '3'],\n        'product_type': 'reanalysis',\n        'year': ['2008'],\n
-  'month': ['01'],\n        'day': ['01'],\n        'time': ['00:00', '06:00', '12:00', '18:00'],\n
-  }\n    )\n    \n    data_sel = ct.geo.extract_point(data, lon=lon, lat=lat)\n
-  data_daily = ct.climate.daily_mean(data_sel)\n    return data_daily"
+  # one line as indentation matters
+  code <-"
+import cdstoolbox as ct
+
+@ct.application()
+@ct.output.download()
+def plot_time_series(var, lon, lat):
+    data = ct.catalogue.retrieve(
+      'reanalysis-era5-single-levels',
+      {
+        'variable': '2m_temperature',
+        'grid': ['3', '3'],
+        'product_type': 'reanalysis',
+        'year': ['2008'],
+        'month': ['01'],
+        'day': ['01'],
+        'time': ['00:00', '06:00', '12:00', '18:00'],
+      }
+    )
+
+    data_sel = ct.geo.extract_point(data, lon=lon, lat=lat)
+    data_daily = ct.climate.daily_mean(data_sel)
+    return data_daily
+"
 
   request = list(
     code = code,

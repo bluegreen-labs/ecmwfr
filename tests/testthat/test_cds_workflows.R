@@ -1,7 +1,11 @@
 # set options
 options(keyring_backend="file")
-#opts <- options(keyring_warn_for_env_fallback = FALSE)
-#on.exit(options(opts), add = TRUE)
+
+# spoof keyring
+if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
+  keyring::keyring_create("ecmwfr", password = "test")
+}
+
 login_check <- NA
 
 # is the server reachable

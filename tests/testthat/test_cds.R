@@ -44,8 +44,8 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(server_check){
-  key <- system("echo $cds", intern = TRUE)
-  if(key != "" & key != "$cds"){
+  key <- system("echo $CDS", intern = TRUE)
+  if(key != "" & key != "$CDS"){
     try(
       wf_set_key(user = "2088",
                  key = key,

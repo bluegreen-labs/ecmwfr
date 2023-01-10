@@ -13,7 +13,7 @@ name: test-coverage
 jobs:
   test-coverage:
     timeout-minutes: 30
-    runs-on: Ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}
@@ -32,21 +32,14 @@ jobs:
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
-      - name: Restore R package cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install system dependencies on MacOS (X11, gdal)
-        if: runner.os == 'macOS'
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
         run: |
-          brew install --cask xquartz
-          brew install pkg-config
-          brew install netcdf
-          brew install proj
-          brew install gdal
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+          sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev netcdf-bin libsecret-1-dev libsodium-dev
 
       - name: Install dependencies
         run: |

@@ -1,7 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
-login_check <- TRUE
+login_check <- NA
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",

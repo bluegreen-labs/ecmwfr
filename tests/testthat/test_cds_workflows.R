@@ -1,7 +1,7 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
-login_check <- TRUE
+login_check <- NA
 
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))

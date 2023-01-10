@@ -184,10 +184,13 @@ plot(time, temp, ylab = "Temperature (K)")
 ```
 
 ```{r echo = FALSE}
-nc_file <- system.file(package = "ecmwfr","extdata/cds_workflow.nc")
+
+# grab demo nc files
+ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
+ncfile <- ncfile[grepl("cds_workflow.nc", ncfile)]
 
 # open the netcdf file and print the meta-data
-f <- ncdf4::nc_open(nc_file)
+f <- ncdf4::nc_open(ncfile)
 
 # read in the temperature data stored in field "t2m"
 # and the dates from the "time" field

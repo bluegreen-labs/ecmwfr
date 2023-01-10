@@ -2,6 +2,9 @@
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
+# ignore SSL (server has SSL issues)
+httr::set_config(httr::config(ssl_verifypeer = 0L))
+
 # format request (see below)
 cds_request <- list(
   "dataset_short_name" = "reanalysis-era5-pressure-levels",
@@ -34,11 +37,11 @@ cds_request_faulty <- list(
   )
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
+server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(!server_check){
+if(server_check){
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     try(

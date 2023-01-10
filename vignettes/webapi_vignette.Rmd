@@ -23,6 +23,10 @@ library(terra)
 library(maps)
 library(ecmwfr)
 
+# grab demo nc files
+ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
+ncfile <- ncfile[grepl("webapi.nc", ncfile)]
+
 ```
 
 # ecmwfr
@@ -88,10 +92,6 @@ ncfile <- wf_request(user    = "khrdev@outlook.com",
            transfer = TRUE,
            path     = tempdir(),
            verbose  = FALSE)
-```
-
-```{r echo = FALSE}
-ncfile <- system.file(package = "ecmwfr","extdata/webapi.nc")
 ```
 
 The download operation might take a while. A progress indicator will keep you informed on the status of your request. The download will expire after a default time out of one hour. You will be informed of where to track your job request on [the ECMWF website](https://apps.ecmwf.int/webmars/joblist/), and provided with a download url which can be used with the `wt_transfer()` funtion to download the data on a later moment. Keep in mind that you can only have 3 active downloads and 20 job items queued! 

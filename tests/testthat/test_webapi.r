@@ -2,6 +2,9 @@
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
+# ignore SSL (server has SSL issues)
+httr::set_config(httr::config(ssl_verifypeer = 0L))
+
 # format request (see below)
 my_request <- list(
   stream = "oper",
@@ -20,10 +23,10 @@ my_request <- list(
 )
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
+server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 
 # if server is up, create login
-if(!server_check){
+if(server_check){
   key <- system("echo $WEBAPI", intern = TRUE)
   if(key != "" & key != "$WEBAPI"){
     try(wf_set_key(

@@ -3,11 +3,11 @@ opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
 
 # is the server reachable
-server_check <- !ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
+server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(!server_check){
+if(server_check){
   key <- system("echo $CDS", intern = TRUE)
   if(key != "" & key != "$CDS"){
     try(

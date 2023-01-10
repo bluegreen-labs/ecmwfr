@@ -19,6 +19,11 @@ knitr::opts_chunk$set(
 library(ncdf4)
 library(terra)
 library(maps)
+
+# grab demo nc files
+ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
+ncfile <- ncfile[grepl("ads.nc", ncfile)]
+
 ```
 
 ## Downloading Data Sets from Copernicus's Atmosphere Data Store
@@ -82,9 +87,6 @@ Depending on the request (the amount of data you are asking for) the request fun
 Once the retrieval has finished you should now be the owner of a NetCDF containing the requested information located in the current working directory, called `particulate_matter.nc`. 
 
 Quick check:
-```{r echo = FALSE}
-ncfile <- system.file(package = "ecmwfr","extdata/ads.nc")
-```
 
 ```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
 # Open NetCDF file and plot

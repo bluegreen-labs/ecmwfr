@@ -21,6 +21,7 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
 if(server_check){
+  key <- system("echo $ADS", intern = TRUE)
   login_check <-
     try(
       wf_set_key(user = "2161",

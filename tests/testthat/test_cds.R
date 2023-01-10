@@ -57,17 +57,20 @@ if(server_check){
 
 #----- initial checks should fail locally when not as cran ----
 
+test_that("encrypted token test", {
+  skip_on_cran()
+  key <- system("echo $TEST", intern = TRUE)
+  print(key)
+  expect_equal(key, "blablabla")
+})
+
 test_that("server up", {
   skip_on_cran()
-
-  message("server is up")
   expect_equal(server_check, TRUE)
 })
 
 test_that("login ok", {
   skip_on_cran()
-
-  message("login is ok")
   expect_equal(login_check, FALSE)
 })
 

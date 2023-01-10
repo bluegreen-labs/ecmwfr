@@ -63,11 +63,15 @@ if(server_check){
 
 test_that("server up", {
   skip_on_cran()
+
+  message("server is up")
   expect_equal(server_check, TRUE)
 })
 
 test_that("login ok", {
   skip_on_cran()
+
+  message("login is ok")
   expect_equal(login_check, FALSE)
 })
 

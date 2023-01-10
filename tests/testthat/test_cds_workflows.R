@@ -1,9 +1,11 @@
 # set options
 opts <- options(keyring_warn_for_env_fallback = FALSE)
 on.exit(options(opts), add = TRUE)
+login_check <- TRUE
 
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
+
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
@@ -21,19 +23,21 @@ if(server_check){
                                 service = "cds"),
                      silent = TRUE)
   login_check <- inherits(login_check, "try-error")
-} else {
-  login_check <- FALSE
 }
 
 #----- initial checks should fail locally when not as cran ----
 
 test_that("server up", {
   skip_on_cran()
+
+  message("server is up")
   expect_equal(server_check, TRUE)
 })
 
 test_that("login ok", {
   skip_on_cran()
+
+  message("login is ok")
   expect_equal(login_check, FALSE)
 })
 

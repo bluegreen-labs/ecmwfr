@@ -276,9 +276,8 @@ test_that("batch request tests", {
   })
 
   expect_error(wf_request_batch(
-    requests,
+    requests_dup,
     user = "2088")
   )
-
 
 })

@@ -1,4 +1,5 @@
 # set options
+options(keyring_backend="file")
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
 login_check <- NA

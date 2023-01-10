@@ -37,7 +37,8 @@ Imports:
     memoise,
     getPass,
     curl,
-    R6
+    R6,
+    uuid
 License: AGPL-3
 ByteCompile: true
 RoxygenNote: 7.2.1

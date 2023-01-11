@@ -205,9 +205,10 @@ test_that("required arguments missing for cds_* functions", {
       )
     )
 
-  # check transfer routine
-  expect_output(
-    r$delete()
+  # Delete file, check status
+  r$delete()
+  expect_equal(
+    r$get_status(), "deleted"
   )
 
   # CDS tranfer (forwarded to wf_transfer, requires at least

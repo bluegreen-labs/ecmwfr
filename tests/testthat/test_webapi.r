@@ -417,13 +417,15 @@ test_that("wf_transfer() check", {
       transfer = FALSE
     )
 
+  tr <- wf_transfer(
+    user = "info@bluegreenlabs.org",
+    service = "webapi",
+    url = r$get_url()
+  )
+
   # check transfer routine
-  expect_output(
-    wf_transfer(
-      user = "info@bluegreenlabs.org",
-      service = "webapi",
-      url = r$get_url()
-    )
+  expect_equal(
+    tr$code, "302"
   )
 
 })

@@ -112,6 +112,7 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       private$next_retry <- Sys.time()
       return(self)
     },
+
     download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
       # Check if download is actually needed
       if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
@@ -166,6 +167,40 @@ cds_service <- R6::R6Class("ecmwfr_cds",
 
       return(self)
     },
+
+    delete = function() {
+
+      # get key
+      key <- wf_get_key(user = private$user, service = private$service)
+
+      #  get the response for the query provided
+      response <- httr::DELETE(
+        private$url,
+        httr::authenticate(private$user, key),
+        httr::add_headers(
+          "Accept" = "application/json",
+          "Content-Type" = "application/json"
+        )
+      )
+
+      # trap general http error
+      if (httr::http_error(response)) {
+        stop(httr::content(response),
+             call. = FALSE
+        )
+      }
+
+      # some verbose feedback
+      if (private$verbose) {
+        message("- Delete data from queue for url endpoint or request id:")
+        message("  ", private$url, "\n")
+      }
+
+      private$status <- "deleted"
+      private$code <- 204
+      return(self)
+    },
+
     browse_request = function() {
       url <- "https://cds.climate.copernicus.eu/user/login?destination=%2Fcdsapp%23!%2Fyourrequests"
       utils::browseURL(url)

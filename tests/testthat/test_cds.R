@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-#opts <- options(keyring_warn_for_env_fallback = FALSE)
-#on.exit(options(opts), add = TRUE)
 login_check <- NA
 
 # ignore SSL (server has SSL issues)
@@ -65,13 +63,9 @@ if(server_check){
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-  key <- system("echo $CDS", intern = TRUE)
-  if(key != "" & key != "$CDS"){
     expect_message(wf_set_key(user = "2088",
-                              key = key,
+                              Sys.getenv("CDS"),
                               service = "cds"))
-  }
-  rm(key)
 })
 
 test_that("cds datasets returns data.frame or list", {
@@ -120,10 +114,12 @@ test_that("cds request", {
     )
 
   # faulty request
-  expect_error(wf_request(
-    user = "2088",
-    request = cds_request_faulty)
+  expect_error(
+    wf_request(
+      user = "2088",
+      request = cds_request_faulty
     )
+  )
 
   # wrong request
   expect_error(
@@ -135,23 +131,29 @@ test_that("cds request", {
     )
 
   # missing request
-  expect_error(wf_request(user = "2088",
-                          transfer = TRUE))
+  expect_error(wf_request(
+    user = "2088",
+    transfer = TRUE
+    )
+  )
 
   # missing user
   expect_error(wf_request(
     request = cds_request,
-    transfer = TRUE)
+    transfer = TRUE
+    )
+  )
+
+  r <- wf_request(
+    user = "2088",
+    request = cds_request,
+    transfer = FALSE
     )
 
   # is R6 class
-  expect_true(inherits(
-    wf_request(
-      user = "2088",
-      request = cds_request,
-      transfer = FALSE)
-    , "R6")
-  )
+  expect_true(inherits(r, "R6"))
+  r$delete() # cleanup
+
 })
 
 
@@ -173,23 +175,21 @@ test_that("required arguments missing for cds_* functions", {
 
   # CDS productinfo (requires at least 'user' and 'dataset')
   expect_error(wf_product_info())
-  expect_error(wf_product_info(user = "2088",
-                               service = "cds",
-                               dataset = "foo"))
+  expect_error(wf_product_info(
+    user = "2088",
+    service = "cds",
+    dataset = "foo"
+    )
+  )
 
   # CDS productinfo: product name which is not available
-  expect_output(str(wf_product_info(user = "2088",
-                                    service = "cds",
-                                    dataset = "satellite-methane")))
-
-  # check transfer routine
-  expect_output(
-    wf_transfer(
-      user = "2088",
-      service = "cds",
-      url = r
+  expect_output(str(wf_product_info(
+    user = "2088",
+    service = "cds",
+    dataset = "satellite-methane"
       )
     )
+  )
 
   # check transfer routine
   expect_output(
@@ -197,7 +197,13 @@ test_that("required arguments missing for cds_* functions", {
       user = "2088",
       service = "cds",
       url = r$get_url()
+      )
     )
+
+  # Delete file, check status
+  r$delete()
+  expect_equal(
+    r$get_status(), "deleted"
   )
 
   # CDS tranfer (forwarded to wf_transfer, requires at least

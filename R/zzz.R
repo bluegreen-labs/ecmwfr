@@ -249,8 +249,6 @@ retrieve_header <- function(url, headers) {
   return(head)
 }
 
-
-
 # Encapsulates errors are warnings logic.
 warn_or_error <- function(..., error = FALSE) {
   if (error) {

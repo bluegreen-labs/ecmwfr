@@ -102,7 +102,7 @@ Once the retrieval has finished you should now be the owner of a NetCDF containi
 
 Quick check:
 
-```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
+```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6, eval = ifelse(tolower(Sys.info()[["sysname"]]) == "mac", FALSE, TRUE)}
 # Open NetCDF file and plot
 r <- terra::rast(ncfile)
 terra::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")

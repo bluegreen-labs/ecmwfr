@@ -70,10 +70,14 @@ wf_request_batch <- function(
       # add the request to the "done" list
       # and free-up the slot
       if (!isFALSE(slots[[w]]) && !slots[[w]]$is_pending()) {
+
+        # remove the download slot from the queue
+        slots[[w]]$delete()
+
+        # add finished request to done list
         done <- append(done, slots[[w]])
         slots[[w]] <- FALSE
       }
-
     }
   }
 

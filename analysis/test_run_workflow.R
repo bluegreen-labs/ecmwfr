@@ -41,11 +41,6 @@ request = list(
 file <- wf_request(
   user = "2088",
   request,
-  path = "analysis/"
+  path = "analysis/",
+  transfer = FALSE
   )
-
-f <- ncdf4::nc_open("analysis/test.nc")
-print(f)
-
-t <- ncdf4::ncvar_get(nc = f, "t2m")
-ncdf4::nc_close(f)

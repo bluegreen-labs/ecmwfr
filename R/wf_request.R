@@ -33,7 +33,8 @@
 #' @param job_name optional name to use as an RStudio job and as output variable
 #'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
-
+#' @import uuid
+#'
 #' @return the path of the downloaded (requested file) or the an R6 object
 #' with download/transfer information
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -168,7 +169,15 @@ wf_request <- function(
   if (transfer) {
     request$transfer(time_out = time_out)
     if (request$is_success()) {
-      return(request$get_file())
+
+      # download the data to a set file location
+      file_location <- request$get_file()
+
+      # delete from queue
+      request$delete()
+
+      # return file location
+      return(file_location)
     }
     message("Transfer was not successfull - please check your request later at:")
     message(request$get_url())

@@ -425,7 +425,7 @@ test_that("wf_transfer() check", {
 
   # check transfer routine
   expect_equal(
-    tr$code, "302"
+    tr$code, 302
   )
 
 })

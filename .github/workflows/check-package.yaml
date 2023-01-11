@@ -34,7 +34,6 @@ jobs:
       ADS: ${{ secrets.ADS }}
       CDS: ${{ secrets.CDS }}
       WEBAPI: ${{ secrets.WEBAPI }}
-      TEST: ${{ secrets.TEST }}
 
     steps:
       - uses: actions/checkout@v2

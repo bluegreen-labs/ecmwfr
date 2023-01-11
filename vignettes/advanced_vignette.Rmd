@@ -23,10 +23,9 @@ library(terra)
 library(maps)
 library(ecmwfr)
 
+# disable render of chunks on mac
 if(tolower(Sys.info()[["sysname"]]) == "mac") {
-  eval <- FALSE
-} else {
-  eval <- TRUE
+   opts_chunk$set(eval=FALSE, message=FALSE, echo=FALSE)
 }
 ```
 

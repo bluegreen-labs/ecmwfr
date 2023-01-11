@@ -17,6 +17,11 @@ knitr::opts_chunk$set(
 
 # load the library
 library(ncdf4)
+
+# disable render of chunks on mac
+if(tolower(Sys.info()[["sysname"]]) == "mac") {
+   opts_chunk$set(eval=FALSE, message=FALSE, echo=FALSE)
+}
 ```
 
 ## Running workflows on Copernicus' Climate Data Store

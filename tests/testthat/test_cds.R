@@ -153,7 +153,8 @@ test_that("cds request", {
   r <- wf_request(
     user = "2088",
     request = cds_request,
-    transfer = FALSE)
+    transfer = FALSE
+    )
 
   # is R6 class
   expect_true(inherits(r, "R6"))
@@ -233,6 +234,9 @@ test_that("required arguments missing for cds_* functions", {
                                     service = "cds",
                                     user = NULL,
                                     simplify = FALSE)))
+
+  # clean up request
+  r$delete()
 })
 
 # check delete routine CDS (fails)

@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-#opts <- options(keyring_warn_for_env_fallback = FALSE)
-#on.exit(options(opts), add = TRUE)
 login_check <- NA
 
 # ignore SSL (server has SSL issues)
@@ -65,13 +63,9 @@ if(server_check){
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-  key <- system("echo $CDS", intern = TRUE)
-  if(key != "" & key != "$CDS"){
     expect_message(wf_set_key(user = "2088",
-                              key = key,
+                              Sys.getenv("CDS"),
                               service = "cds"))
-  }
-  rm(key)
 })
 
 test_that("cds datasets returns data.frame or list", {
@@ -234,9 +228,6 @@ test_that("required arguments missing for cds_* functions", {
                                     service = "cds",
                                     user = NULL,
                                     simplify = FALSE)))
-
-  # clean up request
-  r$delete()
 })
 
 # check delete routine CDS (fails)

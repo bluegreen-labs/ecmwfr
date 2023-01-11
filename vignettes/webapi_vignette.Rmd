@@ -29,7 +29,7 @@ ncfile <- ncfile[grepl("webapi.nc", ncfile)]
 
 # disable render of chunks on mac
 if(tolower(Sys.info()[["sysname"]]) == "mac") {
-   opts_chunk$set(eval=FALSE, message=FALSE, echo=FALSE)
+   knitr::opts_chunk$set(eval=FALSE)
 }
 ```
 

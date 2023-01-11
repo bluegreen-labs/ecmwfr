@@ -24,9 +24,10 @@ library(maps)
 ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
 ncfile <- ncfile[grepl("ads.nc", ncfile)]
 
+
 # disable render of chunks on mac
 if(tolower(Sys.info()[["sysname"]]) == "mac") {
-   opts_chunk$set(eval=FALSE, message=FALSE, echo=FALSE)
+   knitr::opts_chunk$set(eval=FALSE)
 }
 ```
 

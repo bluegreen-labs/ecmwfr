@@ -38,7 +38,9 @@ service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
       stop("not implemented")
       },
 
-    download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
+    download = function(force_redownload = FALSE,
+                        fail_is_error = TRUE,
+                        verbose = NULL) {
      stop("not implemented")
     },
 
@@ -69,6 +71,10 @@ service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
       }
       return(self)
 
+    },
+
+    delete = function() {
+      stop("not implemented")
     },
 
     browse_request = function() {

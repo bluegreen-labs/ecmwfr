@@ -216,6 +216,40 @@ webapi_service <- R6::R6Class("ecmwfr_webapi", inherit = service,
       return(self)
     },
 
+    delete = function() {
+
+      # get key
+      key <- wf_get_key(user = private$user, service = private$service)
+
+      #  get the response for the query provided
+      response <- httr::DELETE(
+        private$url,
+        httr::add_headers(
+          "Accept" = "application/json",
+          "Content-Type" = "application/json",
+          "From" = private$user,
+          "X-ECMWF-KEY" = key)
+      )
+
+      # trap general http error
+      if (httr::http_error(response)) {
+        stop(httr::content(response),
+             call. = FALSE
+        )
+      }
+
+      # some verbose feedback
+      if (private$verbose) {
+        message("- Delete data from queue for url endpoint or request id:")
+        message("  ", private$url, "\n")
+      }
+
+      private$status <- "deleted"
+      private$code <- 204
+      return(self)
+    },
+
+
     browse_request = function() {
       url <- paste0("https://apps.ecmwf.int/webmars/joblist/", private$name)
       utils::browseURL(url)

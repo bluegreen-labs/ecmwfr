@@ -168,7 +168,15 @@ wf_request <- function(
   if (transfer) {
     request$transfer(time_out = time_out)
     if (request$is_success()) {
-      return(request$get_file())
+
+      # download the data to a set file location
+      file_location <- request$get_file()
+
+      # delete from queue
+      request$delete()
+
+      # return file location
+      return(file_location)
     }
     message("Transfer was not successfull - please check your request later at:")
     message(request$get_url())

@@ -97,12 +97,15 @@ The download operation might take a while. A progress indicator will keep you in
 
 If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
 
-```{r fig.width = 7, fig.height = 7, eval = ifelse(tolower(Sys.info()[["sysname"]]) == "mac", FALSE, TRUE)}
-s <- terra::rast(ncfile)
-print(s)
+```{r fig.width = 7, fig.height = 7}
+# Open NetCDF file and plot the data
+# (trap read error on mac - if gdal netcdf support is missing)
+r <- try(terra::rast(ncfile))
 
-terra::plot(s[[1]], main = "2 meter temperature (Kelvin)")
-maps::map("world", add = TRUE)
+if(!inherits(r, "try-error")) {
+  terra::plot(r[[1]], main = "2 meter temperature (Kelvin)")
+  maps::map("world", add = TRUE)
+}
 ```
 
 ## ECMWF mars Requests

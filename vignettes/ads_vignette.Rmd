@@ -87,12 +87,15 @@ Once the retrieval has finished you should now be the owner of a NetCDF containi
 
 Quick check:
 
-```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6, eval=ifelse(tolower(Sys.info()[["sysname"]]) == "mac", FALSE, TRUE)}
-# Open NetCDF file and plot
-# the log transformed data
-r <- terra::rast(ncfile)
-terra::plot(log(rotate(r)),
-             main = "CAMS reanalysis data (particulate matter 2.5u)",
-             col = rev(heat.colors(100)))
-maps::map("world", add = TRUE)
+```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
+# Open NetCDF file and plot the data
+# (trap read error on mac - if gdal netcdf support is missing)
+r <- try(terra::rast(ncfile))
+
+if(!inherits(r, "try-error")) {
+  terra::plot(log(rotate(r)),
+              main = "CAMS reanalysis data (particulate matter 2.5u)",
+              col = rev(heat.colors(100)))
+  maps::map("world", add = TRUE)
+}
 ```

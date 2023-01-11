@@ -22,6 +22,12 @@ library(ncdf4)
 library(terra)
 library(maps)
 library(ecmwfr)
+
+if(tolower(Sys.info()[["sysname"]]) == "mac") {
+  eval <- FALSE
+} else {
+  eval <- TRUE
+}
 ```
 
 # Advanced Use Cases

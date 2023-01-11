@@ -24,6 +24,12 @@ library(maps)
 ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
 ncfile <- ncfile[grepl("ads.nc", ncfile)]
 
+if(tolower(Sys.info()[["sysname"]]) == "mac") {
+  eval <- FALSE
+} else {
+  eval <- TRUE
+}
+
 ```
 
 ## Downloading Data Sets from Copernicus's Atmosphere Data Store
@@ -88,7 +94,7 @@ Once the retrieval has finished you should now be the owner of a NetCDF containi
 
 Quick check:
 
-```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6}
+```{r spatial-plot, echo = TRUE, figure = TRUE, fig.width = 8, fig.height = 6, eval = eval}
 # Open NetCDF file and plot
 # the log transformed data
 r <- terra::rast(ncfile)

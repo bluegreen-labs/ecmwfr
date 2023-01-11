@@ -22,11 +22,6 @@ library(ncdf4)
 library(terra)
 library(maps)
 library(ecmwfr)
-
-# disable render of chunks on mac
-if(tolower(Sys.info()[["sysname"]]) == "mac") {
-   knitr::opts_chunk$set(eval=FALSE)
-}
 ```
 
 # Advanced Use Cases

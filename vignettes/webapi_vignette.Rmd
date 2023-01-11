@@ -26,11 +26,6 @@ library(ecmwfr)
 # grab demo nc files
 ncfile <- list.files(system.file(package="ecmwfr"),"*.nc", recursive = TRUE, full.names = TRUE)
 ncfile <- ncfile[grepl("webapi.nc", ncfile)]
-
-# disable render of chunks on mac
-if(tolower(Sys.info()[["sysname"]]) == "mac") {
-   knitr::opts_chunk$set(eval=FALSE)
-}
 ```
 
 # ecmwfr
@@ -102,7 +97,7 @@ The download operation might take a while. A progress indicator will keep you in
 
 If the download is successful you can visualize one layer in the retrieved stack of temperatures at 2 meters using the plotting routine below.
 
-```{r fig.width = 7, fig.height = 7}
+```{r fig.width = 7, fig.height = 7, eval = ifelse(tolower(Sys.info()[["sysname"]]) == "mac", FALSE, TRUE)}
 s <- terra::rast(ncfile)
 print(s)
 

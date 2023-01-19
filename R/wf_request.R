@@ -105,10 +105,12 @@ wf_request <- function(
       )
     }
 
-    job <-
-      rstudioapi::jobRunScript(path = script,
-                               name = job_name,
-                               exportEnv = "R_GlobalEnv")
+    job <- rstudioapi::jobRunScript(
+      path = script,
+      name = job_name,
+      exportEnv = "R_GlobalEnv"
+      )
+
     return(invisible(job))
   }
 

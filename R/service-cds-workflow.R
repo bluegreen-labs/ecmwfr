@@ -7,7 +7,7 @@ cds_workflow <- R6::R6Class("ecmwfr_cds_workflow", inherit = cds_service,
         wf_server(service = "cds"),
         # NOTE THE DIFFERENENT ENDPOINT FOR TOOLBOX EDITOR APPS
         gsub("\\.", "/","tool.toolbox.orchestrator.run_workflow"),
-        uuid::UUIDgenerate(output = "string")
+        ecmwfr:::wf_unique_id()
       )
     },
     get_location = function(content) {

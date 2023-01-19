@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # ecmwfr <img src="man/figures/logo.png" align="right" height="138.5"/>
 
 [![R-CMD-check](https://github.com/bluegreen-labs/ecmwfr/workflows/R-CMD-check/badge.svg)](https://github.com/bluegreen-labs/ecmwfr/actions)

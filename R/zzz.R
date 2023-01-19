@@ -217,7 +217,6 @@ new_archetype <- function(args, body) {
   f
 }
 
-
 # Creates a script to then run as a job
 make_script <- function(call, name) {
   script <- tempfile()
@@ -234,6 +233,11 @@ make_script <- function(call, name) {
   return(script)
 }
 
+# generate a unique id to use in workflow
+# download queue
+wf_unique_id <- function() {
+  uuid::UUIDgenerate(output = "string")
+}
 
 # Downlaods only the header information
 retrieve_header <- function(url, headers) {

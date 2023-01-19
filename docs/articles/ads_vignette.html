@@ -105,7 +105,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2023-01-10</h4>
+            <h4 data-toc-skip class="date">2023-01-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/vignettes/ads_vignette.Rmd" class="external-link"><code>vignettes/ads_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>ads_vignette.Rmd</code></div>
@@ -200,13 +200,16 @@ NetCDF containing the requested information located in the current
 working directory, called <code>particulate_matter.nc</code>.</p>
 <p>Quick check:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Open NetCDF file and plot</span></span>
-<span><span class="co"># the log transformed data</span></span>
-<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span></span>
-<span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu">rotate</span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>             main <span class="op">=</span> <span class="st">"CAMS reanalysis data (particulate matter 2.5u)"</span>,</span>
-<span>             col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Open NetCDF file and plot the data</span></span>
+<span><span class="co"># (trap read error on mac - if gdal netcdf support is missing)</span></span>
+<span><span class="va">r</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">ncfile</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">inherits</a></span><span class="op">(</span><span class="va">r</span>, <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu">rotate</span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>              main <span class="op">=</span> <span class="st">"CAMS reanalysis data (particulate matter 2.5u)"</span>,</span>
+<span>              col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">heat.colors</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p><img src="ads_vignette_files/figure-html/spatial-plot-1.png" width="768"></p>
 </div>
 </div>

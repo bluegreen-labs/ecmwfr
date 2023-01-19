@@ -1,5 +1,5 @@
 pandoc: '2.18'
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   ads_vignette: ads_vignette.html
@@ -7,5 +7,5 @@ articles:
   cds_vignette: cds_vignette.html
   cds_workflow_vignette: cds_workflow_vignette.html
   webapi_vignette: webapi_vignette.html
-last_built: 2023-01-10T13:24Z
+last_built: 2023-01-19T08:21Z
 

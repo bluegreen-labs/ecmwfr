@@ -105,7 +105,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2023-01-10</h4>
+            <h4 data-toc-skip class="date">2023-01-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/vignettes/cds_workflow_vignette.Rmd" class="external-link"><code>vignettes/cds_workflow_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>cds_workflow_vignette.Rmd</code></div>
@@ -152,7 +152,8 @@ and 6-hourly time steps (although more data is available).</p>
 critical for the success of our workflow. Instead of returning a figure,
 we will want to return the data on which the figure is based. We
 therefore changed the last line of the original file to
-<code>return data_daily</code>. We can save this script as a normal
+<code>return data_daily</code>. We also set the output format from a
+live figure to a download. We can then save this script as a normal
 python script in any editor. For this example the data was saved into a
 file called <code>era5.py</code></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cdstoolbox <span class="im">as</span> ct</span>
@@ -174,65 +175,66 @@ file called <code>era5.py</code></p>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">@ct.input.dropdown</span>(<span class="st">'var'</span>, label<span class="op">=</span><span class="st">'Variable'</span>, values<span class="op">=</span>variables.keys(), description<span class="op">=</span><span class="st">'Sample variables'</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">@ct.input.text</span>(<span class="st">'lon'</span>, label<span class="op">=</span><span class="st">'Longitude'</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">75.</span>, description<span class="op">=</span><span class="st">'Decimal degrees'</span>)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">@ct.input.text</span>(<span class="st">'lat'</span>, label<span class="op">=</span><span class="st">'Latitude'</span>, <span class="bu">type</span><span class="op">=</span><span class="bu">float</span>, default<span class="op">=</span><span class="fl">43.</span>, description<span class="op">=</span><span class="st">'Decimal degrees'</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">@ct.output.livefigure</span>()</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_time_series(var, lon, lat):</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    Application main steps:</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    - set the application layout with 3 columns for the input and output at the bottom</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    - retrieve a variable over a defined time range</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">    - select a location, defined by longitude and latitude coordinates</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">    - compute the daily average</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">    - show the result as a timeseries on an interactive chart</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Time range</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> ct.catalogue.retrieve(</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">'reanalysis-era5-single-levels'</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">'variable'</span>: variables[var],</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">'grid'</span>: [<span class="st">'3'</span>, <span class="st">'3'</span>],</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">'product_type'</span>: <span class="st">'reanalysis'</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">'year'</span>: [</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2008'</span>, <span class="st">'2009'</span>, <span class="st">'2010'</span>,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2011'</span>, <span class="st">'2012'</span>, <span class="st">'2013'</span>,</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2014'</span>, <span class="st">'2015'</span>, <span class="st">'2016'</span>,</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2017'</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            <span class="st">'month'</span>: [</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                <span class="st">'01'</span>, <span class="st">'02'</span>, <span class="st">'03'</span>, <span class="st">'04'</span>, <span class="st">'05'</span>, <span class="st">'06'</span>,</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                <span class="st">'07'</span>, <span class="st">'08'</span>, <span class="st">'09'</span>, <span class="st">'10'</span>, <span class="st">'11'</span>, <span class="st">'12'</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">'day'</span>: [</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>                <span class="st">'01'</span>, <span class="st">'02'</span>, <span class="st">'03'</span>, <span class="st">'04'</span>, <span class="st">'05'</span>, <span class="st">'06'</span>,</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">'07'</span>, <span class="st">'08'</span>, <span class="st">'09'</span>, <span class="st">'10'</span>, <span class="st">'11'</span>, <span class="st">'12'</span>,</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">'13'</span>, <span class="st">'14'</span>, <span class="st">'15'</span>, <span class="st">'16'</span>, <span class="st">'17'</span>, <span class="st">'18'</span>,</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>                <span class="st">'19'</span>, <span class="st">'20'</span>, <span class="st">'21'</span>, <span class="st">'22'</span>, <span class="st">'23'</span>, <span class="st">'24'</span>,</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                <span class="st">'25'</span>, <span class="st">'26'</span>, <span class="st">'27'</span>, <span class="st">'28'</span>, <span class="st">'29'</span>, <span class="st">'30'</span>,</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>                <span class="st">'31'</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>            <span class="st">'time'</span>: [<span class="st">'00:00'</span>, <span class="st">'06:00'</span>, <span class="st">'12:00'</span>, <span class="st">'18:00'</span>],</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Location selection</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the closest point to selected lon/lat (no interpolation).</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If wrong number is set for latitude, the closest available one is chosen:</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. if lat = 4000 -&gt; lat = 90.</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If wrong number is set for longitude, first a wrap in [-180, 180] is made,</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># then the closest one present is chosen:</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. if lon = 200 -&gt; lon = -160.</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    data_sel <span class="op">=</span> ct.geo.extract_point(data, lon<span class="op">=</span>lon, lat<span class="op">=</span>lat)</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Daily mean on selection</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    data_daily <span class="op">=</span> ct.climate.daily_mean(data_sel)</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> ct.chart.line(data_daily)</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return fig</span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_daily</span></code></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># @ct.output.livefigure() # Disable live figure!</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">@ct.output.download</span>() <span class="co"># Enable a plain download</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_time_series(var, lon, lat):</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    Application main steps:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    - set the application layout with 3 columns for the input and output at the bottom</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">    - retrieve a variable over a defined time range</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">    - select a location, defined by longitude and latitude coordinates</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">    - compute the daily average</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">    - show the result as a timeseries on an interactive chart</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Time range</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> ct.catalogue.retrieve(</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">'reanalysis-era5-single-levels'</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">'variable'</span>: variables[var],</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">'grid'</span>: [<span class="st">'3'</span>, <span class="st">'3'</span>],</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">'product_type'</span>: <span class="st">'reanalysis'</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            <span class="st">'year'</span>: [</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2008'</span>, <span class="st">'2009'</span>, <span class="st">'2010'</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2011'</span>, <span class="st">'2012'</span>, <span class="st">'2013'</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2014'</span>, <span class="st">'2015'</span>, <span class="st">'2016'</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>                <span class="st">'2017'</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>            <span class="st">'month'</span>: [</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                <span class="st">'01'</span>, <span class="st">'02'</span>, <span class="st">'03'</span>, <span class="st">'04'</span>, <span class="st">'05'</span>, <span class="st">'06'</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>                <span class="st">'07'</span>, <span class="st">'08'</span>, <span class="st">'09'</span>, <span class="st">'10'</span>, <span class="st">'11'</span>, <span class="st">'12'</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">'day'</span>: [</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">'01'</span>, <span class="st">'02'</span>, <span class="st">'03'</span>, <span class="st">'04'</span>, <span class="st">'05'</span>, <span class="st">'06'</span>,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">'07'</span>, <span class="st">'08'</span>, <span class="st">'09'</span>, <span class="st">'10'</span>, <span class="st">'11'</span>, <span class="st">'12'</span>,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>                <span class="st">'13'</span>, <span class="st">'14'</span>, <span class="st">'15'</span>, <span class="st">'16'</span>, <span class="st">'17'</span>, <span class="st">'18'</span>,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                <span class="st">'19'</span>, <span class="st">'20'</span>, <span class="st">'21'</span>, <span class="st">'22'</span>, <span class="st">'23'</span>, <span class="st">'24'</span>,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>                <span class="st">'25'</span>, <span class="st">'26'</span>, <span class="st">'27'</span>, <span class="st">'28'</span>, <span class="st">'29'</span>, <span class="st">'30'</span>,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>                <span class="st">'31'</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>            <span class="st">'time'</span>: [<span class="st">'00:00'</span>, <span class="st">'06:00'</span>, <span class="st">'12:00'</span>, <span class="st">'18:00'</span>],</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Location selection</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the closest point to selected lon/lat (no interpolation).</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If wrong number is set for latitude, the closest available one is chosen:</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. if lat = 4000 -&gt; lat = 90.</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If wrong number is set for longitude, first a wrap in [-180, 180] is made,</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># then the closest one present is chosen:</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># e.g. if lon = 200 -&gt; lon = -160.</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    data_sel <span class="op">=</span> ct.geo.extract_point(data, lon<span class="op">=</span>lon, lat<span class="op">=</span>lat)</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Daily mean on selection</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    data_daily <span class="op">=</span> ct.climate.daily_mean(data_sel)</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> ct.chart.line(data_daily)</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="co">#return fig</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> data_daily</span></code></pre></div>
 <p>With the script adjusted and saved we can now use it in our
 <code>ecmwfr</code> workflow run as follows.</p>
 <p>First we read in the python script as a long string into R. Use

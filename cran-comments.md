@@ -14,7 +14,10 @@ downloaded locally before aggregation. Such an example is excluded in the
 documentation, but applications are plenty and not limited to data aggregation.
 
 For optimization, the batch processing script now also checks for duplicate
-filenames and reports this as such. Limiting data overwrites.
+filenames and reports this as such limiting data overwrites.
+
+Kind regards,
+Koen Hufkens
 
 I have read and agree to the the CRAN policies at
 http://cran.r-project.org/web/packages/policies.html

@@ -1,3 +1,7 @@
+# ecmwfr 1.5.1
+
+* `wf_request_batch()` logic patch, to keep running on a 202 http error
+
 # ecmwfr 1.5.0
 
 * `wf_request()` now accepts CDS Toolbox API workflow calls

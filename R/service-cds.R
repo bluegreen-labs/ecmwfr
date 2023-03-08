@@ -94,9 +94,7 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       if (private$status != "completed" || is.null(private$status)) {
         private$code <- 202
         private$file_url <- NA # just ot be on the safe side
-      }
-
-      if (private$status == "completed") {
+      } else if (private$status == "completed") {
         private$code <- 302
         private$file_url <- private$get_location(ct)
       } else if (private$status == "failed") {

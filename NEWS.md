@@ -1,6 +1,6 @@
 # ecmwfr 1.5.1
 
-* `wf_request_batch()` logic patch, to keep running on a 202 http error
+* `wf_request_batch()` logic patch for 202 http error on long runs
 
 # ecmwfr 1.5.0
 

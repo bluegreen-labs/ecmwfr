@@ -63,11 +63,6 @@ wf_request_batch <- function(
 
       # Try to download
       if (!isFALSE(slots[[w]])) {
-
-        # put the breaks on polling
-        # not to spam the API
-        Sys.sleep(3)
-
         slots[[w]]$download()
       }
 

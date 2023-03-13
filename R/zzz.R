@@ -125,16 +125,23 @@ exit_message <- function(url, service, path, file) {
 .onAttach <-
   function(libname = find.package("ecmwfr"),
            pkgname = "ecmwfr") {
+
+    # startup messages
     vers <- as.character(utils::packageVersion("ecmwfr"))
     txt <- paste(
       "\n     This is 'ecmwfr' version ",
       vers,
       ". Please respect the terms of use:\n",
       "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
-      "     - https://www.ecmwf.int/en/terms-use\n"
+      "     - https://www.ecmwf.int/en/terms-use\n",
+      " (note: using http version 1.1)"
     )
     if (interactive())
       packageStartupMessage(txt)
+
+    # force non http/2 transfers to avoid
+    # batch processing issues
+    httr::set_config(httr::config(http_version = 1))
   }
 
 # check if server is reachable

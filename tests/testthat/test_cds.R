@@ -11,8 +11,8 @@ login_check <- FALSE
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
-  FALSE,
-  TRUE
+  TRUE,
+  FALSE
 )
 
 # ignore SSL (server has SSL issues)
@@ -54,7 +54,7 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(server_check && ON_GIT){
+if(server_check & ON_GIT){
   user <- try(
       ecmwfr::wf_set_key(
         user = "2088",

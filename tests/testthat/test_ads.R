@@ -13,9 +13,9 @@ login_check <- FALSE
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
-  FALSE,
-  TRUE
-  )
+  TRUE,
+  FALSE
+)
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",
@@ -34,7 +34,7 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(server_check){
+if(server_check & ON_GIT){
   user <-
     try(
       wf_set_key(user = "2161",
@@ -44,11 +44,7 @@ if(server_check){
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
-} else {
-  # skip if the server is not reachable
-  login_check <- TRUE
 }
-
 
 #----- formal checks ----
 

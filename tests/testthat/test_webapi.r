@@ -13,8 +13,8 @@ login_check <- FALSE
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
-  FALSE,
-  TRUE
+  TRUE,
+  FALSE
 )
 
 # format request (see below)
@@ -38,7 +38,7 @@ my_request <- list(
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 
 # if server is up, create login
-if(server_check && ON_GIT){
+if(server_check & ON_GIT){
   user <- try(
     wf_set_key(
       user = "info@bluegreenlabs.org",

@@ -51,6 +51,7 @@ if(server_check & ON_GIT){
 test_that("ads datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
   expect_true(inherits(wf_datasets(user = "2161",
                                    service = "ads",
                                    simplify = TRUE), "data.frame"))
@@ -63,6 +64,7 @@ test_that("ads datasets returns data.frame or list", {
 test_that("ads request", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   # ok transfer
   expect_message(wf_request(user = "2161",
@@ -74,6 +76,8 @@ test_that("ads request", {
 test_that("check ADS product info",{
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_output(
     str(wf_product_info("cams-global-reanalysis-eac4",
                         service = "ads",
@@ -83,6 +87,7 @@ test_that("check ADS product info",{
 test_that("batch request works", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   years <- c(2017,2018)
 

@@ -56,6 +56,7 @@ if(server_check & ON_GIT){
 test_that("set, get secret key",{
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   # check retrieval
   expect_error(wf_get_key(user = "info@bluegreenlabs.org"))
@@ -64,18 +65,24 @@ test_that("set, get secret key",{
 test_that("test dataset function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_output(str(wf_datasets(user = "info@bluegreenlabs.org")))
 })
 
 test_that("test dataset function - no login", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_error(wf_datasets())
 })
 
 test_that("test services function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_output(str(wf_services(user = "info@bluegreenlabs.org")))
 })
 
@@ -88,18 +95,24 @@ test_that("test services function - no login", {
 test_that("test user info function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_output(str(wf_user_info(user = "info@bluegreenlabs.org")))
 })
 
 test_that("test user info function - no login", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_error(wf_user_info())
 })
 
 test_that("test request (transfer) function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
+
   expect_type(
     wf_request(
       user = "info@bluegreenlabs.org",
@@ -113,6 +126,7 @@ test_that("test request (transfer) function", {
 test_that("test request (transfer) function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   # create new output dir in tempdir()
   path <- file.path(tempdir(),"/test/")
@@ -129,6 +143,7 @@ test_that("test request (transfer) function", {
 test_that("test request (transfer) function - time out", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_output(str(wf_request(
     user = "info@bluegreenlabs.org",
@@ -140,6 +155,7 @@ test_that("test request (transfer) function - time out", {
 test_that("test request (transfer) function - no transfer", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   ct <- wf_request(
     user = "info@bluegreenlabs.org",
@@ -170,6 +186,7 @@ test_that("test request (transfer) function - no transfer", {
 test_that("test request (transfer) function - no email", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_error(wf_request())
 })
@@ -177,6 +194,7 @@ test_that("test request (transfer) function - no email", {
 test_that("test transfer function - no login", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_error(wf_transfer())
 })
@@ -184,6 +202,7 @@ test_that("test transfer function - no login", {
 test_that("list datasets webapi",{
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_output(str(wf_datasets(user = "info@bluegreenlabs.org",
                                 service = "webapi")))
@@ -195,6 +214,7 @@ test_that("list datasets webapi",{
 test_that("test request (transfer) function", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_message(
     wf_request(
@@ -220,6 +240,7 @@ test_that("check product info",{
 test_that("test delete function - no login", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   expect_error(wf_delete())
 })
@@ -227,6 +248,7 @@ test_that("test delete function - no login", {
 test_that("check request - no dataset field", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- list(
     stream = "oper",
@@ -251,6 +273,7 @@ test_that("check request - no dataset field", {
 test_that("check request - bad request type", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- "xyz"
   expect_error(
@@ -263,6 +286,7 @@ test_that("check request - bad request type", {
 test_that("check mars request - no target", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- list(
     stream = "oper",
@@ -288,6 +312,7 @@ test_that("check mars request - no target", {
 test_that("check request - no netcdf grid specified", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- list(
     stream = "oper",
@@ -312,6 +337,7 @@ test_that("check request - no netcdf grid specified", {
 test_that("check request - bad credentials", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- list(
     stream = "oper",
@@ -338,6 +364,7 @@ test_that("check request - bad credentials", {
 test_that("job_name has to be valid", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   my_request <- list(
     stream = "oper",
@@ -364,6 +391,7 @@ test_that("job_name has to be valid", {
 test_that("batch request", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   years <- c(2017,2018)
   requests <- lapply(years, function(y) {
@@ -395,6 +423,7 @@ test_that("batch request", {
 test_that("wf_transfer() check", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   request <- list(
     stream = "oper",

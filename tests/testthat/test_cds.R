@@ -6,10 +6,8 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-login_check <- NA
-
 # ignore SSL (server has SSL issues)
-httr::set_config(httr::config(ssl_verifypeer = 0L))
+#httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # format request (see below)
 cds_request <- list(
@@ -54,8 +52,13 @@ if(server_check){
         key = Sys.getenv("CDS"),
         service = "cds")
       )
-  print(user)
+
+  # set login check to TRUE so skipped if
+  # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  # skip if the server is not reachable
+  login_check <- TRUE
 }
 
 #----- formal checks ----

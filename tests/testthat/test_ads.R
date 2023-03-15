@@ -8,7 +8,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
 
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
-login_check <- NA
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",
@@ -20,7 +19,7 @@ ads_request <- list(
 )
 
 # ignore SSL (server has SSL issues)
-httr::set_config(httr::config(ssl_verifypeer = 0L))
+#httr::set_config(httr::config(ssl_verifypeer = 0L))
 
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
@@ -32,10 +31,16 @@ if(server_check){
     try(
       wf_set_key(user = "2161",
                  key = Sys.getenv("ADS"),
-                 service = "ads")
-    )
+                 service = "ads"))
+
+  # set login check to TRUE so skipped if
+  # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  # skip if the server is not reachable
+  login_check <- TRUE
 }
+
 
 #----- formal checks ----
 

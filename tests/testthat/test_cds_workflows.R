@@ -19,8 +19,15 @@ if(server_check) {
         service = "cds"
         )
     )
+
+  # set login check to TRUE so skipped if
+  # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  # skip if the server is not reachable
+  login_check <- TRUE
 }
+
 
 #----- formal checks ----
 

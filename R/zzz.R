@@ -125,6 +125,8 @@ exit_message <- function(url, service, path, file) {
 .onAttach <-
   function(libname = find.package("ecmwfr"),
            pkgname = "ecmwfr") {
+
+    # startup messages
     vers <- as.character(utils::packageVersion("ecmwfr"))
     txt <- paste(
       "\n     This is 'ecmwfr' version ",
@@ -135,6 +137,9 @@ exit_message <- function(url, service, path, file) {
     )
     if (interactive())
       packageStartupMessage(txt)
+
+    # force http/2 for all products
+    httr::set_config(httr::config(http_version = 2))
   }
 
 # check if server is reachable

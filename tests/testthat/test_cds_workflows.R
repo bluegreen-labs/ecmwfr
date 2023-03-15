@@ -6,12 +6,19 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
+# check if on github
+ON_GIT <- ifelse(
+  length(Sys.getenv("GITHUB_TOKEN")) <= 1,
+  FALSE,
+  TRUE
+)
+
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(server_check) {
+if(server_check & ON_GIT) {
   user <-try(
       wf_set_key(
         user = "2088",
@@ -19,7 +26,12 @@ if(server_check) {
         service = "cds"
         )
     )
+
+  # set login check to TRUE so skipped if
+  # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  login_check <- TRUE
 }
 
 #----- formal checks ----
@@ -28,6 +40,7 @@ if(server_check) {
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   # basic request for data via python
   # one line as indentation matters

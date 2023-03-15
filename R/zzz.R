@@ -140,7 +140,7 @@ exit_message <- function(url, service, path, file) {
 
     # force non http/2 transfers to avoid
     # batch processing issues
-    #httr::set_config(httr::config(http_version = 1))
+    httr::set_config(httr::config(http_version = 1))
   }
 
 # check if server is reachable

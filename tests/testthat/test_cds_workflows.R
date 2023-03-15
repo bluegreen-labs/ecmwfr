@@ -11,8 +11,8 @@ login_check <- FALSE
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
-  TRUE,
-  FALSE
+  FALSE,
+  TRUE
 )
 
 # is the server reachable

@@ -11,8 +11,8 @@ login_check <- FALSE
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
-  TRUE,
-  FALSE
+  FALSE,
+  TRUE
 )
 
 # ignore SSL (server has SSL issues)
@@ -68,7 +68,6 @@ if(server_check & ON_GIT){
 }
 
 #----- formal checks ----
-
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)

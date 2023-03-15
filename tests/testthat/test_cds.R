@@ -6,6 +6,15 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
+login_check <- FALSE
+
+# check if on github
+ON_GIT <- ifelse(
+  length(Sys.getenv("GITHUB_TOKEN")) <= 1,
+  FALSE,
+  TRUE
+)
+
 # ignore SSL (server has SSL issues)
 #httr::set_config(httr::config(ssl_verifypeer = 0L))
 
@@ -45,7 +54,7 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
-if(server_check){
+if(server_check && ON_GIT){
   user <- try(
       ecmwfr::wf_set_key(
         user = "2088",
@@ -56,9 +65,6 @@ if(server_check){
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
-} else {
-  # skip if the server is not reachable
-  login_check <- TRUE
 }
 
 #----- formal checks ----

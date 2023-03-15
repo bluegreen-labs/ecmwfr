@@ -8,6 +8,14 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
 
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
+login_check <- FALSE
+
+# check if on github
+ON_GIT <- ifelse(
+  length(Sys.getenv("GITHUB_TOKEN")) <= 1,
+  FALSE,
+  TRUE
+  )
 
 ads_request <- list(
   date = "2003-01-01/2003-01-01",

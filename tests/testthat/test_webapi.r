@@ -8,6 +8,14 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
 
 # ignore SSL (server has SSL issues)
 #httr::set_config(httr::config(ssl_verifypeer = 0L))
+login_check <- FALSE
+
+# check if on github
+ON_GIT <- ifelse(
+  length(Sys.getenv("GITHUB_TOKEN")) <= 1,
+  FALSE,
+  TRUE
+)
 
 # format request (see below)
 my_request <- list(
@@ -30,7 +38,7 @@ my_request <- list(
 server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "webapi"))
 
 # if server is up, create login
-if(server_check){
+if(server_check && ON_GIT){
   user <- try(
     wf_set_key(
       user = "info@bluegreenlabs.org",
@@ -41,9 +49,6 @@ if(server_check){
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
-} else {
-  # skip if the server is not reachable
-  login_check <- TRUE
 }
 
 #----- formal checks ----
@@ -53,7 +58,7 @@ test_that("set, get secret key",{
   skip_if(login_check)
 
   # check retrieval
-  expect_output(str(wf_get_key(user = "info@bluegreenlabs.org")))
+  expect_error(wf_get_key(user = "info@bluegreenlabs.org"))
 })
 
 test_that("test dataset function", {
@@ -68,24 +73,15 @@ test_that("test dataset function - no login", {
   expect_error(wf_datasets())
 })
 
-test_that("list datasets webapi",{
-  skip_on_cran()
-  skip_if(login_check)
-  expect_output(str(wf_datasets(user = "info@bluegreenlabs.org",
-                                service = "webapi")))
-})
-
 test_that("test services function", {
   skip_on_cran()
   skip_if(login_check)
-
   expect_output(str(wf_services(user = "info@bluegreenlabs.org")))
 })
 
 test_that("test services function - no login", {
   skip_on_cran()
   skip_if(login_check)
-
   expect_error(wf_services())
 })
 

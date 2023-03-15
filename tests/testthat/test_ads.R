@@ -31,10 +31,9 @@ if(server_check){
   user <-
     try(
       wf_set_key(user = "2161",
-                 key = system("echo $ADS", intern = TRUE),
+                 key = Sys.getenv("ADS"),
                  service = "ads")
     )
-  print(user)
   login_check <- inherits(user, "try-error")
 }
 

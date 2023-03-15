@@ -34,10 +34,9 @@ if(server_check){
   user <- try(
     wf_set_key(
       user = "info@bluegreenlabs.org",
-      key = system("echo $WEBAPI", intern = TRUE),
+      key = Sys.getenv("WEBAPI"),
       service = "webapi"
     ))
-  print(user)
   login_check <- inherits(user, "try-error")
 }
 

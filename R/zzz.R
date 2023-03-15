@@ -139,8 +139,9 @@ exit_message <- function(url, service, path, file) {
       packageStartupMessage(txt)
 
     # force non http/2 transfers to avoid
-    # batch processing issues
-    httr::set_config(httr::config(http_version = 1))
+    # batch processing issues (set to 1)
+    httr::set_config(httr::config(http_version = 2))
+    #breaks SSL, but enables long batch processes
   }
 
 # check if server is reachable

@@ -133,15 +133,14 @@ exit_message <- function(url, service, path, file) {
       vers,
       ". Please respect the terms of use:\n",
       "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
-      "     - https://www.ecmwf.int/en/terms-use\n",
-      " (note: using http version 1.1)"
+      "     - https://www.ecmwf.int/en/terms-use\n"
     )
     if (interactive())
       packageStartupMessage(txt)
 
     # force non http/2 transfers to avoid
     # batch processing issues
-    httr::set_config(httr::config(http_version = 1))
+    #httr::set_config(httr::config(http_version = 1))
   }
 
 # check if server is reachable

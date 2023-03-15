@@ -65,6 +65,8 @@ if(server_check & ON_GIT){
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  login_check <- TRUE
 }
 
 #----- formal checks ----

@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-login_check <- FALSE
-
 # check if on github
 ON_GIT <- ifelse(
   length(Sys.getenv("GITHUB_TOKEN")) <= 1,
@@ -32,6 +30,8 @@ if(server_check & ON_GIT) {
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  login_check <- TRUE
 }
 
 #----- formal checks ----
@@ -40,6 +40,7 @@ if(server_check & ON_GIT) {
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
+  skip_if(!server_check)
 
   # basic request for data via python
   # one line as indentation matters

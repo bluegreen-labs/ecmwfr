@@ -8,7 +8,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
 
 #opts <- options(keyring_warn_for_env_fallback = FALSE)
 #on.exit(options(opts), add = TRUE)
-login_check <- FALSE
 
 # check if on github
 ON_GIT <- ifelse(
@@ -37,14 +36,34 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "ads"))
 if(server_check & ON_GIT){
   user <-
     try(
-      wf_set_key(user = "2161",
-                 key = Sys.getenv("ADS"),
-                 service = "ads"))
+      wf_set_key(
+        user = "2161",
+        key = Sys.getenv("ADS"),
+        service = "ads")
+      )
 
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  login_check <- TRUE
 }
+
+#---- check server active ----
+test_that("Server up? Fails if not",{
+  skip_on_cran()
+
+  # check retrieval
+  expect_true(server_check)
+})
+
+#---- Login well set ----
+test_that("Could the login be set? Fails if not",{
+  skip_on_cran()
+
+  # check retrieval
+  expect_true(login_check)
+})
 
 #----- formal checks ----
 

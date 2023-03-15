@@ -8,7 +8,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
 
 # ignore SSL (server has SSL issues)
 #httr::set_config(httr::config(ssl_verifypeer = 0L))
-login_check <- FALSE
 
 # check if on github
 ON_GIT <- ifelse(
@@ -44,11 +43,14 @@ if(server_check & ON_GIT){
       user = "info@bluegreenlabs.org",
       key = Sys.getenv("WEBAPI"),
       service = "webapi"
-    ))
+    )
+  )
 
   # set login check to TRUE so skipped if
   # the user is not created
   login_check <- inherits(user, "try-error")
+} else {
+  login_check <- TRUE
 }
 
 #---- check server active ----

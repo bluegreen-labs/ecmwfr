@@ -17,7 +17,7 @@ and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu)
 or 'CDS' from within R, matching and expanding upon the ECMWF python
 tools.
 
-## How to cite this package in your article
+## How to cite this package
 
 You can cite this package like this "we obtained data from the European
 Centre for Medium-Range Weather Forecasts API using the ecmwf R package

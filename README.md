@@ -25,7 +25,6 @@ Centre for Medium-Range Weather Forecasts API using the ecmwf R package
 bibliographic reference to include in your reference list (don't forget
 to update the 'last accessed' date):
 
-> [!important]
 > Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr:
 > Programmatic interface to the two European Centre for Medium-Range
 > Weather Forecasts API services. Zenodo.

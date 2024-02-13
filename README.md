@@ -17,6 +17,18 @@ and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu)
 or 'CDS' from within R, matching and expanding upon the ECMWF python
 tools.
 
+> [!note]
+> The ECMWF CDS service is currently undergoing changes which might impact performance
+> including longer download queues, download times and or dropped requests.
+> A solution temporary solution is provided by @mpaulacaldas
+> https://github.com/bluegreen-labs/ecmwfr/issues/125
+>
+> A more permanent solution, and CRAN release, will be provided on a later date.
+> 
+> Details on the disruption here:
+> https://confluence.ecmwf.int/display/CUSF/A+new+CDS+soon+to+be+launched+-+expect+some+disruptions
+
+
 ## How to cite this package
 
 You can cite this package like this "we obtained data from the European

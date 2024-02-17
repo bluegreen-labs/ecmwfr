@@ -20,7 +20,7 @@ tools.
 > [!note]
 > The ECMWF CDS service is currently undergoing changes which might impact performance
 > including longer download queues, download times and or dropped requests.
-> A solution temporary solution is provided by @mpaulacaldas
+> A temporary solution is provided by @mpaulacaldas
 > https://github.com/bluegreen-labs/ecmwfr/issues/125
 >
 > A more permanent solution, and CRAN release, will be provided on a later date.

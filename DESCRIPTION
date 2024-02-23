@@ -41,7 +41,7 @@ Imports:
     uuid
 License: AGPL-3
 ByteCompile: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Suggests:
     rmarkdown,
     covr,

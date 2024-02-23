@@ -42,7 +42,6 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       private$status <- "submitted"
       private$code <- ct$code
       private$name <- ct$request_id
-      private$retry <- 30
       private$next_retry <- Sys.time() + private$retry
       private$url <- wf_server(id = ct$request_id, service = "cds")
       return(self)

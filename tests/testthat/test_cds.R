@@ -262,7 +262,7 @@ test_that("batch request tests", {
   skip_on_cran()
   skip_if(login_check)
 
-  years <- c(2017,2017)
+  years <- c(2017,2018)
   requests <- lapply(years, function(y) {
     list(
       "dataset_short_name" = "reanalysis-era5-pressure-levels",

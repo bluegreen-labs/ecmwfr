@@ -16,6 +16,8 @@ ON_GIT <- ifelse(
   TRUE
 )
 
+ON_GIT <- TRUE
+
 # format request (see below)
 my_request <- list(
   stream = "oper",

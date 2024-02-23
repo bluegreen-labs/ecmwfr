@@ -53,7 +53,8 @@ wf_request_batch <- function(
           queue[[1]],
           user = user[1],
           time_out = time_out[1],
-          path = path[1], transfer = FALSE
+          path = path[1],
+          transfer = FALSE
           )
         queue <- queue[-1]
         user <- user[-1]

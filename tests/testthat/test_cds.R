@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-login_check <- FALSE
-
 # check if on github
 ON_GIT <- ifelse(
   Sys.getenv("GITHUB_ACTION") == "",
@@ -88,6 +86,8 @@ test_that("cds datasets returns data.frame or list", {
                                    service = "cds",
                                    simplify = FALSE), "list"))
 })
+
+login_check <- FALSE
 
 # Testing the cds request function
 test_that("cds request", {

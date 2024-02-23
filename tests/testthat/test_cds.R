@@ -87,8 +87,6 @@ test_that("cds datasets returns data.frame or list", {
                                    simplify = FALSE), "list"))
 })
 
-login_check <- FALSE
-
 # Testing the cds request function
 test_that("cds request", {
   skip_on_cran()

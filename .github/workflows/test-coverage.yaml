@@ -12,8 +12,8 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    timeout-minutes: 30
-    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    runs-on: Ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ADS: ${{secrets.ADS}}

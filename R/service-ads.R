@@ -34,8 +34,7 @@ ads_service <- R6::R6Class("ecmwfr_ads", inherit = cds_service,
 
       # grab content, to look at the status
       ct <- httr::content(response)
-
-      ct$code <- 202
+      ct$code <- httr::status_code(response)
 
       # some verbose feedback
       if (private$verbose) {

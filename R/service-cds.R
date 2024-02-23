@@ -29,9 +29,9 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       }
 
       # grab content, to look at the status
+      # and code
       ct <- httr::content(response)
-
-      ct$code <- 202
+      ct$code <- httr::status_code(response)
 
       # some verbose feedback
       if (private$verbose) {
@@ -65,6 +65,7 @@ cds_service <- R6::R6Class("ecmwfr_cds",
 
       key <- wf_get_key(user = private$user, service = private$service)
 
+      # set retry time
       retry_in <- as.numeric(private$next_retry) - as.numeric(Sys.time())
 
       if (retry_in > 0) {
@@ -90,6 +91,19 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       ct <- httr::content(response)
       private$status <- ct$state
 
+      # trap general http error most likely
+      # will fail on spamming the service too fast
+      # with a high retry rate
+      if (httr::http_error(response)) {
+        stop(paste0(
+          httr::content(response),
+          "--- check your retry rate!"),
+          call. = FALSE
+        )
+      }
+
+      # checks the status of the true download, not the http status
+      # of the call itself
       if (private$status != "completed" || is.null(private$status)) {
         private$code <- 202
         private$file_url <- NA # just ot be on the safe side

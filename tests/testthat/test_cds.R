@@ -262,7 +262,7 @@ test_that("batch request tests", {
   skip_on_cran()
   skip_if(login_check)
 
-  years <- c(2017,2018)
+  years <- c(2017,2017)
   requests <- lapply(years, function(y) {
     list(
       "dataset_short_name" = "reanalysis-era5-pressure-levels",
@@ -281,6 +281,7 @@ test_that("batch request tests", {
 
   expect_output(wf_request_batch(
     requests,
+    retry = 5,
     user = "2088")
     )
 

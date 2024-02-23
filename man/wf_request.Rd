@@ -22,6 +22,7 @@ wf_request_batch(
   user,
   path = tempdir(),
   time_out = 3600,
+  retry = 5,
   total_timeout = length(request_list) * time_out/workers
 )
 }

@@ -27,6 +27,8 @@
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
 #' \code{3*3600} seconds).
+#' @param retry polling frequency of submitted request for downloading (default =
+#' \code{30} seconds).
 #' @param transfer logical, download data TRUE or FALSE (default = TRUE)
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF APIs page
@@ -76,6 +78,7 @@ wf_request <- function(
     transfer = TRUE,
     path = tempdir(),
     time_out = 3600,
+    retry = 30,
     job_name,
     verbose = TRUE
 ) {
@@ -161,6 +164,7 @@ wf_request <- function(
     request = request,
     user = service_info$user,
     url = service_info$url,
+    retry = retry,
     path = path
     )
 

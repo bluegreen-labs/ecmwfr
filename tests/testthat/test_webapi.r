@@ -16,6 +16,9 @@ ON_GIT <- ifelse(
   TRUE
 )
 
+# force to skip webapi checks
+ON_GIT <- TRUE
+
 # format request (see below)
 my_request <- list(
   stream = "oper",

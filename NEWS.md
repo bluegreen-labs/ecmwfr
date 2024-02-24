@@ -1,6 +1,7 @@
 # ecmwfr 1.5.1
 
 * Logic patch for 202 http error on long runs
+* dynamic retry polling to avoid API rate limiting (default = 30s)
 
 # ecmwfr 1.5.0
 

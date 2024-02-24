@@ -3,11 +3,13 @@ service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
     initialize = function(request,
                           user,
                           url,
+                          retry,
                           path = tempdir(),
                           verbose = TRUE) {
       private$user <- user
       private$request <- request
       private$path <- path
+      private$retry <- retry
       private$file <- file.path(path, request$target)
       private$verbose <- verbose
       private$url <- url

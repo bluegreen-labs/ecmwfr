@@ -11,6 +11,7 @@ wf_request(
   transfer = TRUE,
   path = tempdir(),
   time_out = 3600,
+  retry = 30,
   job_name,
   verbose = TRUE
 )
@@ -21,6 +22,7 @@ wf_request_batch(
   user,
   path = tempdir(),
   time_out = 3600,
+  retry = 5,
   total_timeout = length(request_list) * time_out/workers
 )
 }
@@ -28,7 +30,7 @@ wf_request_batch(
 \item{request}{nested list with query parameters following the layout
 as specified on the ECMWF APIs page}
 
-\item{user}{user (email address) used to sign up for the ECMWF data service,
+\item{user}{user (email address or ID) provided by the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{transfer}{logical, download data TRUE or FALSE (default = TRUE)}
@@ -37,6 +39,9 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{time_out}{how long to wait on a download to start (default =
 \code{3*3600} seconds).}
+
+\item{retry}{polling frequency of submitted request for downloading (default =
+\code{30} seconds).}
 
 \item{job_name}{optional name to use as an RStudio job and as output variable
 name. It has to be a syntactically valid name.}

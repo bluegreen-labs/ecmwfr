@@ -34,8 +34,7 @@ ads_service <- R6::R6Class("ecmwfr_ads", inherit = cds_service,
 
       # grab content, to look at the status
       ct <- httr::content(response)
-
-      ct$code <- 202
+      ct$code <- httr::status_code(response)
 
       # some verbose feedback
       if (private$verbose) {
@@ -46,7 +45,6 @@ ads_service <- R6::R6Class("ecmwfr_ads", inherit = cds_service,
       private$status <- "submitted"
       private$code <- ct$code
       private$name <- ct$request_id
-      private$retry <- 5
       private$next_retry <- Sys.time() + private$retry
       private$url <- wf_server(id = ct$request_id, service = "ads")
       return(self)

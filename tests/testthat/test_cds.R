@@ -6,8 +6,6 @@ if(!("ecmwfr" %in% keyring::keyring_list()$keyring)){
   keyring::keyring_create("ecmwfr", password = "test")
 }
 
-login_check <- FALSE
-
 # check if on github
 ON_GIT <- ifelse(
   Sys.getenv("GITHUB_ACTION") == "",
@@ -281,8 +279,10 @@ test_that("batch request tests", {
       "target"         = paste0(y, "-era5-demo.nc"))
   })
 
-  expect_output(wf_request_batch(
+  expect_output(
+    wf_request_batch(
     requests,
+    retry = 5,
     user = "2088")
     )
 

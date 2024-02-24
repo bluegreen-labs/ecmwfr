@@ -3,6 +3,8 @@
 #' to the service. Most ECMWF services are limited to 20 concurrent requests
 #' (default = 2).
 #' @param total_timeout overall timeout limit for all the requests in seconds.
+#' @param retry polling frequency of submitted request for downloading (default =
+#' \code{30} seconds).
 #' @importFrom R6 R6Class
 #'
 #' @rdname wf_request
@@ -13,6 +15,7 @@ wf_request_batch <- function(
     user,
     path = tempdir(),
     time_out = 3600,
+    retry = 5,
     total_timeout = length(request_list)*time_out/workers
 ) {
 
@@ -53,7 +56,9 @@ wf_request_batch <- function(
           queue[[1]],
           user = user[1],
           time_out = time_out[1],
-          path = path[1], transfer = FALSE
+          retry = retry,
+          path = path[1],
+          transfer = FALSE
           )
         queue <- queue[-1]
         user <- user[-1]

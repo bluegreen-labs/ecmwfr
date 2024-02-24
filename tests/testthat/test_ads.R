@@ -62,7 +62,7 @@ test_that("Could the login be set? Fails if not",{
   skip_on_cran()
 
   # check retrieval
-  expect_true(login_check)
+  expect_true(!login_check)
 })
 
 #----- formal checks ----

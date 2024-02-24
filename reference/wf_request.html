@@ -94,6 +94,7 @@ to identify possible problems.</p>
 <span>  transfer <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  time_out <span class="op">=</span> <span class="fl">3600</span>,</span>
+<span>  retry <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  <span class="va">job_name</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
@@ -104,6 +105,7 @@ to identify possible problems.</p>
 <span>  <span class="va">user</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  time_out <span class="op">=</span> <span class="fl">3600</span>,</span>
+<span>  retry <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  total_timeout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">request_list</span><span class="op">)</span> <span class="op">*</span> <span class="va">time_out</span><span class="op">/</span><span class="va">workers</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -116,7 +118,7 @@ as specified on the ECMWF APIs page</p></dd>
 
 
 <dt>user</dt>
-<dd><p>user (email address) used to sign up for the ECMWF data service,
+<dd><p>user (email address or ID) provided by the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code></p></dd>
 
 
@@ -131,6 +133,11 @@ used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a>
 <dt>time_out</dt>
 <dd><p>how long to wait on a download to start (default =
 <code>3*3600</code> seconds).</p></dd>
+
+
+<dt>retry</dt>
+<dd><p>polling frequency of submitted request for downloading (default =
+<code>30</code> seconds).</p></dd>
 
 
 <dt>job_name</dt>

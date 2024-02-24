@@ -279,7 +279,8 @@ test_that("batch request tests", {
       "target"         = paste0(y, "-era5-demo.nc"))
   })
 
-  expect_output(wf_request_batch(
+  expect_output(
+    wf_request_batch(
     requests,
     retry = 5,
     user = "2088")

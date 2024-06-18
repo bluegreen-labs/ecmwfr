@@ -48,6 +48,9 @@ wf_request_batch <- function(
   while (length(done) < length(request_list) & Sys.time() < timeout_time) {
     for (w in seq_along(slots)) {
 
+      # wait before submitting a call
+      Sys.sleep(10)
+
       # If a slot is free and there's a queue,
       # assign to it the next pending request,
       # remove that request from the queue

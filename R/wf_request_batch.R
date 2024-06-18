@@ -49,7 +49,9 @@ wf_request_batch <- function(
     for (w in seq_along(slots)) {
 
       # wait before submitting a call
-      Sys.sleep(10)
+      # set to the same value is the
+      # retry rate
+      Sys.sleep(retry)
 
       # If a slot is free and there's a queue,
       # assign to it the next pending request,

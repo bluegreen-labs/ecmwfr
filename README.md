@@ -12,9 +12,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 Programmatic interface to the two [European Centre for Medium-Range
 Weather Forecasts](https://www.ecmwf.int/) API services. The package
 provides easy access to the ['ECMWF' web API
-services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home)
-and Copernicus [Climate Data Store](https://cds.climate.copernicus.eu)
-or 'CDS' from within R, matching and expanding upon the ECMWF python
+services](https://confluence.ecmwf.int/display/WEBAPI/ECMWF+Web+API+Home),Copernicus [Climate Data Store](https://cds.climate.copernicus.eu)
+or 'CDS' and [Copernicus Atmosphere Data Store](https://atmosphere.copernicus.eu/data) or 'ADS' from within R, matching and expanding upon the ECMWF python
 tools.
 
 > [!note]

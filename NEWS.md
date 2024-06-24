@@ -2,6 +2,7 @@
 
 * Logic patch for 202 http error on long runs
 * dynamic retry polling to avoid API rate limiting (default = 30s)
+* adding CDS beta url (new service)
 
 # ecmwfr 1.5.0
 

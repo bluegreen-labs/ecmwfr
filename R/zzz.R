@@ -14,14 +14,15 @@
 # \code{type == "cds"}).
 #
 # @author Koen Kufkens
-wf_server <- function(id, service = "webapi") {
+wf_server <- function(id, service = "cds") {
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds", "ads"))
+  service <- match.arg(service, c("webapi", "cds", "cds-beta", "ads"))
 
   # set base urls
   webapi_url <- "https://api.ecmwf.int/v1"
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
+  cds_beta_url <- "https://cds-beta.climate.copernicus.eu/api"
   ads_url <- "https://ads.atmosphere.copernicus.eu/api/v2"
 
   # return url depending on service or id
@@ -36,6 +37,12 @@ wf_server <- function(id, service = "webapi") {
       return(ads_url)
     } else {
       return(file.path(ads_url, "tasks", id))
+    }
+  } else if (service == "cds-beta") {
+    if (missing(id)) {
+      return(cds_beta_url)
+    } else {
+      return(file.path(cds_beta_url, "tasks", id))
     }
   } else {
     if (missing(id)) {

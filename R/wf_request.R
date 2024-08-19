@@ -155,7 +155,7 @@ wf_request <- function(
     service,
     webapi = webapi_service,
     cds = cds_service,
-    cds_beta = cds-beta_service,
+    cds_beta = cds_beta_service,
     cds_workflow = cds_workflow,
     ads = ads_service
     )
@@ -166,7 +166,8 @@ wf_request <- function(
     user = service_info$user,
     url = service_info$url,
     retry = retry,
-    path = path
+    path = path,
+    verbose = verbose
     )
 
   # Submit the request

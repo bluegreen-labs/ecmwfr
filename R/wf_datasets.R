@@ -34,7 +34,7 @@ wf_datasets <- function(
 
   # check the login credentials
   if(missing(user)){
-    stop("Please provide ECMWF WebAPI or CDS login email / url!")
+    stop("Please provide ECMWF WebAPI or CDS login email or user ID!")
   }
 
   # get key
@@ -54,7 +54,11 @@ wf_datasets <- function(
     "cds" = httr::GET(sprintf("%s/resources/",
                                   wf_server(service = "cds"))),
     "ads" = httr::GET(sprintf("%s/resources/",
-                            wf_server(service = "ads"))))
+                            wf_server(service = "ads"))),
+    "cds_beta" = httr::GET(
+      "https://cds-beta.climate.copernicus.eu/api/catalogue/v1/collections/"
+      )
+    )
 
   # trap errors
   if (httr::http_error(response)){
@@ -72,11 +76,20 @@ wf_datasets <- function(
         return(data.frame(x['name'], x['href'], stringsAsFactors = FALSE))
       }))
       colnames(ct) <- c("name","url")
-    } else {
+    } else if(service == "cds" || service == "ads") {
       # reformat content
       ct <- data.frame(name = unlist(ct),
                        url = sprintf("%s/resources/%s",
                                      wf_server(), unlist(ct)))
+    } else {
+      collections <- unlist(lapply(ct[["collections"]], "[[", 2))
+      ct <- data.frame(
+        name = collections,
+        url = sprintf(
+          "https://cds-beta.climate.copernicus.eu/api/catalogue/v1/collections/%s",
+          collections
+        )
+      )
     }
   }
 

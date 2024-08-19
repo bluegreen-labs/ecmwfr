@@ -45,7 +45,8 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
       private$code <- ct$code
       private$name <- ct$jobID
       private$next_retry <- Sys.time() + private$retry
-      private$url <- wf_server(id = ct$request_id, service = "cds_beta")
+      private$url <- wf_server(id = ct$jobID, service = "cds_beta")
+
       return(self)
     },
     update_status = function(
@@ -115,8 +116,9 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
       # of the call itself
       if (private$status != "successful" || is.null(private$status)) {
         private$code <- 202
-        private$file_url <- NA # just ot be on the safe side
+        private$file_url <- NA # just to be on the safe side
       } else if (private$status == "successful") {
+        if (private$verbose) message("   file ready to download...")
         private$code <- 302
         private$file_url <- private$get_location(ct)
       } else if (private$status == "failed") {

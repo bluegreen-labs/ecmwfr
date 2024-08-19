@@ -4,6 +4,11 @@ Binding: MARS2list_Addin
 Interactive: false
 
 Name: Python to list
-Description: Convert python retrieve request to list.
+Description: Converts CDS python retrieve request to list.
 Binding: python2list_Addin
+Interactive: false
+
+Name: CDS-beta Python to list
+Description: Convert CDS-beta python retrieve request to list.
+Binding: pythonbeta2list_Addin
 Interactive: false

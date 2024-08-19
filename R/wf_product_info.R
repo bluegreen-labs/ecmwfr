@@ -65,9 +65,13 @@ wf_product_info <- function(
       encode = "json")
 
   } else {
-    response <- httr::GET(sprintf("%s/resources/%s",
-                                  wf_server(service = service),
-                                  dataset))
+    response <- httr::GET(
+      sprintf(
+        "%s/resources/%s",
+        wf_server(service = service),
+        dataset
+        )
+    )
   }
 
   # trap errors

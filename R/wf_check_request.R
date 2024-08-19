@@ -21,20 +21,8 @@ wf_check_request <- memoise::memoise(function(
   # Stop if not a list
   stopifnot(inherits(request, "list"))
 
-  # check MARS requirements
-  if(request$dataset == "mars"){
-    if(grepl("^netcdf$", tolower(request$format))) {
-      if(!"grid" %in% names(request)){
-        stop("'mars' requests: 'grid' required if 'format = \"netcdf\"'")
-      }
-    }
-    if(!"target" %in% names(request)){
-      stop("'mars' requests: require a 'target' variable in the request.")
-    }
-  }
-
   service <- do.call("rbind",
-                     lapply(c("webapi","cds","ads","cds_beta","ads_beta"),
+                     lapply(c("cds","ads", "cds_beta","ads_beta"),
                                      function(service){
     dataset <- try(
       wf_datasets(
@@ -47,22 +35,7 @@ wf_check_request <- memoise::memoise(function(
       return(NULL)
     }
 
-    if (service == "webapi"){
-      # sadly had to split this up between services
-      # due to changes in dataset naming conventions
-      # i.e. no consistent dataset variable can be used
-      # see note below
-
-      if(!"dataset" %in% names(request)){
-        stop("Request specification has to contain a \"dataset\" identifier.")
-      }
-
-      if(request$dataset %in% dataset$name ||
-         (request$dataset == "mars" && service == "webapi")){
-        return(service)
-      }
-
-    } else if (service == "cds" || service == "ads") {
+    if (service == "cds" || service == "ads") {
 
       # on CDS / ADS use the short name variable to avoid conflicts
       # for certain data products (which reuse the dataset parameter)
@@ -99,14 +72,7 @@ wf_check_request <- memoise::memoise(function(
                  request$dataset), call. = FALSE)
   }
 
-  url <- if(request$dataset == "mars" && service == "webapi") {
-    sprintf("%s/services/mars/requests", wf_server(service = service))
-  } else if(service == "webapi") {
-    sprintf("%s/datasets/%s/requests", wf_server(service = service),
-            request$dataset)
-  } else {
-    wf_server(service = service)
-  }
+  url <- wf_server(service = service)
 
   # return service string
   return(data.frame(service, url, stringsAsFactors = FALSE))

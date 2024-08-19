@@ -72,57 +72,6 @@ wf_transfer <- function(
                         "Content-Type" = "application/json"),
       encode = "json"
     )
-  } else {
-    # Webapi
-    response <- retrieve_header(
-      url,
-      list(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json",
-        "From" = user,
-        "X-ECMWF-KEY" = key
-      )
-    )
-    status_code <- response[["status_code"]]
-
-    if (httr::http_error(status_code)) {
-      stop("Your requested download failed - check url", call. = FALSE)
-    }
-
-    if (status_code == "202") {
-      # still processing
-      # Simulated content with the things we need to use.
-      ct <- list(
-        code = status_code,
-        retry = as.numeric(response$headers$`retry-after`),
-        href = url
-      )
-      return(invisible(ct))
-
-    } else if (status_code == "200") {
-      # Done!
-      message("\nDownloading file")
-      response <- httr::GET(
-        url,
-        httr::add_headers(
-          "Accept" = "application/json",
-          "Content-Type" = "application/json",
-          "From" = user,
-          "X-ECMWF-KEY" = key
-        ),
-        encode = "json",
-        httr::write_disk(tmp_file, overwrite = TRUE),
-        # write on disk!
-        httr::progress()
-      )
-
-      return(invisible(list(code = 302,
-                            href = url)))
-    } else {
-      stop("Your requested download had a problem with code ",
-           status_code,
-           call. = FALSE)
-    }
   }
 
   # trap (http) errors on download, return a general error statement
@@ -133,24 +82,6 @@ wf_transfer <- function(
   # check the content, and status of the download
   # will fail on large (binary) files
   ct <- httr::content(response)
-
-  # write raw data to file from memory
-  # if not returned url + passing code
-  if (inherits(ct, "raw") && service == "webapi") {
-    if (verbose) {
-      message("- polling server for a data transfer")
-      message(sprintf("- writing data to disk (\"%s\")", tmp_file))
-    }
-
-    # write binary file
-    f <- file(tmp_file, "wb")
-    writeBin(ct, f)
-    close(f)
-
-    # return data
-    return(invisible(list(code = 302,
-                          href = url)))
-  }
 
   if (service == "cds" | service == "ads") {
 

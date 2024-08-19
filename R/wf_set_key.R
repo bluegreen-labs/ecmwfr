@@ -11,8 +11,8 @@
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service
 #' @param key token provided by ECMWF
-#' @param service which service to use, one of \code{webapi}, \code{cds}
-#' or \code{ads}
+#' @param service which service to use, one of \code{webapi}, \code{cds},
+#' \code{ads}, \code{ads_beta}, \code{cds_beta}
 #'
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}

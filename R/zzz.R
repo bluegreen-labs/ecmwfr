@@ -17,15 +17,24 @@
 wf_server <- function(id, service = "cds") {
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds", "cds_beta", "ads"))
+  service <- match.arg(
+    service,
+    c("webapi",
+      "cds",
+      "cds_beta",
+      "ads",
+      "ads_beta")
+    )
 
   # set base urls
   webapi_url <- "https://api.ecmwf.int/v1"
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
   ads_url <- "https://ads.atmosphere.copernicus.eu/api/v2"
   cds_beta_url <- "https://cds-beta.climate.copernicus.eu/api/retrieve/v1"
+  ads_beta_url <- "https://ads-beta.atmosphere.copernicus.eu/api/retrieve/v1"
 
   # return url depending on service or id
+  # TODO: use switch
   if (service == "webapi") {
     if (missing(id)) {
       return(webapi_url)
@@ -44,6 +53,12 @@ wf_server <- function(id, service = "cds") {
     } else {
       return(file.path(cds_beta_url, "jobs", id))
     }
+  }else if (service == "ads_beta") {
+      if (missing(id)) {
+        return(ads_beta_url)
+      } else {
+        return(file.path(ads_beta_url, "jobs", id))
+      }
   } else {
     if (missing(id)) {
       return(cds_url)
@@ -89,6 +104,7 @@ exit_message <- function(url, service, path, file) {
     "webapi"= " Visit https://apps.ecmwf.int/webmars/joblist/",
     "cds" = " Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
     "cds_beta" = " Visit https://cds-beta.climate.copernicus.eu/requests?tab=all",
+    "ads_beta" = " Visit https://ads-beta.atmosphere.copernicus.eu/requests?tab=all",
     "ads" = " Visit https://ads.atmosphere.copernicus.eu/cdsapp#!/yourrequests"
   )
 
@@ -140,7 +156,6 @@ exit_message <- function(url, service, path, file) {
       "\n     This is 'ecmwfr' version ",
       vers,
       ". Please respect the terms of use:\n",
-      "     - https://cds.climate.copernicus.eu/disclaimer-privacy\n",
       "     - https://www.ecmwf.int/en/terms-use\n"
     )
     if (interactive())
@@ -180,6 +195,7 @@ wf_key_page <- function(service) {
          webapi = "https://api.ecmwf.int/v1/key/",
          cds = "https://cds.climate.copernicus.eu/user/login?destination=user",
          cds_beta = "https://www.ecmwf.int/user/login",
+         ads_beta = "https://www.ecmwf.int/user/login",
          ads = "https://ads.atmosphere.copernicus.eu/user/login?destination=user")
 }
 
@@ -214,6 +230,20 @@ wf_check_login <- function(user, key, service) {
   # CDS-beta service
   if (service == "cds_beta") {
     # url <- paste0(wf_server(service = "cds_beta"), "/processes/")
+    # ct <- httr::GET(
+    #   url,
+    #   httr::add_headers(
+    #     'PRIVATE-TOKEN' = key
+    #   )
+    # )
+    # return(httr::status_code(ct) < 400)
+    message("CDS-beta login validation is non-functional!")
+    return(TRUE)
+  }
+
+  # ADS beta service
+  if (service == "ads_beta") {
+    # url <- paste0(wf_server(service = "ads_beta"), "/processes/")
     # ct <- httr::GET(
     #   url,
     #   httr::add_headers(

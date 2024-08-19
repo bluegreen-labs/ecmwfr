@@ -6,7 +6,7 @@
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param url url to query
 #' @param verbose show feedback on processing
-#' @param service which service to use, one of \code{webapi}, \code{cds}
+#' @param service which service to use, one of \code{cds}
 #' or \code{ads} (default = webapi)
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' \code{\link[ecmwfr]{wf_transfer}}
@@ -36,7 +36,7 @@ wf_delete <- function(
   }
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds", "ads"))
+  service <- match.arg(service, c("cds", "ads"))
 
   # get key
   key <- wf_get_key(user = user, service = service)
@@ -56,15 +56,6 @@ wf_delete <- function(
       httr::add_headers(
         "Accept" = "application/json",
         "Content-Type" = "application/json")
-    )
-  } else {
-    response <- httr::DELETE(
-      url,
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json",
-        "From" = user,
-        "X-ECMWF-KEY" = key)
     )
   }
 

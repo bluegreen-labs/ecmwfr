@@ -1,8 +1,10 @@
-# ecmwfr 1.5.1
+# ecmwfr 2.0
 
+* removal of the Toolbox API workflow
+* removal of the WebAPI integration
+* moving from CDS to CDS-beta servers
 * Logic patch for 202 http error on long runs
 * dynamic retry polling to avoid API rate limiting (default = 30s)
-* adding CDS beta url (new service)
 
 # ecmwfr 1.5.0
 

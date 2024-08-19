@@ -43,20 +43,11 @@ wf_datasets <- function(
   # query the status url provided
   response <- switch(
     service,
-    "webapi" = httr::GET(
-    paste0(wf_server(),"/datasets"),
-    httr::add_headers(
-      "Accept" = "application/json",
-      "Content-Type" = "application/json",
-      "From" = user,
-      "X-ECMWF-KEY" = key),
-    encode = "json"),
-    "cds" = httr::GET(sprintf("%s/resources/",
-                                  wf_server(service = "cds"))),
-    "ads" = httr::GET(sprintf("%s/resources/",
-                            wf_server(service = "ads"))),
     "cds_beta" = httr::GET(
       "https://cds-beta.climate.copernicus.eu/api/catalogue/v1/collections/"
+      ),
+    "ads_beta" = httr::GET(
+      "https://ads-beta.atmosphere.copernicus.eu/api/catalogue/v1/collections/"
       )
     )
 
@@ -83,6 +74,7 @@ wf_datasets <- function(
                                      wf_server(), unlist(ct)))
     } else {
       collections <- unlist(lapply(ct[["collections"]], "[[", 2))
+      urls <- unlist(lapply(ct[["collections"]], "[[", 2))
       ct <- data.frame(
         name = collections,
         url = sprintf(

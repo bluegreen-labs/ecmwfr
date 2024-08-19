@@ -32,7 +32,7 @@
 wf_product_info <- function(
   dataset,
   user,
-  service = "webapi",
+  service = "cds",
   simplify = TRUE
   ){
 
@@ -42,30 +42,10 @@ wf_product_info <- function(
   }
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds", "ads"))
+  service <- match.arg(service, c("cds", "ads"))
 
-  # query the status url provided
-  if (service == "webapi"){
-
-    # get webapi key
-    key <- wf_get_key(user = user, service = service)
-
-    # Get list of data sets to which the user can choose from.
-    # Check if input 'dataset' is a valid choice.
-    ds <- wf_datasets(user = user, service = service)
-    dataset <- match.arg(dataset, ds$name)
-
-    response <- httr::GET(
-      paste0(wf_server(),"/datasets/",dataset),
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json",
-        "From" = user,
-        "X-ECMWF-KEY" = key),
-      encode = "json")
-
-  } else {
-    response <- httr::GET(
+  if (service == "cds" || service == "ads"){
+  response <- httr::GET(
       sprintf(
         "%s/resources/%s",
         wf_server(service = service),

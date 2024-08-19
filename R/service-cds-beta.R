@@ -118,7 +118,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
         private$code <- 202
         private$file_url <- NA # just to be on the safe side
       } else if (private$status == "successful") {
-        if (private$verbose) message("   file ready to download...")
+        if (private$verbose) message("   file ready to download...           ")
         private$code <- 302
         private$file_url <- private$get_location(ct)
       } else if (private$status == "failed") {
@@ -131,6 +131,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
         )
         warn_or_error(error_msg, error = fail_is_error)
       }
+
       private$next_retry <- Sys.time()
       return(self)
     },
@@ -165,7 +166,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
       response <- httr::GET(
         private$file_url,
         httr::write_disk(temp_file, overwrite = TRUE),
-        httr::progress()
+        if(private$verbose) {httr::progress()}
       )
 
       # trap (http) errors on download, return a general error statement
@@ -179,6 +180,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
       }
 
       private$downloaded <- TRUE
+
       # Copy data from temporary file to final location
       move <- suppressWarnings(file.rename(temp_file, private$file))
 

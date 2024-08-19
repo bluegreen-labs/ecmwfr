@@ -17,13 +17,13 @@
 wf_server <- function(id, service = "cds") {
 
   # match arguments, if not stop
-  service <- match.arg(service, c("webapi", "cds", "cds-beta", "ads"))
+  service <- match.arg(service, c("webapi", "cds", "cds_beta", "ads"))
 
   # set base urls
   webapi_url <- "https://api.ecmwf.int/v1"
   cds_url <- "https://cds.climate.copernicus.eu/api/v2"
-  cds_beta_url <- "https://cds-beta.climate.copernicus.eu/api"
   ads_url <- "https://ads.atmosphere.copernicus.eu/api/v2"
+  cds_beta_url <- "https://cds-beta.climate.copernicus.eu/api/retrieve/v1"
 
   # return url depending on service or id
   if (service == "webapi") {
@@ -38,11 +38,11 @@ wf_server <- function(id, service = "cds") {
     } else {
       return(file.path(ads_url, "tasks", id))
     }
-  } else if (service == "cds-beta") {
+  } else if (service == "cds_beta") {
     if (missing(id)) {
       return(cds_beta_url)
     } else {
-      return(file.path(cds_beta_url, "tasks", id))
+      return(file.path(cds_beta_url, "jobs", id))
     }
   } else {
     if (missing(id)) {
@@ -88,6 +88,7 @@ exit_message <- function(url, service, path, file) {
   job_list <- switch(service,
     "webapi"= " Visit https://apps.ecmwf.int/webmars/joblist/",
     "cds" = " Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
+    "cds_beta" = " Visit https://cds-beta.climate.copernicus.eu/requests?tab=all",
     "ads" = " Visit https://ads.atmosphere.copernicus.eu/cdsapp#!/yourrequests"
   )
 
@@ -178,6 +179,7 @@ wf_key_page <- function(service) {
   switch(service,
          webapi = "https://api.ecmwf.int/v1/key/",
          cds = "https://cds.climate.copernicus.eu/user/login?destination=user",
+         cds_beta = "https://www.ecmwf.int/user/login",
          ads = "https://ads.atmosphere.copernicus.eu/user/login?destination=user")
 }
 
@@ -207,6 +209,20 @@ wf_check_login <- function(user, key, service) {
     url <- paste0(wf_server(service = "cds"), "/tasks/")
     ct <- httr::GET(url, httr::authenticate(user, key))
     return(httr::status_code(ct) < 400)
+  }
+
+  # CDS-beta service
+  if (service == "cds_beta") {
+    # url <- paste0(wf_server(service = "cds_beta"), "/processes/")
+    # ct <- httr::GET(
+    #   url,
+    #   httr::add_headers(
+    #     'PRIVATE-TOKEN' = key
+    #   )
+    # )
+    # return(httr::status_code(ct) < 400)
+    message("CDS-beta login validation is non-functional!")
+    return(TRUE)
   }
 
   # ADS service
@@ -277,6 +293,7 @@ warn_or_error <- function(..., error = FALSE) {
 # Guesses the username and service from request
 guess_service <- function(request, user = NULL) {
   is_workflow <- !is.null(request[["workflow_name"]])
+  is_beta <- !is.null(request[["inputs"]])
 
   # Workflow only works in CDS (maybe?)
   if (is_workflow) {
@@ -292,11 +309,27 @@ guess_service <- function(request, user = NULL) {
                 url = url))
   }
 
+  # CDS-beta
+  if (is_workflow) {
+
+    if (missing(user) || is.null(user)) {
+      user <- keyring::key_list(service = make_key_service("cds_beta"))[["username"]][1]
+    }
+
+    service <- "cds_beta"
+    url <- wf_server(service = "cds_beta")
+
+    return(list(user = user,
+                service = service,
+                url = url))
+  }
+
   if (missing(user) || is.null(user)) {
     user <-
       rbind(
         keyring::key_list(service = make_key_service(c("webapi"))),
         keyring::key_list(service = make_key_service(c("cds"))),
+        keyring::key_list(service = make_key_service(c("cds_beta"))),
         keyring::key_list(service = make_key_service(c("ads")))
       )
     serv <- make_key_service()
@@ -314,8 +347,8 @@ guess_service <- function(request, user = NULL) {
   if (length(correct) == 0) {
     stop(
       sprintf(
-        "Data identifier %s is not found in Web API, CDS or ADS datasets.
-                 Or your login credentials do not match your request.",
+" Data identifier %s is not found in Web API, CDS, CDS-beta or ADS datasets.
+ Or your login credentials do not match your request.",
         request$dataset_short_name
       ),
       call. = FALSE

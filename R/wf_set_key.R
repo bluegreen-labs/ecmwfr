@@ -72,9 +72,11 @@ wf_set_key <- function(user, key, service) {
   }
 
   # check login
-  login_ok <- wf_check_login(user = user,
-                             key = key,
-                             service = service)
+  login_ok <- wf_check_login(
+    user = user,
+    key = key,
+    service = service
+  )
 
   if (!login_ok) {
     stop("Could not validate login information.")

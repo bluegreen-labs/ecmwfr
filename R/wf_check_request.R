@@ -34,7 +34,7 @@ wf_check_request <- memoise::memoise(function(
   }
 
   service <- do.call("rbind",
-                     lapply(c("webapi","cds","ads","cds_beta"),
+                     lapply(c("webapi","cds","ads","cds_beta","ads_beta"),
                                      function(service){
     dataset <- try(
       wf_datasets(

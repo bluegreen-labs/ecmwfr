@@ -3,7 +3,7 @@
 similar to wf_modify_request() but the added advantage
 that you could code for the use of dynamic changes in the
 parameters provided to the resulting custom function."><meta property="og:image" content="/logo.png"><meta name="twitter:card" content="summary"></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -36,7 +36,7 @@ parameters provided to the resulting custom function."><meta property="og:image"
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -61,20 +61,20 @@ parameters provided to the resulting custom function."><meta property="og:image"
         <li>
   <a href="https://github.com/bluegreen-labs/ecmwfr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Creates an archetype function</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/R/wf_archetype.R" class="external-link"><code>R/wf_archetype.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/v1.5.1/R/wf_archetype.R" class="external-link"><code>R/wf_archetype.R</code></a></small>
     <div class="hidden name"><code>wf_archetype.Rd</code></div>
     </div>
 
@@ -91,19 +91,19 @@ parameters provided to the resulting custom function.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>request</dt>
+
+
+<dl><dt id="arg-request">request<a class="anchor" aria-label="anchor" href="#arg-request"></a></dt>
 <dd><p>a MARS or CDS request as an R list object.</p></dd>
 
 
-<dt>dynamic_fields</dt>
+<dt id="arg-dynamic-fields">dynamic_fields<a class="anchor" aria-label="anchor" href="#arg-dynamic-fields"></a></dt>
 <dd><p>character vector of fields that could be changed.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>a function that takes `dynamic_fields` as arguments and returns a
+    <p>a function that takes `dynamic_fields` as arguments and returns a
 request as an R list object.</p>
     </div>
     <div id="details">
@@ -117,7 +117,7 @@ will be guaranteed and tested for.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># format an archetype function</span></span></span>
 <span class="r-in"><span><span class="va">ERAI</span> <span class="op">&lt;-</span> <span class="fu">wf_archetype</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span></span>
@@ -139,7 +139,7 @@ will be guaranteed and tested for.</p>
 <span class="r-in"><span><span class="co"># print output of the function with below parameters</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">ERA_interim</span><span class="op">(</span><span class="st">"20100101"</span>, <span class="fl">3</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -186,10 +186,10 @@ will be guaranteed and tested for.</p>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

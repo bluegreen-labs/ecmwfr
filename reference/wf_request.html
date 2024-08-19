@@ -4,7 +4,7 @@ you can only stage requests, logging the request URLs to submit download
 queries later on using wf_transfer.
 Note that the function will do some basic checks on the request input
 to identify possible problems."><meta property="og:image" content="/logo.png"><meta name="twitter:card" content="summary"></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -37,7 +37,7 @@ to identify possible problems."><meta property="og:image" content="/logo.png"><m
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -62,20 +62,20 @@ to identify possible problems."><meta property="og:image" content="/logo.png"><m
         <li>
   <a href="https://github.com/bluegreen-labs/ecmwfr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>ECMWF data request and download</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/R/wf_request.R" class="external-link"><code>R/wf_request.R</code></a>, <a href="https://github.com/bluegreen-labs/ecmwfr/blob/HEAD/R/wf_request_batch.R" class="external-link"><code>R/wf_request_batch.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/v1.5.1/R/wf_request.R" class="external-link"><code>R/wf_request.R</code></a>, <a href="https://github.com/bluegreen-labs/ecmwfr/blob/v1.5.1/R/wf_request_batch.R" class="external-link"><code>R/wf_request_batch.R</code></a></small>
     <div class="hidden name"><code>wf_request.Rd</code></div>
     </div>
 
@@ -112,62 +112,62 @@ to identify possible problems.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>request</dt>
+
+
+<dl><dt id="arg-request">request<a class="anchor" aria-label="anchor" href="#arg-request"></a></dt>
 <dd><p>nested list with query parameters following the layout
 as specified on the ECMWF APIs page</p></dd>
 
 
-<dt>user</dt>
+<dt id="arg-user">user<a class="anchor" aria-label="anchor" href="#arg-user"></a></dt>
 <dd><p>user (email address or ID) provided by the ECMWF data service,
 used to retrieve the token set by <code><a href="wf_set_key.html">wf_set_key</a></code></p></dd>
 
 
-<dt>transfer</dt>
+<dt id="arg-transfer">transfer<a class="anchor" aria-label="anchor" href="#arg-transfer"></a></dt>
 <dd><p>logical, download data TRUE or FALSE (default = TRUE)</p></dd>
 
 
-<dt>path</dt>
+<dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p>path were to store the downloaded data</p></dd>
 
 
-<dt>time_out</dt>
+<dt id="arg-time-out">time_out<a class="anchor" aria-label="anchor" href="#arg-time-out"></a></dt>
 <dd><p>how long to wait on a download to start (default =
 <code>3*3600</code> seconds).</p></dd>
 
 
-<dt>retry</dt>
+<dt id="arg-retry">retry<a class="anchor" aria-label="anchor" href="#arg-retry"></a></dt>
 <dd><p>polling frequency of submitted request for downloading (default =
 <code>30</code> seconds).</p></dd>
 
 
-<dt>job_name</dt>
+<dt id="arg-job-name">job_name<a class="anchor" aria-label="anchor" href="#arg-job-name"></a></dt>
 <dd><p>optional name to use as an RStudio job and as output variable
 name. It has to be a syntactically valid name.</p></dd>
 
 
-<dt>verbose</dt>
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>show feedback on processing</p></dd>
 
 
-<dt>request_list</dt>
+<dt id="arg-request-list">request_list<a class="anchor" aria-label="anchor" href="#arg-request-list"></a></dt>
 <dd><p>a list of requests that will be processed in parallel.</p></dd>
 
 
-<dt>workers</dt>
+<dt id="arg-workers">workers<a class="anchor" aria-label="anchor" href="#arg-workers"></a></dt>
 <dd><p>maximum number of simultaneous request that will be submitted
 to the service. Most ECMWF services are limited to 20 concurrent requests
 (default = 2).</p></dd>
 
 
-<dt>total_timeout</dt>
+<dt id="arg-total-timeout">total_timeout<a class="anchor" aria-label="anchor" href="#arg-total-timeout"></a></dt>
 <dd><p>overall timeout limit for all the requests in seconds.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>the path of the downloaded (requested file) or the an R6 object
+    <p>the path of the downloaded (requested file) or the an R6 object
 with download/transfer information</p>
     </div>
     <div id="details">
@@ -199,7 +199,7 @@ and the small example included in the
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># set key</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="wf_set_key.html">wf_set_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -224,7 +224,7 @@ and the small example included in the
 <span class="r-in"><span><span class="co"># variable named "test" in your environment with the path to</span></span></span>
 <span class="r-in"><span><span class="co"># the downloaded file.</span></span></span>
 <span class="r-in"><span><span class="fu">wf_request</span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span>, user <span class="op">=</span> <span class="st">"test@mail.com"</span>, job_name <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -271,10 +271,10 @@ and the small example included in the
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

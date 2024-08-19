@@ -157,7 +157,8 @@ wf_request <- function(
     cds = cds_service,
     cds_beta = cds_beta_service,
     cds_workflow = cds_workflow,
-    ads = ads_service
+    ads = ads_service,
+    ads_beta = ads_beta_service
     )
 
   # Create request and submit to service

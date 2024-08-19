@@ -148,7 +148,7 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       response <- httr::GET(
         private$file_url,
         httr::write_disk(temp_file, overwrite = TRUE),
-        httr::progress()
+        if(private$verbose) {httr::progress()}
       )
 
       # trap (http) errors on download, return a general error statement

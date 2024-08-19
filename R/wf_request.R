@@ -155,6 +155,7 @@ wf_request <- function(
     service,
     webapi = webapi_service,
     cds = cds_service,
+    cds_beta = cds-beta_service,
     cds_workflow = cds_workflow,
     ads = ads_service
     )

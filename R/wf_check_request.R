@@ -34,11 +34,14 @@ wf_check_request <- memoise::memoise(function(
   }
 
   service <- do.call("rbind",
-                     lapply(c("webapi","cds","ads"),
+                     lapply(c("webapi","cds","ads","cds_beta"),
                                      function(service){
-    dataset <- try(wf_datasets(user,
-                               service = service),
-                   silent = TRUE)
+    dataset <- try(
+      wf_datasets(
+        user,
+        service = service),
+      silent = TRUE
+      )
 
     if(inherits(dataset,"try-error")){
       return(NULL)
@@ -59,7 +62,7 @@ wf_check_request <- memoise::memoise(function(
         return(service)
       }
 
-    } else {
+    } else if (service == "cds" || service == "ads") {
 
       # on CDS / ADS use the short name variable to avoid conflicts
       # for certain data products (which reuse the dataset parameter)
@@ -72,7 +75,21 @@ wf_check_request <- memoise::memoise(function(
       if(request$dataset_short_name %in% dataset$name){
         return(service)
       }
+    } else {
+
+      # on CDS / ADS beta use the short name variable to avoid conflicts
+      # for certain data products (which reuse the dataset parameter)
+
+      if(!"dataset_short_name" %in% names(request)){
+        stop("Request specification has to contain a \"dataset_short_name\"
+             identifier.")
+      }
+
+      if(request$dataset_short_name %in% dataset$name){
+        return(service)
+      }
     }
+
   }))
 
   if(is.null(service)){

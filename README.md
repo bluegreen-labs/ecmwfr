@@ -368,7 +368,7 @@ security issues when sharing scripts on github or otherwise.
 # set a key to the keychain
 wf_set_key(user = "2345",
             key = "asfed1234-foo-bar-98765431-XXXXXXXXXX",
-            service = "cds")
+            service = "ads")
 
 # you can retrieve the key using
 wf_get_key(user = "2345")

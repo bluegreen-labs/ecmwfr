@@ -10,7 +10,8 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       key <- wf_get_key(user = private$user, service = private$service)
 
       #  get the response for the query provided
-      response <- httr::VERB(private$http_verb,
+      response <- httr::VERB(
+        private$http_verb,
         private$request_url(),
         httr::authenticate(private$user, key),
         httr::add_headers(

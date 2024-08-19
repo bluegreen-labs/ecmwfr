@@ -214,7 +214,7 @@ test_that("required arguments missing for cds_* functions", {
     r$get_status(), "deleted"
   )
 
-  # CDS tranfer (forwarded to wf_transfer, requires at least
+  # CDS transfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)
   expect_error(wf_transfer())
   expect_error(wf_transfer(user = "2088",

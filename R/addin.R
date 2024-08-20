@@ -1,5 +1,5 @@
 # addin behaviour specifics
-pythonbeta2list_Addin <- function() {
+python2list_Addin <- function() {
   context   <- rstudioapi::getActiveDocumentContext()
   selection <- context$selection[[1]]$text
   request  <- python_to_list(selection)

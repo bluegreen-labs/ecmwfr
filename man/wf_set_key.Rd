@@ -4,15 +4,15 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(user, key, service)
+wf_set_key(user = "ecmwfr", key, service = "ecmwfr")
 }
 \arguments{
-\item{user}{user (email address) used to sign up for the ECMWF data service}
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+if only a single user is needed it defaults to ("ecmwfr").}
 
 \item{key}{token provided by ECMWF}
 
-\item{service}{which service to use, one of \code{webapi}, \code{cds}
-or \code{ads}}
+\item{service}{which service to use (default = \code{ecmwf})}
 }
 \value{
 It invisibly returns the user.
@@ -39,7 +39,7 @@ wf_get_key(user = "test@mail.com")
 
 # leave user and key empty to open a browser window to the service's website
 # and type the key interactively
-wf_get_key()
+wf_set_key()
 
 }
 }

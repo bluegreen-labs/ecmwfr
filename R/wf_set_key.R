@@ -9,10 +9,10 @@
 #' This mostly pertains to headless Linux systems. The keychain files
 #' can be found in ~/.config/r-keyring.
 #'
-#' @param user user (email address) used to sign up for the ECMWF data service
+#' @param user user (email address) used to sign up for the ECMWF data service,
+#'  if only a single user is needed it defaults to ("ecmwfr").
 #' @param key token provided by ECMWF
-#' @param service which service to use, one of \code{webapi}, \code{cds},
-#' \code{ads}, \code{ads_beta}, \code{cds_beta}
+#' @param service which service to use (default = \code{ecmwf})
 #'
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
@@ -29,11 +29,11 @@
 #'
 #' # leave user and key empty to open a browser window to the service's website
 #' # and type the key interactively
-#' wf_get_key()
+#' wf_set_key()
 #'
 #'}
 #' @importFrom utils browseURL
-wf_set_key <- function(user, key, service) {
+wf_set_key <- function(user = "ecmwfr", key, service = "ecmwfr") {
 
   if (keyring::default_backend()$name != "env") {
     if (keyring::default_backend()$name == "file") {
@@ -55,7 +55,7 @@ wf_set_key <- function(user, key, service) {
 
   if (missing(service)) {
     stop("Please provide a service for which
-         to set your API key ('webapi' or 'cds')")
+         to set your API key (e.g. 'ecmwf')")
   }
 
   if (missing(user) | missing(key)) {
@@ -72,11 +72,16 @@ wf_set_key <- function(user, key, service) {
   }
 
   # check login
-  login_ok <- wf_check_login(
-    user = user,
-    key = key,
-    service = service
-  )
+  # login_ok <- wf_check_login(
+  #   user = user,
+  #   key = key,
+  #   service = service
+  # )
+
+  # currently I can't figure out the accounts API endpoint
+  # this should/could be used for account validation
+  # for now set to OK
+  login_ok <- TRUE
 
   if (!login_ok) {
     stop("Could not validate login information.")
@@ -112,5 +117,4 @@ wf_set_key <- function(user, key, service) {
 
     return(invisible(user))
   }
-
 }

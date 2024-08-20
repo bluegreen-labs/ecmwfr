@@ -19,53 +19,33 @@ wf_server <- function(id, service = "cds") {
   # match arguments, if not stop
   service <- match.arg(
     service,
-    c("webapi",
-      "cds",
-      "cds_beta",
-      "ads",
-      "ads_beta")
+    c("cds","ads","cems")
     )
 
   # set base urls
-  webapi_url <- "https://api.ecmwf.int/v1"
-  cds_url <- "https://cds.climate.copernicus.eu/api/v2"
-  ads_url <- "https://ads.atmosphere.copernicus.eu/api/v2"
-  cds_beta_url <- "https://cds-beta.climate.copernicus.eu/api/retrieve/v1"
-  ads_beta_url <- "https://ads-beta.atmosphere.copernicus.eu/api/retrieve/v1"
+  cds_url <- "https://cds-beta.climate.copernicus.eu/api"
+  ads_url <- "https://ads-beta.atmosphere.copernicus.eu/api"
+  cems_url <- "https://ewds-beta.climate.copernicus.eu/api"
 
   # return url depending on service or id
-  # TODO: use switch
-  if (service == "webapi") {
-    if (missing(id)) {
-      return(webapi_url)
-    } else {
-      return(file.path(webapi_url, "services/mars/requests", id))
-    }
-  } else if (service == "ads") {
-    if (missing(id)) {
-      return(ads_url)
-    } else {
-      return(file.path(ads_url, "tasks", id))
-    }
-  } else if (service == "cds_beta") {
-    if (missing(id)) {
-      return(cds_beta_url)
-    } else {
-      return(file.path(cds_beta_url, "jobs", id))
-    }
-  }else if (service == "ads_beta") {
-      if (missing(id)) {
-        return(ads_beta_url)
-      } else {
-        return(file.path(ads_beta_url, "jobs", id))
-      }
-  } else {
-    if (missing(id)) {
+  switch(
+    service,
+    "cds" = if (missing(id)) {
       return(cds_url)
     } else {
-      return(file.path(cds_url, "tasks", id))
+      return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
+    },
+  "ads" = if (missing(id)) {
+        return(ads_url)
+      } else {
+        return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
+      },
+  "cems" = if (missing(id)) {
+      return(cems_url)
+    } else {
+      return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
     }
-  }
+  )
 }
 
 # Simple progress spinner
@@ -101,11 +81,9 @@ spinner <- function(seconds) {
 # or as soon as an error will be thrown.
 exit_message <- function(url, service, path, file) {
   job_list <- switch(service,
-    "webapi"= " Visit https://apps.ecmwf.int/webmars/joblist/",
-    "cds" = " Visit https://cds.climate.copernicus.eu/cdsapp#!/yourrequests",
-    "cds_beta" = " Visit https://cds-beta.climate.copernicus.eu/requests?tab=all",
-    "ads_beta" = " Visit https://ads-beta.atmosphere.copernicus.eu/requests?tab=all",
-    "ads" = " Visit https://ads.atmosphere.copernicus.eu/cdsapp#!/yourrequests"
+    "cds" = " Visit https://cds-beta.climate.copernicus.eu/requests?tab=all",
+    "cems" = " Visit https://ewds-beta.climate.copernicus.eu/requests?tab=all",
+    "ads" = " Visit https://ads-beta.atmosphere.copernicus.eu/requests?tab=all"
   )
 
   intro <- paste(
@@ -191,34 +169,11 @@ make_key_service <- function(service = "") {
 
 # gets url where to get API key
 wf_key_page <- function(service) {
-  switch(service,
-         webapi = "https://api.ecmwf.int/v1/key/",
-         cds = "https://cds.climate.copernicus.eu/user/login?destination=user",
-         cds_beta = "https://www.ecmwf.int/user/login",
-         ads_beta = "https://www.ecmwf.int/user/login",
-         ads = "https://ads.atmosphere.copernicus.eu/user/login?destination=user")
+  "https://www.ecmwf.int/user/login"
 }
 
 # checks credentials
 wf_check_login <- function(user, key, service) {
-
-  # WEBAPI (old)
-  if (service == "webapi") {
-    info <- httr::GET(
-      paste0(wf_server(),
-             "/who-am-i"),
-      httr::add_headers(
-        "Accept" = "application/json",
-        "Content-Type" = "application/json",
-        "From" = user,
-        "X-ECMWF-KEY" = key
-      ),
-      encode = "json"
-    )
-    return(!httr::http_error(info) &&
-           (any(user %in% unclass(httr::content(info)[c("uid", "email")]))))
-
-  }
 
   # CDS service
   if (service == "cds") {
@@ -291,12 +246,6 @@ make_script <- function(call, name) {
   return(script)
 }
 
-# generate a unique id to use in workflow
-# download queue
-wf_unique_id <- function() {
-  uuid::UUIDgenerate(output = "string")
-}
-
 # Downlaods only the header information
 retrieve_header <- function(url, headers) {
   h <- curl::new_handle()
@@ -322,59 +271,17 @@ warn_or_error <- function(..., error = FALSE) {
 
 # Guesses the username and service from request
 guess_service <- function(request, user = NULL) {
-  is_workflow <- !is.null(request[["workflow_name"]])
-  is_beta <- !is.null(request[["inputs"]])
-
-  # Workflow only works in CDS (maybe?)
-  if (is_workflow) {
-    if (missing(user) || is.null(user)) {
-      user <- keyring::key_list(service = make_key_service("cds"))[["username"]][1]
-    }
-
-    service <- "cds_workflow"
-    url <- wf_server(service = "cds")
-
-    return(list(user = user,
-                service = service,
-                url = url))
-  }
-
-  # CDS-beta
-  if (is_workflow) {
-
-    if (missing(user) || is.null(user)) {
-      user <- keyring::key_list(service = make_key_service("cds_beta"))[["username"]][1]
-    }
-
-    service <- "cds_beta"
-    url <- wf_server(service = "cds_beta")
-
-    return(list(user = user,
-                service = service,
-                url = url))
-  }
 
   if (missing(user) || is.null(user)) {
-    user <-
-      rbind(
-        keyring::key_list(service = make_key_service(c("webapi"))),
-        keyring::key_list(service = make_key_service(c("cds"))),
-        keyring::key_list(service = make_key_service(c("cds_beta"))),
-        keyring::key_list(service = make_key_service(c("ads")))
-      )
-    serv <- make_key_service()
-    user <-
-      user[substr(user$service, 1,  nchar(serv)) == serv, ][["username"]]
+    user <- keyring::key_list(keyring = "ecmwfr")[["username"]][1]
   }
 
   # checks user login, the request layout and
   # returns the service to use if successful
-  wf_check <-
-    lapply(user, function(u)
-      try(wf_check_request(u, request), silent = TRUE))
-  correct <- which(!vapply(wf_check, inherits, TRUE, "try-error"))
+  # TODO LOGIN CHECK
+  wf_check <- try(wf_check_request(user, request), silent = TRUE)
 
-  if (length(correct) == 0) {
+  if (nrow(wf_check) <= 0 || is.null(wf_check)) {
     stop(
       sprintf(
 " Data identifier %s is not found in Web API, CDS, CDS-beta or ADS datasets.
@@ -384,9 +291,6 @@ guess_service <- function(request, user = NULL) {
       call. = FALSE
     )
   }
-
-  wf_check <- wf_check[[correct]]
-  user <- user[correct]
 
   return(list(user = user,
               service = wf_check$service,

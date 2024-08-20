@@ -1,6 +1,6 @@
 Package: ecmwfr
 Title: Interface to 'ECMWF' and 'CDS' Data Web Services
-Version: 1.5.1
+Version: 2.0.0
 Authors@R: c(person(
                family = "Hufkens",
                given = "Koen",
@@ -24,24 +24,25 @@ Authors@R: c(person(
            )
 Description: Programmatic interface to the European Centre for Medium-Range
     Weather Forecasts dataset web services (ECMWF; <https://www.ecmwf.int/>)
-    and Copernicus's Climate Data Store (CDS; 
-    <https://cds.climate.copernicus.eu>). Allows for easy downloads of weather 
-    forecasts and climate reanalysis data in R.
+    and Copernicus's Data Stores. Allows for easy downloads of weather 
+    forecasts and climate reanalysis data in R. Data stores covered include the Climate Data Store (CDS; 
+    <https://cds-beta.climate.copernicus.eu>), Atmosphere Data Store (ADS; 
+    <https://ads-beta.atmosphere.copernicus.eu>) and Early Warning Data Store (CEMS; 
+    <https://ewds-beta.climate.copernicus.eu>).
 URL: https://github.com/bluegreen-labs/ecmwfr
 BugReports: https://github.com/bluegreen-labs/ecmwfr/issues
 Depends:
-    R (>= 3.6)
+    R (>= 4.2)
 Imports:
     httr,
     keyring,
     memoise,
     getPass,
     curl,
-    R6,
-    uuid
+    R6
 License: AGPL-3
 ByteCompile: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests:
     rmarkdown,
     covr,

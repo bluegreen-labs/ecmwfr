@@ -2,40 +2,37 @@
 % Please edit documentation in R/wf_datasets.R
 \name{wf_datasets}
 \alias{wf_datasets}
-\title{ECMWF dataset list}
+\title{List ECMWF Data Store dataset}
 \usage{
-wf_datasets(user, service = "webapi", simplify = TRUE)
+wf_datasets(service = c("cds", "ads", "cems"), simplify = TRUE)
 }
 \arguments{
-\item{user}{user (email address) used to sign up for the ECMWF data service,
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
-
 \item{service}{which service to use, one of \code{webapi}, \code{cds}
 or \code{ads} (default = webapi)}
 
-\item{simplify}{simplify the output, logical (default = \code{TRUE})}
+\item{simplify}{simplify the output, logical (default = \code{TRUE}). When
+not simplified the raw API return is provided as a nested list, for debugging
+purposes  mostly.}
 }
 \value{
-returns a nested list or data frame with the ECMWF datasets
+returns a data frame with the ECMWF Data Store datasets
 }
 \description{
-Returns a list of datasets
+Returns a list of all ECMWF datasets, covering all Data Store services
+(i.e. CDS, ADS, CEMS). This function is used to validate the datasets
+queried by \code{\link[ecmwfr]{wf_request}}. For optimization reasons
+and limit API calls the function is cached and only called once per
+session (assuming that available products and their information and
+endpoints aren't updated on a regular sub-daily basis).
 }
 \examples{
 
 \dontrun{
-# set key
-wf_set_key(email = "test@mail.com", key = "123")
-
-# get a list of services
-wf_services("test@mail.com")
-
-# get a list of datasets
-wf_datasets("test@mail.com")
+# get a list of ECMWF Data Store datasets
+wf_datasets(service = "cems")
 }
 }
 \seealso{
-\code{\link[ecmwfr]{wf_set_key}}
 \code{\link[ecmwfr]{wf_transfer}}
 \code{\link[ecmwfr]{wf_request}}
 }

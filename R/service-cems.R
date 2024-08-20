@@ -1,4 +1,6 @@
-ads_beta_service <- R6::R6Class("ecmwfr_ads_beta", inherit = cds_beta_service,
+ads_beta_service <- R6::R6Class(
+  "ecmwfr_cems",
+  inherit = cds_service,
   public = list(
     submit = function() {
       if (private$status != "unsubmitted") {
@@ -44,13 +46,20 @@ ads_beta_service <- R6::R6Class("ecmwfr_ads_beta", inherit = cds_beta_service,
       private$code <- ct$code
       private$name <- ct$jobID
       private$next_retry <- Sys.time() + private$retry
-      private$url <- wf_server(id = ct$jobID, service = "cds_beta")
+
+      # update url from collection to scheduled job
+      private$url <- wf_server(id = ct$jobID, service = "cems")
 
       return(self)
+    },
+    browse_request = function() {
+      url <- "https://cems-beta.climate.copernicus.eu/requests?tab=all"
+      utils::browseURL(url)
+      return(invisible(self))
     }
   ),
   private = list(
-    service = "ads"
+    service = "cems"
   )
 )
 

@@ -6,8 +6,8 @@
 \usage{
 wf_transfer(
   url,
-  user,
-  service = "webapi",
+  user = "ecmwfr",
+  service = "ecmwfr",
   path = tempdir(),
   filename = tempfile("ecmwfr_", tmpdir = ""),
   verbose = TRUE

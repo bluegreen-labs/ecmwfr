@@ -1,12 +1,18 @@
-# ecmwfr 2.0
+# ecmwfr 2.0.0
 
+* code refactoring in light of the new API
+* wf_product_inf() -> wf_dataset_inf()
 * removal of the Toolbox API workflow
-* removal of the WebAPI integration
-* moving from CDS to CDS-beta servers
+* removal of the WebAPI endpoints
+* moving to beta servers only
+* adding CEMS services on top of previous WebAPI/CDS/ADS support
+
+# ecmwfr 1.5.2
+
 * Logic patch for 202 http error on long runs
 * dynamic retry polling to avoid API rate limiting (default = 30s)
 
-# ecmwfr 1.5.0
+# ecmwfr 1.5.1
 
 * `wf_request()` now accepts CDS Toolbox API workflow calls
 * `wf_request_batch()` now checks for duplicated filenames and stops early.

@@ -12,7 +12,7 @@ wf_delete(url, user, service = "webapi", verbose = TRUE)
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 
-\item{service}{which service to use, one of \code{webapi}, \code{cds}
+\item{service}{which service to use, one of \code{cds}
 or \code{ads} (default = webapi)}
 
 \item{verbose}{show feedback on processing}

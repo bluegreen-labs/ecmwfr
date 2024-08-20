@@ -1,4 +1,4 @@
-#' ECMWF data request and download
+#' ECMWF Data Store (DS) request and download
 #'
 #' Stage a data request, and optionally download the data to disk. Alternatively
 #' you can only stage requests, logging the request URLs to submit download
@@ -6,23 +6,9 @@
 #' Note that the function will do some basic checks on the \code{request} input
 #' to identify possible problems.
 #'
-#' Two sorts of requests are accepted, a simple data request based upon the
-#' available data in the (raw) CDS repository, and a workflow request which
-#' forwards an anonymous python function to the CDS servers and returns its
-#' results.
-#'
-#' The latter advanced use case is non-trivial, as both python and R code is
-#' required. However, it allows you to offload costly data operations /
-#' aggregation to the ECMWF servers, therefore limiting the amount of data
-#' that needs to be transferred.
-#'
-#' A detailed summary of the use of the python API underpinning the CDS Toolbox
-#' (Editor) these operations is beyond the scope of this package. We refer to
-#' the [CDS Toolbox manual](https://cds.climate.copernicus.eu/toolbox/doc/api.html),
-#' and the small example included in the
-#' [vignettes](https://bluegreen-labs.github.io/ecmwfr/articles/cds_workflow_vignette.html).
-#'
-#' @param user user (email address or ID) provided by the ECMWF data service,
+#' @param request nested list with query parameters following the layout
+#' as specified on the ECMWF APIs page
+#' @param user user (default = "ecmwf") provided by the ECMWF data service,
 #' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param path path were to store the downloaded data
 #' @param time_out how long to wait on a download to start (default =
@@ -30,8 +16,6 @@
 #' @param retry polling frequency of submitted request for downloading (default =
 #' \code{30} seconds).
 #' @param transfer logical, download data TRUE or FALSE (default = TRUE)
-#' @param request nested list with query parameters following the layout
-#' as specified on the ECMWF APIs page
 #' @param job_name optional name to use as an RStudio job and as output variable
 #'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
@@ -74,7 +58,7 @@
 
 wf_request <- function(
     request,
-    user,
+    user = "ecmwf",
     transfer = TRUE,
     path = tempdir(),
     time_out = 3600,
@@ -82,6 +66,7 @@ wf_request <- function(
     job_name,
     verbose = TRUE
 ) {
+
   if (!missing(job_name)) {
     if (make.names(job_name) != job_name) {
       stop("job_name '",
@@ -117,48 +102,33 @@ wf_request <- function(
     return(invisible(job))
   }
 
+  # check for request
+  if (missing(request)) {
+    stop("Please provide ECMWF data request!")
+  }
+
   if (!is.list(request) | is.character(request)) {
     stop(
-      "`request` must be a named list. \n",
-      "If you are passing the user as first argument, notice that argument ",
-      "order was changed in version 1.1.1."
+      "`request` must be a named list. \n"
     )
-  }
-
-  # check the login credentials
-  if (missing(request)) {
-    stop("Please provide ECMWF or CDS login credentials and data request!")
-  }
-
-  # check for user
-  if (missing(user)){
-    stop("Missing user credentials, please provide a valid user/ID!")
   }
 
   # Guessing credentials/service
   service_info <- guess_service(request, user)
 
-  if (verbose)
-  {
+  if (verbose){
     message("Requesting data to the ",
             service_info$service,
             " service with username ",
             service_info$user)
   }
 
-  # split out data
-  service <- service_info$service
-  url <- service_info$url
-
   # Select the appropriate service
   service <- switch(
-    service,
-    webapi = webapi_service,
+    service_info$service,
     cds = cds_service,
-    cds_beta = cds_beta_service,
-    cds_workflow = cds_workflow,
     ads = ads_service,
-    ads_beta = ads_beta_service
+    cems = cems_service
     )
 
   # Create request and submit to service

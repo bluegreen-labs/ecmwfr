@@ -4,7 +4,7 @@
 \alias{wf_get_key}
 \title{Get secret ECMWF / CDS token}
 \usage{
-wf_get_key(user, service = "webapi")
+wf_get_key(user = "ecmwfr", service = "ecmwfr")
 }
 \arguments{
 \item{user}{user (email address) used to sign up for the ECMWF data service}

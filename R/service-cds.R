@@ -1,4 +1,4 @@
-cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
+cds_beta_service <- R6::R6Class("ecmwfr_cds",
   inherit = service,
   public = list(
     submit = function() {
@@ -45,7 +45,9 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
       private$code <- ct$code
       private$name <- ct$jobID
       private$next_retry <- Sys.time() + private$retry
-      private$url <- wf_server(id = ct$jobID, service = "cds_beta")
+
+      # update url from collection to scheduled job
+      private$url <- wf_server(id = ct$jobID, service = "cds")
 
       return(self)
     },
@@ -237,11 +239,11 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds_beta",
     }
   ),
   private = list(
-    service = "cds_beta",
+    service = "cds",
     http_verb = "POST",
     request_url = function() {
       sprintf(
-        "%s/processes/%s/execute",
+        "/retrieve/v1/%s/processes/%s/execute",
         private$url,
         private$request$dataset_short_name
       )

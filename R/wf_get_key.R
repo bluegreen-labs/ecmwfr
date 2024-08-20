@@ -20,7 +20,7 @@
 #' wf_get_key(user = "test@mail.com")
 #'}
 
-wf_get_key <- function(user, service = "webapi") {
+wf_get_key <- function(user = "ecmwfr", service = "ecmwfr") {
 
   # unlock the keyring when required, mostly so
   # only the "env" option does not require this
@@ -28,9 +28,8 @@ wf_get_key <- function(user, service = "webapi") {
     if (keyring::default_backend()$name == "file") {
       if ("ecmwfr" %in% keyring::keyring_list()$keyring) {
         if(keyring::keyring_is_locked(keyring = "ecmwfr")){
-          message("
-          Your keyring is locked
-          please unlock with your keyring password!")
+          message("Your keyring is locked \n",
+                  "please unlock with your keyring password!")
           keyring::keyring_unlock(keyring = "ecmwfr")
         }
       } else {
@@ -38,9 +37,8 @@ wf_get_key <- function(user, service = "webapi") {
       }
     } else {
       if (keyring::keyring_is_locked()) {
-        message("
-          Your keyring is locked
-          please unlock with your keyring password!")
+        message("Your keyring is locked \n",
+                "please unlock with your keyring password!")
        keyring::keyring_unlock()
       }
     }
@@ -50,13 +48,12 @@ wf_get_key <- function(user, service = "webapi") {
   # throw warnings which gives issues for unit tests
   if(keyring::default_backend()$name == "file"){
     keyring::key_get(
-      service = make_key_service(service),
+      service = service,
       username = user,
       keyring = "ecmwfr")
   } else {
     keyring::key_get(
-      service = make_key_service(service),
+      service = service,
       username = user)
   }
-
 }

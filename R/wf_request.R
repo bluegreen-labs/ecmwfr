@@ -58,7 +58,7 @@
 
 wf_request <- function(
     request,
-    user = "ecmwf",
+    user = "ecmwfr",
     transfer = TRUE,
     path = tempdir(),
     time_out = 3600,
@@ -123,18 +123,11 @@ wf_request <- function(
             service_info$user)
   }
 
-  # Select the appropriate service
-  service <- switch(
-    service_info$service,
-    cds = cds_service,
-    ads = ads_service,
-    cems = cems_service
-    )
-
   # Create request and submit to service
-  request <- service$new(
+  request <- ds_service$new(
     request = request,
     user = service_info$user,
+    service = service_info$service,
     url = service_info$url,
     retry = retry,
     path = path,

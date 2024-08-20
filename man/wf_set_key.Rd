@@ -4,13 +4,13 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(user = "ecmwfr", key, service = "ecmwfr")
+wf_set_key(key, user = "ecmwfr", service = "ecmwfr")
 }
 \arguments{
+\item{key}{token provided by ECMWF}
+
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 if only a single user is needed it defaults to ("ecmwfr").}
-
-\item{key}{token provided by ECMWF}
 
 \item{service}{which service to use (default = \code{ecmwf})}
 }

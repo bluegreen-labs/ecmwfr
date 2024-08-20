@@ -33,7 +33,7 @@
 #'
 #'}
 #' @importFrom utils browseURL
-wf_set_key <- function(user = "ecmwfr", key, service = "ecmwfr") {
+wf_set_key <- function(key, user = "ecmwfr", service = "ecmwfr") {
 
   if (keyring::default_backend()$name != "env") {
     if (keyring::default_backend()$name == "file") {
@@ -53,15 +53,17 @@ wf_set_key <- function(user = "ecmwfr", key, service = "ecmwfr") {
     }
   }
 
-  if (missing(service)) {
-    stop("Please provide a service for which
-         to set your API key (e.g. 'ecmwf')")
+  if (!exists("service")) {
+    stop("Please provide a service for which ",
+         "to set your API key (e.g. 'ecmwfr')")
   }
 
-  if (missing(user) | missing(key)) {
+  if (!exists("user") | missing(key)) {
     if (!interactive()) {
-      stop("wf_set_key needs to be run interactivelly if `user` or `key` are
-           not provided.")
+      stop(
+        "wf_set_key needs to be run interactivelly if",
+         "`user` or `key` are not provided."
+        )
     }
     browseURL(wf_key_page(service))
     message("Login or register to get a key")
@@ -95,7 +97,7 @@ wf_set_key <- function(user = "ecmwfr", key, service = "ecmwfr") {
 
       # set keyring
       keyring::key_set_with_value(
-        service = make_key_service(service),
+        service = service,
         username = user,
         password = key,
         keyring = "ecmwfr"
@@ -106,7 +108,7 @@ wf_set_key <- function(user = "ecmwfr", key, service = "ecmwfr") {
 
     } else {
       keyring::key_set_with_value(
-        service = make_key_service(service),
+        service = service,
         username = user,
         password = key
       )

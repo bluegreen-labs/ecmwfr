@@ -47,6 +47,12 @@ wf_check_request <- memoise::memoise(function(
               request$dataset), call. = FALSE)
   }
 
+  # select CDS over CEMS when there are multiple choices
+  # as data is available on multiple services
+  if(length(service)>1){
+    service <- service[grep("^cds$", service)]
+  }
+
   # format the service URL
   url <- wf_server(service = service)
 

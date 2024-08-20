@@ -16,12 +16,6 @@
 # @author Koen Kufkens
 wf_server <- function(id, service = "cds") {
 
-  # match arguments, if not stop
-  service <- match.arg(
-    service,
-    c("cds","ads","cems")
-    )
-
   # set base urls
   cds_url <- "https://cds-beta.climate.copernicus.eu/api"
   ads_url <- "https://ads-beta.atmosphere.copernicus.eu/api"
@@ -38,14 +32,16 @@ wf_server <- function(id, service = "cds") {
   "ads" = if (missing(id)) {
         return(ads_url)
       } else {
-        return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
+        return(paste0(ads_url,"/retrieve/v1/", "jobs/", id))
       },
   "cems" = if (missing(id)) {
       return(cems_url)
     } else {
-      return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
+      return(paste0(cems_url,"/retrieve/v1/", "jobs/", id))
     }
   )
+
+  stop("No server for the service found")
 }
 
 # Simple progress spinner
@@ -279,7 +275,7 @@ guess_service <- function(request, user = NULL) {
   # checks user login, the request layout and
   # returns the service to use if successful
   # TODO LOGIN CHECK
-  wf_check <- try(wf_check_request(user, request), silent = TRUE)
+  wf_check <- try(wf_check_request(request, user), silent = TRUE)
 
   if (nrow(wf_check) <= 0 || is.null(wf_check)) {
     stop(

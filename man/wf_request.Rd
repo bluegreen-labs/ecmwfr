@@ -7,7 +7,7 @@
 \usage{
 wf_request(
   request,
-  user = "ecmwf",
+  user = "ecmwfr",
   transfer = TRUE,
   path = tempdir(),
   time_out = 3600,

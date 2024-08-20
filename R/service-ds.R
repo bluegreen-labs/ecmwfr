@@ -1,4 +1,4 @@
-cds_beta_service <- R6::R6Class("ecmwfr_cds",
+ds_service <- R6::R6Class("ecmwfr_ds",
   inherit = service,
   public = list(
     submit = function() {
@@ -9,7 +9,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       # get key
       key <- wf_get_key(
         user = private$user,
-        service = private$service
+        service = "ecmwfr"
       )
 
       #  get the response for the query provided
@@ -19,7 +19,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
         httr::add_headers(
           "PRIVATE-TOKEN" = key
         ),
-        body = private$request,
+        body = list(inputs = private$request),
         encode = "json"
       )
 
@@ -39,6 +39,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       if (private$verbose) {
         message("- staging data transfer at url endpoint or request id:")
         message("  ", ct$jobID, "\n")
+        message("  on server: ", wf_server(service = private$service), "\n")
       }
 
       private$status <- ct$status
@@ -47,7 +48,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       private$next_retry <- Sys.time() + private$retry
 
       # update url from collection to scheduled job
-      private$url <- wf_server(id = ct$jobID, service = "cds")
+      private$url <- wf_server(id = ct$jobID, service = private$service)
 
       return(self)
     },
@@ -70,13 +71,13 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       }
 
       if (private$status == "failed") {
-        warn_or_error("Request has failed", call. = FALSE, error = fail_is_error)
+        warn_or_error("Request has failed, please check the online request queue for more details!", call. = FALSE, error = fail_is_error)
         return(self)
       }
 
       key <- wf_get_key(
         user = private$user,
-        service = private$service
+        service = "ecmwfr"
         )
 
       # set retry time
@@ -162,7 +163,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       if (private$verbose) message("\nDownloading file")
 
       temp_file <- tempfile(pattern = "ecmwfr_", tmpdir = private$path)
-      key <- wf_get_key(user = private$user, service = private$service)
+      key <- wf_get_key(user = private$user, service = "ecmwfr")
 
       # formally download the file
       response <- httr::GET(
@@ -204,7 +205,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
     delete = function() {
 
       # get key
-      key <- wf_get_key(user = private$user, service = private$service)
+      key <- wf_get_key(user = private$user, service = "ecmwfr")
 
       #  get the response for the query provided
       response <- httr::DELETE(
@@ -233,17 +234,16 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
     },
 
     browse_request = function() {
-      url <- "https://cds-beta.climate.copernicus.eu/requests?tab=all"
+      url <- paste0(dirname(private$url,"/requests?tab=all"))
       utils::browseURL(url)
       return(invisible(self))
     }
   ),
   private = list(
-    service = "cds",
     http_verb = "POST",
     request_url = function() {
       sprintf(
-        "/retrieve/v1/%s/processes/%s/execute",
+        "%s/retrieve/v1/processes/%s/execute",
         private$url,
         private$request$dataset_short_name
       )
@@ -253,7 +253,7 @@ cds_beta_service <- R6::R6Class("ecmwfr_cds",
       # get key
       key <- wf_get_key(
         user = private$user,
-        service = private$service
+        service = "ecmwfr"
       )
 
       # fetch download location from results URL

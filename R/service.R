@@ -4,12 +4,14 @@ service <- R6::R6Class(
   public = list(
     initialize = function(request,
                           user,
+                          service,
                           url,
                           retry,
                           path = tempdir(),
                           verbose = TRUE) {
       private$user <- user
       private$request <- request
+      private$service <- service
       private$path <- path
       private$retry <- retry
       private$file <- file.path(path, request$target)

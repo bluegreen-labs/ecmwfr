@@ -69,7 +69,7 @@ if(server_check & ON_GIT){
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-    expect_message(wf_set_key(Sys.getenv("PAT")))
+    expect_message(wf_set_key(Sys.getenv("CDS")))
 })
 
 test_that("cds datasets returns data.frame or list", {

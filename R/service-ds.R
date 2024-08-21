@@ -71,7 +71,11 @@ ds_service <- R6::R6Class("ecmwfr_ds",
       }
 
       if (private$status == "failed") {
-        warn_or_error("Request has failed, please check the online request queue for more details!", call. = FALSE, error = fail_is_error)
+        warn_or_error(
+          "Request has failed, please check the online request queue for more details!",
+          call. = FALSE,
+          error = fail_is_error
+        )
         return(self)
       }
 

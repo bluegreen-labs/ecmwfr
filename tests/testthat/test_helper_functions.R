@@ -7,16 +7,15 @@ test_that("create tests archetype", {
   my_request <- list(
     dataset_short_name = "reanalysis-era5-pressure-levels",
     product_type = "reanalysis",
-    variable = "temperature",
-    year = "2000",
-    month = "04",
-    day = "04",
-    time = "00:00",
-    pressure_level = "850",
-    data_format = "netcdf",
-    download_format = "unarchived",
-    area = c(70, -20, 60, 30),
-    target = "TMPFILE"
+    variable = "geopotential",
+    year = "2024",
+    month = "03",
+    day = "01",
+    time = "13:00",
+    pressure_level = "1000",
+    data_format = "grib",
+    area = c(51, 1, 50, 2),
+    target = "download.grib"
   )
 
   # create archetype

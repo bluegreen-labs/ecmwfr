@@ -26,7 +26,7 @@ cds_request <- list(
   time = "13:00",
   pressure_level = "1000",
   data_format = "grib",
-  area = c(70, -20, 60, 30),
+  area = c(51, 1, 50, 2),
   target = "download.grib"
 )
 
@@ -40,7 +40,7 @@ cds_request_faulty <- list(
   time = "13:00",
   pressure_level = "1000",
   data_format = "grib",
-  area = c(70, -20, 60, 30),
+  area = c(51, 1, 50, 2),
   target = "download.grib"
 )
 
@@ -194,18 +194,17 @@ test_that("batch request tests", {
   years <- c(2017,2018)
   requests <- lapply(years, function(y) {
     list(
-      "dataset_short_name" = "reanalysis-era5-pressure-levels",
-      "product_type"   = "reanalysis",
-      "format"         = "netcdf",
-      "variable"       = "temperature",
-      "pressure_level" = "850",
-      "year"           = y,
-      "month"          = "05",
-      "day"            = "04",
-      "time"           = "00:00",
-      "area"           = "50/9/51/10",
-      "format"         = "netcdf",
-      "target"         = paste0(y, "-era5-demo.nc"))
+      dataset_short_name = "reanalysis-era5-pressure-levels",
+      product_type = "reanalysis",
+      variable = "geopotential",
+      year = "2024",
+      month = "03",
+      day = "01",
+      time = "13:00",
+      pressure_level = "1000",
+      data_format = "grib",
+      area = c(51, 1, 50, 2),
+      target = paste0(y, "-era5-demo.grib"))
   })
 
   expect_output(

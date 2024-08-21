@@ -112,21 +112,21 @@ function, and a request string syntax. The simplest way to get the requests is
 to go to the Data Store website which offers an interactive interface to create
 these requests e.g., for the CDS ERA-5 reanalysis data:
 
--   [pressure level
-    data](https://cds-beta.climate.copernicus.eu/dataset/reanalysis-era5-pressure-levels?tab=download)
--   [surface
-    data](https://cds-beta.climate.copernicus.eu/dataset/reanalysis-era5-single-levels?tab=download)
+-   [ERA-5 at pressure level data](https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels?tab=download)
+-   [ERA-5 land](https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download)
 -   ...
 
 After formatting the request online copy the API request python code to your script.
 The request should include the _dataset_, _request_ and _target_ field (if available).
+
+![](https://github.com/user-attachments/assets/865fcf2a-e4da-4fd8-80a8-9ced448caabb)
 
 Instead of `json` formatting as shown in the online form the `ecmwfr` package 
 uses a _R_ lists for all the arguments. This makes changing variables less prone
 to error, although overall we suggest not to manually create requests and use
 the RStudio Addin to translate the python `json` request to _R_ as shown below.
 
-![](https://github.com/user-attachments/assets/9e7ac6cc-a43e-4860-aa88-ac43c55e2673)
+
 
 This will give you a request as an annotated list, which can then be used by the
 [`wf_request`](references/wf_request.html) function to query and download the
@@ -209,7 +209,7 @@ maps::map("world", add = TRUE)
 
 ![spatial-plot](https://github.com/user-attachments/assets/27a89664-7aaf-483f-94dd-8d9992e862be)
 
-## File based keychains
+## File and system based keychains
 
 On linux you can opt to use a file based keyring, instead of a GUI based
 keyring manager. This is helpful for headless setups such as servers.

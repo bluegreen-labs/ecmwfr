@@ -139,9 +139,9 @@ test_that("cds request", {
   r$delete() # cleanup
 
   # test delete routine
-  expect_warning(
-    wf_delete(url = "50340909as"))
-
+  expect_error(
+    wf_delete(url = "50340909as")
+  )
 })
 
 

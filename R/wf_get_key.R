@@ -3,8 +3,6 @@
 #' Returns you token set by \code{\link[ecmwfr]{wf_set_key}}
 #'
 #' @param user user (email address) used to sign up for the ECMWF data service
-#' @param service which service to use, one of \code{webapi}, \code{cds}
-#' or \code{ads} (default = webapi)
 #' @return the key set using \code{\link[ecmwfr]{wf_set_key}} saved
 #' in the keychain
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
@@ -14,13 +12,16 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(user = "test@mail.com", key = "123")
+#' wf_set_key(key = "123")
 #'
 #' # get key
-#' wf_get_key(user = "test@mail.com")
+#' wf_get_key()
 #'}
 
-wf_get_key <- function(user = "ecmwfr", service = "ecmwfr") {
+wf_get_key <- function(user = "ecmwfr") {
+
+  # service is hard coded, but kept here should policy change
+  service = "ecmwfr"
 
   # system environments variables override the keyring
   # by default

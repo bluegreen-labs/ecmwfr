@@ -12,7 +12,6 @@
 #' @param user user (email address) used to sign up for the ECMWF data service,
 #'  if only a single user is needed it defaults to ("ecmwfr").
 #' @param key token provided by ECMWF
-#' @param service which service to use (default = \code{ecmwf})
 #'
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
@@ -22,10 +21,10 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(user = "test@mail.com", key = "123")
+#' wf_set_key(key = "123")
 #'
 #' # get key
-#' wf_get_key(user = "test@mail.com")
+#' wf_get_key()
 #'
 #' # leave user and key empty to open a browser window to the service's website
 #' # and type the key interactively
@@ -33,7 +32,10 @@
 #'
 #'}
 #' @importFrom utils browseURL
-wf_set_key <- function(key, user = "ecmwfr", service = "ecmwfr") {
+wf_set_key <- function(key, user = "ecmwfr") {
+
+  # service is hard coded, but kept here should policy change
+  service = "ecmwfr"
 
   if (keyring::default_backend()$name != "env") {
     if (keyring::default_backend()$name == "file") {

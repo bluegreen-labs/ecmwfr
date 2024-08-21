@@ -1,19 +1,22 @@
-service <- R6::R6Class("ecmwfr_service", cloneable = FALSE,
+service <- R6::R6Class(
+  "ecmwfr_service",
+  cloneable = FALSE,
   public = list(
     initialize = function(request,
                           user,
+                          service,
                           url,
                           retry,
                           path = tempdir(),
                           verbose = TRUE) {
       private$user <- user
       private$request <- request
+      private$service <- service
       private$path <- path
       private$retry <- retry
       private$file <- file.path(path, request$target)
       private$verbose <- verbose
       private$url <- url
-      self$request_id <- basename(url) # Compatibility with old code
       private$status <- "unsubmitted"
       private$next_retry <- Sys.time()
 

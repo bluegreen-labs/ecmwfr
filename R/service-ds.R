@@ -1,4 +1,4 @@
-cds_service <- R6::R6Class("ecmwfr_cds",
+ds_service <- R6::R6Class("ecmwfr_ds",
   inherit = service,
   public = list(
     submit = function() {
@@ -7,17 +7,18 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       }
 
       # get key
-      key <- wf_get_key(user = private$user, service = private$service)
+      key <- wf_get_key(
+        user = private$user
+      )
 
       #  get the response for the query provided
-      response <- httr::VERB(private$http_verb,
+      response <- httr::VERB(
+        private$http_verb,
         private$request_url(),
-        httr::authenticate(private$user, key),
         httr::add_headers(
-          "Accept" = "application/json",
-          "Content-Type" = "application/json"
+          "PRIVATE-TOKEN" = key
         ),
-        body = private$request,
+        body = list(inputs = private$request),
         encode = "json"
       )
 
@@ -36,34 +37,50 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       # some verbose feedback
       if (private$verbose) {
         message("- staging data transfer at url endpoint or request id:")
-        message("  ", ct$request_id, "\n")
+        message("  ", ct$jobID, "\n")
+        message("  on server: ", wf_server(service = private$service), "\n")
       }
 
-      private$status <- "submitted"
+      private$status <- ct$status
       private$code <- ct$code
-      private$name <- ct$request_id
+      private$name <- ct$jobID
       private$next_retry <- Sys.time() + private$retry
-      private$url <- wf_server(id = ct$request_id, service = "cds")
+
+      # update url from collection to scheduled job
+      private$url <- wf_server(id = ct$jobID, service = private$service)
+
       return(self)
     },
-    update_status = function(fail_is_error = TRUE,
-                             verbose = NULL) {
+    update_status = function(
+      fail_is_error = TRUE,
+      verbose = NULL) {
+
       if (private$status == "unsubmitted") {
         self$submit()
         return(self)
       }
 
       if (private$status == "deleted") {
-        warn_or_error("Request was previously deleted from queue", call. = FALSE, error = fail_is_error)
+        warn_or_error(
+          "Request was previously deleted from queue",
+          call. = FALSE,
+          error = fail_is_error
+          )
         return(self)
       }
 
       if (private$status == "failed") {
-        warn_or_error("Request has failed", call. = FALSE, error = fail_is_error)
+        warn_or_error(
+          "Request has failed, please check the online request queue for more details!",
+          call. = FALSE,
+          error = fail_is_error
+        )
         return(self)
       }
 
-      key <- wf_get_key(user = private$user, service = private$service)
+      key <- wf_get_key(
+        user = private$user
+        )
 
       # set retry time
       retry_in <- as.numeric(private$next_retry) - as.numeric(Sys.time())
@@ -80,16 +97,14 @@ cds_service <- R6::R6Class("ecmwfr_cds",
 
       response <- httr::GET(
         private$url,
-        httr::authenticate(private$user, key),
         httr::add_headers(
-          "Accept" = "application/json",
-          "Content-Type" = "application/json"
+          "PRIVATE-TOKEN" = key
         ),
         encode = "json"
       )
 
       ct <- httr::content(response)
-      private$status <- ct$state
+      private$status <- ct$status
 
       # trap general http error most likely
       # will fail on spamming the service too fast
@@ -104,10 +119,11 @@ cds_service <- R6::R6Class("ecmwfr_cds",
 
       # checks the status of the true download, not the http status
       # of the call itself
-      if (private$status != "completed" || is.null(private$status)) {
+      if (private$status != "successful" || is.null(private$status)) {
         private$code <- 202
-        private$file_url <- NA # just ot be on the safe side
-      } else if (private$status == "completed") {
+        private$file_url <- NA # just to be on the safe side
+      } else if (private$status == "successful") {
+        if (private$verbose) message("   file ready to download...           ")
         private$code <- 302
         private$file_url <- private$get_location(ct)
       } else if (private$status == "failed") {
@@ -120,11 +136,17 @@ cds_service <- R6::R6Class("ecmwfr_cds",
         )
         warn_or_error(error_msg, error = fail_is_error)
       }
+
       private$next_retry <- Sys.time()
       return(self)
     },
 
-    download = function(force_redownload = FALSE, fail_is_error = TRUE, verbose = NULL) {
+    download = function(
+      force_redownload = FALSE,
+      fail_is_error = TRUE,
+      verbose = NULL
+      ) {
+
       # Check if download is actually needed
       if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
         if (private$verbose) message("File already downloaded")
@@ -134,20 +156,22 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       # Check status
       self$update_status()
 
-      if (private$status != "completed") {
+      if (private$status != "successful") {
         # if (private$verbose) message("\nRequest not completed")
         return(self)
       }
 
       # If it's completed, begin download
       if (private$verbose) message("\nDownloading file")
-      temp_file <- tempfile(pattern = "ecmwfr_", tmpdir = private$path)
-      key <- wf_get_key(user = private$user, service = private$service)
 
+      temp_file <- tempfile(pattern = "ecmwfr_", tmpdir = private$path)
+      key <- wf_get_key(user = private$user)
+
+      # formally download the file
       response <- httr::GET(
         private$file_url,
         httr::write_disk(temp_file, overwrite = TRUE),
-        httr::progress()
+        if(private$verbose) {httr::progress()}
       )
 
       # trap (http) errors on download, return a general error statement
@@ -161,6 +185,7 @@ cds_service <- R6::R6Class("ecmwfr_cds",
       }
 
       private$downloaded <- TRUE
+
       # Copy data from temporary file to final location
       move <- suppressWarnings(file.rename(temp_file, private$file))
 
@@ -182,15 +207,13 @@ cds_service <- R6::R6Class("ecmwfr_cds",
     delete = function() {
 
       # get key
-      key <- wf_get_key(user = private$user, service = private$service)
+      key <- wf_get_key(user = private$user)
 
       #  get the response for the query provided
       response <- httr::DELETE(
         private$url,
-        httr::authenticate(private$user, key),
         httr::add_headers(
-          "Accept" = "application/json",
-          "Content-Type" = "application/json"
+          "PRIVATE-TOKEN" = key
         )
       )
 
@@ -213,23 +236,49 @@ cds_service <- R6::R6Class("ecmwfr_cds",
     },
 
     browse_request = function() {
-      url <- "https://cds.climate.copernicus.eu/user/login?destination=%2Fcdsapp%23!%2Fyourrequests"
+      url <- paste0(dirname(private$url),"/requests?tab=all")
       utils::browseURL(url)
       return(invisible(self))
     }
   ),
   private = list(
-    service = "cds",
     http_verb = "POST",
     request_url = function() {
       sprintf(
-        "%s/resources/%s",
+        "%s/retrieve/v1/processes/%s/execute",
         private$url,
         private$request$dataset_short_name
       )
     },
     get_location = function(content) {
-      content$location
+
+      # get key
+      key <- wf_get_key(
+        user = private$user
+      )
+
+      # fetch download location from results URL
+      # this is now a two step process
+      response <- httr::GET(
+        file.path(private$url, "results"),
+        httr::add_headers(
+          "PRIVATE-TOKEN" = key
+        )
+      )
+
+      # trap general http error
+      if (httr::http_error(response)) {
+        stop(httr::content(response),
+             call. = FALSE
+        )
+      }
+
+      # grab content
+      ct <- httr::content(response)
+
+      # return the asset location
+      return(ct$asset$value$href)
+
     }
   )
 )

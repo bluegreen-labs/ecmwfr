@@ -9,10 +9,9 @@
 #' This mostly pertains to headless Linux systems. The keychain files
 #' can be found in ~/.config/r-keyring.
 #'
-#' @param user user (email address) used to sign up for the ECMWF data service
+#' @param user user (email address) used to sign up for the ECMWF data service,
+#'  if only a single user is needed it defaults to ("ecmwfr").
 #' @param key token provided by ECMWF
-#' @param service which service to use, one of \code{webapi}, \code{cds}
-#' or \code{ads}
 #'
 #' @return It invisibly returns the user.
 #' @seealso \code{\link[ecmwfr]{wf_get_key}}
@@ -22,18 +21,21 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(user = "test@mail.com", key = "123")
+#' wf_set_key(key = "123")
 #'
 #' # get key
-#' wf_get_key(user = "test@mail.com")
+#' wf_get_key()
 #'
 #' # leave user and key empty to open a browser window to the service's website
 #' # and type the key interactively
-#' wf_get_key()
+#' wf_set_key()
 #'
 #'}
 #' @importFrom utils browseURL
-wf_set_key <- function(user, key, service) {
+wf_set_key <- function(key, user = "ecmwfr") {
+
+  # service is hard coded, but kept here should policy change
+  service = "ecmwfr"
 
   if (keyring::default_backend()$name != "env") {
     if (keyring::default_backend()$name == "file") {
@@ -53,28 +55,36 @@ wf_set_key <- function(user, key, service) {
     }
   }
 
-  if (missing(service)) {
-    stop("Please provide a service for which
-         to set your API key ('webapi' or 'cds')")
+  if (!exists("service")) {
+    stop("Please provide a service for which ",
+         "to set your API key (e.g. 'ecmwfr')")
   }
 
-  if (missing(user) | missing(key)) {
+  if (!exists("user") | missing(key)) {
     if (!interactive()) {
-      stop("wf_set_key needs to be run interactivelly if `user` or `key` are
-           not provided.")
+      stop(
+        "wf_set_key needs to be run interactivelly if",
+         "`key` is not provided."
+        )
     }
     browseURL(wf_key_page(service))
-    message("Login or register to get a key")
-    user <- readline("User ID / email: ")
-    key <- getPass::getPass(msg = "API key: ")
+    message("Login or register to get a Personal Access Token")
+    key <- getPass::getPass(msg = "Personal Access Token: ")
     if (is.null(key))
       stop("No key supplied.")
   }
 
   # check login
-  login_ok <- wf_check_login(user = user,
-                             key = key,
-                             service = service)
+  # login_ok <- wf_check_login(
+  #   user = user,
+  #   key = key,
+  #   service = service
+  # )
+
+  # currently I can't figure out the accounts API endpoint
+  # this should/could be used for account validation
+  # for now set to OK
+  login_ok <- TRUE
 
   if (!login_ok) {
     stop("Could not validate login information.")
@@ -88,7 +98,7 @@ wf_set_key <- function(user, key, service) {
 
       # set keyring
       keyring::key_set_with_value(
-        service = make_key_service(service),
+        service = service,
         username = user,
         password = key,
         keyring = "ecmwfr"
@@ -99,7 +109,7 @@ wf_set_key <- function(user, key, service) {
 
     } else {
       keyring::key_set_with_value(
-        service = make_key_service(service),
+        service = service,
         username = user,
         password = key
       )
@@ -110,5 +120,4 @@ wf_set_key <- function(user, key, service) {
 
     return(invisible(user))
   }
-
 }

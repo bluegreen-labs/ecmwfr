@@ -4,15 +4,13 @@
 \alias{wf_set_key}
 \title{Set secret ECMWF token}
 \usage{
-wf_set_key(user, key, service)
+wf_set_key(key, user = "ecmwfr")
 }
 \arguments{
-\item{user}{user (email address) used to sign up for the ECMWF data service}
-
 \item{key}{token provided by ECMWF}
 
-\item{service}{which service to use, one of \code{webapi}, \code{cds}
-or \code{ads}}
+\item{user}{user (email address) used to sign up for the ECMWF data service,
+if only a single user is needed it defaults to ("ecmwfr").}
 }
 \value{
 It invisibly returns the user.
@@ -32,14 +30,14 @@ can be found in ~/.config/r-keyring.
 
 \dontrun{
 # set key
-wf_set_key(user = "test@mail.com", key = "123")
+wf_set_key(key = "123")
 
 # get key
-wf_get_key(user = "test@mail.com")
+wf_get_key()
 
 # leave user and key empty to open a browser window to the service's website
 # and type the key interactively
-wf_get_key()
+wf_set_key()
 
 }
 }

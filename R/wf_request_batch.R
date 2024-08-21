@@ -12,7 +12,7 @@
 wf_request_batch <- function(
     request_list,
     workers = 2,
-    user,
+    user = "ecmwf",
     path = tempdir(),
     time_out = 3600,
     retry = 5,
@@ -47,6 +47,11 @@ wf_request_batch <- function(
 
   while (length(done) < length(request_list) & Sys.time() < timeout_time) {
     for (w in seq_along(slots)) {
+
+      # wait before submitting a call
+      # set to the same value is the
+      # retry rate
+      Sys.sleep(retry)
 
       # If a slot is free and there's a queue,
       # assign to it the next pending request,

@@ -6,21 +6,17 @@
 \usage{
 wf_transfer(
   url,
-  user,
-  service = "webapi",
+  user = "ecmwfr",
   path = tempdir(),
   filename = tempfile("ecmwfr_", tmpdir = ""),
   verbose = TRUE
 )
 }
 \arguments{
-\item{url}{R6 \code{\link[ecmwfr]{wf_request}}) query output}
+\item{url}{R6 \code{\link[ecmwfr]{wf_request}}) query output or API endpoint}
 
 \item{user}{user (email address) used to sign up for the ECMWF data service,
 used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}.}
-
-\item{service}{which service to use, one of \code{webapi}, \code{cds}
-or \code{ads} (default = webapi)}
 
 \item{path}{path were to store the downloaded data}
 
@@ -29,24 +25,29 @@ or \code{ads} (default = webapi)}
 \item{verbose}{show feedback on data transfers}
 }
 \value{
-a netCDF of data on disk as specified by a
+a (netCDF) file of data on disk as specified by a
 \code{\link[ecmwfr]{wf_request}}
 }
 \description{
-Returns the contents of the requested url as a NetCDF file downloaded
+Returns the contents of the requested url as a (NetCDF) file downloaded
 to disk or the current status of the requested transfer.
+}
+\details{
+Normal workflows would use the methods included in returned objects. This is
+for legacy support and custom scripting only.
 }
 \examples{
 
 \dontrun{
 # set key
-wf_set_key(user = "test@mail.com", key = "123")
+wf_set_key(key = "123")
 
 # request data and grab url and try a transfer
-r <- wf_request(request, "test@email.com", transfer = FALSE)
+# (request not provided)
+r <- wf_request(request, transfer = FALSE)
 
 # check transfer, will download if available
-wf_transfer(r$get_url(), "test@email.com")
+wf_transfer(r$get_url())
 }
 }
 \seealso{

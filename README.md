@@ -161,23 +161,21 @@ data. By default the process is verbose, and will give you plenty of feedback
 on progress.
 
 ``` r
-# This is an example of a request for # downloading 'ERA-5' reanalysis data for
-# 2000-04-04 00:00 UTC, temperature on # 850 hectopascal for an area covering 
-# northern Europe.
-# File will be stored as "era5-demo.nc" (netcdf format).
+# This is an example of a request as converted from 
 request <- list(
- "dataset_short_name" = "reanalysis-era5-pressure-levels",
- "product_type" = "reanalysis",
- "variable" = "temperature",
- "pressure_level" = "850",
- "year" = "2000",
- "month" = "04",
- "day" = "04",
- "time" = "00:00",
- "area" = "70/-20/00/60",
- "format" = "netcdf",
- "target" = "era5-demo.nc"
- )
+  dataset_short_name = "reanalysis-era5-pressure-levels",
+  product_type = "reanalysis",
+  variable = "temperature",
+  year = "2000",
+  month = "04",
+  day = "04",
+  time = "00:00",
+  pressure_level = "850",
+  data_format = "netcdf",
+  download_format = "unarchived",
+  area = c(70, -20, 60, 30),
+  target = "era5-demo.nc"
+)
 
 # If you have stored your user login information
 # in the keyring by calling cds_set_key you can
@@ -229,7 +227,7 @@ We can quickly visualize this data using the `terra` geospatial library using:
 ```r
 # Open NetCDF file and plot the data
 # (trap read error on mac - if gdal netcdf support is missing)
-r <- try(terra::rast(ncfile))
+r <- terra::rast(file)
 terra::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
 maps::map("world", add = TRUE)
 ```

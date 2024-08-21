@@ -22,6 +22,15 @@
 
 wf_get_key <- function(user = "ecmwfr", service = "ecmwfr") {
 
+  # system environments variables override the keyring
+  # by default
+  key <- Sys.getenv("ecmwfr_PAT")
+  if(nchar(key)>0){
+    message("An environmental variable set Personal Access Token is present \n",
+            "bypassing the use of your keyring")
+    return(key)
+  }
+
   # unlock the keyring when required, mostly so
   # only the "env" option does not require this
   if (keyring::default_backend()$name != "env") {

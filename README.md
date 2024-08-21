@@ -268,9 +268,7 @@ For those familiar with the old ECMWF *mars* syntax: CDS/ADS/CEMS does not accep
 `date = "2000-01-01/to/2000-12-31"` specifications. It is possible to
 specify one specific date via `date = "2000-01-01"` or multiple days via
 `date = ["2000-01-01","2000-01-02","2000-10-20"]` or
-`date = "YYYY-MM-DD/YYYY-MM-DD"`. Specifying the date as a range allows
-you to sidestep the [ERA5T restricted access
-issue](https://confluence.ecmwf.int/pages/viewpage.action?pageId=277352608&focusedCommentId=278530169).
+`date = "YYYY-MM-DD/YYYY-MM-DD"`.
 
 ## Citation
 

@@ -16,36 +16,31 @@ ON_GIT <- ifelse(
 # ignore SSL (server has SSL issues)
 #httr::set_config(httr::config(ssl_verifypeer = 0L))
 
-# format request (see below)
 cds_request <- list(
-  "dataset_short_name" = "reanalysis-era5-pressure-levels",
-  "product_type"   = "reanalysis",
-  "format"         = "netcdf",
-  "variable"       = "temperature",
-  "pressure_level" = "850",
-  "year"           = "2018",
-  "month"          = "04",
-  "day"            = "04",
-  "time"           = "00:00",
-  "area"           = c(50,9,51,10),
-  "format"         = "netcdf",
-  "target"         = "era5-demo.nc"
-  )
+  dataset_short_name = "reanalysis-era5-pressure-levels",
+  product_type = "reanalysis",
+  variable = "geopotential",
+  year = "2024",
+  month = "03",
+  day = "01",
+  time = "13:00",
+  pressure_level = "1000",
+  data_format = "grib",
+  target = "download.grib"
+)
 
 cds_request_faulty <- list(
-  "dataset_short_name" = "reanalysis-era5-preure-levels",
-  "product_type"   = "reanalysis",
-  "format"         = "netcdf",
-  "variable"       = "temperature",
-  "pressure_level" = "850",
-  "year"           = "2018",
-  "month"          = "04",
-  "day"            = "04",
-  "time"           = "00:00",
-  "area"           = c(50,9,51,10),
-  "format"         = "netcdf",
-  "target"         = "era5-demo.nc"
-  )
+  dataset_short_name = "reanalysis-era5-prssre-levels",
+  product_type = "reanalysis",
+  variable = "geopotential",
+  year = "2024",
+  month = "03",
+  day = "01",
+  time = "13:00",
+  pressure_level = "1000",
+  data_format = "grib",
+  target = "download.grib"
+)
 
 # is the server reachable
 server_check <- ecmwfr:::ecmwf_running(
@@ -166,6 +161,7 @@ test_that("required arguments missing for cds_* functions", {
   expect_error(wf_dataset_info(dataset = "foo"))
 
   # check transfer routine
+  Sys.sleep(20)
   expect_output(
     wf_transfer(
       url = r$get_url()

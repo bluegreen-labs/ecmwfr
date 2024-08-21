@@ -41,14 +41,22 @@ wf_delete <- function(
     )
   )
 
-  # trap general http error, otherwise report success
-  if (httr::http_error(response) || inherits(response, "try-error")) {
+  # trap bad urls
+  if(inherits(response, "try-error")){
     warning("Request not purged from queue, check download!")
-  } else {
-    if (verbose){
-      message("- request purged from queue!")
-    } else {
-      invisible()
-    }
   }
+
+  # trap general http error
+  if (httr::http_error(response)) {
+    warning("Request not purged from queue, check download!")
+  }
+
+  # otherwise report success
+  if (verbose){
+      message("- request purged from queue!")
+  }
+
+  # return content of call
+  ct <- httr::content(ct)
+  invisible(ct)
 }

@@ -33,15 +33,16 @@ wf_delete <- function(
   key <- wf_get_key(user = user)
 
   #  get the response for the query provided
-  response <- httr::DELETE(
+  response <- try(httr::DELETE(
     url,
     httr::add_headers(
       "PRIVATE-TOKEN" = key
+      )
     )
   )
 
   # trap general http error, otherwise report success
-  if (httr::http_error(response)) {
+  if (httr::http_error(response) || inherits(response, "try-error")) {
     warning("Request not purged from queue, check download!")
   } else {
     if (verbose){

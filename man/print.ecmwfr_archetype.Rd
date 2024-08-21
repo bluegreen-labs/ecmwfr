@@ -3,11 +3,14 @@
 \name{print.ecmwfr_archetype}
 \alias{print.ecmwfr_archetype}
 \title{Methods to deal with visualizing / printing
-request info}
+requesting info from the archetype constructor}
 \usage{
 \method{print}{ecmwfr_archetype}(x, ...)
 }
+\arguments{
+\item{x}{archetype object}
+}
 \description{
 Methods to deal with visualizing / printing
-request info
+requesting info from the archetype constructor
 }

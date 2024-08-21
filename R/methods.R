@@ -1,5 +1,7 @@
 #' Methods to deal with visualizing / printing
-#' request info
+#' requesting info from the archetype constructor
+#'
+#' @param x archetype object
 #' @export
 
 print.ecmwfr_archetype <- function(x, ...) {

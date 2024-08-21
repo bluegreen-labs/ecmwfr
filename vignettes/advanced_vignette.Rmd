@@ -1,10 +1,10 @@
 ---
-title: "Advanced Use Cases"
+title: "Advanced Features"
 author: "Koen Hufkens"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Advanced Use Cases}
+  %\VignetteIndexEntry{Advanced Features}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +24,7 @@ library(maps)
 library(ecmwfr)
 ```
 
-# Advanced Use Cases
+# Advanced Features
 
 This is a brief overview of some of the more advanced options in the `ecmwfr` package.
 

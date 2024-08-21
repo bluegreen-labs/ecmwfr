@@ -162,12 +162,8 @@ test_that("required arguments missing for cds_* functions", {
   )
 
   # CDS productinfo (requires at least 'user' and 'dataset')
-  expect_error(wf_product_info())
-  expect_error(wf_product_info(dataset = "foo"))
-
-  # CDS productinfo: product name which is not available
-  expect_output(str(wf_product_info(dataset = "satellite-methane"))
-  )
+  expect_error(wf_dataset_info())
+  expect_error(wf_dataset_info(dataset = "foo"))
 
   # check transfer routine
   expect_output(

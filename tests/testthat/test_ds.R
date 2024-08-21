@@ -48,7 +48,9 @@ cds_request_faulty <- list(
   )
 
 # is the server reachable
-server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
+server_check <- ecmwfr:::ecmwf_running(
+    paste0(ecmwfr:::wf_server(service = "cds"),"/catalogue/v1/collections/")
+  )
 
 # if the server is reachable, try to set login
 # if not set login check to TRUE as well
@@ -214,8 +216,7 @@ test_that("batch request tests", {
   expect_output(
     wf_request_batch(
     requests,
-    retry = 5,
-    user = "2088")
+    retry = 5)
     )
 
   requests_dup <- lapply(requests, function(r) {
@@ -224,8 +225,7 @@ test_that("batch request tests", {
   })
 
   expect_error(wf_request_batch(
-    requests_dup,
-    user = "2088")
+    requests_dup)
   )
 
 })

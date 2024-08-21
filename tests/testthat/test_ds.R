@@ -71,20 +71,14 @@ if(server_check & ON_GIT){
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-    expect_message(wf_set_key(user = "2088",
-                              Sys.getenv("CDS"),
-                              service = "cds"))
+    expect_message(wf_set_key(Sys.getenv("PAT")))
 })
 
 test_that("cds datasets returns data.frame or list", {
   skip_on_cran()
   skip_if(login_check)
-  expect_true(inherits(wf_datasets(user = "2088",
-                                   service = "cds",
-                                   simplify = TRUE), "data.frame"))
-  expect_true(inherits(wf_datasets(user = "2088",
-                                   service = "cds",
-                                   simplify = FALSE), "list"))
+  expect_true(inherits(wf_datasets(simplify = TRUE), "data.frame"))
+  expect_true(inherits(wf_datasets(simplify = FALSE), "list"))
 })
 
 # Testing the cds request function
@@ -95,7 +89,6 @@ test_that("cds request", {
   # ok transfer
   expect_message(
     wf_request(
-      user = "2088",
       request = cds_request,
       transfer = TRUE
       )
@@ -104,7 +97,6 @@ test_that("cds request", {
   # timeout trigger
   expect_message(
     wf_request(
-      user = "2088",
       request = cds_request,
       time_out = -1,
       transfer = TRUE
@@ -114,7 +106,6 @@ test_that("cds request", {
   # job test (can't run headless)
   expect_error(
     wf_request(
-      user = "2088",
       request = cds_request,
       transfer = TRUE,
       job_name = "jobtest"
@@ -124,7 +115,6 @@ test_that("cds request", {
   # faulty request
   expect_error(
     wf_request(
-      user = "2088",
       request = cds_request_faulty
     )
   )
@@ -132,7 +122,6 @@ test_that("cds request", {
   # wrong request
   expect_error(
     wf_request(
-      user = "2088",
       request = "xyz",
       transfer = TRUE
       )
@@ -140,20 +129,12 @@ test_that("cds request", {
 
   # missing request
   expect_error(wf_request(
-    user = "2088",
     transfer = TRUE
     )
   )
 
-  # missing user
-  expect_error(wf_request(
-    request = cds_request,
-    transfer = TRUE
-    )
-  )
-
+  # R6 testing
   r <- wf_request(
-    user = "2088",
     request = cds_request,
     transfer = FALSE
     )
@@ -161,6 +142,10 @@ test_that("cds request", {
   # is R6 class
   expect_true(inherits(r, "R6"))
   r$delete() # cleanup
+
+  # test delete routine
+  expect_warning(
+    wf_delete(url = "50340909as"))
 
 })
 
@@ -172,38 +157,21 @@ test_that("required arguments missing for cds_* functions", {
 
   # submit request
   r <- wf_request(
-    user = "2088",
     request = cds_request,
     transfer = FALSE
   )
 
-  # CDS dataset (requires at least 'user')
-  expect_error(wf_dataset())
-  expect_output(str(wf_datasets(user = "2088", service = "cds")))
-
   # CDS productinfo (requires at least 'user' and 'dataset')
   expect_error(wf_product_info())
-  expect_error(wf_product_info(
-    user = "2088",
-    service = "cds",
-    dataset = "foo"
-    )
-  )
+  expect_error(wf_product_info(dataset = "foo"))
 
   # CDS productinfo: product name which is not available
-  expect_output(str(wf_product_info(
-    user = "2088",
-    service = "cds",
-    dataset = "satellite-methane"
-      )
-    )
+  expect_output(str(wf_product_info(dataset = "satellite-methane"))
   )
 
   # check transfer routine
   expect_output(
     wf_transfer(
-      user = "2088",
-      service = "cds",
       url = r$get_url()
       )
     )
@@ -217,45 +185,11 @@ test_that("required arguments missing for cds_* functions", {
   # CDS tranfer (forwarded to wf_transfer, requires at least
   # 'user' and 'url)
   expect_error(wf_transfer())
-  expect_error(wf_transfer(user = "2088",
-                           service = "cds",
-                           url = "http://google.com"))
-
-  # CDS transfer with wrong type
-  expect_error(wf_transfer(user = "2088",
-                           url = "http://google.com",
-                           service = "foo"))
+  expect_error(wf_transfer(url = "http://google.com"))
 
   # check product listing
   expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                    service = "cds",
-                                    user = NULL,
                                     simplify = FALSE)))
-
-  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
-                                    service = "cds",
-                                    user = NULL,
-                                    simplify = FALSE)))
-})
-
-# check delete routine CDS (fails)
-test_that("delete request", {
-  skip_on_cran()
-  skip_if(login_check)
-  expect_warning(
-    wf_delete(user = "2088",
-              service = "cds",
-              url = "50340909as"))
-})
-
-# CDS product info
-test_that("check product info",{
-  skip_on_cran()
-  skip_if(login_check)
-  expect_output(
-    str(wf_product_info("reanalysis-era5-single-levels",
-                        service = "cds",
-                        user = NULL)))
 })
 
 test_that("batch request tests", {

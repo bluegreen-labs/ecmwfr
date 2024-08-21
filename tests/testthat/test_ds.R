@@ -180,7 +180,7 @@ test_that("required arguments missing for cds_* functions", {
   expect_error(wf_transfer(url = "http://google.com"))
 
   # check product listing
-  expect_output(str(wf_product_info("reanalysis-era5-single-levels",
+  expect_output(str(wf_dataset_info("reanalysis-era5-single-levels",
                                     simplify = FALSE)))
 })
 

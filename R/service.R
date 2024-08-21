@@ -17,7 +17,6 @@ service <- R6::R6Class(
       private$file <- file.path(path, request$target)
       private$verbose <- verbose
       private$url <- url
-      self$request_id <- basename(url) # Compatibility with old code
       private$status <- "unsubmitted"
       private$next_retry <- Sys.time()
 

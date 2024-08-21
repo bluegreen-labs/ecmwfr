@@ -6,3 +6,9 @@
 inst/doc
 docs/
 CRAN-SUBMISSION
+
+# ignore accidental download files
+# which could be uploaded
+analysis/*.grib
+analysis/*.nc
+analysis/TMPFILE

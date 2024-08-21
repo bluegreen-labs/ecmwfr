@@ -22,7 +22,7 @@ a service called "ecmwfr".'><meta property="og:image" content="/logo.png"><meta 
         <a class="external-link hidden-md hidden-lg" href="https://bluegreenlabs.org">
           <img src="https://bluegreenlabs.org/img/logo.png" id="hexlogo" alt="bluegreen labs"></a>
         <a class="navbar-brand" href="../index.html">
-           <i>ecmwfr <small>v1.5.1</small></i>
+           <i>ecmwfr <small>v2.0.0</small></i>
         </a>
       </div>
     </div>
@@ -38,19 +38,7 @@ a service called "ecmwfr".'><meta property="og:image" content="/logo.png"><meta 
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/ads_vignette.html">ADS functionality</a>
-    </li>
-    <li>
-      <a href="../articles/advanced_vignette.html">Advanced Use Cases</a>
-    </li>
-    <li>
-      <a href="../articles/cds_vignette.html">CDS functionality</a>
-    </li>
-    <li>
-      <a href="../articles/cds_workflow_vignette.html">CDS workflow functionality</a>
-    </li>
-    <li>
-      <a href="../articles/webapi_vignette.html">WebAPI functionality</a>
+      <a href="../articles/advanced_vignette.html">Advanced Features</a>
     </li>
   </ul></li>
 <li>
@@ -72,7 +60,7 @@ a service called "ecmwfr".'><meta property="og:image" content="/logo.png"><meta 
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Set secret ECMWF token</h1>
-    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/v1.5.1/R/wf_set_key.R" class="external-link"><code>R/wf_set_key.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/R/wf_set_key.R" class="external-link"><code>R/wf_set_key.R</code></a></small>
     <div class="hidden name"><code>wf_set_key.Rd</code></div>
     </div>
 
@@ -82,24 +70,20 @@ a service called "ecmwfr".</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_set_key</span><span class="op">(</span><span class="va">user</span>, <span class="va">key</span>, <span class="va">service</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">wf_set_key</span><span class="op">(</span><span class="va">key</span>, user <span class="op">=</span> <span class="st">"ecmwfr"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
 
 
-<dl><dt id="arg-user">user<a class="anchor" aria-label="anchor" href="#arg-user"></a></dt>
-<dd><p>user (email address) used to sign up for the ECMWF data service</p></dd>
-
-
-<dt id="arg-key">key<a class="anchor" aria-label="anchor" href="#arg-key"></a></dt>
+<dl><dt id="arg-key">key<a class="anchor" aria-label="anchor" href="#arg-key"></a></dt>
 <dd><p>token provided by ECMWF</p></dd>
 
 
-<dt id="arg-service">service<a class="anchor" aria-label="anchor" href="#arg-service"></a></dt>
-<dd><p>which service to use, one of <code>webapi</code>, <code>cds</code>
-or <code>ads</code></p></dd>
+<dt id="arg-user">user<a class="anchor" aria-label="anchor" href="#arg-user"></a></dt>
+<dd><p>user (email address) used to sign up for the ECMWF data service,
+if only a single user is needed it defaults to ("ecmwfr").</p></dd>
 
 </dl></div>
     <div id="value">
@@ -128,14 +112,14 @@ can be found in ~/.config/r-keyring.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># set key</span></span></span>
-<span class="r-in"><span><span class="fu">wf_set_key</span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span>, key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">wf_set_key</span><span class="op">(</span>key <span class="op">=</span> <span class="st">"123"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># get key</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="wf_get_key.html">wf_get_key</a></span><span class="op">(</span>user <span class="op">=</span> <span class="st">"test@mail.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="wf_get_key.html">wf_get_key</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># leave user and key empty to open a browser window to the service's website</span></span></span>
 <span class="r-in"><span><span class="co"># and type the key interactively</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="wf_get_key.html">wf_get_key</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">wf_set_key</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

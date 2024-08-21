@@ -56,3 +56,4 @@ Suggests:
     rstudioapi,
     jsonlite
 VignetteBuilder: knitr
+Encoding: UTF-8

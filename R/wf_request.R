@@ -19,7 +19,6 @@
 #' @param job_name optional name to use as an RStudio job and as output variable
 #'  name. It has to be a syntactically valid name.
 #' @param verbose show feedback on processing
-#' @import uuid
 #'
 #' @return the path of the downloaded (requested file) or the an R6 object
 #' with download/transfer information

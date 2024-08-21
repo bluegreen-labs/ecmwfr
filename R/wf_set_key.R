@@ -62,13 +62,12 @@ wf_set_key <- function(key, user = "ecmwfr", service = "ecmwfr") {
     if (!interactive()) {
       stop(
         "wf_set_key needs to be run interactivelly if",
-         "`user` or `key` are not provided."
+         "`key` is not provided."
         )
     }
     browseURL(wf_key_page(service))
-    message("Login or register to get a key")
-    user <- readline("User ID / email: ")
-    key <- getPass::getPass(msg = "API key: ")
+    message("Login or register to get a Personal Access Token")
+    key <- getPass::getPass(msg = "Personal Access Token: ")
     if (is.null(key))
       stop("No key supplied.")
   }

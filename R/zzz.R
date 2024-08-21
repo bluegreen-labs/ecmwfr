@@ -165,7 +165,7 @@ make_key_service <- function(service = "") {
 
 # gets url where to get API key
 wf_key_page <- function(service) {
-  "https://www.ecmwf.int/user/login"
+  "https://cds-beta.climate.copernicus.eu/profile"
 }
 
 # checks credentials

@@ -161,7 +161,7 @@ test_that("required arguments missing for cds_* functions", {
   expect_error(wf_dataset_info(dataset = "foo"))
 
   # check transfer routine
-  Sys.sleep(20)
+  Sys.sleep(120)
   expect_output(
     wf_transfer(
       url = r$get_url()

@@ -126,10 +126,37 @@ uses a _R_ lists for all the arguments. This makes changing variables less prone
 to error, although overall we suggest not to manually create requests and use
 the RStudio Addin to translate the python `json` request to _R_ as shown below.
 
+Just select the whole query, including the dataset and target fields, and click
+on the Addins > ECMWF Python to list. The original python query is listed below
+so you can try this routine yourself.
 
+![](https://github.com/user-attachments/assets/100cf392-3214-4bcd-b308-7ef7a50308a0)
 
-This will give you a request as an annotated list, which can then be used by the
-[`wf_request`](references/wf_request.html) function to query and download the
+```python
+# The full python query, which you can translate to an R
+# list using the Addin
+
+dataset = "reanalysis-era5-pressure-levels"
+request = {
+  'product_type': ['reanalysis'],
+  'variable': ['temperature'],
+  'year': ['2000'],
+  'month': ['04'],
+  'day': ['04'],
+  'time': ['00:00'],
+  'pressure_level': ['850'],
+  'data_format': 'netcdf',
+  'download_format': 'unarchived',
+  'area': [70, -20, 60, 30]
+}
+```
+
+This will give you a request as an annotated list. If no target file is
+specified in the original request a _target_ field will be added to the list
+with a default name `TMPFILE`. Replace this filename with something that matches
+your preference and the specified data format. In this case the default name
+was changed to `era5-demo.nc`, a netcdf file. This formatted request can now be
+used by the [`wf_request`](references/wf_request.html) function to query and download the
 data. By default the process is verbose, and will give you plenty of feedback
 on progress.
 

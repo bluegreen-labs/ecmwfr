@@ -1,10 +1,10 @@
 ---
-title: "CDS functionality"
+title: "CDS worked example"
 author: "Reto Stauffer, Koen Hufkens"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{CDS functionality}
+  %\VignetteIndexEntry{CDS worked example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -27,23 +27,21 @@ ncfile <- ncfile[grepl("cds.nc", ncfile)]
 
 ## Downloading Data Sets from Copernicus's Climate Data Store
 
-[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting data sets for research, education, and applied earth sciences on their [Climate Data Store](https://cds.climate.copernicus.eu) (CDS). Among the different data sets there is the latest [ECMWF](https://www.ecmwf.int) high-resolution reanalysis data set which replaces ERA Interim (which was ERA-4; version 4). The R package `ecmwfr` provides a convenient interface to download these data sets.
+[Copernicus.eu](https://www.copernicus.eu/en) provides a set of interesting data sets for research, education, and applied earth sciences on their [Climate Data Store](https://cds-beta.climate.copernicus.eu) (CDS). The R package `ecmwfr` provides a convenient interface to download these data sets.
 
 ## Before Downloading Data
 
 Before you will be able to download any data you need to get a free personal
 account. 
 
-* [Register yourself for CDS services](https://cds.climate.copernicus.eu/user/register)
-* [Terms and conditions](https://cds.climate.copernicus.eu/disclaimer-privacy)
+* [Register yourself for CDS services](https://cds-beta.climate.copernicus.eu/login)
+* [Accpet the Terms and Conditions](https://cds-beta.climate.copernicus.eu/profile)
 
-To retrieve data `ecmwfr` use `wf_set_key()`to add the login details to your local keyring (requires the _R_ package [`keyring`](https://CRAN.R-project.org/package=keyring)).
-
-Once you are in possession of your personal user (namely your user ID and a secret key) `ecmwfr` allows to send requests to CDS and/or download the data.
+To retrieve data `ecmwfr` use `wf_set_key()`to add the Personal Access Token to your local keyring (requires the _R_ package [`keyring`](https://CRAN.R-project.org/package=keyring)).
 
 ## The Request Syntax
 
-CDS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests` (for those who are familiar with _mars_: these are basically _mars_ requests). A `request` defined the type of the `dataset`, the `variables` to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
+CDS data retrievals are based on a `list` object which specifies the data set to be downloaded.  These definitions are called `requests`. A `request` defined the type of the `dataset`, the `variables` to be downloaded, the time period, output `format`, `target` location, a custom `area` extent, and other details.
 
 The request syntax is available for a range of different CDS data sets. Check the [CDS Dataset](https://cds.climate.copernicus.eu/cdsapp#!/search?type=dataset) website to see a list of available datasets and to check whether API requests are allowed or not (go to _Download Data_, select some data, show request by clicking _Show API Request_ (red button, bottom of page).
 
@@ -88,7 +86,6 @@ The data set as specified above can be downloaded calling the
 # Start downloading the data, the path of the file
 # will be returned as a variable (ncfile)
 ncfile <- wf_request(
-  user = "2088",
   request = request,   
   transfer = TRUE,  
   path = "~",

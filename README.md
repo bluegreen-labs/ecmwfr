@@ -62,89 +62,76 @@ remotes::install_github("bluegreen-labs/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
 
-## Use: ECMWF services
+## Use: ECMWF Data Store services
 
 Create a ECMWF account by [self
-registering](https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/registrations?client_id=apps&response_type=code&scope=openid%20email&redirect_uri=https://www.ecmwf.int)
-and retrieving your key at <https://api.ecmwf.int/v1/key/> after you log
-in. The key is a long series of numbers and characters (X in the example
-below).
+registering](https://accounts.ecmwf.int/auth/realms/ecmwf/login-actions/registration?client_id=cms-www&tab_id=-Wuo-QeT0_k). Once your user account has been verified you can get your personal access token or *key* by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds-beta.climate.copernicus.eu/profile). 
+
+The Personal Access Token is a long string of letters and numbers:
 
 ``` json
-{
-    "url"   : "https://api.ecmwf.int/v1",
-    "key"   : "XXXXXXXXXXXXXXXXXXXXXX",
-    "email" : "john.smith@example.com"
-}
+Personal Access Token: abcd1234-foo-bar-98765431-XXXXXXXXXX
 ```
-
-## Use: Copernicus Data Stores (xDS)
-
-Create a free CDS user account by [self
-registering](https://cds.climate.copernicus.eu/user/register). Once your
-user account has been verified you can get your personal *user ID* and
-*key* by visiting the [user
-profile](https://cds.climate.copernicus.eu/user). This information is
-required to be able to retrieve data via the `ecmwfr` package. Use the
-`ecmwf` [`wf_set_key`](references/wf_set_key.html) function to store
-your login information in the system keyring (see below). Be aware, that
-unlike the API key for the ECMWF API your `user` does not correspond to
-the email address you use for the CDS login.
-
-``` json
-UID: 1234
-API key: abcd1234-foo-bar-98765431-XXXXXXXXXX
-```
+This Personal Access Token gives you access to all Data Store services, including the climate atmosphere and emergency management services. This information is required to be able to retrieve data via the `ecmwfr` package. Use the
+`ecmwfr` [`wf_set_key`](references/wf_set_key.html) function to store
+your login information in the system keyring (see below).
 
 ### Setup
 
-If you prefer to use your local keychain (rather than using the
-`.cdsapirc` file) you have to save your login information first. The
+You have to save your login information before proceeding. The
 package does not allow you to use your key inline in scripts to limit
-security issues when sharing scripts on github or otherwise.
+security issues when sharing scripts on github or otherwise. **The following
+lines should NEVER be included in any script and run only once at setup.**
 
 ``` r
 # set a key to the keychain
-wf_set_key(user = "1234",
-            key = "abcd1234-foo-bar-98765431-XXXXXXXXXX",
-            service = "cds")
+wf_set_key(key = "abcd1234-foo-bar-98765431-XXXXXXXXXX")
 
 # you can retrieve the key using
-wf_get_key(user = "1234")
+wf_get_key()
 
 # the output should be the key you provided
 # "abcd1234-foo-bar-98765431-XXXXXXXXXX"
 
 # Alternatively you can input your login info with an interactive request
-wf_set_key(service = "cds")
+# if you do not put in the key directly
+wf_set_key()
 
 # you will get a command line request to provide the required details
 ```
 
 Before you can download any data you have to make sure to accept the
 terms and conditions here: Before downloading and processing data from
-CDS please make sure you accept the terms and conditions which can be
-found here: [Copernicus Climate Data Store
-Disclaimer/Privacy](https://cds.climate.copernicus.eu/disclaimer-privacy).
+CDS please make sure you accept the terms and conditions in the profile
+pages of your Data Store of choice.
 
 ### Data Requests
 
 To download data use the [`wf_request`](references/wf_request.html)
-function, together with your *user ID* and a request string syntax [as
-documented](https://confluence.ecmwf.int/display/WEBAPI/Brief+request+syntax#Briefrequestsyntax-Syntax).
-Instead of `json` formatting the function uses a simple `R` list for all
-the arguments. Be sure to specify the service you want to use in your
-query in this case `cds`.
-
-**Note**: the simplest way to get the requests is to go to the CDS
-website which offers an interactive interface to create these requests.
-E.g., for ERA-5 reanalysis:
+function, and a request string syntax. The simplest way to get the requests is 
+to go to the Data Store website which offers an interactive interface to create
+these requests e.g., for the CDS ERA-5 reanalysis data:
 
 -   [pressure level
-    data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-pressure-levels?tab=form)
+    data](https://cds-beta.climate.copernicus.eu/dataset/reanalysis-era5-pressure-levels?tab=download)
 -   [surface
-    data](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=form)
+    data](https://cds-beta.climate.copernicus.eu/dataset/reanalysis-era5-single-levels?tab=download)
 -   ...
+
+After formatting the request online copy the API request python code to your script.
+The request should include the _dataset_, _request_ and _target_ field (if available).
+
+Instead of `json` formatting as shown in the online form the `ecmwfr` package 
+uses a _R_ lists for all the arguments. This makes changing variables less prone
+to error, although overall we suggest not to manually create requests and use
+the RStudio Addin to translate the python `json` request to _R_ as shown below.
+
+![](https://github.com/user-attachments/assets/9e7ac6cc-a43e-4860-aa88-ac43c55e2673)
+
+This will give you a request as an annotated list, which can then be used by the
+[`wf_request`](references/wf_request.html) function to query and download the
+data. By default the process is verbose, and will give you plenty of feedback
+on progress.
 
 ``` r
 # This is an example of a request for # downloading 'ERA-5' reanalysis data for
@@ -169,21 +156,58 @@ request <- list(
 # in the keyring by calling cds_set_key you can
 # call:
 file <- wf_request(
- user     = "1234",   # user ID (for authentification)
  request  = request,  # the request
  transfer = TRUE,     # download the file
  path     = "."       # store data in current working directory
  )
 ```
 
-The CDS services are quite fast, however, if you request a lot of
+The Data Store services are quite fast, however, if you request a lot of
 variables, multiple levels, and data over several years these requests
-might take quite a while! **Note**: If you need to download larger
+might take quite a while! You can check the scope of your query and if
+it is out of bounds in the right hand `Request Validation` panel when
+formatting your original data request in the web interface.
+
+**Note**: If you need to download larger
 amounts of data it is suggested to split the downloads, e.g., download
 the data in chunks (e.g., month-by-month, or year-by-year). A progress
 indicator will keep you informed on the status of your request. Keep in
 mind that all data downloaded will be buffered in memory limiting the
 downloads to \~6GB on low end systems.
+
+#### ERA5 demo 
+
+The above request uses ERA-5 reanalysis data on pressure levels.
+
+* `dataset`: downloading ERA-5 reanalysis on pressure level(s)
+* `product_type`: (deterministic) reanalysis data
+* `variable`/`pressure_level`: requesting temperature on 850 hectopascal
+* `year`/`month`/`day`: April 4, 2000 (one day in this example)
+* `time`: valid at 00:00 UTC (date/time always in UTC),
+* `area`: custom subset covering northern Europe
+* `format`: output format NetCDF
+* `target`: local output file `era5-demo.nc`
+
+The data set as specified above can be downloaded calling the
+`wf_request` function, and upon request returns the location of the 
+NetCDF file on your system. The `file` variable can then be used directly
+for further processing (note: should the download be interupted the job ID in your
+download queue is returned and the job can be resumed using `wf_transfer()`).
+
+Once the retrieval has finished you should now be the owner of a NetCDF containing
+the requested information located in the current working directory, called `era5-demo.nc`.
+
+We can quickly visualize this data using the `terra` geospatial library using:
+
+```r
+# Open NetCDF file and plot the data
+# (trap read error on mac - if gdal netcdf support is missing)
+r <- try(terra::rast(ncfile))
+terra::plot(r, main = "ERA-5 Reanalysis Demo (2m Temperature 850 hPa)")
+maps::map("world", add = TRUE)
+```
+
+![spatial-plot](https://github.com/user-attachments/assets/27a89664-7aaf-483f-94dd-8d9992e862be)
 
 ## File based keychains
 
@@ -200,6 +224,18 @@ Upon the start of each session you will be asked to provide this
 password, unlocking all `ecmwfr` credentials for this session. Should
 you ever forget the password just delete the file at:
 `~/.config/r-keyring/ecmwfr.keyring` and re-enter all your credentials.
+
+Alternatively, you can set an environmental containing your Personal Access Token. 
+
+```r
+ Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")
+```
+
+This will need to be set at the beginning of each setting or added to the user
+`.Renviron` file. Overall,  this is considered insecure, but might be the only 
+option on some legacy or HPC systems to get full `ecmwfr` functionality. A good 
+blog post on why you should not do this is 
+provided by [Maëlle Salmon](https://blog.r-hub.io/2024/02/28/key-advantages-of-using-keyring/).
 
 ## Date specification
 

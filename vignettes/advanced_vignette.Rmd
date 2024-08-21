@@ -28,25 +28,6 @@ library(ecmwfr)
 
 This is a brief overview of some of the more advanced options in the `ecmwfr` package.
 
-## Setup
-
-A 'hidden' feature of the `wf_set_key()` function is that it returns the user name upon success. This allows for easier integration in scripts shared with users (which have different credentials)
-
-```{r eval = FALSE}
-# set a key to the keychain interactively
-user <- wf_set_key(service = "webapi")
-```
-
-## Formatting requests 
-
-The conversion from a MARS or python based queries (formed on the ECMWF or Copernicus CDS websites) to the list format used by `ecmwfr` can be automated if you use the RStudio based Addin. 
-
-By selecting and using Addin -> Mars to list (or 'Python to list') you dynamically convert queries copied from either ECMWF or CDS based services.
-
-![](https://user-images.githubusercontent.com/1354258/56429601-ced94100-62c3-11e9-82f3-ae2cd03d06f5.gif)
-
-Using the `Addin` is the sure way to form a proper `ecmwfr` request and avoids typos. As such, we recommend the use of the `Addin`.
-
 ## Piped requests
 
 Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function (using the %>% or pipe symbol).
@@ -64,8 +45,8 @@ list(stream  = "oper",
      class   = "ei",
      area    = "73.5/-27/33/45",
      format  = "netcdf",
-     target  = "tmp.nc") %>%
-  wf_request(user = user, path = "~")
+     target  = "tmp.nc") |>
+  wf_request(path = "~")
 ```
 
 ## Dynamic request functions / archetypes
@@ -121,4 +102,4 @@ wf_request_batch(
 ## Date specification
 
 For those familiar to ECMWF _mars_ syntax: CDS/ADS does not
-accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` or `date = "YYYY-MM-DD/YYYY-MM-DD"` but not via `".../to/..."`. Specifying the date as a range allows you to sidestep the [ERA5T restricted access issue](https://confluence.ecmwf.int/pages/viewpage.action?pageId=277352608&focusedCommentId=278530169).
+accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` or `date = "YYYY-MM-DD/YYYY-MM-DD"` but not via `".../to/..."`.

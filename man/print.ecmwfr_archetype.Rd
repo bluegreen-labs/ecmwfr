@@ -9,6 +9,8 @@ requesting info from the archetype constructor}
 }
 \arguments{
 \item{x}{archetype object}
+
+\item{...}{additional parameters to pass on}
 }
 \description{
 Methods to deal with visualizing / printing

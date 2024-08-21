@@ -85,6 +85,10 @@ wf_transfer <- function(
     stop("Your requested download failed - check url", call. = FALSE)
   }
 
+  if(verbose){
+    message("File succesfully downloaded! ")
+  }
+
   # return state variable
   return(invisible(ct))
 }

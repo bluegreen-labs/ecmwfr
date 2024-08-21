@@ -8,8 +8,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
 
       # get key
       key <- wf_get_key(
-        user = private$user,
-        service = "ecmwfr"
+        user = private$user
       )
 
       #  get the response for the query provided
@@ -80,8 +79,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
       }
 
       key <- wf_get_key(
-        user = private$user,
-        service = "ecmwfr"
+        user = private$user
         )
 
       # set retry time
@@ -167,7 +165,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
       if (private$verbose) message("\nDownloading file")
 
       temp_file <- tempfile(pattern = "ecmwfr_", tmpdir = private$path)
-      key <- wf_get_key(user = private$user, service = "ecmwfr")
+      key <- wf_get_key(user = private$user)
 
       # formally download the file
       response <- httr::GET(
@@ -209,7 +207,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
     delete = function() {
 
       # get key
-      key <- wf_get_key(user = private$user, service = "ecmwfr")
+      key <- wf_get_key(user = private$user)
 
       #  get the response for the query provided
       response <- httr::DELETE(
@@ -256,8 +254,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
 
       # get key
       key <- wf_get_key(
-        user = private$user,
-        service = "ecmwfr"
+        user = private$user
       )
 
       # fetch download location from results URL

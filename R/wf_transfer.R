@@ -47,8 +47,7 @@ wf_transfer <- function(
 
   # get key
   key <- wf_get_key(
-    user = user,
-    service = "ecmwfr"
+    user = user
   )
 
   # fetch download location from results URL

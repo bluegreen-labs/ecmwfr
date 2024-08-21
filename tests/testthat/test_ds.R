@@ -55,9 +55,7 @@ server_check <- ecmwfr:::ecmwf_running(ecmwfr:::wf_server(service = "cds"))
 if(server_check & ON_GIT){
   user <- try(
       ecmwfr::wf_set_key(
-        user = "2088",
-        key = Sys.getenv("CDS"),
-        service = "cds")
+        key = Sys.getenv("CDS"))
       )
 
   # set login check to TRUE so skipped if

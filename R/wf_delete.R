@@ -38,25 +38,26 @@ wf_delete <- function(
     httr::add_headers(
       "PRIVATE-TOKEN" = key
       )
-    )
+    ), silent = TRUE
   )
 
   # trap bad urls
   if(inherits(response, "try-error")){
     stop("Request not purged from queue, check download!")
-  }
+  } else {
 
-  # trap general http error
-  if (httr::http_error(response)) {
-    stop("Request not purged from queue, check download!")
-  }
+    # trap general http error
+    if (httr::http_error(response)) {
+      stop("Request not purged from queue, check download!")
+    }
 
-  # otherwise report success
-  if (verbose){
-    message("- request purged from queue!")
-  }
+    # otherwise report success
+    if (verbose){
+      message("- request purged from queue!")
+    }
 
-  # return content of call
-  ct <- httr::content(response)
-  invisible(ct)
+    # return content of call
+    ct <- httr::content(response)
+    invisible(ct)
+  }
 }

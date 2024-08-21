@@ -234,7 +234,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
     },
 
     browse_request = function() {
-      url <- paste0(dirname(private$url,"/requests?tab=all"))
+      url <- paste0(dirname(private$url),"/requests?tab=all")
       utils::browseURL(url)
       return(invisible(self))
     }

@@ -2,32 +2,26 @@
 % Please edit documentation in R/wf_delete.R
 \name{wf_delete}
 \alias{wf_delete}
-\title{delete ECMWF request}
+\title{Delete ECMWF Data Store request}
 \usage{
-wf_delete(url, user, service = "webapi", verbose = TRUE)
+wf_delete(url, user = "ecmwfr", verbose = TRUE)
 }
 \arguments{
 \item{url}{url to query}
 
-\item{user}{user (email address) used to sign up for the ECMWF data service,
-used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
-
-\item{service}{which service to use, one of \code{cds}
-or \code{ads} (default = webapi)}
+\item{user}{user, generally not set (default = "ecmwfr"), used by \code{\link[ecmwfr]{wf_set_key}}}
 
 \item{verbose}{show feedback on processing}
 }
 \description{
-Deletes a staged download from the queue
+Deletes a staged download from the queue when not using R6 methods.
 }
 \examples{
 
 \dontrun{
-# set key
-wf_set_key(email = "test@mail.com", key = "123")
-
-# get key
-wf_get_key(email = "test@mail.com")
+# delete request
+job_url <- file$get_url()
+wf_delete(url = job_url)
 }
 }
 \seealso{

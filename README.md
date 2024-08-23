@@ -251,7 +251,7 @@ password, unlocking all `ecmwfr` credentials for this session. Should
 you ever forget the password just delete the file at:
 `~/.config/r-keyring/ecmwfr.keyring` and re-enter all your credentials.
 
-Alternatively, you can set an environmental containing your Personal Access Token. 
+Alternatively, you can set an environmental variable containing your Personal Access Token. 
 
 ```r
  Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")

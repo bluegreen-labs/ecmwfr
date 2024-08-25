@@ -90,7 +90,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2024-08-23</h4>
+            <h4 data-toc-skip class="date">2024-08-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/advanced_vignette.Rmd" class="external-link"><code>vignettes/advanced_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_vignette.Rmd</code></div>
@@ -187,9 +187,56 @@ as per above).</p>
 <span><span class="co"># can't exceed 20)</span></span>
 <span><span class="fu"><a href="../reference/wf_request.html">wf_request_batch</a></span><span class="op">(</span></span>
 <span>  <span class="va">batch_request</span>,</span>
-<span>  workers <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  user <span class="op">=</span> <span class="va">user</span></span>
+<span>  workers <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="mixing-data-services-in-batch-requests">Mixing data services in batch requests<a class="anchor" aria-label="anchor" href="#mixing-data-services-in-batch-requests"></a>
+</h4>
+<p>It is allowed to mix data services in a batch requests. This allows
+you to formulate complex multi-service requests. Below you see a simple
+example using a batch requests for data from both the CDS and ADS
+services in one pass.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CDS</span></span>
+<span><span class="va">cds_request</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      product_type <span class="op">=</span> <span class="st">'reanalysis'</span>,</span>
+<span>      variable <span class="op">=</span> <span class="st">'geopotential'</span>,</span>
+<span>      year <span class="op">=</span> <span class="st">'2024'</span>,</span>
+<span>      month <span class="op">=</span> <span class="st">'03'</span>,</span>
+<span>      day <span class="op">=</span> <span class="st">'01'</span>,</span>
+<span>      time <span class="op">=</span> <span class="st">'13:00'</span>,</span>
+<span>      pressure_level <span class="op">=</span> <span class="st">'1000'</span>,</span>
+<span>      data_format <span class="op">=</span> <span class="st">'grib'</span>,</span>
+<span>      dataset_short_name <span class="op">=</span> <span class="st">'reanalysis-era5-pressure-levels'</span>,</span>
+<span>      target <span class="op">=</span> <span class="st">'test.grib'</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ADS</span></span>
+<span><span class="va">ads_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  dataset_short_name <span class="op">=</span> <span class="st">"cams-global-radiative-forcings"</span>,</span>
+<span>  variable <span class="op">=</span> <span class="st">"radiative_forcing_of_carbon_dioxide"</span>,</span>
+<span>  forcing_type <span class="op">=</span> <span class="st">"instantaneous"</span>,</span>
+<span>  band <span class="op">=</span> <span class="st">"long_wave"</span>,</span>
+<span>  sky_type <span class="op">=</span> <span class="st">"all_sky"</span>,</span>
+<span>  level <span class="op">=</span> <span class="st">"surface"</span>,</span>
+<span>  version <span class="op">=</span> <span class="st">"2"</span>,</span>
+<span>  year <span class="op">=</span> <span class="st">"2018"</span>,</span>
+<span>  month <span class="op">=</span> <span class="st">"06"</span>,</span>
+<span>  target <span class="op">=</span> <span class="st">"download.grib"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">combined_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="va">cds_request</span>,</span>
+<span>  <span class="va">ads_request</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_request.html">wf_request_batch</a></span><span class="op">(</span></span>
+<span>  <span class="va">combined_request</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="date-specification">Date specification<a class="anchor" aria-label="anchor" href="#date-specification"></a>

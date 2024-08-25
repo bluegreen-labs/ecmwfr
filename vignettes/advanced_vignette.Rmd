@@ -94,8 +94,53 @@ batch_request <- list(
 # can't exceed 20)
 wf_request_batch(
   batch_request,
-  workers = 2,
-  user = user
+  workers = 2
+  )
+```
+
+### Mixing data services in batch requests
+
+It is allowed to mix data services in a batch requests. This allows you to formulate complex multi-service requests. Below you see a simple example using a batch requests for data from both the CDS and ADS services in one pass.
+
+```{r eval=FALSE}
+# CDS
+cds_request <-
+  list(
+      product_type = 'reanalysis',
+      variable = 'geopotential',
+      year = '2024',
+      month = '03',
+      day = '01',
+      time = '13:00',
+      pressure_level = '1000',
+      data_format = 'grib',
+      dataset_short_name = 'reanalysis-era5-pressure-levels',
+      target = 'test.grib'
+)
+
+# ADS
+ads_request <- list(
+  dataset_short_name = "cams-global-radiative-forcings",
+  variable = "radiative_forcing_of_carbon_dioxide",
+  forcing_type = "instantaneous",
+  band = "long_wave",
+  sky_type = "all_sky",
+  level = "surface",
+  version = "2",
+  year = "2018",
+  month = "06",
+  target = "download.grib"
+)
+
+
+combined_request <- list(
+  cds_request,
+  ads_request
+)
+
+
+files <- wf_request_batch(
+  combined_request
   )
 ```
 

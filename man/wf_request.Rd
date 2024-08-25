@@ -19,7 +19,7 @@ wf_request(
 wf_request_batch(
   request_list,
   workers = 2,
-  user = "ecmwf",
+  user = "ecmwfr",
   path = tempdir(),
   time_out = 3600,
   retry = 5,

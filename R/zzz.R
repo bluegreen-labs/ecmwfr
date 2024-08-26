@@ -73,52 +73,6 @@ spinner <- function(seconds) {
   }
 }
 
-# Show message if user exits the function (interrupts execution)
-# or as soon as an error will be thrown.
-exit_message <- function(url, service, path, file) {
-  job_list <- switch(service,
-    "cds" = " Visit https://cds-beta.climate.copernicus.eu/requests?tab=all",
-    "cems" = " Visit https://ewds-beta.climate.copernicus.eu/requests?tab=all",
-    "ads" = " Visit https://ads-beta.atmosphere.copernicus.eu/requests?tab=all"
-  )
-
-  intro <- paste(
-    "Even after exiting your request is still beeing processed!",
-    job_list,
-    "  to manage (download, retry, delete) your requests",
-    "  or to get ID's from previous requests.\n\n",
-    sep = "\n"
-  )
-
-  options <- paste(
-    "- Retry downloading as soon as as completed:\n",
-    "  wf_transfer(url = '",
-    url,
-    "\n",
-    "<user>,\n ",
-    "',\n path = '",
-    path,
-    "',\n filename = '",
-    file,
-    "',\n service = \'",
-    service,
-    "')\n\n",
-    "- Delete the job upon completion using:\n",
-    "  wf_delete(<user>,\n url ='",
-    url,
-    "')\n\n",
-    sep = ""
-  )
-
-  # combine all messages
-  exit_msg <- paste(intro, options, sep = "")
-  message(sprintf(
-    "- Your request has been submitted as a %s request.\n\n  %s",
-    toupper(service),
-    exit_msg
-  ))
-}
-
 # Startup message when attaching the package.
 .onAttach <-
   function(libname = find.package("ecmwfr"),
@@ -158,61 +112,34 @@ ecmwf_running <- function(url) {
   }
 }
 
-# builds keychain service name from service
-make_key_service <- function(service = "") {
-  paste("ecmwfr", service, sep = "_")
-}
-
 # gets url where to get API key
 wf_key_page <- function(service) {
   "https://cds-beta.climate.copernicus.eu/profile"
 }
 
-# checks credentials
-wf_check_login <- function(user, key, service) {
-
-  # CDS service
-  if (service == "cds") {
-    url <- paste0(wf_server(service = "cds"), "/tasks/")
-    ct <- httr::GET(url, httr::authenticate(user, key))
-    return(httr::status_code(ct) < 400)
-  }
-
-  # CDS-beta service
-  if (service == "cds_beta") {
-    # url <- paste0(wf_server(service = "cds_beta"), "/processes/")
-    # ct <- httr::GET(
-    #   url,
-    #   httr::add_headers(
-    #     'PRIVATE-TOKEN' = key
-    #   )
-    # )
-    # return(httr::status_code(ct) < 400)
-    message("CDS-beta login validation is non-functional!")
-    return(TRUE)
-  }
-
-  # ADS beta service
-  if (service == "ads_beta") {
-    # url <- paste0(wf_server(service = "ads_beta"), "/processes/")
-    # ct <- httr::GET(
-    #   url,
-    #   httr::add_headers(
-    #     'PRIVATE-TOKEN' = key
-    #   )
-    # )
-    # return(httr::status_code(ct) < 400)
-    message("CDS-beta login validation is non-functional!")
-    return(TRUE)
-  }
-
-  # ADS service
-  if (service == "ads") {
-    url <- paste0(wf_server(service = "ads"), "/tasks/")
-    ct <- httr::GET(url, httr::authenticate(user, key))
-    return(httr::status_code(ct) < 400)
-  }
-}
+# checks credentials, disabled until
+# v2 API clarification
+# wf_check_login <- function(user, key, service) {
+#
+#   # CDS service
+#   url <- paste0(wf_server(service = "cds"), "/tasks/")
+#   ct <- httr::GET(url, httr::authenticate(user, key))
+#   return(httr::status_code(ct) < 400)
+#
+#   # CDS-beta service
+#   if (service == "cds_beta") {
+#     # url <- paste0(wf_server(service = "cds_beta"), "/processes/")
+#     # ct <- httr::GET(
+#     #   url,
+#     #   httr::add_headers(
+#     #     'PRIVATE-TOKEN' = key
+#     #   )
+#     # )
+#     # return(httr::status_code(ct) < 400)
+#     message("CDS-beta login validation is non-functional!")
+#     return(TRUE)
+#   }
+# }
 
 # build an archetype from arguments and body (either list or expression)
 new_archetype <- function(args, body) {
@@ -257,13 +184,13 @@ retrieve_header <- function(url, headers) {
 }
 
 # Encapsulates errors are warnings logic.
-warn_or_error <- function(..., error = FALSE) {
-  if (error) {
-    stop(...)
-  } else {
-    warning(...)
-  }
-}
+# warn_or_error <- function(..., error = FALSE) {
+#   if (error) {
+#     stop(...)
+#   } else {
+#     warning(...)
+#   }
+# }
 
 # Guesses the username and service from request
 guess_service <- function(request, user = NULL) {

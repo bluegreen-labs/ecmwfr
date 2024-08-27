@@ -165,8 +165,16 @@ test_that("cds request", {
     wf_delete(url = "50340909as")
   )
 
-  # error on second call
-  expect_error(
+  # delete job with function not method
+  r <- wf_request(
+    request = cds_request,
+    transfer = FALSE
+  )
+
+  # is R6 class
+  url <- r$get_url()
+
+  expect_message(
     wf_delete(url)
   )
 })

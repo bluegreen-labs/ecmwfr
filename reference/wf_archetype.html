@@ -106,26 +106,24 @@ will be guaranteed and tested for.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># format an archetype function</span></span></span>
-<span class="r-in"><span><span class="va">ERAI</span> <span class="op">&lt;-</span> <span class="fu">wf_archetype</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>stream <span class="op">=</span> <span class="st">"oper"</span>,</span></span>
-<span class="r-in"><span>                 levtype <span class="op">=</span> <span class="st">"sfc"</span>,</span></span>
-<span class="r-in"><span>                 param <span class="op">=</span> <span class="st">"165.128/166.128/167.128"</span>,</span></span>
-<span class="r-in"><span>                 dataset <span class="op">=</span> <span class="st">"interim"</span>,</span></span>
-<span class="r-in"><span>                 step <span class="op">=</span> <span class="st">"0"</span>,</span></span>
-<span class="r-in"><span>                 grid <span class="op">=</span> <span class="st">"0.75/0.75"</span>,</span></span>
-<span class="r-in"><span>                 time <span class="op">=</span> <span class="st">"00/06/12/18"</span>,</span></span>
-<span class="r-in"><span>                 date <span class="op">=</span> <span class="st">"2014-07-01/to/2014-07-31"</span>,</span></span>
-<span class="r-in"><span>                 type <span class="op">=</span> <span class="st">"an"</span>,</span></span>
-<span class="r-in"><span>                 class <span class="op">=</span> <span class="st">"ei"</span>,</span></span>
-<span class="r-in"><span>                 area <span class="op">=</span> <span class="st">"73.5/-27/33/45"</span>,</span></span>
-<span class="r-in"><span>                 format <span class="op">=</span> <span class="st">"netcdf"</span>,</span></span>
-<span class="r-in"><span>                 target <span class="op">=</span> <span class="st">"tmp.nc"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"time"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># print output of the function with below parameters</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">ERA_interim</span><span class="op">(</span><span class="st">"20100101"</span>, <span class="fl">3</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ERA</span> <span class="op">&lt;-</span> <span class="fu">wf_archetype</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  request <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    dataset_short_name <span class="op">=</span> <span class="st">"reanalysis-era5-pressure-levels"</span>,</span></span>
+<span class="r-in"><span>    product_type <span class="op">=</span> <span class="st">"reanalysis"</span>,</span></span>
+<span class="r-in"><span>    variable <span class="op">=</span> <span class="st">"geopotential"</span>,</span></span>
+<span class="r-in"><span>    year <span class="op">=</span> <span class="st">"2024"</span>,</span></span>
+<span class="r-in"><span>    month <span class="op">=</span> <span class="st">"03"</span>,</span></span>
+<span class="r-in"><span>    day <span class="op">=</span> <span class="st">"01"</span>,</span></span>
+<span class="r-in"><span>    time <span class="op">=</span> <span class="st">"13:00"</span>,</span></span>
+<span class="r-in"><span>    pressure_level <span class="op">=</span> <span class="st">"1000"</span>,</span></span>
+<span class="r-in"><span>    data_format <span class="op">=</span> <span class="st">"grib"</span>,</span></span>
+<span class="r-in"><span>    target <span class="op">=</span> <span class="st">"download.grib"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"day"</span>, <span class="st">"target"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># print output of the function with below (new) parameters</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">ERA</span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">3</span>, <span class="st">"new_download.grip"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

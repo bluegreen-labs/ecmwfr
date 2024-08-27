@@ -102,6 +102,10 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># demo query using a valid request (not shown)</span></span></span>
+<span class="r-in"><span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="wf_request.html">wf_request</a></span><span class="op">(</span>request <span class="op">=</span> <span class="va">request</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># delete request</span></span></span>
 <span class="r-in"><span><span class="va">job_url</span> <span class="op">&lt;-</span> <span class="va">file</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">wf_delete</span><span class="op">(</span>url <span class="op">=</span> <span class="va">job_url</span><span class="op">)</span></span></span>

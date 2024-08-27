@@ -184,13 +184,13 @@ make_script <- function(call, name) {
 # }
 
 # Encapsulates errors are warnings logic.
-# warn_or_error <- function(..., error = FALSE) {
-#   if (error) {
-#     stop(...)
-#   } else {
-#     warning(...)
-#   }
-# }
+warn_or_error <- function(..., error = FALSE) {
+  if (error) {
+    stop(...)
+  } else {
+    warning(...)
+  }
+}
 
 # Guesses the username and service from request
 guess_service <- function(request, user = NULL) {
@@ -219,3 +219,38 @@ guess_service <- function(request, user = NULL) {
               service = wf_check$service,
               url = wf_check$url))
 }
+
+exit_message <- function(url, path, file, service) {
+
+  intro <- paste(
+    "Even after exiting your request is still beeing processed!\n\n"
+  )
+
+  options <- paste(
+    "- Retry downloading as soon as completed! \n\n",
+    "  If you close your session use the following code: \n\n",
+    "  wf_transfer(\n   url = '",
+    url,
+    "',\n   path = '",
+    path,
+    "',\n   filename = '",
+    file,
+    "'\n  )\n\n",
+    "- Delete the job upon completion using:\n",
+    "  wf_delete(\n   url ='", url,"'\n  )\n\n",
+    "  If your session stays open you can donwload or delete requests using: \n\n",
+    "  file$download() and file$delete() *\n\n",
+    " [* with file from: file <- wf_request(request)] \n\n",
+    sep = ""
+  )
+
+  # combine all messages
+  exit_msg <- paste(intro, options, sep = "")
+  message(sprintf(
+    "- Your request has been submitted as a %s request.\n\n  %s",
+    toupper(service),
+    exit_msg
+  ))
+}
+
+

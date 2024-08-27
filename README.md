@@ -1,7 +1,7 @@
 # ecmwfr <img src="man/figures/logo.png" align="right" height="138.5"/>
 
 [![R-CMD-check](https://github.com/bluegreen-labs/ecmwfr/workflows/R-CMD-check/badge.svg)](https://github.com/bluegreen-labs/ecmwfr/actions)
-[![codecov](https://codecov.io/gh/bluegreen-labs/ecmwfr/branch/master/graph/badge.svg)](https://codecov.io/gh/bluegreen-labs/ecmwfr)
+[![codecov](https://codecov.io/gh/bluegreen-labs/ecmwfr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bluegreen-labs/ecmwfr)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ecmwfr)](https://cran.r-project.org/package=ecmwfr)
 [![Project Status: Active -- The project has reached a stable, usable
 state and is being actively
@@ -29,7 +29,7 @@ to update the 'last accessed' date):
 > Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr:
 > Programmatic interface to the two European Centre for Medium-Range
 > Weather Forecasts API services. Zenodo.
-> <http://doi.org/10.5281/zenodo.2647531>.
+> <https://doi.org/10.5281/zenodo.2647531>.
 
 ## Installation
 
@@ -300,7 +300,7 @@ specify one specific date via `date = "2000-01-01"` or multiple days via
 
 Hufkens, K., R. Stauffer, & E. Campitelli. (2019). ecmwfr: Programmatic
 interface to the two European Centre for Medium-Range Weather Forecasts
-API services. Zenodo. <http://doi.org/10.5281/zenodo.2647531>.
+API services. Zenodo. <https://doi.org/10.5281/zenodo.2647531>.
 
 ## Acknowledgements
 

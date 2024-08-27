@@ -27,8 +27,6 @@ wf_get_key <- function(user = "ecmwfr") {
   # by default
   key <- Sys.getenv("ecmwfr_PAT")
   if(nchar(key)>0){
-    message("An environmental variable set Personal Access Token is present \n",
-            "bypassing the use of your keyring")
     return(key)
   }
 

@@ -202,9 +202,9 @@ guess_service <- function(request, user = NULL) {
   # checks user login, the request layout and
   # returns the service to use if successful
   # TODO LOGIN CHECK
-  wf_check <- try(wf_check_request(request, user), silent = TRUE)
+  wf_check <- try(wf_check_request(request), silent = TRUE)
 
-  if (nrow(wf_check) <= 0 || is.null(wf_check)) {
+  if (nrow(wf_check) <= 0 || is.null(wf_check) || inherits(wf_check, "try-error") ) {
     stop(
       sprintf(
 " Data identifier %s is not found in Web API, CDS, CDS-beta or ADS datasets.

@@ -30,5 +30,5 @@ wf_get_key()
 \code{\link[ecmwfr]{wf_set_key}}
 }
 \author{
-Koen Kufkens
+Koen Hufkens
 }

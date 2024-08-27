@@ -25,7 +25,7 @@ sub-products in the collection as well as date and time ranges.
 \examples{
 \dontrun{
  # Return information
- info <- wf_product_info("reanalysis-era5-single-levels")
+ info <- wf_dataset_info("reanalysis-era5-single-levels")
  names(info)
 }
 }

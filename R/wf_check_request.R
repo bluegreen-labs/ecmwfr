@@ -1,21 +1,20 @@
 #' check ECMWF / CDS data requests
 #'
-#' Check the validity of a data request, and login credentials.
+#' Check the validity of a data request by comparing the main dataset
+#' to the list provided by \code{\link[ecmwfr]{wf_datasets}}
 #'
-#' @param user user (email address) used to sign up for the ECMWF data service,
-#' used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}
 #' @param request nested list with query parameters following the layout
 #' as specified on the ECMWF API page
 #' @return a data frame with the determined service and url service endpoint
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
-#' \code{\link[ecmwfr]{wf_transfer}},\code{\link[ecmwfr]{wf_request}}
+#' \code{\link[ecmwfr]{wf_transfer}},\code{\link[ecmwfr]{wf_request}},
+#' \code{\link[ecmwfr]{wf_transfer}}
 #' @export
 #' @author Koen Hufkens
 #' @importFrom memoise memoise
 
 wf_check_request <- memoise::memoise(function(
-  request,
-  user
+  request
 ){
 
   # Stop if not a list

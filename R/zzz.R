@@ -169,19 +169,19 @@ make_script <- function(call, name) {
   return(script)
 }
 
-# Downlaods only the header information
-retrieve_header <- function(url, headers) {
-  h <- curl::new_handle()
-  curl::handle_setheaders(h, .list = headers)
-  con <- curl::curl(url, handle = h)
-
-  open(con, "rf")
-  head <- curl::handle_data(h)
-  close(con)
-
-  head$headers <- curl::parse_headers_list(head$headers)
-  return(head)
-}
+# Downloads only the header information
+# retrieve_header <- function(url, headers) {
+#   h <- curl::new_handle()
+#   curl::handle_setheaders(h, .list = headers)
+#   con <- curl::curl(url, handle = h)
+#
+#   open(con, "rf")
+#   head <- curl::handle_data(h)
+#   close(con)
+#
+#   head$headers <- curl::parse_headers_list(head$headers)
+#   return(head)
+# }
 
 # Encapsulates errors are warnings logic.
 # warn_or_error <- function(..., error = FALSE) {

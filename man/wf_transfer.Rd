@@ -39,9 +39,6 @@ for legacy support and custom scripting only.
 \examples{
 
 \dontrun{
-# set key
-wf_set_key(key = "123")
-
 # request data and grab url and try a transfer
 # (request not provided)
 r <- wf_request(request, transfer = FALSE)

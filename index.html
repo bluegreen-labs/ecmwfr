@@ -127,8 +127,11 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/bluegreen-labs/ecmwfr" class="external-link">"ecmwfr"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="breaking-changes--200">Breaking changes (&gt;= 2.0.0)<a class="anchor" aria-label="anchor" href="#breaking-changes--200"></a>
+<h3 id="breaking-changes--200">breaking changes (&gt;= 2.0.0)<a class="anchor" aria-label="anchor" href="#breaking-changes--200"></a>
 </h3>
+<div class="section level4">
+<h4 id="querying-data">querying data<a class="anchor" aria-label="anchor" href="#querying-data"></a>
+</h4>
 <p>With the introduction of version 2.0.0 and the migration to the new API some changes to the package were implemented which will cause breaking changes. In particular the <code><a href="reference/wf_request.html">wf_request()</a></code> function(s) now use a default <code>ecmwfr</code> user field due to the consolidation of the API, with a single sign-on across all services and the use of a Personal Access Token (PAT) rather than user and password credentials.</p>
 <p>In order to migrate to version &gt;=2.0.0 you will have to provide a new PAT using <code><a href="reference/wf_set_key.html">wf_set_key()</a></code> and remove the user argument from any <code><a href="reference/wf_request.html">wf_request()</a></code> call, i.e.:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -143,6 +146,12 @@
 <span>  <span class="va">request</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The requests themselves should translate mostly without intervention and remain nested lists of parameters.</p>
+</div>
+<div class="section level4">
+<h4 id="netcdf-data-format">netCDF data format<a class="anchor" aria-label="anchor" href="#netcdf-data-format"></a>
+</h4>
+<p>In comparison with the original services the new <code>beta</code> API <a href="https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322" class="external-link">regresses in terms of netCDF support</a>. Those relying on common netCDF support such as ecosystem modellers will find this troubling. Note that both CDS and ADS have different policies and use different methods. Note that this regression in usability is not caused by this package. Please forward any issues you have with formatting of the data to the ECMWF using <a href="https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322" class="external-link">the public forum</a>. We suggest to fall back to grib files, and convert internally if netCDF driver files are needed. Sadly, consistency for now is not, and will not be, guaranteed it seems.</p>
+</div>
 </div>
 </div>
 <div class="section level2">

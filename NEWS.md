@@ -1,11 +1,11 @@
 # ecmwfr 2.0.0
 
-* code refactoring in light of the new API
-* wf_product_inf() -> wf_dataset_inf()
+* code refactoring in light of the new API (consolidating code)
+* renaming wf_product_inf() -> wf_dataset_inf()
 * removal of the Toolbox API workflow
 * removal of the WebAPI endpoints
 * moving to beta servers only
-* adding CEMS services on top of previous WebAPI/CDS/ADS support
+* adding CEMS services on top of previous CDS/ADS support
 
 # ecmwfr 1.5.2
 

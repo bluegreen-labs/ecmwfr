@@ -1,20 +1,32 @@
-## New release v1.5.0 
+## New release v2.0.0 
 
 Dear CRAN team,
 
-This is a major version increase due to the migration of the ECMWF APIs.
+This is a major version increment due to the migration of the ECMWF APIs.
 
 Hereby, the package will drop the support of the old API in favour of the
-new one. I've added additional support for the Copernicus Emergency Management
-System (CEMS) data store. Workflows remain largely the same with data requests
-backwards compatible with the previous versions. Some components such as
-legacy support for the WebAPI are removed as well, but remain available
-through a github install should this be needed (although the service is also
-scheduled for removal). For optimization, the batch processing script now also
-checks for duplicate filenames and reports this as such, limiting 
-accidental data overwrites.
+new one, confusingly still called "beta". I've added additional support for 
+the Copernicus Emergency Management System (CEMS) data store. 
 
-Consolidation of the APIs leads to a more compact code base (thankfully).
+The workflows remain largely the same with data requests
+backwards compatible with the previous versions. Some components such as
+legacy support for the WebAPI are removed. This service should have been
+removed a long time ago but is still there. However, use cases are few. I now 
+refer to the older v1 package for WebAPI support.
+
+For optimization, the batch processing script now also
+checks for duplicate filenames and reports this as such, limiting 
+accidental data overwrites. Consolidation of the APIs authentication 
+leads to a more compact code base (thankfully), but creates some breaking
+changes due to the omission of a 'user' argument (with a consistent default).
+
+These breaking changes are well documented, and migration should be as simple
+as providing the new Personal Access Token and removing the user argument in
+API query functions.
+
+Consolidation of the API as the advantage that mixed queries of various
+services are now allowed. Mixing for example querying climate data from CDS,
+with atmospheric data from ADS in one batch.
 
 Kind regards,
 Koen Hufkens

@@ -61,14 +61,25 @@ if(server_check & ON_GIT){
   # the user is not created
   login_check <- inherits(user, "try-error")
 } else {
-  login_check <- TRUE
+
+  # assume local run
+  if(!inherits(wf_get_key(), "try-error")){
+    Sys.setenv(CDS = wf_get_key())
+    login_check <- FALSE
+  } else{
+    login_check <- TRUE
+  }
 }
 
 #----- formal checks ----
 test_that("set key", {
   skip_on_cran()
   skip_if(login_check)
-    expect_message(wf_set_key(Sys.getenv("CDS")))
+  expect_message(wf_set_key(Sys.getenv("CDS")))
+
+  # set system variable and check key again
+  Sys.setenv(ecmwfr_PAT=Sys.getenv("CDS"))
+  expect_identical(wf_get_key(), Sys.getenv("CDS"))
 })
 
 test_that("cds datasets returns data.frame or list", {
@@ -101,13 +112,15 @@ test_that("cds request", {
     )
 
   # job test (can't run headless)
-  expect_error(
-    wf_request(
-      request = cds_request,
-      transfer = TRUE,
-      job_name = "jobtest"
+  if(ON_GIT){
+    expect_error(
+      wf_request(
+        request = cds_request,
+        transfer = TRUE,
+        job_name = "jobtest"
       )
     )
+  }
 
   # faulty request
   expect_error(
@@ -138,11 +151,21 @@ test_that("cds request", {
 
   # is R6 class
   expect_true(inherits(r, "R6"))
-  r$delete() # cleanup
+  url <- r$get_url()
 
   # test delete routine
   expect_error(
     wf_delete(url = "50340909as")
+  )
+
+  # cleanup
+  expect_message(
+    r$delete()
+  )
+
+  # error on second call
+  expect_error(
+    wf_delete(url)
   )
 })
 
@@ -183,8 +206,9 @@ test_that("required arguments missing for cds_* functions", {
   expect_error(wf_transfer(url = "http://google.com"))
 
   # check product listing
-  expect_output(str(wf_dataset_info("reanalysis-era5-single-levels",
-                                    simplify = FALSE)))
+  expect_output(str(wf_dataset_info(
+    "reanalysis-era5-single-levels",
+    simplify = FALSE)))
 })
 
 test_that("batch request tests", {

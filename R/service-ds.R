@@ -176,12 +176,11 @@ ds_service <- R6::R6Class("ecmwfr_ds",
 
       # trap (http) errors on download, return a general error statement
       if (httr::http_error(response)) {
-        if (fail_is_error) {
-          stop("Download failed with error ", response$status_code)
-        } else {
-          warning("Download failed with error ", response$status_code)
-          return(self)
-        }
+        warn_or_error(
+          paste0("Download failed with error ", response$status_code),
+          call. = FALSE,
+          error = fail_is_error
+        )
       }
 
       private$downloaded <- TRUE

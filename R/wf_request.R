@@ -122,6 +122,9 @@ wf_request <- function(
             service_info$user)
   }
 
+  # grab filename
+  filename <- file.path(path, request$target)
+
   # Create request and submit to service
   request <- ds_service$new(
     request = request,
@@ -149,9 +152,29 @@ wf_request <- function(
 
       # return file location
       return(file_location)
+    } else {
+
+      # give verbose feedback
+      if(verbose){
+        exit_message(
+          request$get_url(),
+          path,
+          filename,
+          service_info$service
+        )
+      }
     }
-    message("Transfer was not successfull - please check your request later at:")
-    message(request$get_url())
+  } else {
+
+    # give verbose feedback
+    if(verbose){
+      exit_message(
+        request$get_url(),
+        path,
+        filename,
+        service_info$service
+      )
+    }
   }
 
   return(request)

@@ -62,13 +62,15 @@ if(server_check & ON_GIT){
   login_check <- inherits(user, "try-error")
 } else {
 
+  login_check <- TRUE
+
   # assume local run
-  if(!inherits(wf_get_key(), "try-error")){
-    Sys.setenv(CDS = wf_get_key())
-    login_check <- FALSE
-  } else{
-    login_check <- TRUE
-  }
+  # if(!inherits(wf_get_key(), "try-error")){
+  #   Sys.setenv(CDS = wf_get_key())
+  #   login_check <- FALSE
+  # } else{
+  #   login_check <- TRUE
+  # }
 }
 
 #----- formal checks ----

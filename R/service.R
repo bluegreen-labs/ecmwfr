@@ -34,6 +34,40 @@ service <- R6::R6Class(
       invisible(self)
     },
 
+    exit_message = function(...) {
+
+    intro <- paste(
+      "Even after exiting your request is still beeing processed!\n\n"
+    )
+
+    options <- paste(
+      "- Retry downloading as soon as as completed! \n\n",
+      "  If you close your session use the following code: \n\n",
+      "  wf_transfer(url = '",
+      private$url,
+      "',\n   path = '",
+      private$path,
+      "',\n   filename = '",
+      private$file,
+      "'\n  )\n\n",
+      "- Delete the job upon completion using:\n",
+      "  wf_delete(\n   url ='", private$url,"'\n  )\n\n",
+      "  If your session stays open you donwload or delete requests using: \n\n",
+      "  file$download() and file$delete() *\n\n",
+      " [* with file from: file <- wf_request(request)] \n\n",
+      sep = ""
+    )
+
+    # combine all messages
+    exit_msg <- paste(intro, options, sep = "")
+    message(sprintf(
+      "- Your request has been submitted as a %s request.\n\n  %s",
+      toupper(private$service),
+      exit_msg
+    ))
+
+    },
+
     submit = function() {
      stop("not implemented")
     },
@@ -71,7 +105,7 @@ service <- R6::R6Class(
         if (private$verbose) {
           # needs to change!
           message("  Your download timed out, however ...\n")
-          # self$exit_message()  # TODO
+          #self$exit_message()  # TODO
         }
       }
       return(self)

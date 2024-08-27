@@ -1,10 +1,11 @@
 citHeader("To cite ecmwfr in publications use:")
 
-citEntry(entry = "Misc",
+bibentry(bibtype = "Misc",
          title = "The ecwmfr package: an interface to ECMWF API endpoints",
-         author = personList(as.person("Koen Hufkens"),
-                                   as.person("Reto Stauffer"),
-                                   as.person("Elio Campitelli")),
+         author = c(as.person("Koen Hufkens"),
+                    as.person("Reto Stauffer"),
+                    as.person("Elio Campitelli")
+                  ),
          year = "2019",
          doi = "10.5281/zenodo.2647531",
          url = "https://bluegreen-labs.github.io/ecmwfr/",

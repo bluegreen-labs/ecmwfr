@@ -22,7 +22,7 @@
 #'
 #' \dontrun{
 #' # get a list of ECMWF Data Store datasets
-#' wf_datasets(service = "cems")
+#' wf_datasets()
 #'}
 
 wf_datasets <- memoise::memoise(function(

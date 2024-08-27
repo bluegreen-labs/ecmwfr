@@ -30,26 +30,24 @@ will be guaranteed and tested for.
 }
 \examples{
 \dontrun{
-# format an archetype function
-ERAI <- wf_archetype(
-  request = list(stream = "oper",
-                 levtype = "sfc",
-                 param = "165.128/166.128/167.128",
-                 dataset = "interim",
-                 step = "0",
-                 grid = "0.75/0.75",
-                 time = "00/06/12/18",
-                 date = "2014-07-01/to/2014-07-31",
-                 type = "an",
-                 class = "ei",
-                 area = "73.5/-27/33/45",
-                 format = "netcdf",
-                 target = "tmp.nc"),
-  dynamic_fields = c("date", "time")
-)
 
-# print output of the function with below parameters
-str(ERA_interim("20100101", 3, 200))
+ERA <- wf_archetype(
+  request = list(
+    dataset_short_name = "reanalysis-era5-pressure-levels",
+    product_type = "reanalysis",
+    variable = "geopotential",
+    year = "2024",
+    month = "03",
+    day = "01",
+    time = "13:00",
+    pressure_level = "1000",
+    data_format = "grib",
+    target = "download.grib"
+  ),
+    dynamic_fields = c("year", "day", "target")
+  )
+# print output of the function with below (new) parameters
+str(ERA(2021, 3, "new_download.grip"))
 
 }
 }

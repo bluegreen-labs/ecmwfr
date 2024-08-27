@@ -30,30 +30,30 @@
 #'
 #' \dontrun{
 #' # set key
-#' wf_set_key(user = "test@mail.com", key = "123")
+#' wf_set_key(key = "123")
 #'
-#' request <- list(stream = "oper",
-#'    levtype = "sfc",
-#'    param = "167.128",
-#'    dataset = "interim",
-#'    step = "0",
-#'    grid = "0.75/0.75",
-#'    time = "00",
-#'    date = "2014-07-01/to/2014-07-02",
-#'    type = "an",
-#'    class = "ei",
-#'    area = "50/10/51/11",
-#'    format = "netcdf",
-#'    target = "tmp.nc")
+#' request <- list(
+#'   dataset_short_name = "reanalysis-era5-pressure-levels",
+#'   product_type = "reanalysis",
+#'   variable = "geopotential",
+#'   year = "2024",
+#'   month = "03",
+#'   day = "01",
+#'   time = "13:00",
+#'   pressure_level = "1000",
+#'   data_format = "grib",
+#'   target = "download.grib"
+#' )
 #'
 #' # demo query
-#' wf_request(request = request, user = "test@mail.com")
+#' wf_request(request = request)
 #'
 #' # Run as an RStudio Job. When finished, will create a
 #' # variable named "test" in your environment with the path to
 #' # the downloaded file.
-#' wf_request(request = request, user = "test@mail.com", job_name = "test")
+#' wf_request(request = request, job_name = "test")
 #'}
+
 
 wf_request <- function(
     request,

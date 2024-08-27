@@ -15,7 +15,7 @@
 #' @examples
 #' \dontrun{
 #'  # Return information
-#'  info <- wf_product_info("reanalysis-era5-single-levels")
+#'  info <- wf_dataset_info("reanalysis-era5-single-levels")
 #'  names(info)
 #' }
 #' @seealso \code{\link[ecmwfr]{wf_datasets}}.

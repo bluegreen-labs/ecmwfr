@@ -29,7 +29,7 @@ endpoints aren't updated on a regular sub-daily basis).
 
 \dontrun{
 # get a list of ECMWF Data Store datasets
-wf_datasets(service = "cems")
+wf_datasets()
 }
 }
 \seealso{

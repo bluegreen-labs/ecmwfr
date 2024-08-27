@@ -7,7 +7,7 @@
 #' in the keychain
 #' @seealso \code{\link[ecmwfr]{wf_set_key}}
 #' @export
-#' @author Koen Kufkens
+#' @author Koen Hufkens
 #' @examples
 #'
 #' \dontrun{

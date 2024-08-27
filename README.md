@@ -11,7 +11,6 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 Programmatic interface to the two [European Centre for Medium-Range
 Weather Forecasts](https://www.ecmwf.int/) API services. The package
-
 provides easy access to all available Data Stores from within R, matching and
 expanding upon the ECMWF python tools. Support is provided for the 
 [Climate Data Store](https://cds-beta.climate.copernicus.eu), the 
@@ -62,6 +61,32 @@ if(!require(remotes)){install.packages("remotes")}
 remotes::install_github("bluegreen-labs/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
+
+### Breaking changes (>= 2.0.0)
+
+With the introduction of version 2.0.0 and the migration to the new API some
+changes to the package were implemented which will cause breaking changes. In particular
+the `wf_request()` function(s) now use a default `ecmwfr` user field due to the
+consolidation of the API, with a single sign-on across all services and the use
+of a Personal Access Token (PAT) rather than user and password credentials.
+
+In order to migrate to version >=2.0.0 you will have to provide a new PAT using `wf_set_key()` and remove the user argument from any `wf_request()` call, i.e.:
+
+```r
+# The original v1.x.x call
+wf_request(
+  request,
+  user = "your_id"
+)
+
+# The new v2.x.x call
+wf_request(
+  request
+)
+```
+
+The requests themselves should translate mostly without intervention
+and remain nested lists of parameters.
 
 ## Use: ECMWF Data Store services
 

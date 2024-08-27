@@ -19,6 +19,10 @@ Deletes a staged download from the queue when not using R6 methods.
 \examples{
 
 \dontrun{
+
+# demo query using a valid request (not shown)
+file <- wf_request(request = request)
+
 # delete request
 job_url <- file$get_url()
 wf_delete(url = job_url)

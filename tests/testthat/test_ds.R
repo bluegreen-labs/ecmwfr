@@ -155,14 +155,14 @@ test_that("cds request", {
   expect_true(inherits(r, "R6"))
   url <- r$get_url()
 
-  # test delete routine
-  expect_error(
-    wf_delete(url = "50340909as")
-  )
-
   # cleanup
   expect_message(
     r$delete()
+  )
+
+  # test delete routine
+  expect_error(
+    wf_delete(url = "50340909as")
   )
 
   # error on second call

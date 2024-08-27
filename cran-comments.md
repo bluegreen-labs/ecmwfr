@@ -38,7 +38,7 @@ http://cran.r-project.org/web/packages/policies.html
 
 - local Ubuntu 22.04 install on R 4.4.1
 - Ubuntu 22.04 on github actions (devel / release / macos / windows)
-- codecove.io code coverage at ~66%
+- codecove.io code coverage at ~70%
 
 ## local / github actions CI R CMD check results
 

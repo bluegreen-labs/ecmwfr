@@ -62,7 +62,9 @@ remotes::install_github("bluegreen-labs/ecmwfr", build_vignettes = TRUE)
 library("ecmwfr")
 ```
 
-### Breaking changes (>= 2.0.0)
+### breaking changes (>= 2.0.0)
+
+#### querying data
 
 With the introduction of version 2.0.0 and the migration to the new API some
 changes to the package were implemented which will cause breaking changes. In particular
@@ -87,6 +89,13 @@ wf_request(
 
 The requests themselves should translate mostly without intervention
 and remain nested lists of parameters.
+
+#### netCDF data format
+
+In comparison with the original services the new `beta` API [regresses in terms
+of netCDF support](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322). Those relying on common netCDF support such as ecosystem modellers will find this troubling. Note that both CDS and ADS have different policies and use different methods. Note that this regression in usability is not caused
+by this package. Please forward any issues you have with formatting of the data
+to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322). We suggest to fall back to grib files, and convert internally if netCDF driver files are needed. Sadly, consistency for now is not, and will not be, guaranteed it seems.
 
 ## Use: ECMWF Data Store services
 

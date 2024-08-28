@@ -146,3 +146,17 @@ files <- wf_request_batch(
 
 For those familiar to ECMWF _mars_ syntax: CDS/ADS does not
 accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` or `date = "YYYY-MM-DD/YYYY-MM-DD"` but not via `".../to/..."`.
+
+## Environmental variables
+
+Alternatively, you can set an environmental variable containing your Personal Access Token. 
+
+```{r eval=FALSE}
+ Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")
+```
+
+This will need to be set at the beginning of each setting or added to the user
+`.Renviron` file. Overall,  this is considered insecure, but might be the only 
+option on some legacy or HPC systems to get full `ecmwfr` functionality. A good 
+blog post on why you should not do this is 
+provided by [Maëlle Salmon](https://blog.r-hub.io/2024/02/28/key-advantages-of-using-keyring/).

@@ -285,18 +285,6 @@ password, unlocking all `ecmwfr` credentials for this session. Should
 you ever forget the password just delete the file at:
 `~/.config/r-keyring/ecmwfr.keyring` and re-enter all your credentials.
 
-Alternatively, you can set an environmental variable containing your Personal Access Token. 
-
-```r
- Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")
-```
-
-This will need to be set at the beginning of each setting or added to the user
-`.Renviron` file. Overall,  this is considered insecure, but might be the only 
-option on some legacy or HPC systems to get full `ecmwfr` functionality. A good 
-blog post on why you should not do this is 
-provided by [Maëlle Salmon](https://blog.r-hub.io/2024/02/28/key-advantages-of-using-keyring/).
-
 ## Date specification
 
 For those familiar with the old ECMWF *mars* syntax: CDS/ADS/CEMS does not accept

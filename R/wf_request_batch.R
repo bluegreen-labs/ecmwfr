@@ -38,7 +38,6 @@ wf_request_batch <- function(
 
   force(total_timeout)  # Need to evaluate the expression before changing time_out
   time_out <- repeat_if_one(time_out, N)
-  if (missing(user)) user <- NULL
 
   user <- repeat_if_one(user, N)
   path <- repeat_if_one(path, N)

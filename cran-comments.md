@@ -5,8 +5,10 @@ Dear CRAN team,
 This is a bugfix to the package which would halt the batch downloading
 after one donwload completed (due to updates to the argument structure
 after the recent API migration). This updates addresses this issue.
+No further changes were made.
 
-Stats on code coverage and test routines remain the same.
+Stats on code coverage and test routines remain the same as per pervious
+v2.0.0 release.
 
 Kind regards,
 Koen Hufkens

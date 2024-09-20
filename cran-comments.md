@@ -1,4 +1,4 @@
-## New release v2.0.0 
+## New release v2.0.1 
 
 Dear CRAN team,
 

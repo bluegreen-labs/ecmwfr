@@ -1,3 +1,7 @@
+# ecmwfr 2.0.1
+
+* fixing bug in batch processing, which stops the process after one download
+
 # ecmwfr 2.0.0
 
 * code refactoring in light of the new API (consolidating code)

@@ -1,14 +1,17 @@
-## New release v2.0.1 
+## New release v2.0.2
 
 Dear CRAN team,
 
-This is a bugfix to the package which would halt the batch downloading
-after one donwload completed (due to updates to the argument structure
-after the recent API migration). This updates addresses this issue.
-No further changes were made.
+This is a bugfix to the package which would fail downloads of certain
+products due to the handling of unknown query fields. I now sanitize
+the requests further.
+
+This updates addresses this issue. No further changes were made.
+Given the final migration to the new API at ECMWF you may expect many
+more small bug fixes as the API is poorly documented.
 
 Stats on code coverage and test routines remain the same as per pervious
-v2.0.0 release.
+v2.0.1 release.
 
 Kind regards,
 Koen Hufkens

@@ -17,9 +17,9 @@
 wf_server <- function(id, service = "cds") {
 
   # set base urls
-  cds_url <- "https://cds-beta.climate.copernicus.eu/api"
-  ads_url <- "https://ads-beta.atmosphere.copernicus.eu/api"
-  cems_url <- "https://ewds-beta.climate.copernicus.eu/api"
+  cds_url <- "https://cds.climate.copernicus.eu/api"
+  ads_url <- "https://ads.atmosphere.copernicus.eu/api"
+  cems_url <- "https://ewds.climate.copernicus.eu/api"
 
   # return url depending on service or id
   switch(

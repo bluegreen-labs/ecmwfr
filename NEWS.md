@@ -1,3 +1,7 @@
+# ecmwfr 2.0.2
+
+* bug fix, sanitizing data requests which would fail on certain (CAMS) products
+
 # ecmwfr 2.0.1
 
 * fixing bug in batch processing, which stops the process after one download

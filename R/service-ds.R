@@ -11,6 +11,14 @@ ds_service <- R6::R6Class("ecmwfr_ds",
         user = private$user
       )
 
+      # sanizite request before submission
+      # some product requests can't handle the
+      # presence of extra fields (e.g. target
+      # dataset_short_name)
+      request <- private$request
+      request$dataset_short_name <- NULL
+      request$target <- NULL
+
       #  get the response for the query provided
       response <- httr::VERB(
         private$http_verb,
@@ -18,7 +26,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
         httr::add_headers(
           "PRIVATE-TOKEN" = key
         ),
-        body = list(inputs = private$request),
+        body = list(inputs = request),
         encode = "json"
       )
 

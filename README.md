@@ -13,9 +13,9 @@ Programmatic interface to the two [European Centre for Medium-Range
 Weather Forecasts](https://www.ecmwf.int/) API services. The package
 provides easy access to all available Data Stores from within R, matching and
 expanding upon the ECMWF python tools. Support is provided for the 
-[Climate Data Store](https://cds-beta.climate.copernicus.eu), the 
+[Climate Data Store](https://cds.climate.copernicus.eu), the 
 [Atmosphere Data Store](https://ads.atmosphere.copernicus.eu) and the
-[Early Warning Data Store](https://cds.climate.copernicus.eu) (from the 
+[Early Warning Data Store](https://ewds.climate.copernicus.eu) (from the 
 Copernicus Emergency Management Services).
 
 ## How to cite this package
@@ -92,7 +92,7 @@ and remain nested lists of parameters.
 
 #### netCDF data format
 
-In comparison with the original services the new `beta` API [regresses in terms
+In comparison with the original services the new API [regresses in terms
 of netCDF support](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322). Those relying on common netCDF support such as ecosystem modellers will find this troubling. Note that both CDS and ADS have different policies and use different methods. Note that this regression in usability is not caused
 by this package. Please forward any issues you have with formatting of the data
 to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322). We suggest to fall back to grib files, and convert internally if netCDF driver files are needed. Sadly, consistency for now is not, and will not be, guaranteed it seems.
@@ -100,7 +100,7 @@ to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-
 ## Use: ECMWF Data Store services
 
 Create a ECMWF account by [self
-registering](https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/auth?client_id=cms-www&response_type=code&scope=openid%20email%20profile&redirect_uri=https%3A//www.ecmwf.int/openid-connect/). Once your user account has been verified you can get your personal access token or *key* by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds-beta.climate.copernicus.eu/profile). 
+registering](https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/auth?client_id=cms-www&response_type=code&scope=openid%20email%20profile&redirect_uri=https%3A//www.ecmwf.int/openid-connect/). Once your user account has been verified you can get your personal access token or *key* by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds.climate.copernicus.eu/profile). 
 
 The Personal Access Token is a long string of letters and numbers:
 
@@ -147,8 +147,8 @@ function, and a request string syntax. The simplest way to get the requests is
 to go to the Data Store website which offers an interactive interface to create
 these requests e.g., for the CDS ERA-5 reanalysis data:
 
--   [ERA-5 at pressure level data](https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels?tab=download)
--   [ERA-5 land](https://cds-beta.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download)
+-   [ERA-5 at pressure level data](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels?tab=download)
+-   [ERA-5 land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download)
 -   ...
 
 After formatting the request online copy the API request python code to your script.

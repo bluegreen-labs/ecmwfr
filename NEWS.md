@@ -1,3 +1,7 @@
+# ecmwfr 2.0.3
+
+* fix of feedback on failed downloads
+
 # ecmwfr 2.0.2
 
 * bug fix, sanitizing data requests which would fail on certain (CAMS) products

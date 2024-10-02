@@ -1,10 +1,10 @@
-## New release v2.0.2
+## New release v2.0.3
 
 Dear CRAN team,
 
-This is a bugfix to the package which would fail downloads of certain
-products due to the handling of unknown query fields. I now sanitize
-the requests further.
+Small update on the verbose feedback when a transfer is not dealt with
+internally. The file name with path is used where it should only be the
+file referenced.
 
 This update addresses this issue. No further changes were made.
 Given the final migration to the new API at ECMWF you may expect many

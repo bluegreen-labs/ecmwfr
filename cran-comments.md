@@ -1,17 +1,14 @@
-## New release v2.0.3
+## New release v2.0.4
 
 Dear CRAN team,
 
-Small update on the verbose feedback when a transfer is not dealt with
-internally. The file name with path is used where it should only be the
-file referenced.
-
-This update addresses this issue. No further changes were made.
-Given the final migration to the new API at ECMWF you may expect many
-more small bug fixes as the API is poorly documented.
+This small update fixes an edge case in the RStudio Addin for conversion
+of ECMWF python to R queries. Mention of the keyword `dataset` was filtered
+properly only to select the first instance, not allowing multiple selections
+which as cause for an error. No further changes were made.
 
 Stats on code coverage and test routines remain the same as per previous
-v2.0.1 release.
+v2.0.3 release.
 
 Kind regards,
 Koen Hufkens

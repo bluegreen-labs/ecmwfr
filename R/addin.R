@@ -24,8 +24,8 @@ python_to_list <- function(python_text) {
   # split string on line breaks
   line_breaks <- strsplit(python_text, "\\n")[[1]]
 
-  leading <- line_breaks[grep("dataset", line_breaks)]
-  trailing <- line_breaks[grep("target", line_breaks)]
+  leading <- line_breaks[grep("dataset =", line_breaks)]
+  trailing <- line_breaks[grep("target =", line_breaks)]
 
   # clean up leading and trailing ends if any
   if (nchar(leading) == 0 || length(leading) == 0){

@@ -149,7 +149,7 @@ accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is p
 
 ## Environmental variables
 
-Alternatively, you can set an environmental variable containing your Personal Access Token. 
+Alternatively, you can set an environmental variable containing your API. 
 
 ```{r eval=FALSE}
  Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")

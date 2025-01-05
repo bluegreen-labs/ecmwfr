@@ -68,8 +68,8 @@ wf_set_key <- function(key, user = "ecmwfr") {
         )
     }
     browseURL(wf_key_page(service))
-    message("Login or register to get a Personal Access Token")
-    key <- getPass::getPass(msg = "Personal Access Token: ")
+    message("Login or register to get a API Token")
+    key <- getPass::getPass(msg = "API Token: ")
     if (is.null(key))
       stop("No key supplied.")
   }

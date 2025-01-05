@@ -102,12 +102,13 @@ to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-
 Create a ECMWF account by [self
 registering](https://www.ecmwf.int/user/login). Once your user account has been verified you can get your API token (or `key` in `ecmwfr`) by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds.climate.copernicus.eu/profile). 
 
-The Personal Access Token is a long string of letters and numbers:
+The API Token is a [UUID](https://fr.wikipedia.org/wiki/Universally_unique_identifier) and should look something like:
 
-``` json
-Personal Access Token: abcd1234-foo-bar-98765431-XXXXXXXXXX
 ```
-This Personal Access Token gives you access to all Data Store services, including the climate atmosphere and emergency management services. This information is required to be able to retrieve data via the `ecmwfr` package. Use the
+API: abcd1234-foo-bar-98765431-XXXXXXXXXX
+```
+
+This API Token gives you access to all Data Store services, including the climate atmosphere and emergency management services. This information is required to be able to retrieve data via the `ecmwfr` package. Use the
 `ecmwfr` [`wf_set_key`](references/wf_set_key.html) function to store
 your login information in the system keyring (see below).
 

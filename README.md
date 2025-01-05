@@ -100,7 +100,7 @@ to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-
 ## Use: ECMWF Data Store services
 
 Create a ECMWF account by [self
-registering](https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/auth?client_id=cms-www&response_type=code&scope=openid%20email%20profile&redirect_uri=https%3A//www.ecmwf.int/openid-connect/). Once your user account has been verified you can get your personal access token or *key* by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds.climate.copernicus.eu/profile). 
+registering](https://www.ecmwf.int/user/login). Once your user account has been verified you can get your API token (or `key` in `ecmwfr`) by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds.climate.copernicus.eu/profile). 
 
 The Personal Access Token is a long string of letters and numbers:
 

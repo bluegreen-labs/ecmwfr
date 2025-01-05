@@ -111,6 +111,8 @@ This Personal Access Token gives you access to all Data Store services, includin
 `ecmwfr` [`wf_set_key`](references/wf_set_key.html) function to store
 your login information in the system keyring (see below).
 
+In order to download the data, you will also need to accept the licence agreement on the bottom of the [user profile page](https://cds.climate.copernicus.eu/profile).
+
 ### Setup
 
 You have to save your login information before proceeding. The

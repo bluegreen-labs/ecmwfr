@@ -71,6 +71,7 @@ if(server_check & ON_GIT){
   # } else{
   #   login_check <- TRUE
   # }
+
 }
 
 #----- formal checks ----

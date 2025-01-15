@@ -97,7 +97,7 @@ of netCDF support](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter
 by this package. Please forward any issues you have with formatting of the data
 to the ECMWF using [the public forum](https://forum.ecmwf.int/t/changes-to-grib-to-netcdf-converter-on-cds-beta-ads-beta/4322). We suggest to fall back to grib files, and convert internally if netCDF driver files are needed. Sadly, consistency for now is not, and will not be, guaranteed it seems.
 
-## Use: ECMWF Data Store services
+## Use:
 
 Create a ECMWF account by [self
 registering](https://www.ecmwf.int/user/login). Once your user account has been verified you can get your API token (or `key` in `ecmwfr`) by visiting one of the Data Stores user profiles, for example the CDS [user profile](https://cds.climate.copernicus.eu/profile). 
@@ -116,10 +116,11 @@ In order to download the data, you will also need to accept the licence agreemen
 
 ### Setup
 
-You have to save your login information before proceeding. The
-package does not allow you to use your key inline in scripts to limit
-security issues when sharing scripts on github or otherwise. **The following
-lines should NEVER be included in any script and run only once at setup.**
+Before using the package in `R` to download data you have to save your login
+information. The package does not allow you to use your key inline in scripts
+to limit security issues when sharing scripts on github or otherwise. 
+
+**The following lines should NEVER be included in any script and run only once at setup.**
 
 ``` r
 # set a key to the keychain

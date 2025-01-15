@@ -157,10 +157,11 @@
 <div class="section level2">
 <h2 id="use-ecmwf-data-store-services">Use: ECMWF Data Store services<a class="anchor" aria-label="anchor" href="#use-ecmwf-data-store-services"></a>
 </h2>
-<p>Create a ECMWF account by <a href="https://accounts.ecmwf.int/auth/realms/ecmwf/protocol/openid-connect/auth?client_id=cms-www&amp;response_type=code&amp;scope=openid%20email%20profile&amp;redirect_uri=https%3A//www.ecmwf.int/openid-connect/" class="external-link">self registering</a>. Once your user account has been verified you can get your personal access token or <em>key</em> by visiting one of the Data Stores user profiles, for example the CDS <a href="https://cds.climate.copernicus.eu/profile" class="external-link">user profile</a>.</p>
-<p>The Personal Access Token is a long string of letters and numbers:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="er">Personal</span> <span class="er">Access</span> <span class="er">Token:</span> <span class="er">abcd1234-foo-bar-98765431-XXXXXXXXXX</span></span></code></pre></div>
-<p>This Personal Access Token gives you access to all Data Store services, including the climate atmosphere and emergency management services. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Use the <code>ecmwfr</code> <a href="references/wf_set_key.html"><code>wf_set_key</code></a> function to store your login information in the system keyring (see below).</p>
+<p>Create a ECMWF account by <a href="https://www.ecmwf.int/user/login" class="external-link">self registering</a>. Once your user account has been verified you can get your API token (or <code>key</code> in <code>ecmwfr</code>) by visiting one of the Data Stores user profiles, for example the CDS <a href="https://cds.climate.copernicus.eu/profile" class="external-link">user profile</a>.</p>
+<p>The API Token is a <a href="https://fr.wikipedia.org/wiki/Universally_unique_identifier" class="external-link">UUID</a> and should look something like:</p>
+<pre><code><span><span class="va">API</span><span class="op">:</span> <span class="va">abcd1234</span><span class="op">-</span><span class="va">foo</span><span class="op">-</span><span class="va">bar</span><span class="op">-</span><span class="fl">98765431</span><span class="op">-</span><span class="va">XXXXXXXXXX</span></span></code></pre>
+<p>This API Token gives you access to all Data Store services, including the climate atmosphere and emergency management services. This information is required to be able to retrieve data via the <code>ecmwfr</code> package. Use the <code>ecmwfr</code> <a href="references/wf_set_key.html"><code>wf_set_key</code></a> function to store your login information in the system keyring (see below).</p>
+<p>In order to download the data, you will also need to accept the licence agreement on the bottom of the <a href="https://cds.climate.copernicus.eu/profile" class="external-link">user profile page</a>.</p>
 <div class="section level3">
 <h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h3>

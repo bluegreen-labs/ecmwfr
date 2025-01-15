@@ -90,7 +90,7 @@
                         <h4 data-toc-skip class="author">Koen
 Hufkens</h4>
             
-            <h4 data-toc-skip class="date">2024-11-20</h4>
+            <h4 data-toc-skip class="date">2025-01-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bluegreen-labs/ecmwfr/blob/master/vignettes/advanced_vignette.Rmd" class="external-link"><code>vignettes/advanced_vignette.Rmd</code></a></small>
       <div class="hidden name"><code>advanced_vignette.Rmd</code></div>
@@ -110,7 +110,8 @@ Hufkens</h4>
 <p>Another hidden feature of <code>ecmwfr</code> is the fact that the
 request is the first argument in the <code><a href="../reference/wf_request.html">wf_request()</a></code> function.
 This means that any valid list can be piped into this function (using
-the %&gt;% or pipe symbol).</p>
+the magrittr <code>%&gt;%</code> or native pipe symbol
+<code>|&gt;</code>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      product_type <span class="op">=</span> <span class="st">'reanalysis'</span>,</span>
@@ -137,9 +138,9 @@ naming the field which are to be set as dynamic.</p>
 as parameters the dynamic fields previously assigned. The below example
 show how to use the function to generate the custom
 <code>dynamic_request()</code> function. We then use this new function
-to alter the <code>area</code> and <code>day</code> fields and pipe
-(%&gt;%) into the <code><a href="../reference/wf_request.html">wf_request()</a></code> function to retrieve the
-data.</p>
+to alter the <code>day</code> and <code>target</code> fields and pipe
+(<code>|&gt;</code>) into the <code><a href="../reference/wf_request.html">wf_request()</a></code> function to
+retrieve the data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># this is an example of a request</span></span>
 <span><span class="va">dynamic_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/wf_archetype.html">wf_archetype</a></span><span class="op">(</span></span>
@@ -158,7 +159,8 @@ data.</p>
 <span>  dynamic_fields <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"day"</span>, <span class="st">"target"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># change the day of the month</span></span>
-<span><span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span>, target <span class="op">=</span> <span class="st">"new.grib"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dynamic_request</span><span class="op">(</span>day <span class="op">=</span> <span class="st">"01"</span>, target <span class="op">=</span> <span class="st">"new.grib"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/wf_request.html">wf_request</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="batch-parallel-requests">Batch (parallel) requests<a class="anchor" aria-label="anchor" href="#batch-parallel-requests"></a>
@@ -248,10 +250,10 @@ the moment. It is possible to specify one specific date via
 <code>".../to/..."</code>.</p>
 </div>
 <div class="section level3">
-<h3 id="environmental-variables">Environmental variables<a class="anchor" aria-label="anchor" href="#environmental-variables"></a>
+<h3 id="environmental-variables-for-api-token">Environmental variables for API token<a class="anchor" aria-label="anchor" href="#environmental-variables-for-api-token"></a>
 </h3>
-<p>Alternatively, you can set an environmental variable containing your
-Personal Access Token.</p>
+<p>Alternatively to using <code><a href="../reference/wf_set_key.html">wf_set_key()</a></code>, you can set an
+environmental variable containing your API.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>ecmwfr_PAT<span class="op">=</span><span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span><span class="op">)</span></span></code></pre></div>
 <p>This will need to be set at the beginning of each setting or added to

@@ -171,7 +171,7 @@ wf_request <- function(
       exit_message(
         request$get_url(),
         path,
-        filename,
+        request$target,
         service_info$service
       )
     }

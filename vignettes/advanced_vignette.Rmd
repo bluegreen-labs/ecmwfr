@@ -30,7 +30,7 @@ This is a brief overview of some of the more advanced options in the `ecmwfr` pa
 
 ## Piped requests
 
-Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function (using the %>% or pipe symbol).
+Another hidden feature of `ecmwfr` is the fact that the request is the first argument in the `wf_request()` function. This means that any valid list can be piped into this function (using the magrittr `%>%` or native pipe symbol `|>`).
 
 ```{r eval = FALSE}
 list(
@@ -52,7 +52,7 @@ list(
 
 Once a valid request has been created it can be made into a dynamic function using `achetypes`. Archetype functions are build using a valid `ecmwfr` ECMWF or CDS request and the vector naming the field which are to be set as dynamic.
 
-The `wf_archetype()` function creates a new function with as parameters the dynamic fields previously assigned. The below example show how to use the function to generate the custom `dynamic_request()` function. We then use this new function to alter the `area` and `day` fields and pipe (%>%) into the `wf_request()` function to retrieve the data.
+The `wf_archetype()` function creates a new function with as parameters the dynamic fields previously assigned. The below example show how to use the function to generate the custom `dynamic_request()` function. We then use this new function to alter the `day` and `target` fields and pipe (`|>`) into the `wf_request()` function to retrieve the data.
 
 ```{r eval = FALSE}
 # this is an example of a request
@@ -72,7 +72,8 @@ dynamic_request <- wf_archetype(
   dynamic_fields = c("day", "target"))
 
 # change the day of the month
-dynamic_request(day = "01", target = "new.grib")
+dynamic_request(day = "01", target = "new.grib") |>
+  wf_request()
 ```
 
 ## Batch (parallel) requests
@@ -147,9 +148,9 @@ files <- wf_request_batch(
 For those familiar to ECMWF _mars_ syntax: CDS/ADS does not
 accept `date = "2000-01-01/to/2000-12-31"` specifications at the moment. It is possible to specify one specific date via `date = "2000-01-01"` or multiple days via `date = ["2000-01-01","2000-01-02","2000-10-20"]` or `date = "YYYY-MM-DD/YYYY-MM-DD"` but not via `".../to/..."`.
 
-## Environmental variables
+## Environmental variables for API token
 
-Alternatively, you can set an environmental variable containing your Personal Access Token. 
+Alternatively to using `wf_set_key()`, you can set an environmental variable containing your API. 
 
 ```{r eval=FALSE}
  Sys.setenv(ecmwfr_PAT="abcd1234-foo-bar-98765431-XXXXXXXXXX")

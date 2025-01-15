@@ -155,7 +155,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="use-ecmwf-data-store-services">Use: ECMWF Data Store services<a class="anchor" aria-label="anchor" href="#use-ecmwf-data-store-services"></a>
+<h2 id="use">Use:<a class="anchor" aria-label="anchor" href="#use"></a>
 </h2>
 <p>Create a ECMWF account by <a href="https://www.ecmwf.int/user/login" class="external-link">self registering</a>. Once your user account has been verified you can get your API token (or <code>key</code> in <code>ecmwfr</code>) by visiting one of the Data Stores user profiles, for example the CDS <a href="https://cds.climate.copernicus.eu/profile" class="external-link">user profile</a>.</p>
 <p>The API Token is a <a href="https://fr.wikipedia.org/wiki/Universally_unique_identifier" class="external-link">UUID</a> and should look something like:</p>
@@ -165,7 +165,8 @@
 <div class="section level3">
 <h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h3>
-<p>You have to save your login information before proceeding. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise. <strong>The following lines should NEVER be included in any script and run only once at setup.</strong></p>
+<p>Before using the package in <code>R</code> to download data you have to save your login information. The package does not allow you to use your key inline in scripts to limit security issues when sharing scripts on github or otherwise.</p>
+<p><strong>The following lines should NEVER be included in any script and run only once at setup.</strong></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># set a key to the keychain</span></span>
 <span><span class="fu"><a href="reference/wf_set_key.html">wf_set_key</a></span><span class="op">(</span>key <span class="op">=</span> <span class="st">"abcd1234-foo-bar-98765431-XXXXXXXXXX"</span><span class="op">)</span></span>

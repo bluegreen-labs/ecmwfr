@@ -122,8 +122,8 @@ wf_request <- function(
             service_info$user)
   }
 
-  # grab filename
-  filename <- file.path(path, request$target)
+  # grab filename for verbose output
+  filename <- request$target
 
   # Create request and submit to service
   request <- ds_service$new(
@@ -159,7 +159,7 @@ wf_request <- function(
         exit_message(
           request$get_url(),
           path,
-          request$target,
+          filename,
           service_info$service
         )
       }
@@ -171,7 +171,7 @@ wf_request <- function(
       exit_message(
         request$get_url(),
         path,
-        request$target,
+        filename,
         service_info$service
       )
     }

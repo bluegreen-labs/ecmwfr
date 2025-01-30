@@ -38,7 +38,7 @@ used to retrieve the token set by \code{\link[ecmwfr]{wf_set_key}}}
 \item{path}{path were to store the downloaded data}
 
 \item{time_out}{how long to wait on a download to start (default =
-\code{3*3600} seconds).}
+\code{3600} seconds).}
 
 \item{retry}{polling frequency of submitted request for downloading (default =
 \code{30} seconds).}

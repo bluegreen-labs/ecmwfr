@@ -156,7 +156,7 @@ ds_service <- R6::R6Class("ecmwfr_ds",
       ) {
 
       # Check if download is actually needed
-      if (private$downloaded == TRUE & file.exists(private$file) & !force_redownload) {
+      if (private$downloaded == TRUE & !force_redownload) {
         if (private$verbose) message("File already downloaded")
         return(self)
       }
@@ -191,7 +191,39 @@ ds_service <- R6::R6Class("ecmwfr_ds",
         )
       }
 
+      # flag as downloaded
       private$downloaded <- TRUE
+
+      # no target file provided
+      # use temp file name (assignment
+      # of extension see below)
+      if(length(private$file) ==  0){
+        private$file <- temp_file
+      }
+
+      # check extension
+      if(tools::file_ext(private$file_url) != tools::file_ext(private$file)){
+
+        # list old and new name
+        old_file <- private$file
+        new_file <- paste0(
+          tools::file_path_sans_ext(private$file),".",
+          tools::file_ext(private$file_url)
+        )
+
+        # assign to internal variable
+        private$file <- new_file
+
+        # provide feedback
+        if (private$verbose){
+          message(
+            sprintf(
+              "- renaming output format -> %s to %s",
+              old_file, new_file
+            )
+          )
+        }
+      }
 
       # Copy data from temporary file to final location
       move <- suppressWarnings(file.rename(temp_file, private$file))

@@ -1,10 +1,7 @@
-# ecmwfr 2.0.4
+# ecmwfr 2.0.3
 
 * fix of Addin conversion issue (edge case)
 * documentation corrections by @Rafnuss
-
-# ecmwfr 2.0.3
-
 * fix of feedback on failed downloads
 
 # ecmwfr 2.0.2

@@ -1,3 +1,5 @@
+#' @import tools
+
 ds_service <- R6::R6Class("ecmwfr_ds",
   inherit = service,
   public = list(

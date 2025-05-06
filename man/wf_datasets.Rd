@@ -4,7 +4,7 @@
 \alias{wf_datasets}
 \title{List ECMWF Data Store dataset}
 \usage{
-wf_datasets(service = c("cds", "ads", "cems"), simplify = TRUE)
+wf_datasets(service = c("cds", "ads", "cems", "xds"), simplify = TRUE)
 }
 \arguments{
 \item{service}{which service to use, one of \code{webapi}, \code{cds}

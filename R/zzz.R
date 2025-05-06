@@ -30,21 +30,21 @@ wf_server <- function(id, service = "cds") {
     } else {
       return(paste0(cds_url,"/retrieve/v1/", "jobs/", id))
     },
-  "ads" = if (missing(id)) {
-        return(ads_url)
-      } else {
-        return(paste0(ads_url,"/retrieve/v1/", "jobs/", id))
-      },
-  "cems" = if (missing(id)) {
+    "ads" = if (missing(id)) {
+      return(ads_url)
+    } else {
+      return(paste0(ads_url,"/retrieve/v1/", "jobs/", id))
+    },
+    "cems" = if (missing(id)) {
       return(cems_url)
     } else {
       return(paste0(cems_url,"/retrieve/v1/", "jobs/", id))
     },
-  "xds" = if (missing(id)) {
-    return(cems_url)
-  } else {
-    return(paste0(xds_url,"/retrieve/v1/", "jobs/", id))
-  }
+    "xds" = if (missing(id)) {
+      return(xds_url)
+    } else {
+      return(paste0(xds_url,"/retrieve/v1/", "jobs/", id))
+    }
   )
 
   stop("No server for the service found")

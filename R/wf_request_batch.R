@@ -32,7 +32,7 @@ wf_request_batch <- function(
   }
 
   N <- length(request_list)
-  slots <- as.list(rep(FALSE, workers))
+  slots <- as.list(rep(FALSE, min(workers, N)))
   queue <- request_list
   done  <- list()
 
@@ -44,7 +44,7 @@ wf_request_batch <- function(
 
   timeout_time <- Sys.time() + total_timeout
 
-  while (length(done) < length(request_list) & Sys.time() < timeout_time) {
+  while ((length(done) < length(request_list)) && (Sys.time() < timeout_time)) {
     for (w in seq_along(slots)) {
 
       # wait before submitting a call
